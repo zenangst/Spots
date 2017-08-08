@@ -14,13 +14,13 @@ class DiffManagerTests: XCTestCase {
     let lhs = [Item(title: "foo")]
     let rhs = [Item(title: "foo")]
 
-    XCTAssertNil(manager.compare(oldModels: lhs, newModels: rhs))
+    XCTAssertNil(manager.compare(oldItems: lhs, newItems: rhs))
   }
 
   func testComparingSimpleUpdate() {
     let lhs = [Item(title: "foo")]
     let rhs = [Item(title: "bar")]
-    let changes = manager.compare(oldModels: lhs, newModels: rhs)!
+    let changes = manager.compare(oldItems: lhs, newItems: rhs)!
 
     XCTAssertEqual(changes.insertions.count, 0)
     XCTAssertTrue(changes.updates.contains(0))
@@ -34,7 +34,7 @@ class DiffManagerTests: XCTestCase {
   func testComparingDifferentKind() {
     let lhs = [Item(kind: "foo")]
     let rhs = [Item(kind: "bar")]
-    let changes = manager.compare(oldModels: lhs, newModels: rhs)!
+    let changes = manager.compare(oldItems: lhs, newItems: rhs)!
 
     XCTAssertEqual(changes.insertions.count, 0)
     XCTAssertEqual(changes.updates.count, 0)
@@ -48,7 +48,7 @@ class DiffManagerTests: XCTestCase {
   func testComparingDifferentSize() {
     let lhs = [Item(size: .init(width: 200, height: 200))]
     let rhs = [Item(size: .init(width: 100, height: 100))]
-    let changes = manager.compare(oldModels: lhs, newModels: rhs)!
+    let changes = manager.compare(oldItems: lhs, newItems: rhs)!
 
     XCTAssertEqual(changes.insertions.count, 0)
     XCTAssertEqual(changes.updates.count, 0)
@@ -66,7 +66,7 @@ class DiffManagerTests: XCTestCase {
       Item(title: "b"),
       Item(title: "c"),
     ]
-    let changes = manager.compare(oldModels: lhs, newModels: rhs)!
+    let changes = manager.compare(oldItems: lhs, newItems: rhs)!
 
     XCTAssertEqual(changes.insertions.count, 2)
     XCTAssertTrue(changes.insertions.contains(1))
@@ -85,7 +85,7 @@ class DiffManagerTests: XCTestCase {
       Item(title: "c"),
       ]
     let rhs = [Item(title: "a")]
-    let changes = manager.compare(oldModels: lhs, newModels: rhs)!
+    let changes = manager.compare(oldItems: lhs, newItems: rhs)!
 
     XCTAssertEqual(changes.insertions.count, 0)
     XCTAssertEqual(changes.updates.count, 0)
@@ -105,7 +105,7 @@ class DiffManagerTests: XCTestCase {
       ].refreshIndexes()
     let rhs = Array(lhs.reversed())
 
-    let changes = manager.compare(oldModels: lhs, newModels: rhs)!
+    let changes = manager.compare(oldItems: lhs, newItems: rhs)!
 
     XCTAssertEqual(changes.insertions.count, 0)
     XCTAssertEqual(changes.updates.count, 0)

@@ -788,7 +788,7 @@ public class SpotsControllerManager {
       width: controller.view.frame.width,
       height: ceil(tempComponent.view.frame.height))
 
-    guard let changes = component.manager.diffManager.compare(oldModels: component.model.items, newModels: tempComponent.model.items) else {
+    guard let changes = component.manager.diffManager.compare(oldItems: component.model.items, newItems: tempComponent.model.items) else {
       return false
     }
 

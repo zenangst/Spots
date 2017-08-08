@@ -10,8 +10,8 @@ class DiffManager {
   ///   - oldModels: The old collection of items.
   ///   - newModels: The new collection of items.
   /// - Returns: If both a the same, then it returns `nil`, otherwise it returns a `Changes` struct.
-  public func compare(oldModels: [Item], newModels: [Item]) -> Changes? {
-    guard let itemDiffs = generateItemDiffs(oldModels: oldModels, newModels: newModels) else {
+  public func compare(oldItems: [Item], newItems: [Item]) -> Changes? {
+    guard let itemDiffs = generateItemDiffs(oldItems: oldItems, newItems: newItems) else {
       return nil
     }
 
@@ -23,21 +23,21 @@ class DiffManager {
   /// Compute changes for when there are less new items then there are old ones.
   ///
   /// - Parameters:
-  ///   - newModels: New collection of items.
-  ///   - oldModels: Old collection of items, the count exceeds the new collection of items.
+  ///   - newItems: New collection of items.
+  ///   - oldItems: Old collection of items, the count exceeds the new collection of items.
   ///   - changes: The collection of `ItemDiff`'s, this gets modified when a change is discovered.
-  fileprivate func processLessNewItems(_ newModels: [Item], _ oldModels: [Item]) -> [ItemDiff] {
+  fileprivate func processLessNewItems(_ newItems: [Item], _ oldItems: [Item]) -> [ItemDiff] {
     var changes = [ItemDiff]()
 
-    for (index, oldItem) in oldModels.enumerated() {
-      if index > newModels.count - 1 {
+    for (index, oldItem) in oldItems.enumerated() {
+      if index > newItems.count - 1 {
         changes.append(.removed)
         continue
       }
 
-      let itemDiff = diff(oldModel: oldItem, newModel: newModels[index])
+      let itemDiff = diff(oldModel: oldItem, newModel: newItems[index])
 
-      if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+      if let index = newItems.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
         changes.append(.move(oldItem.index, index))
       } else {
         changes.append(itemDiff)
@@ -50,22 +50,22 @@ class DiffManager {
   /// Compute changes for when there are more new items then there are old ones.
   ///
   /// - Parameters:
-  ///   - newModels: New collection of items, the count exceeds the old collection of items.
-  ///   - oldModels: Old collection of items.
+  ///   - newItems: New collection of items, the count exceeds the old collection of items.
+  ///   - oldItems: Old collection of items.
   ///   - changes: The collection of `ItemDiff`'s, this gets modified when a change is discovered.
-  fileprivate func processMoreNewItems(_ newModels: [Item], _ oldModels: [Item]) -> [ItemDiff] {
+  fileprivate func processMoreNewItems(_ newItems: [Item], _ oldItems: [Item]) -> [ItemDiff] {
     var changes = [ItemDiff]()
 
-    for (index, newItem) in newModels.enumerated() {
-      if index > oldModels.count - 1 {
+    for (index, newItem) in newItems.enumerated() {
+      if index > oldItems.count - 1 {
         changes.append(.new)
         continue
       }
 
-      let oldItem = oldModels[index]
+      let oldItem = oldItems[index]
       let itemDiff = diff(oldModel: oldItem, newModel: newItem)
 
-      if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+      if let index = newItems.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
         changes.append(.move(oldItem.index, index))
       } else {
         changes.append(itemDiff)
@@ -78,17 +78,17 @@ class DiffManager {
   /// Compute changes for collection of items that have the same amount of items.
   ///
   /// - Parameters:
-  ///   - newModels: New collection of items.
-  ///   - oldModels: Old collection of items.
+  ///   - newItems: New collection of items.
+  ///   - oldItems: Old collection of items.
   ///   - changes: The collection of `ItemDiff`'s, this gets modified when a change is discovered.
-  fileprivate func processEqualAmountOfItems(_ newModels: [Item], _ oldModels: [Item]) -> [ItemDiff] {
+  fileprivate func processEqualAmountOfItems(_ newItems: [Item], _ oldItems: [Item]) -> [ItemDiff] {
     var changes = [ItemDiff]()
 
-    for (index, newItem) in newModels.enumerated() {
-      let oldItem = oldModels[index]
+    for (index, newItem) in newItems.enumerated() {
+      let oldItem = oldItems[index]
       let itemDiff = diff(oldModel: oldItem, newModel: newItem)
 
-      if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+      if let index = newItems.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
         changes.append(.move(oldItem.index, index))
       } else {
         changes.append(itemDiff)
@@ -106,17 +106,17 @@ class DiffManager {
   ///   - oldModels: The old collection of items.
   ///   - newItems: The new collection of items.
   /// - Returns: Will return `nil` if no changes are detected, otherwise a collection of `ItemDiff`s
-  private func generateItemDiffs(oldModels: [Item], newModels: [Item]) -> [ItemDiff]? {
-    guard oldModels !== newModels else {
+  private func generateItemDiffs(oldItems: [Item], newItems: [Item]) -> [ItemDiff]? {
+    guard oldItems !== newItems else {
       return nil
     }
 
-    if oldModels.count > newModels.count {
-      return processLessNewItems(newModels, oldModels)
-    } else if newModels.count > oldModels.count {
-      return processMoreNewItems(newModels, oldModels)
+    if oldItems.count > newItems.count {
+      return processLessNewItems(newItems, oldItems)
+    } else if newItems.count > oldItems.count {
+      return processMoreNewItems(newItems, oldItems)
     } else {
-      return processEqualAmountOfItems(newModels, oldModels)
+      return processEqualAmountOfItems(newItems, oldItems)
     }
   }
 

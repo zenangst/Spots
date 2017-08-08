@@ -297,7 +297,7 @@ class TestComponentEngine: XCTestCase {
       Item(title: "new with child")
     ]
 
-    guard let changes = DiffManager().compare(oldModels: component.model.items, newModels: newItems) else {
+    guard let changes = DiffManager().compare(oldItems: component.model.items, newItems: newItems) else {
       XCTFail("Unable to resolve diff")
       return
     }

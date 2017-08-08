@@ -352,7 +352,7 @@ public class ComponentManager {
       component.model.items = items
       component.prepareItems(recreateComposites: true)
 
-      guard let changes = self.diffManager.compare(oldModels: oldItems, newModels: component.model.items) else {
+      guard let changes = self.diffManager.compare(oldItems: oldItems, newItems: component.model.items) else {
         completion?()
         return
       }
