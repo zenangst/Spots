@@ -33,6 +33,9 @@
 		BD1F9E191EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */; };
 		BD1F9E1A1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */; };
 		BD1F9E1B1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */; };
+		BD20E6601F384672008C2B8B /* DiffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20E65F1F384672008C2B8B /* DiffManager.swift */; };
+		BD20E6611F384672008C2B8B /* DiffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20E65F1F384672008C2B8B /* DiffManager.swift */; };
+		BD20E6621F384672008C2B8B /* DiffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20E65F1F384672008C2B8B /* DiffManager.swift */; };
 		BD21C2541E4358CD00FE2B26 /* ComponentFlowLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD21C2511E4358B900FE2B26 /* ComponentFlowLayoutTests.swift */; };
 		BD21C2551E4358CE00FE2B26 /* ComponentFlowLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD21C2511E4358B900FE2B26 /* ComponentFlowLayoutTests.swift */; };
 		BD21C2561E4358CF00FE2B26 /* ComponentFlowLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD21C2511E4358B900FE2B26 /* ComponentFlowLayoutTests.swift */; };
@@ -62,6 +65,12 @@
 		BD45D9961E30A8A000C2D6B2 /* InsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* InsetTests.swift */; };
 		BD45D9971E30A8A000C2D6B2 /* InsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* InsetTests.swift */; };
 		BD5CF7371E8B7C57006CC281 /* ComponentResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5CF7361E8B7C57006CC281 /* ComponentResize.swift */; };
+		BD5D69D41F398C370078AC19 /* Changes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D69D31F398C370078AC19 /* Changes.swift */; };
+		BD5D69D51F398C370078AC19 /* Changes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D69D31F398C370078AC19 /* Changes.swift */; };
+		BD5D69D61F398C370078AC19 /* Changes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D69D31F398C370078AC19 /* Changes.swift */; };
+		BD5D69D81F398E740078AC19 /* DiffManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D69D71F398E740078AC19 /* DiffManagerTests.swift */; };
+		BD5D69D91F398E740078AC19 /* DiffManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D69D71F398E740078AC19 /* DiffManagerTests.swift */; };
+		BD5D69DA1F398E740078AC19 /* DiffManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D69D71F398E740078AC19 /* DiffManagerTests.swift */; };
 		BD5FC7DF1E857AD900D03038 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5FC7DE1E857AD900D03038 /* FlippedView.swift */; };
 		BD5FE3451EA6222C0008749C /* TestComponentDelegate+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestComponentDelegate+iOS.swift */; };
 		BD5FE3461EA6222D0008749C /* TestComponentDelegate+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF5511DD1DA8000FC0537 /* TestComponentDelegate+iOS.swift */; };
@@ -428,6 +437,7 @@
 		BD1F9E101EA39ED9009C018B /* Mappable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Mappable+Extensions.swift"; sourceTree = "<group>"; };
 		BD1F9E141EA39F02009C018B /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
+		BD20E65F1F384672008C2B8B /* DiffManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffManager.swift; sourceTree = "<group>"; };
 		BD21C2511E4358B900FE2B26 /* ComponentFlowLayoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayoutTests.swift; sourceTree = "<group>"; };
 		BD24030B1E4B981A005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
@@ -444,6 +454,8 @@
 		BD45D9981E30B0F700C2D6B2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BD45D9991E30B0F700C2D6B2 /* Spots.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Spots.podspec; sourceTree = "<group>"; };
 		BD5CF7361E8B7C57006CC281 /* ComponentResize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentResize.swift; sourceTree = "<group>"; };
+		BD5D69D31F398C370078AC19 /* Changes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Changes.swift; sourceTree = "<group>"; };
+		BD5D69D71F398E740078AC19 /* DiffManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffManagerTests.swift; sourceTree = "<group>"; };
 		BD5FC7DE1E857AD900D03038 /* FlippedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
 		BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemConfigurableComputeSizeTests.swift; sourceTree = "<group>"; };
 		BD677E841DC616B2006D1654 /* ComponentSharedTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentSharedTests.swift; sourceTree = "<group>"; };
@@ -822,6 +834,7 @@
 				BD99824B1EA93684000A6FD4 /* ViewPreparer.swift */,
 				BDA3D96B1EC6F1A400141227 /* ItemManager.swift */,
 				BDC5F3781F041A6500EA6A2C /* MoveAlgorithm.swift */,
+				BD20E65F1F384672008C2B8B /* DiffManager.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -901,6 +914,7 @@
 				BDAD855C1E3E7032008289AE /* Parser.swift */,
 				BDAD855D1E3E7032008289AE /* Registry.swift */,
 				BDAD855E1E3E7032008289AE /* StateCache.swift */,
+				BD5D69D31F398C370078AC19 /* Changes.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1076,6 +1090,7 @@
 				BDCA3CF21E8295EB00A98A76 /* TestUserInterface.swift */,
 				BD10D5211D79533C00DF8E9B /* TestViewModelExtensions.swift */,
 				BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */,
+				BD5D69D71F398E740078AC19 /* DiffManagerTests.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1543,6 +1558,7 @@
 				BDAD84A91E3E701C008289AE /* CarouselSpotHeader.swift in Sources */,
 				BDAD85741E3E7032008289AE /* Paginate.swift in Sources */,
 				BDAD859B1E3E7032008289AE /* SpotsController+LiveEditing.swift in Sources */,
+				BD20E6621F384672008C2B8B /* DiffManager.swift in Sources */,
 				BDAD84D31E3E701C008289AE /* Delegate+iOS+Extensions.swift in Sources */,
 				BDAD85681E3E7032008289AE /* Delegate.swift in Sources */,
 				BDAD85C81E3E7032008289AE /* SpotsProtocol.swift in Sources */,
@@ -1565,6 +1581,7 @@
 				BDAD84C11E3E701C008289AE /* ListWrapper.swift in Sources */,
 				BD91A9541F2FAB87005B6A38 /* ComponentResolvable+Extensions.swift in Sources */,
 				BD77D1FA1E8538080075A3FC /* ComponentKind.swift in Sources */,
+				BD5D69D61F398C370078AC19 /* Changes.swift in Sources */,
 				BD9ECEC51E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */,
 				BDAD84D11E3E701C008289AE /* DataSource+iOS+Extensions.swift in Sources */,
 				BDAD85D41E3E7032008289AE /* ComponentModel.swift in Sources */,
@@ -1634,6 +1651,7 @@
 				BD10D5271D7955AC00DF8E9B /* TestViewModelExtensions.swift in Sources */,
 				BDCA3CF51E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
 				BD677E911DC65D63006D1654 /* Helpers.swift in Sources */,
+				BD5D69DA1F398E740078AC19 /* DiffManagerTests.swift in Sources */,
 				BD798EFA1EA2A1320069EFB7 /* TestSpotsControllerManager.swift in Sources */,
 				BDA5EEC21EDD78BF00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */,
 				BD6FBEF21E12B5F000AA58BD /* TestComposition.swift in Sources */,
@@ -1682,6 +1700,7 @@
 				BDAD84BE1E3E701C008289AE /* DefaultItemView.swift in Sources */,
 				BD1F9E111EA39ED9009C018B /* Mappable+Extensions.swift in Sources */,
 				BDAD85ED1E3E7032008289AE /* StateCache.swift in Sources */,
+				BD5D69D41F398C370078AC19 /* Changes.swift in Sources */,
 				BDB8D59A1E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift in Sources */,
 				BD1D17251EA89A36000DBCF8 /* SpotsRefreshControl.swift in Sources */,
 				BDAD85B71E3E7032008289AE /* ScrollDelegate.swift in Sources */,
@@ -1741,6 +1760,7 @@
 				BDAD85781E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BDDCF6EF1E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
 				BD44D1E31EADC48200F7205E /* HeaderMode.swift in Sources */,
+				BD20E6601F384672008C2B8B /* DiffManager.swift in Sources */,
 				BD9ECEBE1E6EC8A5003E4388 /* Component+iOS+Carousel.swift in Sources */,
 				BDE44B0F1EA0E5E80021EAC8 /* ComponentManager.swift in Sources */,
 				BDAD85C91E3E7032008289AE /* UserInterface.swift in Sources */,
@@ -1792,6 +1812,7 @@
 				BDE44B161EA0F0E40021EAC8 /* TestComponentManager.swift in Sources */,
 				BDCA3CF31E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
 				BD45D9951E30A8A000C2D6B2 /* InsetTests.swift in Sources */,
+				BD5D69D81F398E740078AC19 /* DiffManagerTests.swift in Sources */,
 				BDEA327F1E87A6FF0044B056 /* TestInteraction.swift in Sources */,
 				BD3B4A8D1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift in Sources */,
 			);
@@ -1818,6 +1839,7 @@
 				BDAD858E1E3E7032008289AE /* Component+Mutation.swift in Sources */,
 				BDAD85241E3E7025008289AE /* NSScrollView+Extensions.swift in Sources */,
 				BDAD85E51E3E7032008289AE /* Layout.swift in Sources */,
+				BD20E6611F384672008C2B8B /* DiffManager.swift in Sources */,
 				BDAD85171E3E7025008289AE /* NoScrollView.swift in Sources */,
 				52CD427B1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BD9ECEBC1E6EC82D003E4388 /* Component+macOS+HeaderFooter.swift in Sources */,
@@ -1837,6 +1859,7 @@
 				BDAD85271E3E7025008289AE /* ComponentView.swift in Sources */,
 				BDAD859A1E3E7032008289AE /* SpotsController+LiveEditing.swift in Sources */,
 				BDAD85231E3E7025008289AE /* NSCollectionView+UserInterface.swift in Sources */,
+				BD5D69D51F398C370078AC19 /* Changes.swift in Sources */,
 				BDA3D96D1EC6F1A400141227 /* ItemManager.swift in Sources */,
 				BDAD85641E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD85881E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
@@ -1892,6 +1915,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD5D69D91F398E740078AC19 /* DiffManagerTests.swift in Sources */,
 				D58478E71C440645006EBA49 /* TestComponentModel.swift in Sources */,
 				BD677E901DC65D63006D1654 /* Helpers.swift in Sources */,
 				BDCA3CF41E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
