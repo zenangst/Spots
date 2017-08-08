@@ -11,7 +11,7 @@ class DiffManager {
   ///   - newModels: The new collection of items.
   /// - Returns: If both a the same, then it returns `nil`, otherwise it returns a `Changes` struct.
   public func compare(oldModels: [Item], newModels: [Item]) -> Changes? {
-    guard let itemDiffs = generateItemDiffs(oldModels: oldModels, newItems: newModels) else {
+    guard let itemDiffs = generateItemDiffs(oldModels: oldModels, newModels: newModels) else {
       return nil
     }
 
@@ -28,30 +28,30 @@ class DiffManager {
   ///   - oldModels: The old collection of items.
   ///   - newItems: The new collection of items.
   /// - Returns: Will return `nil` if no changes are detected, otherwise a collection of `ItemDiff`s
-  private func generateItemDiffs(oldModels: [Item], newItems: [Item]) -> [ItemDiff]? {
-    guard oldModels !== newItems else {
+  private func generateItemDiffs(oldModels: [Item], newModels: [Item]) -> [ItemDiff]? {
+    guard oldModels !== newModels else {
       return nil
     }
 
     var changes = [ItemDiff]()
 
-    if oldModels.count > newItems.count {
+    if oldModels.count > newModels.count {
       for (index, oldItem) in oldModels.enumerated() {
-        if index > newItems.count - 1 {
+        if index > newModels.count - 1 {
           changes.append(.removed)
           continue
         }
 
-        let itemDiff = diff(oldItem: oldItem, newItem: newItems[index])
+        let itemDiff = diff(oldModel: oldItem, newModel: newModels[index])
 
-        if let index = newItems.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+        if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
           changes.append(.move(oldItem.index, index))
         } else {
           changes.append(itemDiff)
         }
       }
-    } else if oldModels.count < newItems.count {
-      for (index, oldItem) in newItems.enumerated() {
+    } else if oldModels.count < newModels.count {
+      for (index, oldItem) in newModels.enumerated() {
         if index > oldModels.count - 1 {
           changes.append(.new)
           continue
@@ -59,18 +59,18 @@ class DiffManager {
 
         let diff = oldItem.diff(oldItem)
 
-        if let index = newItems.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+        if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
           changes.append(.move(oldItem.index, index))
         } else {
           changes.append(diff)
         }
       }
     } else {
-      for (index, newItem) in newItems.enumerated() {
+      for (index, newItem) in newModels.enumerated() {
         let oldItem = oldModels[index]
-        let itemDiff = diff(oldItem: oldItem, newItem: newItem)
+        let itemDiff = diff(oldModel: oldItem, newModel: newItem)
 
-        if let index = newItems.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
+        if let index = newModels.index(where: { $0.compareItemIncludingIndex(oldItem) }), oldItem.index != index {
           changes.append(.move(oldItem.index, index))
         } else {
           changes.append(itemDiff)
@@ -93,13 +93,13 @@ class DiffManager {
   ///   - oldItem: The old item
   ///   - newItem: The new item
   /// - Returns: An item diff depending on which attribute changed.
-  private func diff(oldItem: Item, newItem: Item) -> ItemDiff {
-    let oldChildComponentModels: [ComponentModel] = oldItem.children.map { ComponentModel($0) }
-    let newChildComponentModels: [ComponentModel] = newItem.children.map { ComponentModel($0) }
+  private func diff(oldModel: Item, newModel: Item) -> ItemDiff {
+    let oldChildComponentModels: [ComponentModel] = oldModel.children.map { ComponentModel($0) }
+    let newChildComponentModels: [ComponentModel] = newModel.children.map { ComponentModel($0) }
 
     // Indicates that the view identifier changed, this will later lead to the view
     // being reloaded.
-    if newItem.kind != oldItem.kind {
+    if newModel.kind != oldModel.kind {
       return .kind
     }
 
@@ -109,35 +109,35 @@ class DiffManager {
     }
 
     // The items unique identifier has changed which means that the item cannot match.
-    if newItem.identifier != oldItem.identifier {
+    if newModel.identifier != oldModel.identifier {
       return .identifier
     }
 
-    if newItem.title != oldItem.title {
+    if newModel.title != oldModel.title {
       return .title
     }
 
-    if newItem.subtitle != oldItem.subtitle {
+    if newModel.subtitle != oldModel.subtitle {
       return .subtitle
     }
 
-    if newItem.text != oldItem.text {
+    if newModel.text != oldModel.text {
       return .text
     }
 
-    if newItem.size != oldItem.size {
+    if newModel.size != oldModel.size {
       return .size
     }
 
-    if newItem.image != oldItem.image {
+    if newModel.image != oldModel.image {
       return .image
     }
 
-    if newItem.action != oldItem.action {
+    if newModel.action != oldModel.action {
       return .action
     }
 
-    if !(newItem.meta as NSDictionary).isEqual(to: oldItem.meta) {
+    if !(newModel.meta as NSDictionary).isEqual(to: oldModel.meta) {
       return .meta
     }
 
