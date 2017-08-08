@@ -7,9 +7,9 @@ struct Changes {
   var childUpdates: Set<Int> = []
   var moved: [Int: Int] = [:]
 
-  init(changes: [ItemDiff]) {
-    for (index, change) in changes.enumerated() {
-      switch change {
+  init(itemDiffs: [ItemDiff]) {
+    for (index, itemDiff) in itemDiffs.enumerated() {
+      switch itemDiff {
       case .kind, .size:
         reloads.insert(index)
       case .children:

@@ -15,7 +15,7 @@ class DiffManager {
       return nil
     }
 
-    let changes = Changes(changes: itemDiffs)
+    let changes = Changes(itemDiffs: itemDiffs)
 
     return changes
   }
