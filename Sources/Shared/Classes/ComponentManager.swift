@@ -48,7 +48,7 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (currently not in use)
   /// - parameter completion: A completion closure that is executed in the main queue.
   public func append(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main { [weak self] in
+    Dispatch.interactive { [weak self] in
       var indexes = [Int]()
       let numberOfItems = component.model.items.count
 
@@ -60,13 +60,15 @@ public class ComponentManager {
         self?.itemManager.configureItem(at: numberOfItems + $0.offset, component: component, usesViewSize: true)
       }
 
-      if numberOfItems > 0 {
-        component.userInterface?.insert(indexes, withAnimation: animation) {
+      Dispatch.main {
+        if numberOfItems > 0 {
+          component.userInterface?.insert(indexes, withAnimation: animation) {
+            self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+          }
+        } else {
+          component.userInterface?.reloadDataSource()
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
-      } else {
-        component.userInterface?.reloadDataSource()
-        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
