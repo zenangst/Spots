@@ -29,7 +29,7 @@ class DiffManager {
   ///   - newItems: The new collection of items.
   /// - Returns: Will return `nil` if no changes are detected, otherwise a collection of `ItemDiff`s
   private func generateItemDiffs(oldModels: [Item], newItems: [Item]) -> [ItemDiff]? {
-    guard !(oldModels === newItems) else {
+    guard oldModels !== newItems else {
       return nil
     }
 
