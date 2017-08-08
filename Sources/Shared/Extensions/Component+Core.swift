@@ -55,8 +55,8 @@ public extension Component {
           height = collectionViewLayout.collectionViewContentSize.height
         }
 
-          height += headerView?.frame.size.height ?? 0
-          height += footerView?.frame.size.height ?? 0
+        height += headerView?.frame.size.height ?? 0
+        height += footerView?.frame.size.height ?? 0
       #else
         if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
           switch collectionViewLayout.scrollDirection {
@@ -145,28 +145,39 @@ public extension Component {
   ///
   /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
   public func updateHeight(_ completion: Completion = nil) {
-    Dispatch.main { [weak self] in
+    Dispatch.interactive { [weak self] in
       guard let `self` = self else {
         completion?()
         return
       }
 
       let componentHeight = self.computedHeight
-      self.view.frame.size.height = componentHeight
-      completion?()
+      Dispatch.main {
+        self.view.frame.size.height = componentHeight
+        completion?()
+      }
     }
   }
 
   /// Refresh indexes for all items to ensure that the indexes are unique and in ascending order.
   public func refreshIndexes(completion: Completion = nil) {
-    var updatedItems = model.items
+    Dispatch.interactive { [weak self] in
+      guard let `self` = self else {
+        return
+      }
 
-    updatedItems.enumerated().forEach {
-      updatedItems[$0.offset].index = $0.offset
+      var updatedItems = self.model.items
+
+      updatedItems.enumerated().forEach {
+        updatedItems[$0.offset].index = $0.offset
+      }
+
+      self.model.items = updatedItems
+
+      Dispatch.main {
+        completion?()
+      }
     }
-
-    model.items = updatedItems
-    completion?()
   }
 
   /// Caches the current state of the component
@@ -231,9 +242,14 @@ public extension Component {
   /// - parameter completion: A completion closure that will be run when the computations are complete.
   public func updateHeightAndIndexes(completion: Completion = nil) {
     updateHeight { [weak self] in
-      self?.refreshIndexes(completion: completion)
+      guard let `self` = self else {
+        return
+      }
+
+      self.refreshIndexes(completion: completion)
     }
   }
 
   func configure(with layout: Layout) {}
 }
+
