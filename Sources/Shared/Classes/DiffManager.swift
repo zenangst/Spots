@@ -26,7 +26,9 @@ class DiffManager {
   ///   - newModels: New collection of items.
   ///   - oldModels: Old collection of items, the count exceeds the new collection of items.
   ///   - changes: The collection of `ItemDiff`'s, this gets modified when a change is discovered.
-  fileprivate func processLessNewItems(_ newModels: [Item], _ oldModels: [Item], _ changes: inout [ItemDiff]) {
+  fileprivate func processLessNewItems(_ newModels: [Item], _ oldModels: [Item]) -> [ItemDiff] {
+    var changes = [ItemDiff]()
+
     for (index, oldItem) in oldModels.enumerated() {
       if index > newModels.count - 1 {
         changes.append(.removed)
@@ -41,6 +43,8 @@ class DiffManager {
         changes.append(itemDiff)
       }
     }
+
+    return changes
   }
 
   /// Compute changes for when there are more new items then there are old ones.
@@ -49,7 +53,9 @@ class DiffManager {
   ///   - newModels: New collection of items, the count exceeds the old collection of items.
   ///   - oldModels: Old collection of items.
   ///   - changes: The collection of `ItemDiff`'s, this gets modified when a change is discovered.
-  fileprivate func processMoreNewItems(_ newModels: [Item], _ oldModels: [Item], _ changes: inout [ItemDiff]) {
+  fileprivate func processMoreNewItems(_ newModels: [Item], _ oldModels: [Item]) -> [ItemDiff] {
+    var changes = [ItemDiff]()
+
     for (index, oldItem) in newModels.enumerated() {
       if index > oldModels.count - 1 {
         changes.append(.new)
@@ -64,6 +70,8 @@ class DiffManager {
         changes.append(diff)
       }
     }
+
+    return changes
   }
 
   /// Compute changes for collection of items that have the same amount of items.
@@ -72,7 +80,9 @@ class DiffManager {
   ///   - newModels: New collection of items.
   ///   - oldModels: Old collection of items.
   ///   - changes: The collection of `ItemDiff`'s, this gets modified when a change is discovered.
-  fileprivate func processEqualAmountOfItems(_ newModels: [Item], _ oldModels: [Item], _ changes: inout [ItemDiff]) {
+  fileprivate func processEqualAmountOfItems(_ newModels: [Item], _ oldModels: [Item]) -> [ItemDiff] {
+    var changes = [ItemDiff]()
+
     for (index, newItem) in newModels.enumerated() {
       let oldItem = oldModels[index]
       let itemDiff = diff(oldModel: oldItem, newModel: newItem)
@@ -83,6 +93,8 @@ class DiffManager {
         changes.append(itemDiff)
       }
     }
+
+    return changes
   }
 
   /// Iterate over two collection of items and determine which operations are appropriate.
@@ -98,17 +110,13 @@ class DiffManager {
       return nil
     }
 
-    var changes = [ItemDiff]()
-
     if oldModels.count > newModels.count {
-      processLessNewItems(newModels, oldModels, &changes)
+      return processLessNewItems(newModels, oldModels)
     } else if newModels.count > oldModels.count {
-      processMoreNewItems(newModels, oldModels, &changes)
+      return processMoreNewItems(newModels, oldModels)
     } else {
-      processEqualAmountOfItems(newModels, oldModels, &changes)
+      return processEqualAmountOfItems(newModels, oldModels)
     }
-
-    return changes
   }
 
   /// Compare two items and prioritize the update.
