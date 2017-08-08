@@ -141,10 +141,10 @@ extension NSCollectionView: UserInterface {
     }
   }
 
-  public func process(_ changes: (insertions: [Int], moved: [Int : Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-                      withAnimation animation: Animation = .automatic,
-                      updateDataSource: () -> Void,
-                      completion: ((()) -> Void)? = nil) {
+  public func processChanges(_ changes: Changes,
+                             withAnimation animation: Animation = .automatic,
+                             updateDataSource: () -> Void,
+                             completion: ((()) -> Void)? = nil) {
     let instance = animation != .none ? animator() : self
     let deletionSets = Set<IndexPath>(changes.deletions
       .map { IndexPath(item: $0, section: 0) })
