@@ -342,29 +342,28 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.interactive { [weak self] in
+    Dispatch.main { [weak self] in
       guard let `self` = self else {
-        Dispatch.main {
-          completion?()
-        }
+        completion?()
         return
       }
 
-      let componentCopy = Component(model: component.model)
-      componentCopy.model.items = items
-      componentCopy.prepareItems(recreateComposites: true)
-      guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: componentCopy.model.items) else {
-        Dispatch.main {
-          completion?()
-        }
-        return
-      }
+      let duplicatedComponent = component.duplicate()
 
-      Dispatch.main {
-        component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-          component.model.items = componentCopy.model.items
-        }) {
-          self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+      Dispatch.interactive {
+        guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: duplicatedComponent.model.items) else {
+          Dispatch.main {
+            completion?()
+          }
+          return
+        }
+
+        Dispatch.main {
+          component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+            component.model.items = duplicatedComponent.model.items
+          }) {
+            self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+          }
         }
       }
     }
