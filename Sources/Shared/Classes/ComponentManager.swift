@@ -344,7 +344,9 @@ public class ComponentManager {
   public func reloadIfNeeded(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.interactive { [weak self] in
       guard let `self` = self else {
-        completion?()
+        Dispatch.main {
+          completion?()
+        }
         return
       }
 
