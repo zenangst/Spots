@@ -76,6 +76,16 @@ public extension Component {
     return height
   }
 
+  /// Creates a new instance of the `Component` using the same model information
+  /// and then invokes `setup(with:)` using `view.frame.size`.
+  ///
+  /// - Returns: A new `Component` instance with the same model information.
+  func duplicate() -> Component {
+    let component = Component(model: model)
+    component.setup(with: view.frame.size)
+    return component
+  }
+
   func configureClosureDidChange() {
     guard let configure = configure else {
       return
