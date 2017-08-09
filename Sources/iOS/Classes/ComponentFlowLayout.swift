@@ -359,7 +359,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       }
 
       attributes.zIndex = -1
-      attributes.alpha = 1.0
+
+      if type == .insert {
+        attributes.alpha = 0.0
+      }
+
       attributes.center = .init(x: attributes.center.x,
                                 y: attributes.center.y - attributes.frame.size.height)
     }
