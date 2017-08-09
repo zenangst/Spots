@@ -348,23 +348,19 @@ public class ComponentManager {
         return
       }
 
-      let duplicatedComponent = component.duplicate()
+      let duplicatedComponent = Component(model: component.model)
+      duplicatedComponent.model.items = items
+      duplicatedComponent.setup(with: component.view.frame.size)
 
-      Dispatch.interactive {
-        guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: duplicatedComponent.model.items) else {
-          Dispatch.main {
-            completion?()
-          }
-          return
-        }
+      guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: duplicatedComponent.model.items) else {
+        completion?()
+        return
+      }
 
-        Dispatch.main {
-          component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-            component.model.items = duplicatedComponent.model.items
-          }) {
-            self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-          }
-        }
+      component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+        component.model.items = duplicatedComponent.model.items
+      }) {
+        self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
     }
   }
