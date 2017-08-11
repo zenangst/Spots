@@ -92,7 +92,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
-  public lazy private(set) var refreshControl: UIRefreshControl = SpotsRefreshControl()
+  open lazy private(set) var refreshControl: UIRefreshControl = SpotsRefreshControl()
   #endif
 
   // MARK: Initializer
