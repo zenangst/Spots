@@ -11,8 +11,8 @@ class DataSourceTests: XCTestCase {
   func testDataSourceForListableObject() {
     Configuration.register(view: CustomListCell.self, identifier: "custom")
     let component = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
-      Item(title: "title 1"),
-      Item(title: "title 2")
+      Item(title: "title 1", kind: "custom"),
+      Item(title: "title 2", kind: "custom")
       ]))
 
     component.setup(with: CGSize(width: 100, height: 100))
@@ -22,8 +22,8 @@ class DataSourceTests: XCTestCase {
       return
     }
 
-    var itemCell1: ListWrapper? = component.componentDataSource!.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ListWrapper
-    let itemCell2: ListWrapper? = component.componentDataSource!.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? ListWrapper
+    var itemCell1: CustomListCell? = component.componentDataSource!.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? CustomListCell
+    let itemCell2: CustomListCell? = component.componentDataSource!.tableView(tableView, cellForRowAt: IndexPath(row: 1, section: 0)) as? CustomListCell
 
     XCTAssertNotNil(itemCell1)
     XCTAssertNotNil(itemCell2)
@@ -37,21 +37,16 @@ class DataSourceTests: XCTestCase {
     /// Check that preferred view size is applied if height is 0.0
     component.model.items[0].kind = "custom"
     component.model.items[0].size.height = 0.0
-    itemCell1 = component.componentDataSource!.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ListWrapper
+    itemCell1 = component.componentDataSource!.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? CustomListCell
 
-    guard let itemConfigurable = itemCell1?.wrappedView as? CustomListCell else {
-      XCTFail("Unable to resolve list wrapper.")
-      return
-    }
-
-    XCTAssertNotNil(itemConfigurable)
+    XCTAssertNotNil(itemCell1)
     XCTAssertEqual(component.model.items[0].size.height, 44)
   }
 
   func testDataSourceForGridableObject() {
     let component = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
-      Item(title: "title 1"),
-      Item(title: "title 2")
+      Item(title: "title 1", kind: "custom"),
+      Item(title: "title 2", kind: "custom")
       ]))
 
     component.setup(with: CGSize(width: 100, height: 100))
@@ -67,8 +62,8 @@ class DataSourceTests: XCTestCase {
     }
 
 
-    var itemCell1: GridWrapper? = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0)) as? GridWrapper
-    let itemCell2: GridWrapper? = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 1, section: 0)) as? GridWrapper
+    var itemCell1: CustomGridCell? = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0)) as? CustomGridCell
+    let itemCell2: CustomGridCell? = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 1, section: 0)) as? CustomGridCell
 
     XCTAssertNotNil(itemCell1)
     XCTAssertNotNil(itemCell2)
@@ -80,9 +75,8 @@ class DataSourceTests: XCTestCase {
     /// Check that preferred view size is applied if height is 0.0
     component.model.items[0].kind = "custom"
     component.model.items[0].size.height = 0.0
-    itemCell1 = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0)) as? GridWrapper
-    let itemConfigurable = itemCell1?.wrappedView as! CustomGridCell
-    XCTAssertNotNil(itemConfigurable)
+    itemCell1 = dataSource.collectionView(collectionView, cellForItemAt: IndexPath(item: 0, section: 0)) as? CustomGridCell
+    XCTAssertNotNil(itemCell1)
     XCTAssertEqual(component.model.items[0].size.height, 44)
   }
 
