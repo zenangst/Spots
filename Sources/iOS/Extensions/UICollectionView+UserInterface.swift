@@ -19,17 +19,18 @@ extension UICollectionView: UserInterface {
       switch item {
       case .classType(let classType):
         register(GridWrapper.self, forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
-        let view = Configuration.views.make(identifier, useCache: true)?.view
-        let isCell = view as? UICollectionViewCell != nil
-        let isHeader = view as? UICollectionReusableView != nil
 
-        if isCell {
+        guard let view = Configuration.views.make(identifier, useCache: true)?.view else {
+          return
+        }
+
+        if view is UICollectionViewCell {
           register(classType, forCellWithReuseIdentifier: identifier)
         } else {
           register(GridWrapper.self, forCellWithReuseIdentifier: identifier)
         }
 
-        if isHeader {
+        if view is UICollectionReusableView {
           register(classType,
                    forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                    withReuseIdentifier: identifier)

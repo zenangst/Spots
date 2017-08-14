@@ -19,17 +19,17 @@ extension UITableView: UserInterface {
       switch item {
       case .classType(let classType):
         register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
-        let view = Configuration.views.make(identifier, useCache: true)?.view
-        let isCell = view as? UITableViewCell != nil
-        let isHeader = view as? UITableViewHeaderFooterView != nil
+        guard let view = Configuration.views.make(identifier, useCache: true)?.view else {
+          return
+        }
 
-        if isCell {
+        if view is UITableViewCell {
           register(classType, forCellReuseIdentifier: identifier)
         } else {
           register(ListWrapper.self, forCellReuseIdentifier: identifier)
         }
 
-        if isHeader {
+        if view is UITableViewHeaderFooterView {
           register(classType, forHeaderFooterViewReuseIdentifier: identifier)
         } else {
           register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
