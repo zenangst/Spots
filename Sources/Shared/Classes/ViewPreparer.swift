@@ -23,7 +23,7 @@ class ViewPreparer {
     case let view as Wrappable:
       prepareWrappableView(view, atIndex: index, in: component, parentFrame: parentFrame)
     case let view as ItemConfigurable:
-      prepareItemConfigurableView(view, atIndex: index, in: component, configureView: true)
+      prepareItemConfigurableView(view, atIndex: index, in: component)
     default:
       assertionFailure("Unable to prepare view.")
     }
@@ -49,7 +49,7 @@ class ViewPreparer {
     } else if let wrappedView = Configuration.views.make(identifier, parentFrame: parentFrame)?.view {
       view.configure(with: wrappedView)
       if let configurableView = wrappedView as? ItemConfigurable {
-        prepareItemConfigurableView(configurableView, atIndex: index, in: component, configureView: false)
+        prepareItemConfigurableView(configurableView, atIndex: index, in: component)
       } else {
         component.model.items[index].size.height = wrappedView.frame.size.height
       }
@@ -63,15 +63,11 @@ class ViewPreparer {
   ///   - view: The view that should be prepared.
   ///   - index: The index of the item on the model.
   ///   - component: The component that the item belongs to.
-  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: Component, configureView: Bool = false) {
+  func prepareItemConfigurableView(_ view: ItemConfigurable, atIndex index: Int, in component: Component) {
     view.configure(with: component.model.items[index])
 
     if component.model.items[index].size.height == 0.0 {
       component.model.items[index].size = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size)
-    }
-
-    if configureView {
-      component.configure?(view)
     }
   }
 }
