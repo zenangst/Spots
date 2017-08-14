@@ -17,10 +17,23 @@ extension UITableView: UserInterface {
       }
 
       switch item {
-      case .classType(_):
-        register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
+      case .classType(let classType):
         register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
-        register(ListWrapper.self, forCellReuseIdentifier: identifier)
+        let view = Configuration.views.make(identifier, useCache: true)?.view
+        let isCell = view as? UITableViewCell != nil
+        let isHeader = view as? UITableViewHeaderFooterView != nil
+
+        if isCell {
+          register(classType, forCellReuseIdentifier: identifier)
+        } else {
+          register(ListWrapper.self, forCellReuseIdentifier: identifier)
+        }
+
+        if isHeader {
+          register(classType, forHeaderFooterViewReuseIdentifier: identifier)
+        } else {
+          register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
+        }
       case .nib(let nib):
         register(nib, forCellReuseIdentifier: identifier)
       }

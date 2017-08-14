@@ -17,17 +17,36 @@ extension UICollectionView: UserInterface {
       }
 
       switch item {
-      case .classType(_):
-        register(GridHeaderFooterWrapper.self,
-                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                 withReuseIdentifier: identifier)
-        register(GridHeaderFooterWrapper.self,
-                 forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                 withReuseIdentifier: identifier)
-        register(GridWrapper.self,
-                 forCellWithReuseIdentifier: identifier)
-        register(GridWrapper.self,
-                 forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
+      case .classType(let classType):
+        register(GridWrapper.self, forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
+        let view = Configuration.views.make(identifier, useCache: true)?.view
+        let isCell = view as? UICollectionViewCell != nil
+        let isHeader = view as? UICollectionReusableView != nil
+
+        if isCell {
+          register(classType, forCellWithReuseIdentifier: identifier)
+        } else {
+          register(GridWrapper.self, forCellWithReuseIdentifier: identifier)
+        }
+
+        if isHeader {
+          register(classType,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                   withReuseIdentifier: identifier)
+          register(classType,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                   withReuseIdentifier: identifier)
+        } else {
+          register(GridHeaderFooterWrapper.self,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                   withReuseIdentifier: identifier)
+          register(GridHeaderFooterWrapper.self,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                   withReuseIdentifier: identifier)
+        }
+
+
+
       case .nib(let nib):
         register(nib, forCellWithReuseIdentifier: identifier)
       }

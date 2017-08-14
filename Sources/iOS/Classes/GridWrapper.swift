@@ -13,13 +13,6 @@ public class GridWrapper: UICollectionViewCell, Wrappable, Cell {
     fatalError("init(coder:) has not been implemented")
   }
 
-  public func configureWrappedView() {
-    if let cell = wrappedView as? UICollectionViewCell {
-      cell.contentView.frame = contentView.frame
-      cell.isUserInteractionEnabled = false
-    }
-  }
-
   override public func layoutSubviews() {
     super.layoutSubviews()
 

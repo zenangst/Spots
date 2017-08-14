@@ -7,10 +7,7 @@ public extension Wrappable {
 
     view.frame = bounds
     self.wrappedView = view
-    configureWrappedView()
 
     contentView.addSubview(view)
   }
-
-  func configureWrappedView() {}
 }
