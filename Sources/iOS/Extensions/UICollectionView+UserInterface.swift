@@ -21,22 +21,22 @@ extension UICollectionView: UserInterface {
       }
 
       switch item {
-      case .classType(let classType):
+      case .classType(_):
         guard let view = Configuration.views.make(identifier, useCache: true)?.view else {
           return
         }
 
         if view is UICollectionViewCell {
-          register(classType, forCellWithReuseIdentifier: identifier)
+          register(type(of: view), forCellWithReuseIdentifier: identifier)
         } else {
           register(GridWrapper.self, forCellWithReuseIdentifier: identifier)
         }
 
         if view is UICollectionReusableView {
-          register(classType,
+          register(type(of: view),
                    forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                    withReuseIdentifier: identifier)
-          register(classType,
+          register(type(of: view),
                    forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
                    withReuseIdentifier: identifier)
         } else {
