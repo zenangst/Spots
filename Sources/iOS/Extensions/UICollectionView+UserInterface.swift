@@ -11,6 +11,10 @@ extension UICollectionView: UserInterface {
     Configuration.register(view: GridWrapper.self, identifier: CollectionView.compositeIdentifier)
     register(GridWrapper.self, forCellWithReuseIdentifier: CollectionView.compositeIdentifier)
 
+    if Configuration.views.defaultItem == nil {
+      register(GridWrapper.self, forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
+    }
+
     for (identifier, item) in Configuration.views.storage {
       if identifier.contains(CompositeComponent.identifier) {
         continue
@@ -18,8 +22,6 @@ extension UICollectionView: UserInterface {
 
       switch item {
       case .classType(let classType):
-        register(GridWrapper.self, forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
-
         guard let view = Configuration.views.make(identifier, useCache: true)?.view else {
           return
         }
@@ -45,9 +47,6 @@ extension UICollectionView: UserInterface {
                    forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
                    withReuseIdentifier: identifier)
         }
-
-
-
       case .nib(let nib):
         register(nib, forCellWithReuseIdentifier: identifier)
       }
