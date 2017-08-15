@@ -336,5 +336,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     if !compositeComponents.isEmpty {
       setup(with: view.frame.size)
     }
+
+    pageControl.numberOfPages = model.items.count
   }
 }
