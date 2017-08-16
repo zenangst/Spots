@@ -20,9 +20,10 @@ public extension Component {
 
     var height: CGFloat = 0
 
-    if tableView != nil {
+    switch model.kind {
+    case .list:
       #if !os(OSX)
-        let superViewHeight = self.view.superview?.frame.size.height ?? UIScreen.main.bounds.height
+        let superViewHeight = UIScreen.main.bounds.height
       #endif
 
       for item in model.items {
@@ -49,25 +50,19 @@ public extension Component {
           height += 28
         }
       #endif
-    } else if let collectionView = collectionView {
+    case .grid:
+      height = model.size?.height ?? 0
       #if os(macOS)
-        height = model.size?.height ?? 0
         height += headerView?.frame.size.height ?? 0
         height += footerView?.frame.size.height ?? 0
-      #else
-        if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
-          switch collectionViewLayout.scrollDirection {
-          case .horizontal:
-            if let firstItem = item(at: 0), firstItem.size.height > collectionViewLayout.collectionViewContentSize.height {
-              height = firstItem.size.height + collectionViewLayout.sectionInset.top + collectionViewLayout.sectionInset.bottom
-            } else {
-              height = collectionViewLayout.collectionViewContentSize.height
-            }
-          case .vertical:
-            height = collectionView.collectionViewLayout.collectionViewContentSize.height
-          }
-        }
       #endif
+    case .carousel:
+        height = model.size?.height ?? 0
+        if let firstItem = item(at: 0), firstItem.size.height > height {
+          height = firstItem.size.height
+          height += CGFloat(model.layout.inset.top)
+          height += CGFloat(model.layout.inset.bottom)
+      }
     }
 
     return height

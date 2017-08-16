@@ -113,6 +113,8 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
     }
+
+    component.model.size = contentSize
   }
 
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
