@@ -21,15 +21,15 @@ extension UITableView: UserInterface {
       }
 
       switch item {
-      case .classType(let classType):
-        if classType is UITableViewCell.Type {
-          register(classType, forCellReuseIdentifier: identifier)
+      case .classType(let type):
+        if type is UITableViewCell.Type {
+          register(type, forCellReuseIdentifier: identifier)
         } else {
           register(ListWrapper.self, forCellReuseIdentifier: identifier)
         }
 
-        if classType is UITableViewHeaderFooterView.Type {
-          register(classType, forHeaderFooterViewReuseIdentifier: identifier)
+        if type is UITableViewHeaderFooterView.Type {
+          register(type, forHeaderFooterViewReuseIdentifier: identifier)
         } else {
           register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
         }
