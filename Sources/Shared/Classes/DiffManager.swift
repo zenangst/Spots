@@ -180,6 +180,10 @@ class DiffManager {
       return .meta
     }
 
+    if !(newModel.relations as NSDictionary).isEqual(to: oldModel.relations) {
+      return .relations
+    }
+
     return .none
   }
 }
