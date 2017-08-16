@@ -123,12 +123,12 @@ public class ComponentFlowLayout: FlowLayout {
         } else {
           nextY = itemAttribute.frame.maxY + CGFloat(component.model.layout.lineSpacing)
         }
+        attributes.append(itemAttribute)
       } else {
         itemAttribute.frame.origin.y += CGFloat(component.model.layout.inset.top)
-      }
-
-      if itemAttribute.frame.intersects(rect) {
-        attributes.append(itemAttribute)
+        if itemAttribute.frame.intersects(rect) {
+          attributes.append(itemAttribute)
+        }
       }
     }
 
