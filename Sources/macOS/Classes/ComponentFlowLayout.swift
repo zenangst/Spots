@@ -73,6 +73,7 @@ public class ComponentFlowLayout: FlowLayout {
     }
 
     contentSize.height += CGFloat(component.model.layout.inset.top + component.model.layout.inset.bottom)
+    component.model.size = contentSize
   }
 
   public override func layoutAttributesForElements(in rect: NSRect) -> [NSCollectionViewLayoutAttributes] {
