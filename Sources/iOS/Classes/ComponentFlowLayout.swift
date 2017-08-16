@@ -168,14 +168,16 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           } else {
             nextY = itemAttribute.frame.maxY + minimumLineSpacing
           }
+
+          attributes.append(itemAttribute)
         } else {
           itemAttribute.frame.origin.y += component.headerHeight
-        }
-
-        // Only add item attributes if the item frame insects the rect passed into the method.
-        // This removes unwanted computation when a collection view scrolls.
-        if itemAttribute.frame.intersects(rect) {
-          attributes.append(itemAttribute)
+          // Only add item attributes if the item frame insects the rect passed into the method.
+          // This removes unwanted computation when a collection view scrolls.
+          // Note that this only applies to vertical components.
+          if itemAttribute.frame.intersects(rect) {
+            attributes.append(itemAttribute)
+          }
         }
 
         if index >= cachedFrames.count {

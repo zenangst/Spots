@@ -73,6 +73,7 @@ public class ComponentFlowLayout: FlowLayout {
     }
 
     contentSize.height += CGFloat(component.model.layout.inset.top + component.model.layout.inset.bottom)
+    component.model.size = contentSize
   }
 
   public override func layoutAttributesForElements(in rect: NSRect) -> [NSCollectionViewLayoutAttributes] {
@@ -123,12 +124,12 @@ public class ComponentFlowLayout: FlowLayout {
         } else {
           nextY = itemAttribute.frame.maxY + CGFloat(component.model.layout.lineSpacing)
         }
+        attributes.append(itemAttribute)
       } else {
         itemAttribute.frame.origin.y += CGFloat(component.model.layout.inset.top)
-      }
-
-      if itemAttribute.frame.intersects(rect) {
-        attributes.append(itemAttribute)
+        if itemAttribute.frame.intersects(rect) {
+          attributes.append(itemAttribute)
+        }
       }
     }
 
