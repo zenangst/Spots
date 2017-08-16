@@ -338,5 +338,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     pageControl.numberOfPages = model.items.count
+    view.superview?.layoutIfNeeded()
   }
 }
