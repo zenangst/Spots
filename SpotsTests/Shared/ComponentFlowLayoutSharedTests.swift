@@ -43,7 +43,7 @@ class ComponentFlowLayoutSharedTests: XCTestCase {
     let (component, flowLayout) = createComponent(with: layout)
     let layoutAttributes = flowLayout.sharedLayoutAttributesForElements(in: component.view.frame)
 
-    XCTAssertEqual(layoutAttributes.count, 1)
+    XCTAssertEqual(layoutAttributes.count, 4)
     XCTAssertEqual(component.model.items[0].size, CGSize(width: 100, height: 50))
 
     // Check that the layout attributes correspond to the model sizes
