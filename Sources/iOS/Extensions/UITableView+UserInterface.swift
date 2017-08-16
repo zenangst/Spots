@@ -21,19 +21,15 @@ extension UITableView: UserInterface {
       }
 
       switch item {
-      case .classType(_):
-        guard let view = Configuration.views.make(identifier, useCache: false)?.view else {
-          return
-        }
-
-        if view is UITableViewCell {
-          register(type(of: view), forCellReuseIdentifier: identifier)
+      case .classType(let classType):
+        if classType is UITableViewCell.Type {
+          register(classType, forCellReuseIdentifier: identifier)
         } else {
           register(ListWrapper.self, forCellReuseIdentifier: identifier)
         }
 
-        if view is UITableViewHeaderFooterView {
-          register(type(of: view), forHeaderFooterViewReuseIdentifier: identifier)
+        if classType is UITableViewHeaderFooterView.Type {
+          register(classType, forHeaderFooterViewReuseIdentifier: identifier)
         } else {
           register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
         }
