@@ -116,4 +116,24 @@ class DiffManagerTests: XCTestCase {
     XCTAssertEqual(changes.moved[0], 2)
     XCTAssertEqual(changes.moved[2], 0)
   }
+
+  func testComparingRelations() {
+    var lhsItem = Item()
+    lhsItem.relations["a"] = [Item(title: "a")]
+
+    var rhsItem = Item()
+    rhsItem.relations["b"] = [Item(title: "b")]
+
+    // Comparing two equal items should not generate any changes.
+    XCTAssertNil(manager.compare(oldItems: [lhsItem], newItems: [lhsItem]))
+
+    let changes = manager.compare(oldItems: [lhsItem], newItems: [rhsItem])!
+    XCTAssertEqual(changes.insertions.count, 0)
+    XCTAssertEqual(changes.updates.count, 1)
+    XCTAssertTrue(changes.updates.contains(0))
+    XCTAssertEqual(changes.reloads.count, 0)
+    XCTAssertEqual(changes.deletions.count, 0)
+    XCTAssertEqual(changes.childUpdates.count, 0)
+    XCTAssertEqual(changes.moved.count, 0)
+  }
 }
