@@ -22,7 +22,7 @@ public class ItemManager {
 
     let inset = CGFloat(component.model.layout.inset.left + component.model.layout.inset.right)
     let componentWidth: CGFloat = component.view.frame.size.width - inset
-    return (componentWidth / CGFloat(component.model.layout.span)) - CGFloat(component.model.layout.itemSpacing)
+    return max((componentWidth / CGFloat(component.model.layout.span)) - CGFloat(component.model.layout.itemSpacing), 0)
   }
 
   func prepareItems(component: Component, recreateComposites: Bool = true) {
