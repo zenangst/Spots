@@ -242,8 +242,10 @@ public class ItemManager {
     }
   }
 
-
   /// Resolve size property for an item at index path inside component.
+  /// This method is used to ensure that user interface never receive negative
+  /// size values as that can lead to the user interface implementation throwing
+  /// an exception.
   ///
   /// - Parameters:
   ///   - indexPath: The index path of the item.
