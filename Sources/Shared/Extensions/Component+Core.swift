@@ -242,6 +242,13 @@ public extension Component {
     }
   }
 
+  /// Get the size of the item at index path.
+  ///
+  /// - Parameter indexPath: The index path of the item that should be resolved.
+  /// - Returns: A `CGSize` based of the `Item`'s width and height.
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    return manager.itemManager.sizeForItem(at: indexPath, in: self)
+  }
+
   func configure(with layout: Layout) {}
 }
-
