@@ -241,4 +241,27 @@ public class ItemManager {
       item.size.width = view.bounds.width
     }
   }
+
+
+  /// Resolve size property for an item at index path inside component.
+  ///
+  /// - Parameters:
+  ///   - indexPath: The index path of the item.
+  ///   - component: The component that item resides in.
+  /// - Returns: The size of the item, unless the size is negative, then it will return zero.
+  public func sizeForItem(at indexPath: IndexPath, in component: Component) -> CGSize {
+    var size = component.item(at: indexPath)?.size ?? .zero
+
+    // Never return a negative width.
+    if size.width < 0.0 {
+      size.width = 0.0
+    }
+
+    // Never return a negative height.
+    if size.height < 0.0 {
+      size.height = 0.0
+    }
+
+    return size
+  }
 }
