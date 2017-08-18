@@ -255,6 +255,22 @@ public class ItemManager {
     var size = component.item(at: indexPath)?.size ?? .zero
     size.width = max(size.width, 0)
     size.height = max(size.height, 0)
+
+    #if os(macOS)
+      // Make sure that the item width never exceeds the frame view width.
+      // If it does exceed the maximum width, the layout span will be used to reduce the size to make sure
+      // that all items fit on the same row.
+      if component.model.layout.span > 0 {
+        let inset = CGFloat(component.model.layout.inset.left + component.model.layout.inset.right)
+        let maxWidth = size.width * CGFloat(component.model.layout.span) + inset
+
+        if maxWidth > component.view.frame.size.width {
+          size.width -= CGFloat(component.model.layout.span)
+          size.width = round(size.width)
+        }
+      }
+    #endif
+
     return size
   }
 }

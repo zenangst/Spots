@@ -297,14 +297,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
   }
 
-  /// Get the size of the item at index path.
-  ///
-  /// - Parameter indexPath: The index path of the item that should be resolved.
-  /// - Returns: A `CGSize` based of the `Item`'s width and height.
-  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    return manager.itemManager.sizeForItem(at: indexPath, in: self)
-  }
-
   /// Scroll to a specific item based on predicate.
   ///
   /// - parameter predicate: A predicate closure to determine which item to scroll to.
