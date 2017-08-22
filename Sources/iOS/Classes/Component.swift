@@ -326,6 +326,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       setup(with: view.frame.size)
     }
 
+    reloadHeader()
+    reloadFooter()
+
     pageControl.numberOfPages = model.items.count
     view.superview?.layoutIfNeeded()
   }
