@@ -374,6 +374,9 @@
 		D58478E71C440645006EBA49 /* TestComponentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponentModel.swift */; };
 		D58478ED1C440726006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D58478F91C44076B006EBA49 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478F71C44076B006EBA49 /* Tailor.framework */; };
+		D58A10F11F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */; };
+		D58A10F21F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */; };
+		D58A10F31F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */; };
 		D5D282671E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
 		D5D282681E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
 		D5D282691E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
@@ -606,6 +609,7 @@
 		D58478E91C440726006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/iOS/Tailor.framework; sourceTree = "<group>"; };
 		D58478EC1C440726006EBA49 /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
 		D58478F71C44076B006EBA49 /* Tailor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tailor.framework; path = Carthage/Build/Mac/Tailor.framework; sourceTree = "<group>"; };
+		D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Component+HeaderFooter.swift"; sourceTree = "<group>"; };
 		D5D282661E54710D004BF251 /* ViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		D5D2826A1E547219004BF251 /* ViewStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStateDelegate.swift; sourceTree = "<group>"; };
 		D5D2826E1E5474E0004BF251 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
@@ -880,6 +884,7 @@
 				BD0AF3511E83CC53008795C3 /* UserInterface+Extensions.swift */,
 				BDAD85431E3E7032008289AE /* Wrappable+Extensions.swift */,
 				BD91A9511F2FAB87005B6A38 /* ComponentResolvable+Extensions.swift */,
+				D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1608,6 +1613,7 @@
 				BDAD85951E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
 				BD798EF61EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */,
 				BD77D1FE1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
+				D58A10F31F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */,
 				BD9ECEC21E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
 				BDAD85651E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD84E31E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
@@ -1766,6 +1772,7 @@
 				52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BDAD85781E3E7032008289AE /* CarouselScrollDelegate+Extensions.swift in Sources */,
 				BDDCF6EF1E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
+				D58A10F11F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */,
 				BD44D1E31EADC48200F7205E /* HeaderMode.swift in Sources */,
 				BD20E6601F384672008C2B8B /* DiffManager.swift in Sources */,
 				BD9ECEBE1E6EC8A5003E4388 /* Component+iOS+Carousel.swift in Sources */,
@@ -1858,6 +1865,7 @@
 				BDAD85971E3E7032008289AE /* SpotsController+Extensions.swift in Sources */,
 				BDAD85E21E3E7032008289AE /* Interaction.swift in Sources */,
 				BDAD85D61E3E7032008289AE /* Configuration.swift in Sources */,
+				D58A10F21F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */,
 				BDAD85C41E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				BD165A3B1E6EAF310023AF82 /* ComponentFlowLayout.swift in Sources */,
 				D5D282701E5474E0004BF251 /* Cell.swift in Sources */,

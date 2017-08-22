@@ -114,21 +114,21 @@ class ComponentDelegateiOSTests: XCTestCase {
 
     component.model.header = Item(kind: "regular-header")
     component.headerView = nil
-    component.setupHeader(with: &component.model)
+    component.setupHeader()
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 44)
 
     component.model.header = Item(kind: "")
     component.headerView = nil
-    component.setupHeader(with: &component.model)
+    component.setupHeader()
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 0)
 
     component.model.header = Item(kind: "item-configurable-header")
     component.headerView = nil
-    component.setupHeader(with: &component.model)
+    component.setupHeader()
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForHeaderInSection: 0), 75)
@@ -161,28 +161,28 @@ class ComponentDelegateiOSTests: XCTestCase {
 
     component.model.footer = nil
     component.footerView = nil
-    component.setupFooter(with: &component.model)
+    component.setupFooter()
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
 
     component.model.footer = Item(kind: "regular-footer")
     component.footerView = nil
-    component.setupFooter(with: &component.model)
+    component.setupFooter()
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 44)
 
     component.model.footer = Item(kind: "")
     component.footerView = nil
-    component.setupFooter(with: &component.model)
+    component.setupFooter()
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 0)
 
     component.model.footer = Item(kind: "item-configurable-footer")
     component.footerView = nil
-    component.setupFooter(with: &component.model)
+    component.setupFooter()
     tableView.reloadDataSource()
 
     XCTAssertEqual(delegate.tableView(tableView, heightForFooterInSection: 0), 75)
