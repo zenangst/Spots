@@ -97,6 +97,8 @@ public extension Component {
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     manager.reload(indexes: indexes, component: self, withAnimation: animation, completion: completion)
+    reloadHeader()
+    reloadFooter()
   }
 
   /// Reload component with ItemChanges.

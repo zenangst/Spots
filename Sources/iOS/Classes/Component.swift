@@ -153,8 +153,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public func setup(with size: CGSize) {
     view.frame.size = size
 
-    setupFooter(with: &model)
-    setupHeader(with: &model)
+    setupFooter()
+    setupHeader()
 
     if let tableView = self.tableView {
       setupTableView(tableView, with: size)

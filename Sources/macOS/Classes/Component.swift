@@ -205,8 +205,8 @@ import Tailor
   public func setup(with size: CGSize) {
     scrollView.frame.size = size
 
-    setupHeader(with: &model)
-    setupFooter(with: &model)
+    setupHeader()
+    setupFooter()
 
     configureDataSourceAndDelegate()
 
