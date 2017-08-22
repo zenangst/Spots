@@ -4,6 +4,7 @@ extension Component {
 
   func setupHeader() {
     guard let header = model.header, headerView == nil else {
+      reloadHeader()
       return
     }
 
@@ -27,6 +28,7 @@ extension Component {
 
   func setupFooter() {
     guard let footer = model.footer, footerView == nil else {
+      reloadFooter()
       return
     }
 

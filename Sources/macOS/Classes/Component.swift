@@ -366,6 +366,8 @@ import Tailor
       let size = CGSize(width: superview.frame.width,
                         height: view.frame.height)
       layout(with: size)
+      setupHeader()
+      setupFooter()
 
       guard model.kind == .carousel else {
         return
