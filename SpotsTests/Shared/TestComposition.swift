@@ -139,7 +139,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -156,7 +156,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -178,7 +178,7 @@ class CompositionTests: XCTestCase {
                 items: [
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
@@ -195,7 +195,7 @@ class CompositionTests: XCTestCase {
                   ),
                   Item(kind: CompositeComponent.identifier, children:
                     [
-                      ComponentModel(kind: .grid, layout: Layout(span: 1.0), items: [
+                      ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
                         Item(title: "Item 1"),
                         Item(title: "Item 2"),
                         Item(title: "Item 3"),
