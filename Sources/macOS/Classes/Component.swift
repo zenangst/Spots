@@ -98,9 +98,7 @@ import Tailor
   }
   /// A scroll view container that is used to construct a unified scrolling experience
   /// when using multiple components inside of a controller.
-  open lazy var scrollView: ScrollView = ScrollView(documentView: self.documentView)
-  /// A normal view with a flipped coordinates system.
-  open lazy var documentView: FlippedView = FlippedView()
+  open lazy var scrollView: ComponentScrollView = ComponentScrollView()
   /// The height of the header view.
   var headerHeight: CGFloat {
     guard let headerView = headerView else {
@@ -167,6 +165,8 @@ import Tailor
 
     self.init(model: model, userInterface: userInterface!)
 
+    scrollView.documentView = userInterface as? View
+
     if model.kind == .carousel {
       self.model.interaction.scrollDirection = .horizontal
       (collectionView?.collectionViewLayout as? FlowLayout)?.scrollDirection = .horizontal
@@ -189,6 +189,7 @@ import Tailor
     userInterface = nil
   }
 
+  /// Configure user interface data source and delegate.
   fileprivate func configureDataSourceAndDelegate() {
     if let tableView = self.tableView {
       tableView.dataSource = componentDataSource
@@ -211,10 +212,8 @@ import Tailor
     configureDataSourceAndDelegate()
 
     if let tableView = self.tableView {
-      documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
-      documentView.addSubview(collectionView)
       setupCollectionView(collectionView, with: size)
     }
 
@@ -228,6 +227,8 @@ import Tailor
   /// - Parameter animated: Determines if the `Component` should perform animation when
   ///                       applying its new size.
   public func layout(with size: CGSize, animated: Bool = true) {
+    userInterface?.layoutIfNeeded()
+
     if let tableView = self.tableView {
       let instance = animated ? tableView.animator() : tableView
       layoutTableView(instance, with: size)
@@ -237,7 +238,6 @@ import Tailor
     }
 
     layoutHeaderFooterViews(size)
-    view.layoutSubviews()
 
     if model.items.isEmpty, !model.layout.showEmptyComponent {
       if animated {
@@ -297,6 +297,12 @@ import Tailor
     }
   }
 
+  /// Handle resizing of component when the window size changes.
+  ///
+  /// - Parameters:
+  ///   - collectionView: The collection view instance.
+  ///   - size: The new size of the parent.
+  ///   - type: Determines if resizing is live or if it ended.
   fileprivate func resizeCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
     if model.kind == .carousel {
       resizeHorizontalCollectionView(collectionView, with: size, type: type)
@@ -348,6 +354,15 @@ import Tailor
     delegate?.component(self, itemSelected: item)
   }
 
+  /// This method is invoked when the window is resized. It is called inside `SpotsController`.
+  ///
+  /// - Parameters:
+  ///   - size: The new size of the parent frame.
+  ///   - type: The resizing context determines if the user is currently resizing the window or
+  ///           if they stopped resizing. It contains the following cases: `.live`, `.end`.
+  ///           `.live` is when the user is activly resizing and `.ended` is what the name implies,
+  ///           when the user stopped resizing the window and the `Component` should get its final
+  ///           size.
   public func didResize(size: CGSize, type: ComponentResize) {
     if !compositeComponents.isEmpty && type == .end {
       reload(nil)
@@ -368,12 +383,12 @@ import Tailor
       layout(with: size)
       reloadHeader()
       reloadFooter()
-
-      guard model.kind == .carousel else {
-        return
-      }
-      scrollView.scrollingEnabled = (model.items.count > 1)
-      scrollView.hasHorizontalScroller = (model.items.count > 1)
     }
+
+    guard model.kind == .carousel else {
+      return
+    }
+    scrollView.scrollingEnabled = (model.items.count > 1)
+    scrollView.hasHorizontalScroller = (model.items.count > 1)
   }
 }

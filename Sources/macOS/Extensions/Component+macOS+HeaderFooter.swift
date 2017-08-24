@@ -11,6 +11,7 @@ extension Component {
       if let headerView = headerView {
         self.headerView = headerView
         reloadHeader()
+        (collectionView?.collectionViewLayout as? FlowLayout)?.headerReferenceSize = headerView.frame.size
         scrollView.addSubview(headerView)
       }
     }
@@ -25,6 +26,7 @@ extension Component {
       if let footerView = footerView {
         self.footerView = footerView
         reloadFooter()
+        (collectionView?.collectionViewLayout as? FlowLayout)?.footerReferenceSize = footerView.frame.size
         scrollView.addSubview(footerView)
       }
     }

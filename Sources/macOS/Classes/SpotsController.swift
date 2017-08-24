@@ -135,9 +135,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     return nil
   }
 
-  /**
-   Instantiates a view from a nib file and sets the value of the view property.
-   */
+  /// Instantiates a view from a nib file and sets the value of the view property.
   open override func loadView() {
     let view: NSView
 
@@ -155,9 +153,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
     self.view = view
   }
 
-  /**
-   Called after the view controller’s view has been loaded into memory.
-   */
+  /// Called after the view controller’s view has been loaded into memory.
   open override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -168,24 +164,36 @@ open class SpotsController: NSViewController, SpotsProtocol {
     SpotsController.configure?(scrollView)
   }
 
-  open override func viewWillAppear() {
-    super.viewWillAppear()
-
-    setupComponents()
-    scrollView.layoutViews()
-  }
-
-  open override func viewDidAppear() {
-    super.viewDidAppear()
+  /// Called immediately after the layout() method of the view controller's view is called.
+  open override func viewDidLayout() {
+    super.viewDidLayout()
 
     for component in components {
-      component.layout(with: scrollView.frame.size)
+      component.collectionView?.collectionViewLayout?.invalidateLayout()
     }
 
-    scrollView.layoutViews()
+    scrollView.layoutViews(animated: false)
   }
 
-  public func reloadSpots(components: [Component], closure: (() -> Void)?) {
+  /// Called after the view controller’s view has been loaded into memory is about to be added to the view hierarchy in the window.
+  open override func viewWillAppear() {
+    super.viewWillAppear()
+    setupComponents()
+    scrollView.layoutViews(animated: false)
+  }
+
+  /// Called when the view controller’s view is fully transitioned onto the screen.
+  open override func viewDidAppear() {
+    super.viewDidAppear()
+    scrollView.layoutViews(animated: false)
+  }
+
+  /// Reload controller with a new set of components.
+  ///
+  /// - Parameters:
+  ///   - components: The new collection of components.
+  ///   - closure: A completion closure that is invoked when the components are setup.
+  public func reloadComponents(_ components: [Component], closure: (() -> Void)?) {
     for component in self.components {
       component.delegate = nil
       component.view.removeFromSuperview()
@@ -208,18 +216,28 @@ open class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
+  /// Setup component with size of the controller view.
+  ///
+  /// - Parameters:
+  ///   - index: The index of the component.
+  ///   - component: The component that should be setup.
   public func setupComponent(at index: Int, component: Component) {
-    if component.view.superview == nil {
-      scrollView.componentsView.addSubview(component.view)
-    }
-
     components[index].model.index = index
     component.setup(with: CGSize(width: view.frame.width, height: view.frame.size.height))
     component.model.size = CGSize(
       width: view.frame.width,
       height: ceil(component.view.frame.height))
+
+    if component.view.superview == nil {
+      scrollView.componentsView.addSubview(component.view)
+    }
+
+    scrollView.display()
   }
 
+  /// Deselect all selections on all components except a specific one.
+  ///
+  /// - Parameter selectedComponent: The component that should excluded from deselecting.
   public func deselectAllExcept(selectedComponent: Component) {
     for component in components {
       if selectedComponent.view != component.view {
@@ -228,12 +246,9 @@ open class SpotsController: NSViewController, SpotsProtocol {
     }
   }
 
-  open override func viewDidLayout() {
-    super.viewDidLayout()
-
-    scrollView.layoutViews(animated: false)
-  }
-
+  /// Invoked when the window that the controller belongs to is resized.
+  ///
+  /// - Parameter notification: A container for information broadcast through a notification center to all registered observers.
   open func windowDidResize(_ notification: Notification) {
     for component in components {
       component.didResize(size: view.frame.size, type: .live)
@@ -241,6 +256,9 @@ open class SpotsController: NSViewController, SpotsProtocol {
     scrollView.layoutViews(animated: false)
   }
 
+  /// Invoked when window has received its new size.
+  ///
+  /// - Parameter notification: A container for information broadcast through a notification center to all registered observers.
   public func windowDidEndLiveResize(_ notification: Notification) {
     components.forEach { component in
       component.didResize(size: view.frame.size, type: .end)
@@ -248,19 +266,10 @@ open class SpotsController: NSViewController, SpotsProtocol {
     scrollView.layoutViews(animated: false)
   }
 
-  fileprivate func layoutComponent(_ component: Component) {
-    if component.userInterface is CollectionView {
-      guard component.model.layout.span >= 1 else {
-        return
-      }
-
-      component.setup(with: component.view.frame.size)
-    } else if component.userInterface is TableView {
-      let size = CGSize(width: view.frame.size.width, height: component.view.frame.size.height)
-      component.layout(with: size)
-    }
-  }
-
+  /// Invoked when the `SpotsScrollView` scrolls.
+  /// Handles calling `didReachEnd` and `didReachBeginning` on the `ScrollDelegate`.
+  ///
+  /// - Parameter notification: A container for information broadcast through a notification center to all registered observers.
   open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = scrollDelegate,

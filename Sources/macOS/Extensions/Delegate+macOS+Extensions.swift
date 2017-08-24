@@ -36,6 +36,10 @@ extension Delegate: NSCollectionViewDelegate {
         component.configure?(itemConfigurable)
       }
 
+      let selectedIndexes: [Int] = collectionView.selectionIndexes.map { $0 }
+      if selectedIndexes.contains(indexPath.item) {
+        item.isSelected = true
+      }
       component.delegate?.component(component, willDisplay: view, item: resolvedItem)
     }
   }

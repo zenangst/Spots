@@ -92,4 +92,7 @@ public protocol UserInterface: class {
 
   /// Register all views from Configuration on user interface object.
   func register()
+
+  /// Recalculate the receiver’s layout, if required.
+  func layoutIfNeeded()
 }

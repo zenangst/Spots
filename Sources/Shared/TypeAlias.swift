@@ -19,7 +19,7 @@ public typealias RowComponent = Component
   /// A type alias to reference a normal platform view
   public typealias View = NSView
   /// A type alias to reference a custom scroll view
-  public typealias ScrollView = NoScrollView
+  public typealias ScrollView = ComponentScrollView
   /// A type alias to reference a table view
   public typealias TableView = NSTableView
   /// A type alias to reference a collection view
