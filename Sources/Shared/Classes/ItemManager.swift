@@ -275,7 +275,11 @@ public class ItemManager {
           size.width = component.view.frame.size.width / CGFloat(component.model.layout.span)
           size.width -= CGFloat(component.model.layout.inset.left)
           size.width -= CGFloat(component.model.layout.inset.right)
-          size.width = round(size.width) - 1
+          size.width = round(size.width)
+
+          if component.view.window?.inLiveResize == true {
+            size.width -= 1
+          }
         }
       }
     #endif

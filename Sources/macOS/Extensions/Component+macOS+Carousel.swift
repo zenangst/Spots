@@ -23,7 +23,7 @@ extension Component {
 
     collectionView.frame.size.width = collectionViewContentSize.width
     collectionView.frame.size.height = newCollectionViewHeight
-    collectionView.frame.size.height += headerHeight
+    collectionView.frame.size.height += headerHeight + footerHeight
 
     scrollView.scrollingEnabled = true
     scrollView.frame.size.width = size.width

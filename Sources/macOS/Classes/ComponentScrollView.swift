@@ -23,7 +23,9 @@ class ComponentClipView: NSClipView {
     }
 
     guard let scrollView = superview?.enclosingScrollView as? SpotsScrollView else {
-      super.scroll(newOrigin)
+      if window != nil {
+        super.scroll(newOrigin)
+      }
       return
     }
 

@@ -227,6 +227,8 @@ import Tailor
   /// - Parameter animated: Determines if the `Component` should perform animation when
   ///                       applying its new size.
   public func layout(with size: CGSize, animated: Bool = true) {
+    userInterface?.layoutIfNeeded()
+
     if let tableView = self.tableView {
       let instance = animated ? tableView.animator() : tableView
       layoutTableView(instance, with: size)
