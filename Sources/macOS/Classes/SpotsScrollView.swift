@@ -155,15 +155,15 @@ open class SpotsScrollView: NSScrollView {
       if shouldResize {
         switch animated {
         case true:
+          scrollView.animator().documentView?.frame.size.height = contentSize.height
           scrollView.animator().frame = frame
           scrollView.animator().frame.size.width = self.frame.width
-          scrollView.animator().documentView?.frame.size.height = contentSize.height
         case false:
           CATransaction.begin()
           CATransaction.setDisableActions(true)
-          scrollView.frame = frame
           scrollView.documentView?.frame.size.width = self.frame.width
           scrollView.documentView?.frame.size.height = contentSize.height
+          scrollView.frame = frame
           CATransaction.commit()
         }
 
