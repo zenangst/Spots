@@ -98,8 +98,10 @@ open class SpotsScrollView: NSScrollView {
   ///
   /// - Parameter animated: Determines if animations should be used when updating the frames of the
   ///                       underlaying views.
-  public func layoutViews(animated: Bool = true) {
+  public func layoutViews(animated: Bool = false) {
     var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
+
+    let lastView = componentsView.subviewsInLayoutOrder.last
 
     for case let scrollView as ScrollView in componentsView.subviewsInLayoutOrder {
       guard let documentView: View = scrollView.documentView else {
@@ -132,9 +134,23 @@ open class SpotsScrollView: NSScrollView {
 
       let remainingBoundsHeight = fmax(self.documentView!.visibleRect.maxY - frame.minY, 0.0)
       let remainingContentHeight = fmax(contentSize.height - contentOffset.y, 0.0)
-      let newHeight = fmin(remainingBoundsHeight, remainingContentHeight)
-      frame.size.width = round(self.frame.size.width)
+      var newHeight: CGFloat = 0.0
+      var shouldScroll: Bool = true
+
+      if stretchLastComponent && scrollView.isEqual(lastView) {
+        let stretchedHeight = self.frame.size.height - scrollView.frame.origin.y + self.contentOffset.y
+        if stretchedHeight <= self.frame.size.height {
+          newHeight = stretchedHeight
+          shouldScroll = false
+        } else {
+          newHeight = fmin(remainingBoundsHeight, remainingContentHeight)
+        }
+      } else {
+        newHeight = fmin(remainingBoundsHeight, remainingContentHeight)
+      }
+
       frame.size.height = round(newHeight)
+      frame.size.width = round(self.frame.size.width)
 
       if shouldResize {
         switch animated {
@@ -150,7 +166,10 @@ open class SpotsScrollView: NSScrollView {
           scrollView.documentView?.frame.size.height = contentSize.height
           CATransaction.commit()
         }
-        (scrollView.contentView as? ComponentClipView)?.scrollWithSuperView(contentOffset)
+
+        if shouldScroll {
+          (scrollView.contentView as? ComponentClipView)?.scrollWithSuperView(contentOffset)
+        }
       } else {
         scrollView.frame.origin.y = yOffsetOfCurrentSubview
         scrollView.frame.size.height = contentSize.height
