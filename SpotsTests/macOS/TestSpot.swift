@@ -91,8 +91,8 @@ class TestSpot: XCTestCase {
     component.setup(with: CGSize(width: 100, height: 100))
 
     XCTAssertEqual(component.collectionView?.collectionViewLayout?.collectionViewContentSize, CGSize(width: 100, height: 300))
-    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 400))
-    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 400))
+    XCTAssertEqual(component.view.frame.size, CGSize(width: 100, height: 100))
+    XCTAssertEqual(component.view.contentSize, CGSize(width: 100, height: 100))
   }
 
   func testHybridCarouselComponentWithHeaderAndFooter() {
