@@ -132,7 +132,7 @@ open class SpotsScrollView: NSScrollView {
         frame.origin.y = self.contentOffset.y
       }
 
-      let remainingBoundsHeight = fmax(self.documentView!.visibleRect.maxY - frame.minY, 0.0)
+      let remainingBoundsHeight = fmax(self.documentVisibleRect.maxY - frame.minY, 0.0)
       let remainingContentHeight = fmax(contentSize.height - contentOffset.y, 0.0)
       var newHeight: CGFloat = 0.0
       var shouldScroll: Bool = true
