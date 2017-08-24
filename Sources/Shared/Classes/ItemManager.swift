@@ -61,6 +61,13 @@ public class ItemManager {
     return preparedItems
   }
 
+  /// Configure item at index path inside of a component.
+  ///
+  /// - Parameters:
+  ///   - index: The index of the item.
+  ///   - component: The component that the item belongs to.
+  ///   - usesViewSize: Determines if the views frame should be used when preparing the item.
+  ///   - recreateComposites: Determines if composite components should be reconstructed.
   public func configureItem(at index: Int, component: Component, usesViewSize: Bool = false, recreateComposites: Bool = true) {
     guard let item = component.item(at: index),
       var configuredItem = configure(component: component, item: item, at: index, usesViewSize: usesViewSize, recreateComposites: recreateComposites)
@@ -264,13 +271,14 @@ public class ItemManager {
         let inset = CGFloat(component.model.layout.inset.left + component.model.layout.inset.right)
         let maxWidth = size.width * CGFloat(component.model.layout.span) + inset
 
-        if maxWidth > component.view.frame.size.width {
-          size.width -= CGFloat(component.model.layout.span)
-          size.width = round(size.width)
+        if maxWidth >= component.view.frame.size.width {
+          size.width = component.view.frame.size.width / CGFloat(component.model.layout.span)
+          size.width -= CGFloat(component.model.layout.inset.left)
+          size.width -= CGFloat(component.model.layout.inset.right)
+          size.width = round(size.width) - 1
         }
       }
     #endif
-
     return size
   }
 }

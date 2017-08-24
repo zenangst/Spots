@@ -52,10 +52,6 @@ public extension Component {
       #endif
     case .grid:
       height = model.size?.height ?? 0
-      #if os(macOS)
-        height += headerView?.frame.size.height ?? 0
-        height += footerView?.frame.size.height ?? 0
-      #endif
     case .carousel:
         height = model.size?.height ?? 0
         if let firstItem = item(at: 0), firstItem.size.height > height {

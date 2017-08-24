@@ -2,6 +2,10 @@ import Cocoa
 
 extension DataSource: NSCollectionViewDataSource {
 
+  public func collectionView(_ collectionView: NSCollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> NSView {
+    return NSView()
+  }
+
   /// Asks your data source object to provide the number of items in the specified section.
   ///
   /// - parameter collectionView: The collection view requesting the information.

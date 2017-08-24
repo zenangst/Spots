@@ -47,7 +47,7 @@ open class SpotsContentView: NSView {
    */
   override open func willRemoveSubview(_ subview: View) {
     super.willRemoveSubview(subview)
-    rebuildSubviewsInLayoutOrder()
+    rebuildSubviewsInLayoutOrder(exceptSubview: subview)
     resolveSpotsScrollView { scrollView in
       scrollView.willRemoveSubview(subview)
     }
@@ -62,6 +62,18 @@ open class SpotsContentView: NSView {
     super.layoutSubviews()
     resolveSpotsScrollView { scrollView in
       scrollView.layoutViews(animated: false)
+    }
+  }
+
+  /// Scrolls the view’s closest ancestor NSClipView object so a point in the view lies at the origin of the clip view's bounds rectangle.
+  /// When invoked, the parent view (namely `SpotsScrollView`) will recieve instructions to layout its underlaying views.
+  ///
+  /// - Parameter point: The point in the view to scroll to.
+  open override func scroll(_ point: NSPoint) {
+    super.scroll(point)
+
+    resolveSpotsScrollView { spotsScrollView in
+      spotsScrollView.layoutViews(animated: false)
     }
   }
 
@@ -80,8 +92,9 @@ open class SpotsContentView: NSView {
   }
 
   /// Rebuild the `subviewsInLayoutOrder`.
-  private func rebuildSubviewsInLayoutOrder() {
+  private func rebuildSubviewsInLayoutOrder(exceptSubview: View? = nil) {
     subviewsInLayoutOrder.removeAll()
-    subviewsInLayoutOrder = subviews
+    let filteredSubviews = subviews.filter({ !($0 === exceptSubview) })
+    subviewsInLayoutOrder = filteredSubviews
   }
 }
