@@ -383,12 +383,12 @@ import Tailor
       layout(with: size)
       reloadHeader()
       reloadFooter()
-
-      guard model.kind == .carousel else {
-        return
-      }
-      scrollView.scrollingEnabled = (model.items.count > 1)
-      scrollView.hasHorizontalScroller = (model.items.count > 1)
     }
+
+    guard model.kind == .carousel else {
+      return
+    }
+    scrollView.scrollingEnabled = (model.items.count > 1)
+    scrollView.hasHorizontalScroller = (model.items.count > 1)
   }
 }
