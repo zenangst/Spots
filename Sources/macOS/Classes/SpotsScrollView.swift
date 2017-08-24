@@ -154,8 +154,6 @@ open class SpotsScrollView: NSScrollView {
       } else {
         scrollView.frame.origin.y = yOffsetOfCurrentSubview
         scrollView.frame.size.height = contentSize.height
-        scrollView.documentView?.frame.size.width = 0.0
-        scrollView.documentView?.frame.size = contentSize
       }
 
       yOffsetOfCurrentSubview += contentSize.height
