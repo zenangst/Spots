@@ -17,7 +17,6 @@ extension Component {
       collectionViewContentSize.height += CGFloat(model.layout.inset.top + model.layout.inset.bottom)
       collectionView.frame.size.height = collectionViewContentSize.height
       collectionView.frame.size.width = collectionViewContentSize.width
-      scrollView.frame.size.height = collectionView.frame.height
     }
   }
 
