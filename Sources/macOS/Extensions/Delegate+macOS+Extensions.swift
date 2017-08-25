@@ -3,20 +3,16 @@ import Cocoa
 extension Delegate: NSCollectionViewDelegate {
 
   public func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
-    /*
-     This delay is here to avoid an assertion that happens inside the collection view binding,
-     it tries to resolve the item at index but it no longer exists so the assertion is thrown.
-     This can probably be fixed in a more convenient way in the future without delays.
-     */
-    Dispatch.after(seconds: 0.1) { [weak self] in
-      guard let indexPath = indexPaths.first else {
-        return
-      }
+    guard let indexPath = indexPaths.first else {
+      return
+    }
 
-      self?.resolveComponentItem(at: indexPath) { component, item in
-        if component.model.interaction.mouseClick == .single {
-          component.delegate?.component(component, itemSelected: item)
-        }
+    resolveComponentItem(at: indexPath) { component, item in
+      let indexes = indexPaths.map { $0.item }
+      component.delegate?.component(component, didChangeSelection: indexes)
+
+      if component.model.interaction.mouseClick == .single {
+        component.delegate?.component(component, itemSelected: item)
       }
     }
   }
