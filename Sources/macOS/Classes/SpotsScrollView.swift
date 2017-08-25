@@ -113,7 +113,7 @@ open class SpotsScrollView: NSScrollView {
 
       switch documentView {
       case let collectionView as NSCollectionView:
-        if let flowLayout = (collectionView.collectionViewLayout as? ComponentFlowLayout) {
+        if let flowLayout = collectionView.flowLayout as? ComponentFlowLayout {
           shouldResize = flowLayout.scrollDirection == .vertical
           contentSize = flowLayout.contentSize
         }

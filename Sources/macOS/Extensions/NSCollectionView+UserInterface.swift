@@ -219,7 +219,7 @@ extension NSCollectionView: UserInterface {
   }
 
   private func applyAnimation(_ animation: Animation) {
-    guard let componentFlowLayout = collectionViewLayout as? ComponentFlowLayout else {
+    guard let componentFlowLayout = flowLayout as? ComponentFlowLayout else {
       return
     }
 
@@ -227,7 +227,7 @@ extension NSCollectionView: UserInterface {
   }
 
   private func removeAnimation() {
-    guard let componentFlowLayout = collectionViewLayout as? ComponentFlowLayout else {
+    guard let componentFlowLayout = flowLayout as? ComponentFlowLayout else {
       return
     }
 

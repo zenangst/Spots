@@ -169,7 +169,7 @@ import Tailor
 
     if model.kind == .carousel {
       self.model.interaction.scrollDirection = .horizontal
-      (collectionView?.collectionViewLayout as? FlowLayout)?.scrollDirection = .horizontal
+      collectionView?.flowLayout?.scrollDirection = .horizontal
     }
   }
 
@@ -258,7 +258,7 @@ import Tailor
   ///   - collectionView: The collection view that should be configured.
   ///   - size: The size that should be used for setting up the collection view.
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
+    if let collectionViewLayout = collectionView.flowLayout {
       model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 

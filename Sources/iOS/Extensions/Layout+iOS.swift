@@ -3,7 +3,7 @@ import UIKit
 extension Layout {
 
   public func configure(component: Component) {
-    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+    guard let collectionViewLayout = component.collectionView?.flowLayout else {
       return
     }
 
