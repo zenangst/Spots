@@ -5,7 +5,7 @@ extension Layout {
   public func configure(component: Component) {
     inset.configure(scrollView: component.view)
 
-    if let layout = component.collectionView?.collectionViewLayout as? FlowLayout {
+    if let layout = component.collectionView?.flowLayout {
       layout.minimumInteritemSpacing = CGFloat(itemSpacing)
       layout.minimumLineSpacing = CGFloat(lineSpacing)
     }

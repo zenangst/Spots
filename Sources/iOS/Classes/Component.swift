@@ -111,7 +111,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     registerDefaultIfNeeded(view: DefaultItemView.self)
     userInterface?.register()
 
-    if let collectionViewLayout = collectionView?.collectionViewLayout as? ComponentFlowLayout {
+    if let collectionViewLayout = collectionView?.flowLayout {
       model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 

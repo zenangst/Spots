@@ -79,7 +79,7 @@ class ComponentFlowLayoutTests: XCTestCase {
     let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
 
-    guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
+    guard let collectionViewLayout = carouselComponent.collectionView?.flowLayout else {
       XCTFail("Unable to resolve collection view layout.")
       return
     }
@@ -122,7 +122,7 @@ class ComponentFlowLayoutTests: XCTestCase {
     let carouselComponent = Component(model: model)
     carouselComponent.setup(with: parentSize)
 
-    guard let collectionViewLayout = carouselComponent.collectionView?.collectionViewLayout as? FlowLayout else {
+    guard let collectionViewLayout = carouselComponent.collectionView?.flowLayout else {
       XCTFail("Unable to resolve collection view layout.")
       return
     }
@@ -153,7 +153,7 @@ class ComponentFlowLayoutTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: parentSize)
 
-    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+    guard let collectionViewLayout = component.collectionView?.flowLayout else {
       XCTFail("Unable to resolve collection view layout.")
       return
     }

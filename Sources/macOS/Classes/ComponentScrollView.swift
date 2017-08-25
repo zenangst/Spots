@@ -15,8 +15,7 @@ class ComponentClipView: NSClipView {
   /// - Parameter newOrigin: The new origin.
   override func scroll(to newOrigin: NSPoint) {
     if let collectionView = documentView as? CollectionView {
-      if (collectionView.collectionViewLayout as? FlowLayout)?.scrollDirection == .horizontal {
-
+      if collectionView.flowLayout?.scrollDirection == .horizontal {
         super.scroll(to: newOrigin)
         return
       }

@@ -3,7 +3,7 @@ import UIKit
 extension Component {
 
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? ComponentFlowLayout else {
+    guard let collectionViewLayout = collectionView.flowLayout else {
       return
     }
 
@@ -29,7 +29,7 @@ extension Component {
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? ComponentFlowLayout else {
+    guard let collectionViewLayout = collectionView.flowLayout as? ComponentFlowLayout else {
       return
     }
 
