@@ -6,7 +6,6 @@ class ComponentDelegateTests: XCTestCase {
     var rowClicked: Int = -1
 
     override var clickedRow: Int {
-
       if rowView(atRow: rowClicked, makeIfNecessary: false) != nil {
         return rowClicked
       } else {
