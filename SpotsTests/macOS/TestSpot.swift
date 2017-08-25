@@ -12,6 +12,7 @@ class TestSpot: XCTestCase {
   }
 
   func testDefaultValuesWithList() {
+    Configuration.views.purge()
     Configuration.defaultComponentKind = .list
     Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
     let items = [Item(title: "A"), Item(title: "B")]
