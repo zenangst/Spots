@@ -289,7 +289,7 @@ extension UICollectionView: UserInterface {
   }
 
   private func applyAnimation(animation: Animation) {
-    guard let componentFlowLayout = flowLayout else {
+    guard let componentFlowLayout = flowLayout as? ComponentFlowLayout else {
       return
     }
 
@@ -297,7 +297,7 @@ extension UICollectionView: UserInterface {
   }
 
   private func removeAnimation() {
-    guard let componentFlowLayout = flowLayout else {
+    guard let componentFlowLayout = flowLayout as? ComponentFlowLayout else {
       return
     }
 

@@ -18,7 +18,7 @@ extension Layout {
     collectionViewLayout.minimumLineSpacing = CGFloat(lineSpacing)
   }
 
-  public func configure(collectionViewLayout: CollectionLayout) {
+  public func configure(collectionViewLayout: FlowLayout) {
     collectionViewLayout.sectionInset = UIEdgeInsets(
       top: CGFloat(inset.top),
       left: CGFloat(inset.left),

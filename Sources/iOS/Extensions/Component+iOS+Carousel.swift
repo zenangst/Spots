@@ -29,7 +29,7 @@ extension Component {
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.flowLayout else {
+    guard let collectionViewLayout = collectionView.flowLayout as? ComponentFlowLayout else {
       return
     }
 
