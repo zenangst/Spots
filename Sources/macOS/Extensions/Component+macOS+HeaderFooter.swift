@@ -7,13 +7,11 @@ extension Component {
       return
     }
 
-    if let (_, headerView) = Configuration.views.make(header.kind) {
-      if let headerView = headerView {
-        self.headerView = headerView
-        reloadHeader()
-        (collectionView?.flowLayout)?.headerReferenceSize = headerView.frame.size
-        scrollView.addSubview(headerView)
-      }
+    if let headerView = Configuration.views.make(header.kind)?.view {
+      self.headerView = headerView
+      reloadHeader()
+      (collectionView?.flowLayout)?.headerReferenceSize = headerView.frame.size
+      scrollView.documentView?.addSubview(headerView)
     }
   }
 
@@ -22,13 +20,11 @@ extension Component {
       return
     }
 
-    if let (_, footerView) = Configuration.views.make(footer.kind) {
-      if let footerView = footerView {
-        self.footerView = footerView
-        reloadFooter()
-        (collectionView?.flowLayout)?.footerReferenceSize = footerView.frame.size
-        scrollView.addSubview(footerView)
-      }
+    if let footerView = Configuration.views.make(footer.kind)?.view {
+      self.footerView = footerView
+      reloadFooter()
+      (collectionView?.flowLayout)?.footerReferenceSize = footerView.frame.size
+      scrollView.documentView?.addSubview(footerView)
     }
   }
 
