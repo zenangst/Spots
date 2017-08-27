@@ -38,7 +38,6 @@ open class SpotsScrollView: NSScrollView {
     super.init(frame: frameRect)
     self.documentView = componentsView
     drawsBackground = false
-
     NotificationCenter.default.addObserver(self, selector: #selector(contentViewBoundsDidChange(_:)),
                                            name: NSNotification.Name.NSViewBoundsDidChange,
                                            object: contentView)
@@ -60,13 +59,10 @@ open class SpotsScrollView: NSScrollView {
       return
     }
 
-    guard let window = window else {
+    guard let window = window, !window.inLiveResize else {
       return
     }
 
-    guard !window.inLiveResize else {
-      return
-    }
     layoutViews(animated: false)
   }
 
@@ -99,8 +95,16 @@ open class SpotsScrollView: NSScrollView {
   /// - Parameter animated: Determines if animations should be used when updating the frames of the
   ///                       underlaying views.
   public func layoutViews(animated: Bool = false) {
-    var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
+    if !animated {
+      CATransaction.begin()
+      CATransaction.setDisableActions(true)
 
+      defer {
+        CATransaction.commit()
+      }
+    }
+
+    var yOffsetOfCurrentSubview: CGFloat = CGFloat(self.inset?.top ?? 0.0)
     let lastView = componentsView.subviewsInLayoutOrder.last
 
     for case let scrollView as ScrollView in componentsView.subviewsInLayoutOrder {
@@ -159,12 +163,9 @@ open class SpotsScrollView: NSScrollView {
           scrollView.animator().frame = frame
           scrollView.animator().frame.size.width = self.frame.width
         case false:
-          CATransaction.begin()
-          CATransaction.setDisableActions(true)
           scrollView.documentView?.frame.size.width = self.frame.width
           scrollView.documentView?.frame.size.height = contentSize.height
           scrollView.frame = frame
-          CATransaction.commit()
         }
 
         if shouldScroll {
@@ -189,11 +190,9 @@ open class SpotsScrollView: NSScrollView {
     }
 
     let frameComparison: CGFloat = frame.height - contentInsets.top - CGFloat(self.inset?.bottom ?? 0.0)
-    documentView?.setFrameSize(CGSize(width: frame.width, height: fmax(yOffsetOfCurrentSubview, frameComparison)))
-
-    if let view = superview {
-      view.layout()
-    }
+    documentView?.frame.size = .init(
+      width: frame.width,
+      height: fmax(yOffsetOfCurrentSubview, frameComparison))
   }
 
   open override func layoutSubtreeIfNeeded() {

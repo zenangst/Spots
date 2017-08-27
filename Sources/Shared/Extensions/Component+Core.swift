@@ -141,7 +141,24 @@ public extension Component {
 
       let componentHeight = self.computedHeight
       Dispatch.main {
-        self.view.frame.size.height = componentHeight
+        #if os(macOS)
+          if let enclosingScrollView = self.view.enclosingScrollView {
+            let maxHeight = enclosingScrollView.frame.size.height - enclosingScrollView.contentInsets.top
+            let newHeight: CGFloat
+            if componentHeight > maxHeight {
+              newHeight = maxHeight
+            } else {
+              newHeight = componentHeight
+            }
+
+            if self.view.frame.size.height != newHeight {
+              self.view.frame.size.height = newHeight
+            }
+          }
+        #else
+          self.view.frame.size.height = componentHeight
+        #endif
+
         completion?()
       }
     }
