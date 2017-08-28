@@ -156,7 +156,21 @@ public extension Component {
             }
           }
         #else
-          self.view.frame.size.height = componentHeight
+          if let spotsContentView = self.view.superview {
+            let maxHeight = spotsContentView.frame.size.height
+            let newHeight: CGFloat
+            if componentHeight > maxHeight {
+              newHeight = maxHeight
+            } else {
+              newHeight = componentHeight
+            }
+            if self.view.frame.size.height != newHeight {
+              self.view.frame.size.height = newHeight
+            }
+          } else {
+            self.view.frame.size.height = componentHeight
+          }
+
         #endif
 
         completion?()
