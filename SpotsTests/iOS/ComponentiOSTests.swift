@@ -3,6 +3,12 @@ import Foundation
 import XCTest
 
 class ComponentiOSTests: XCTestCase {
+  class ComponentTestView: View, ItemConfigurable {
+    func configure(with item: Item) {}
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
+      return CGSize(width: 100, height: 100)
+    }
+  }
 
   var component: Component!
   var cachedSpot: Component!
@@ -493,5 +499,38 @@ class ComponentiOSTests: XCTestCase {
     component.scrollTo(item: { $0.title == "item5" })
 
     XCTAssertEqual(component.view.contentOffset.x, 400)
+  }
+
+  func testComponentComputedHeightConstraint() {
+    let identifier = "testComponentComputedHeightConstraint"
+    Configuration.register(view: ComponentTestView.self, identifier: identifier)
+
+    let spotsContentView = SpotsContentView(frame: .init(origin: .zero, size: CGSize(width: 500, height: 500)))
+    let items = [
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      ]
+    let model = ComponentModel(kind: .grid, items: items)
+    let component = Component(model: model)
+    component.setup(with: .init(width: 100, height: 100))
+
+    let initalExpectation = self.expectation(description: "Expect component height to be 600")
+    let secondExpectation = self.expectation(description: "Expect component to be constrainted to its superview, which should be 500")
+
+    component.updateHeight {
+      XCTAssertEqual(component.view.frame.size.height, 600)
+      initalExpectation.fulfill()
+      spotsContentView.addSubview(component.view)
+
+      component.updateHeight {
+        XCTAssertEqual(component.view.frame.size.height, 500)
+        secondExpectation.fulfill()
+      }
+    }
+    wait(for: [initalExpectation, secondExpectation], timeout: 10.0)
   }
 }
