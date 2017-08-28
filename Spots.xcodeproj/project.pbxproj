@@ -49,7 +49,6 @@
 		BD357EB01F46C940002B39AB /* ItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */; };
 		BD357EB11F46C940002B39AB /* ItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */; };
 		BD3B4A8D1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3B4A8C1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift */; };
-		BD3DDC1D1F544E5100832469 /* ComponentiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */; };
 		BD3DDC1F1F544E7200832469 /* ComponentMacOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3DDC1E1F544E7200832469 /* ComponentMacOSTests.swift */; };
 		BD4295551D81D39700E07E1C /* ComponentiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */; };
 		BD42CA851E4C9B2600A86E3B /* ComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */; };
@@ -1660,7 +1659,6 @@
 				BD45D9891E30906300C2D6B2 /* LayoutTests.swift in Sources */,
 				BDCFCD431DCA7EFF0047E84C /* TestSpotsController.swift in Sources */,
 				BD357EB11F46C940002B39AB /* ItemManagerTests.swift in Sources */,
-				BD3DDC1D1F544E5100832469 /* ComponentiOSTests.swift in Sources */,
 				BD677E8B1DC61EFC006D1654 /* TestStateCache.swift in Sources */,
 				BD7397381D718CDB000AF2DE /* TestComponentModel.swift in Sources */,
 				BD5FE3451EA6222C0008749C /* TestComponentDelegate+iOS.swift in Sources */,
