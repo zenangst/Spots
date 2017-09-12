@@ -49,10 +49,10 @@
 		BD357EB01F46C940002B39AB /* ItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */; };
 		BD357EB11F46C940002B39AB /* ItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */; };
 		BD3B4A8D1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3B4A8C1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift */; };
+		BD3DDC1F1F544E7200832469 /* ComponentMacOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3DDC1E1F544E7200832469 /* ComponentMacOSTests.swift */; };
 		BD3EC3B91F541E91009CCDF3 /* CollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */; };
 		BD3EC3BA1F541E91009CCDF3 /* CollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */; };
 		BD3EC3BB1F541E91009CCDF3 /* CollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */; };
-		BD3DDC1F1F544E7200832469 /* ComponentMacOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3DDC1E1F544E7200832469 /* ComponentMacOSTests.swift */; };
 		BD4295551D81D39700E07E1C /* ComponentiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */; };
 		BD42CA851E4C9B2600A86E3B /* ComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */; };
 		BD42CA861E4C9B2600A86E3B /* ComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */; };
@@ -454,8 +454,8 @@
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManagerTests.swift; sourceTree = "<group>"; };
 		BD3B4A8C1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewManagerTests.swift; sourceTree = "<group>"; };
-		BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		BD3DDC1E1F544E7200832469 /* ComponentMacOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMacOSTests.swift; sourceTree = "<group>"; };
+		BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentiOSTests.swift; sourceTree = "<group>"; };
 		BD42CA841E4C9B2600A86E3B /* ComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentTests.swift; sourceTree = "<group>"; };
 		BD44D1E21EADC48200F7205E /* HeaderMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderMode.swift; sourceTree = "<group>"; };
@@ -1173,7 +1173,6 @@
 				BD7397281D718CD2000AF2DE /* Headers */,
 				BD7397291D718CD2000AF2DE /* Resources */,
 				BD73972A1D718CD2000AF2DE /* ShellScript */,
-				BD73972B1D718CD2000AF2DE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1211,7 +1210,6 @@
 				D55B7AFB1E423122000125C8 /* Headers */,
 				D55B7AFC1E423122000125C8 /* Resources */,
 				D55B7AFD1E423122000125C8 /* ShellScript */,
-				D55B7AFE1E423122000125C8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1250,7 +1248,6 @@
 				D58478061C43FEB8006EBA49 /* Headers */,
 				D58478071C43FEB8006EBA49 /* Resources */,
 				D58478A71C440171006EBA49 /* ShellScript */,
-				BD2AD8891D18520600C8E294 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1288,7 +1285,6 @@
 				D58478C51C440567006EBA49 /* Headers */,
 				D58478C61C440567006EBA49 /* Resources */,
 				D58478DF1C4405D2006EBA49 /* ShellScript */,
-				BD2AD8881D1851FB00C8E294 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1437,32 +1433,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BD2AD8881D1851FB00C8E294 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		BD2AD8891D18520600C8E294 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		BD73972A1D718CD2000AF2DE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1477,19 +1447,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		BD73972B1D718CD2000AF2DE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		D55B7AFD1E423122000125C8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1503,19 +1460,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		D55B7AFE1E423122000125C8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		D58478A71C440171006EBA49 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
