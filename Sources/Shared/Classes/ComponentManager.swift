@@ -257,8 +257,13 @@ public class ComponentManager {
 
           updateHeightAndIndexes = true
         } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
-          view.configure(with: component.model.items[index])
-          component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
+          component.userInterface?.performUpdates({
+            view.configure(with: component.model.items[index])
+            component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
+          }, completion: {
+            self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
+          })
+          return
         }
 
         self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
