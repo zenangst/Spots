@@ -1,4 +1,3 @@
-// swiftlint:disable empty_count
 import Cocoa
 
 extension NSTableView: UserInterface {
@@ -118,18 +117,15 @@ extension NSTableView: UserInterface {
       return
     }
 
-    let insertionsSets = NSMutableIndexSet()
-    changes.insertions.forEach { insertionsSets.add($0) }
-    let reloadSets = NSMutableIndexSet()
-    changes.reloads.forEach { reloadSets.add($0) }
-    let deletionSets = NSMutableIndexSet()
-    changes.deletions.forEach { deletionSets.add($0) }
+    let insertionsSets = IndexSet(changes.insertions)
+    let reloadSets = IndexSet(changes.reloads)
+    let deletionSets = IndexSet(changes.deletions)
 
     updateDataSource()
 
-    if insertionsSets.count > 0 &&
-      reloadSets.count > 0 &&
-      deletionSets.count > 0 &&
+    if !insertionsSets.isEmpty &&
+      !reloadSets.isEmpty &&
+      !deletionSets.isEmpty &&
       changes.moved.isEmpty &&
       changes.childUpdates.isEmpty {
       completion?()
