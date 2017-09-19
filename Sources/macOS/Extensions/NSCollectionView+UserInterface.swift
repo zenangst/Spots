@@ -209,14 +209,16 @@ extension NSCollectionView: UserInterface {
    - parameter completion: A completion block for when the updates are done
    **/
   public func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?) {
+    let completionHandler: (Bool) -> Void = { _ in
+      completion?()
+    }
+
     performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
         return
       }
       strongSelf.reloadSections(IndexSet(integer: section))
-    }) { _ in
-      completion?()
-    }
+    }, completionHandler: completionHandler)
   }
 
   private func applyAnimation(_ animation: Animation) {

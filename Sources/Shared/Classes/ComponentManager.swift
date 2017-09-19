@@ -286,8 +286,8 @@ public class ComponentManager {
             self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
           }
         } else {
-          for (index, _) in component.model.items.enumerated() {
-            self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
+          for element in component.model.items.indices {
+            self?.itemManager.configureItem(at: element, component: component, usesViewSize: true)
           }
         }
 
