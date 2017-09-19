@@ -1,3 +1,4 @@
+// swiftlint:disable empty_count
 import Cocoa
 
 extension NSTableView: UserInterface {
