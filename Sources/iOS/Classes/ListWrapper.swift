@@ -36,4 +36,14 @@ public class ListWrapper: UITableViewCell, Wrappable, Cell {
     super.setSelected(selected, animated: animated)
     (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
   }
+
+  #if os(tvOS)
+  public override var canBecomeFocused: Bool {
+    return wrappedView?.canBecomeFocused ?? false
+  }
+
+  public override var preferredFocusedView: UIView? {
+    return wrappedView
+  }
+  #endif
 }
