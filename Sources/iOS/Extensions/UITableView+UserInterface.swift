@@ -1,4 +1,3 @@
-// swiftlint:disable large_tuple
 import UIKit
 
 extension UITableView: UserInterface {

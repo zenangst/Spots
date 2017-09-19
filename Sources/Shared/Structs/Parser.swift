@@ -10,8 +10,8 @@ public struct Parser {
   public static func parse(_ json: [String : Any], key: String = "components") -> [Component] {
     var components: [ComponentModel] = parse(json, key: key)
 
-    for (index, _) in components.enumerated() {
-      components[index].index = index
+    for element in components.indices {
+      components[element].index = element
     }
 
     return components.map { model in

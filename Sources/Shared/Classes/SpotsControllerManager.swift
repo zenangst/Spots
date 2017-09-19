@@ -234,16 +234,7 @@ public class SpotsControllerManager {
                       completion: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
 
-    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      for item in newItems {
-        let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
-        for compositeComponent in results {
-          offsets.append(compositeComponent.component.view.contentOffset)
-        }
-      }
-
-      component.model.items = newItems
-    }) {
+    let completion = {
       for (index, item) in newItems.enumerated() {
         guard index < controller.components.count else {
           break
@@ -262,6 +253,17 @@ public class SpotsControllerManager {
 
       completion?()
     }
+
+    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      for item in newItems {
+        let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
+        for compositeComponent in results {
+          offsets.append(compositeComponent.component.view.contentOffset)
+        }
+      }
+
+      component.model.items = newItems
+    }, completion: completion)
   }
 
   /// Reload Component object with less items
@@ -278,9 +280,12 @@ public class SpotsControllerManager {
                       lessItems newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
-    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+
+    let updateDatasource = {
       component.model.items = newItems
-    }) {
+    }
+
+    let completion = {
       guard !newItems.isEmpty else {
         completion?()
         return
@@ -316,6 +321,8 @@ public class SpotsControllerManager {
         }
       }
     }
+
+    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: completion)
   }
 
   /// Reload Component object with more items
@@ -332,9 +339,11 @@ public class SpotsControllerManager {
                       moreItems newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
-    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+    let updateDataSource = {
       component.model.items = newItems
-    }) {
+    }
+
+    let completion = {
       if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
         component.reload(nil, withAnimation: animation) {
           controller.scrollView.layoutSubviews()
@@ -345,6 +354,8 @@ public class SpotsControllerManager {
         completion?()
       }
     }
+
+    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
   /// Process a collection of component model diffs.
@@ -373,10 +384,8 @@ public class SpotsControllerManager {
       var completion: Completion = nil
       var lastItemChange: Int?
 
-      for (index, change) in changes.enumerated() {
-        if change == .items {
-          lastItemChange = index
-        }
+      for (index, change) in changes.enumerated() where change == .items {
+        lastItemChange = index
       }
 
       for (index, change) in changes.enumerated() {
@@ -794,12 +803,10 @@ public class SpotsControllerManager {
 
     let newItems = tempComponent.model.items
 
-    for index in Array(changes.childUpdates) {
-      if index < tempComponent.compositeComponents.count {
-        component.compositeComponents[index].component.view.removeFromSuperview()
-        component.compositeComponents[index] = tempComponent.compositeComponents[index]
-        component.compositeComponents[index].component.parentComponent = component
-      }
+    for index in Array(changes.childUpdates) where index < tempComponent.compositeComponents.count {
+      component.compositeComponents[index].component.view.removeFromSuperview()
+      component.compositeComponents[index] = tempComponent.compositeComponents[index]
+      component.compositeComponents[index].component.parentComponent = component
     }
 
     if newItems.count == component.model.items.count {

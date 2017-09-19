@@ -164,9 +164,9 @@ public class ComponentManager {
       var indexPaths = [Int]()
       var indexes = [Int]()
 
-      for (index, _) in items.enumerated() {
-        indexPaths.append(index)
-        indexes.append(index)
+      for element in items.indices {
+        indexPaths.append(element)
+        indexes.append(element)
       }
 
       indexes.sorted(by: { $0 > $1 }).forEach {
@@ -286,8 +286,8 @@ public class ComponentManager {
             self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
           }
         } else {
-          for (index, _) in component.model.items.enumerated() {
-            self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
+          for element in component.model.items.indices {
+            self?.itemManager.configureItem(at: element, component: component, usesViewSize: true)
           }
         }
 
@@ -362,11 +362,14 @@ public class ComponentManager {
         return
       }
 
-      component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      let updateDatasource = {
         component.model.items = duplicatedComponent.model.items
-      }) {
+      }
+      let completion = {
         self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
       }
+
+      component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: completion)
     }
   }
 

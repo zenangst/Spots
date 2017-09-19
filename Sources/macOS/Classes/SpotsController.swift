@@ -239,10 +239,8 @@ open class SpotsController: NSViewController, SpotsProtocol {
   ///
   /// - Parameter selectedComponent: The component that should excluded from deselecting.
   public func deselectAllExcept(selectedComponent: Component) {
-    for component in components {
-      if selectedComponent.view != component.view {
-        component.deselect()
-      }
+    for component in components where selectedComponent.view != component.view {
+      component.deselect()
     }
   }
 
@@ -273,7 +271,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = scrollDelegate,
-      let _ = NSApplication.shared().mainWindow
+      NSApplication.shared().mainWindow != nil
       else {
         return
     }

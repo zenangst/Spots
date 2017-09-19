@@ -1,4 +1,3 @@
-// swiftlint:disable large_tuple
 import Cocoa
 
 extension NSCollectionView: UserInterface {
@@ -75,6 +74,9 @@ extension NSCollectionView: UserInterface {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
     let instance = animation != .none ? animator() : self
+    let completionHandler: (Bool) -> Void = { _ in
+      completion?()
+    }
 
     instance.performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
@@ -86,9 +88,7 @@ extension NSCollectionView: UserInterface {
         strongSelf.moveItem(at: IndexPath(item: from, section: 0),
                             to: IndexPath(item: to, section: 0))
       }
-    }) { _ in
-      completion?()
-    }
+    }, completionHandler: completionHandler)
   }
 
   /**
@@ -126,6 +126,9 @@ extension NSCollectionView: UserInterface {
     let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfRows)
     let set = Set<IndexPath>(indexPaths)
     let instance = animation != .none ? animator() : self
+    let completionHandler: (Bool) -> Void = { _ in
+      completion?()
+    }
 
     instance.performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
@@ -136,9 +139,7 @@ extension NSCollectionView: UserInterface {
         strongSelf.moveItem(at: IndexPath(item: from, section: 0),
                             to: IndexPath(item: to, section: 0))
       }
-    }) { _ in
-      completion?()
-    }
+    }, completionHandler: completionHandler)
   }
 
   public func processChanges(_ changes: Changes,
@@ -208,14 +209,16 @@ extension NSCollectionView: UserInterface {
    - parameter completion: A completion block for when the updates are done
    **/
   public func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?) {
+    let completionHandler: (Bool) -> Void = { _ in
+      completion?()
+    }
+
     performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
         return
       }
       strongSelf.reloadSections(IndexSet(integer: section))
-    }) { _ in
-      completion?()
-    }
+    }, completionHandler: completionHandler)
   }
 
   private func applyAnimation(_ animation: Animation) {
