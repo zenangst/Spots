@@ -1,3 +1,0 @@
-protocol Configurator {
-  func configure()
-}
