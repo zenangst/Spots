@@ -271,7 +271,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = scrollDelegate,
-      let NSApplication.shared().mainWindow != nil
+      NSApplication.shared().mainWindow != nil
       else {
         return
     }

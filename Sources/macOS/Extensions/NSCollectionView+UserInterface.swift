@@ -74,7 +74,7 @@ extension NSCollectionView: UserInterface {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
     let set = Set<IndexPath>(indexPaths)
     let instance = animation != .none ? animator() : self
-    let completionHandler (Bool) -> Void = { _ in
+    let completionHandler: (Bool) -> Void = { _ in
       completion?()
     }
 
