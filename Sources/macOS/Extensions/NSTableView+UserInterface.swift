@@ -126,9 +126,9 @@ extension NSTableView: UserInterface {
 
     updateDataSource()
 
-    if !insertionsSets.isEmpty &&
-      !reloadSets.isEmpty &&
-      !deletionSets.isEmpty &&
+    if insertionsSets.count > 0 &&
+      reloadSets.count > 0 &&
+      deletionSets.count > 0 &&
       changes.moved.isEmpty &&
       changes.childUpdates.isEmpty {
       completion?()
