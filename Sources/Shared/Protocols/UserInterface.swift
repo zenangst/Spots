@@ -1,6 +1,4 @@
-// swiftlint:disable large_tuple
-
-/// A protocol used for composition inside components.
+///// A protocol used for composition inside components.
 public protocol UserInterface: class {
 
   static var compositeIdentifier: String { get }

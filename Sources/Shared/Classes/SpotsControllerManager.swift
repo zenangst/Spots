@@ -234,16 +234,7 @@ public class SpotsControllerManager {
                       completion: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
 
-    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      for item in newItems {
-        let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
-        for compositeComponent in results {
-          offsets.append(compositeComponent.component.view.contentOffset)
-        }
-      }
-
-      component.model.items = newItems
-    }) {
+    let completion = {
       for (index, item) in newItems.enumerated() {
         guard index < controller.components.count else {
           break
@@ -262,6 +253,17 @@ public class SpotsControllerManager {
 
       completion?()
     }
+
+    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+      for item in newItems {
+        let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
+        for compositeComponent in results {
+          offsets.append(compositeComponent.component.view.contentOffset)
+        }
+      }
+
+      component.model.items = newItems
+    }, completion: completion)
   }
 
   /// Reload Component object with less items

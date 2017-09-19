@@ -1,4 +1,3 @@
-// swiftlint:disable large_tuple
 import UIKit
 
 extension UICollectionView: UserInterface {
@@ -200,7 +199,7 @@ extension UICollectionView: UserInterface {
       }
       strongSelf.deleteItems(at: indexPaths)
 
-      }) { _ in }
+      }, completion: nil)
 
     updateContentSize()
     removeAnimation()
@@ -245,7 +244,7 @@ extension UICollectionView: UserInterface {
             self.moveItem(at: IndexPath(item: move.key, section: 0),
                           to: IndexPath(item: move.value, section: 0))
           }
-        }) { _ in }
+        }, completion: nil)
       }
     } else {
       performBatchUpdates({
@@ -256,7 +255,7 @@ extension UICollectionView: UserInterface {
           self.moveItem(at: IndexPath(item: move.key, section: 0),
                         to: IndexPath(item: move.value, section: 0))
         }
-      }) { _ in }
+      }, completion: nil)
     }
 
     updateContentSize()
@@ -276,15 +275,18 @@ extension UICollectionView: UserInterface {
   ///  - parameter index: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+
+    let completion: (Bool) -> Void = { _ in
+      completion?()
+    }
+
     UIView.performWithoutAnimation {
       performBatchUpdates({ [weak self] in
         guard let strongSelf = self else {
           return
         }
         strongSelf.reloadSections(IndexSet(integer: section))
-      }) { _ in
-        completion?()
-      }
+      }, completion: completion)
     }
   }
 
@@ -310,9 +312,11 @@ extension UICollectionView: UserInterface {
   ///   - updateClosure: An update closure that contains everything that should be updated just before `performBatchUpdates` is called.
   ///   - completion: An optional completion closure that is invoked inside the completion handler.
   public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)?) {
-    updateClosure()
-    performBatchUpdates({}) { _ in
+    let completion: (Bool) -> Void = { _ in
       completion?()
     }
+
+    updateClosure()
+    performBatchUpdates({}, completion: completion)
   }
 }

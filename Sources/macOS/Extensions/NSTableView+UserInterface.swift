@@ -1,4 +1,3 @@
-// swiftlint:disable empty_count large_tuple
 import Cocoa
 
 extension NSTableView: UserInterface {
@@ -127,9 +126,9 @@ extension NSTableView: UserInterface {
 
     updateDataSource()
 
-    if insertionsSets.count > 0 &&
-      reloadSets.count > 0 &&
-      deletionSets.count > 0 &&
+    if !insertionsSets.isEmpty &&
+      !reloadSets.isEmpty &&
+      !deletionSets.isEmpty &&
       changes.moved.isEmpty &&
       changes.childUpdates.isEmpty {
       completion?()

@@ -217,9 +217,8 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     #if os(iOS)
       refreshControl.addTarget(self, action: #selector(refreshComponent(_:)), for: .valueChanged)
 
-      guard let _ = refreshDelegate, refreshControl.superview == nil
-        else {
-          return
+      guard refreshDelegate != nil, refreshControl.superview == nil else {
+        return
       }
       scrollView.insertSubview(refreshControl, at: 0)
     #endif
@@ -254,14 +253,16 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       }
     #endif
 
-    coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
-      self.configure(withSize: size)
-    }) { (UIViewControllerTransitionCoordinatorContext) in
+    let completion: (UIViewControllerTransitionCoordinatorContext) -> Void = { _ in
       self.configure(withSize: size)
       NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
                                       object: nil,
                                       userInfo: ["size": RotationSize(size: size)])
     }
+
+    coordinator.animate(alongsideTransition: { _ in
+      self.configure(withSize: size)
+    }, completion: completion)
   }
 
   /// Set up components.
