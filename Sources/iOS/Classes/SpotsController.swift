@@ -8,7 +8,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     return view
   }
 
-  public weak var focusedSpot: Component?
+  public weak var focusedComponent: Component?
   public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
@@ -240,6 +240,13 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     }
   }
 
+  open override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+
+    scrollView.frame = view.bounds
+    scrollView.componentsView.frame = scrollView.bounds
+  }
+
   /// Notifies the container that the size of tis view is about to change.
   ///
   /// - parameter size:        The new size for the container’s view.
@@ -341,6 +348,10 @@ extension SpotsController {
         $0.component.delegate = delegate
         $0.component.focusDelegate = self
       }
+    }
+
+    if focusedComponent == nil {
+      focusedComponent = components.first
     }
   }
 

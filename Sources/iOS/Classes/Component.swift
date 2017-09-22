@@ -124,11 +124,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// - Parameter model: A component model that is used for constructing and configurating the component.
   public required convenience init(model: ComponentModel) {
     let view = model.kind == .list
-      ? TableView()
+      ? ComponentTableView()
       : ComponentCollectionView(frame: .zero, collectionViewLayout: CollectionLayout())
 
     self.init(model: model, view: view)
 
+    (tableView as? ComponentTableView)?.component = self
     (collectionView as? ComponentCollectionView)?.component = self
   }
 
@@ -222,6 +223,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
     collectionView.layer.masksToBounds = false
+    collectionView.remembersLastFocusedIndexPath = true
 
     guard model.kind == .carousel else {
       return
