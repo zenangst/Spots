@@ -91,15 +91,15 @@ extension Delegate: UICollectionViewDelegate {
       #if os(tvOS)
         // When scrolling on tvOS, the collection can lose its focus when scrolling fast in either direction,
         // to help fight this issue, we now tell the collection view to scroll to the item that gained focus.
-        if !indexPath.isEmpty && component.model.kind == .grid {
+        if context.focusHeading == .up {
           collectionView.scrollToItem(at: indexPath,
-                                      at: UICollectionViewScrollPosition.centeredVertically,
+                                      at: .centeredVertically,
                                       animated: true)
         }
       #endif
     }
 
-    return !indexPath.isEmpty
+    return context.nextFocusedView?.canBecomeFocused ?? false
   }
 }
 
