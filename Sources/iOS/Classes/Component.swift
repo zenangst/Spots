@@ -223,7 +223,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
     collectionView.layer.masksToBounds = false
-    collectionView.remembersLastFocusedIndexPath = true
+    if #available(iOS 9.0, *) {
+      collectionView.remembersLastFocusedIndexPath = true
+    }
 
     guard model.kind == .carousel else {
       return
