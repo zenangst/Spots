@@ -238,8 +238,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         }
 
-        frame.size.width = ceil(componentsView.frame.size.width)
-
         // Using `.integral` can sometimes set the height back to 1.
         // To avoid this we check if the height is zero before we run `.integral`.
         // If it was, then we set it to zero again to not have frame heights jump between
@@ -251,6 +249,14 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           frame.size.height = 0
         }
 
+        #if os(tvOS)
+          // To avoid "aggressive" scrolling on tvOS, we now give the component view extra
+          // height so that the focus engine will pick the correct perferred view.
+          if remainingContentHeight > frame.size.height {
+            frame.size.height += UIScreen.main.bounds.height / 2
+          }
+        #endif
+
         scrollView.frame = frame
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
@@ -259,7 +265,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         var frame = subview.frame
         frame.origin.x = 0
         frame.origin.y = yOffsetOfCurrentSubview
-        frame.size.width = componentsView.bounds.size.width
         subview.frame = frame
 
         yOffsetOfCurrentSubview += frame.size.height
@@ -278,15 +283,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   /// It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
   open override func layoutSubviews() {
     super.layoutSubviews()
-
-    let initialContentOffset = contentOffset
     layoutViews()
-
-    guard !initialContentOffset.equalTo(contentOffset) else {
-      return
-    }
-    setNeedsLayout()
-    layoutIfNeeded()
   }
 
   /// Compare points

@@ -26,7 +26,7 @@ class ScrollViewManagerTests: XCTestCase {
     let frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 800))
     let parentView = UIView(frame: frame)
     let spotsScrollView = SpotsScrollView(frame: frame)
-    let scrollView = ScrollViewMock(frame: .zero)
+    let scrollView = ScrollViewMock(frame: .init(origin: .zero, size: .init(width: 100, height: 0)))
 
     parentView.addSubview(spotsScrollView)
     scrollView.contentSize = CGSize(width: 300, height: 200)

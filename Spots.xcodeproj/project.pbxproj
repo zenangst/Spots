@@ -363,6 +363,8 @@
 		BDEFF54F1DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDF404D11F4EA2DE00F9E3B9 /* ComponentScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF404D01F4EA2DE00F9E3B9 /* ComponentScrollView.swift */; };
+		BDFBB76D1F75094600421BCF /* ComponentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFBB76C1F75094600421BCF /* ComponentTableView.swift */; };
+		BDFBB76E1F75094600421BCF /* ComponentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFBB76C1F75094600421BCF /* ComponentTableView.swift */; };
 		BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474C1E747B2B008700BF /* TestGridWrapper.swift */; };
 		BDFC47521E747B2B008700BF /* TestListWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474D1E747B2B008700BF /* TestListWrapper.swift */; };
 		D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
@@ -595,6 +597,7 @@
 		BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		BDEFF5511DD1DA8000FC0537 /* TestComponentDelegate+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TestComponentDelegate+iOS.swift"; sourceTree = "<group>"; };
 		BDF404D01F4EA2DE00F9E3B9 /* ComponentScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentScrollView.swift; sourceTree = "<group>"; };
+		BDFBB76C1F75094600421BCF /* ComponentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTableView.swift; sourceTree = "<group>"; };
 		BDFC474C1E747B2B008700BF /* TestGridWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridWrapper.swift; sourceTree = "<group>"; };
 		BDFC474D1E747B2B008700BF /* TestListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListWrapper.swift; sourceTree = "<group>"; };
 		D55B7B021E423122000125C8 /* RxSpots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSpots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -733,6 +736,7 @@
 				BD24030B1E4B981A005BAA19 /* Component.swift */,
 				BDB1FCBB1ED060FF0042ED61 /* ComponentCollectionView.swift */,
 				BDAD84851E3E701B008289AE /* ComponentFlowLayout.swift */,
+				BDFBB76C1F75094600421BCF /* ComponentTableView.swift */,
 				BDAD848E1E3E701C008289AE /* DefaultItemView.swift */,
 				BDAD84871E3E701C008289AE /* GridHeaderFooterWrapper.swift */,
 				BDAD848A1E3E701C008289AE /* GridWrapper.swift */,
@@ -1591,6 +1595,7 @@
 				BDAD84CF1E3E701C008289AE /* SpotsController+UIScrollViewDelegate.swift in Sources */,
 				BDDCF6DD1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD85E91E3E7032008289AE /* Parser.swift in Sources */,
+				BDFBB76E1F75094600421BCF /* ComponentTableView.swift in Sources */,
 				BDAD859E1E3E7032008289AE /* SpotsController+SpotsControllerManager.swift in Sources */,
 				BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */,
 				BD1F9E1B1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
@@ -1781,6 +1786,7 @@
 				BDAD85871E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BD77D1FC1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
 				BD798EF41EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */,
+				BDFBB76D1F75094600421BCF /* ComponentTableView.swift in Sources */,
 				BD9ECEC11E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
 				BDAD85601E3E7032008289AE /* CompositeComponent.swift in Sources */,
 				52CD427A1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,

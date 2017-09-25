@@ -12,6 +12,7 @@ extension Component {
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
     #if os(tvOS)
+      tableView.remembersLastFocusedIndexPath = true
       tableView.layoutMargins = .zero
     #endif
 
@@ -44,7 +45,7 @@ extension Component {
   }
 
   func layoutTableView(_ tableView: TableView, with size: CGSize) {
-    tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
-    tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
+    tableView.frame.size.width = round(size.width - CGFloat(model.layout.inset.left + model.layout.inset.right))
+    tableView.frame.origin.x = CGFloat(model.layout.inset.left)
   }
 }
