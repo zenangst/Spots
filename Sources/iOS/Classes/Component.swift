@@ -18,21 +18,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// A horizontal scroll view delegate that will invoke methods when a user scrolls
   /// a collection view with horizontal scrolling.
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
-  /// A parent component used for composition.
-  public var parentComponent: Component? {
-    didSet {
-      self.view.frame.size.height = self.computedHeight
-      self.focusDelegate = parentComponent?.focusDelegate
-    }
-  }
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
   /// An engine that handles mutation of the component model data source.
   public var manager: ComponentManager = ComponentManager()
-  /// A collection of composite components, dynamically constructed and mutated based of
-  /// the contents of the `.model`.
-  public var compositeComponents: [CompositeComponent] = []
   /// A configuration closure that will be invoked when views are added to the component.
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -106,7 +96,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public required init(model: ComponentModel, view: ScrollView, parentComponent: Component? = nil) {
     self.model = model
     self.view = view
-    self.parentComponent = parentComponent
     super.init()
     registerDefaultIfNeeded(view: DefaultItemView.self)
     userInterface?.register()
@@ -242,9 +231,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - collectionView: The collection view that should be configured.
   ///   - size: The size that should be used for setting the new layout for the collection view.
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    if compositeComponents.isEmpty {
-      prepareItems(recreateComposites: true)
-    }
+    prepareItems()
 
     switch model.interaction.scrollDirection {
     case .horizontal:
@@ -326,10 +313,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
   /// This method is invoked after mutations has been performed on a component.
   public func afterUpdate() {
-    if !compositeComponents.isEmpty {
-      setup(with: view.frame.size)
-    }
-
     reloadHeader()
     reloadFooter()
 

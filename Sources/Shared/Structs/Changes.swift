@@ -10,9 +10,6 @@ public struct Changes {
   var reloads: Set<Int> = []
   /// A collection of indexes that should be deleted.
   var deletions: Set<Int> = []
-  /// A collection of indexes that represent child updates, this is used for when a composite
-  /// component is updated inside of an item.
-  var childUpdates: Set<Int> = []
   /// A dictionary of indexes, the key represents the initial location and the value is the new
   /// index of the item after the update.
   var moved: [Int: Int] = [:]
@@ -26,8 +23,6 @@ public struct Changes {
       switch itemDiff {
       case .kind, .size:
         reloads.insert(index)
-      case .children:
-        childUpdates.insert(index)
       case .new:
         insertions.insert(index)
       case .removed:

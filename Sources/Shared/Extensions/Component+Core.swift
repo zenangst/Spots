@@ -83,8 +83,8 @@ public extension Component {
     }
   }
 
-  public func prepareItems(recreateComposites: Bool = true) {
-    manager.itemManager.prepareItems(component: self, recreateComposites: recreateComposites)
+  public func prepareItems() {
+    manager.itemManager.prepareItems(component: self)
   }
 
   /// A helper method to return self as a Component type.
@@ -218,9 +218,7 @@ public extension Component {
       return ""
     }
 
-    if let item = item(at: index), item.kind.contains(CompositeComponent.identifier) {
-      return type(of: userInterface).compositeIdentifier
-    } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
+    if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
     } else {
       return Configuration.views.defaultIdentifier

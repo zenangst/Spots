@@ -278,13 +278,10 @@ class TestComponentEngine: XCTestCase {
   func testReloadIfNeededWithChanges() {
     var view: TestView?
 
-    var childItem = Item(title: "baz")
-    childItem.children.append(ComponentModel(kind: .carousel).dictionary)
-
     let items = [
       Item(title: "foo"),
       Item(title: "bar"),
-      childItem
+      Item(title: "baz")
     ]
 
     component = Component(model: ComponentModel(kind: .list, items: items))
@@ -303,10 +300,9 @@ class TestComponentEngine: XCTestCase {
     }
 
     XCTAssertEqual(changes.insertions, [3])
-    XCTAssertEqual(changes.updates, [0])
+    XCTAssertEqual(changes.updates, [2, 0])
     XCTAssertEqual(changes.reloads, [1])
     XCTAssertEqual(changes.deletions, [])
-    XCTAssertEqual(changes.childUpdates, [2])
 
     let expectation = self.expectation(description: "Wait for completion")
     component.manager.reloadIfNeeded(with: changes, component: component, updateDataSource: {

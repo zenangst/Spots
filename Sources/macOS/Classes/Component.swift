@@ -16,21 +16,11 @@ import Tailor
   var headerView: View?
   /// A reference to the footer view that should be used for the component.
   var footerView: View?
-  /// A parent component used for composition.
-  public var parentComponent: Component? {
-    didSet {
-      self.view.frame.size.height = self.computedHeight
-    }
-  }
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
   /// An engine that handles mutation of the component model data source.
   public var manager: ComponentManager = ComponentManager()
-  /// A collection of composite components, dynamically constructed and mutated based of
-  /// the contents of the `.model`.
-  public var compositeComponents: [CompositeComponent] = []
-
   /// A configuration closure that will be invoked when views are added to the component.
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -264,7 +254,7 @@ import Tailor
 
     collectionView.frame.size = size
 
-    prepareItems(recreateComposites: true)
+    prepareItems()
 
     collectionView.backgroundColors = [NSColor.clear]
     collectionView.isSelectable = true
@@ -364,7 +354,7 @@ import Tailor
   ///           when the user stopped resizing the window and the `Component` should get its final
   ///           size.
   public func didResize(size: CGSize, type: ComponentResize) {
-    if !compositeComponents.isEmpty && type == .end {
+    if type == .end {
       reload(nil)
     } else {
       if let tableView = tableView {

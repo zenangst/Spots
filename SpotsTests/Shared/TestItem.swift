@@ -152,27 +152,4 @@ class TestItem: XCTestCase {
     item.update(kind: "test")
     XCTAssertEqual(item.kind, "test")
   }
-
-  func testCompareChildren() {
-    let sameItem = Item(data)
-    var newData: [String : Any] = data
-    newData["children"] = [["child 1": "Anna"]]
-    let otherItem = Item(newData)
-
-    XCTAssertTrue(item === sameItem)
-    XCTAssertFalse(item === otherItem)
-
-    data["relations"] = ["Items": [data, data, data]]
-
-    item = Item(data)
-    var item2 = Item(data)
-    XCTAssertTrue(compareRelations(item, item2))
-
-    item2.relations["Items"]![2].title = "new"
-    XCTAssertFalse(compareRelations(item, item2))
-
-    data["relations"] = ["Items": [data, data]]
-    item2 = Item(data)
-    XCTAssertFalse(compareRelations(item, item2))
-  }
 }

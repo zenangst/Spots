@@ -11,7 +11,7 @@ extension Component {
 
     tableView.frame.size = size
 
-    prepareItems(recreateComposites: true)
+    prepareItems()
 
     tableView.backgroundColor = NSColor.clear
     tableView.allowsColumnReordering = false
@@ -43,14 +43,7 @@ extension Component {
     let size = tableView.sizeThatFits(size)
     scrollView.frame.size.width = round(size.width)
     tableView.frame.origin.y = headerView?.frame.size.height ?? 0.0
-
-    if parentComponent != nil {
-      tableView.frame.size.width = round(size.width)
-      tableView.frame.size.height = computedHeight
-    } else {
-      tableView.sizeToFit()
-    }
-
+    tableView.sizeToFit()
     tableView.frame.size.width = size.width
     tableView.frame.origin.y += CGFloat(model.layout.inset.bottom)
     tableView.frame.origin.x = CGFloat(model.layout.inset.left)
@@ -63,7 +56,7 @@ extension Component {
   func resizeTableView(_ tableView: TableView, with size: CGSize, type: ComponentResize) {
     switch type {
     case .live:
-      prepareItems(recreateComposites: false)
+      prepareItems()
       tableView.beginUpdates()
       tableView.reloadSection(0, withAnimation: .none, completion: nil)
       tableView.endUpdates()

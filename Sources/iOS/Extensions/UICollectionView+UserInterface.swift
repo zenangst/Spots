@@ -2,23 +2,12 @@ import UIKit
 
 extension UICollectionView: UserInterface {
 
-  public static var compositeIdentifier: String {
-    return "collection-composite"
-  }
-
   public func register() {
-    Configuration.register(view: GridWrapper.self, identifier: CollectionView.compositeIdentifier)
-    register(GridWrapper.self, forCellWithReuseIdentifier: CollectionView.compositeIdentifier)
-
     if Configuration.views.defaultItem == nil {
       register(GridWrapper.self, forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
     }
 
     for (identifier, item) in Configuration.views.storage {
-      if identifier.contains(CompositeComponent.identifier) {
-        continue
-      }
-
       switch item {
       case .classType(let type):
         if type is UICollectionViewCell.Type {
@@ -226,8 +215,7 @@ extension UICollectionView: UserInterface {
     if insertions.isEmpty &&
       reloads.isEmpty &&
       deletions.isEmpty &&
-      changes.moved.isEmpty &&
-      changes.childUpdates.isEmpty {
+      changes.moved.isEmpty {
       completion?()
       return
     }

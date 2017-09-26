@@ -16,17 +16,12 @@ extension Component {
       tableView.layoutMargins = .zero
     #endif
 
-    prepareItems(recreateComposites: true)
+    prepareItems()
 
     var height: CGFloat = 0.0
 
-    if parentComponent != nil {
-      height = computedHeight
-      tableView.frame.size.height = height
-    } else {
-      for item in model.items {
-        height += item.size.height
-      }
+    for item in model.items {
+      height += item.size.height
     }
 
     height += headerHeight

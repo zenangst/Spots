@@ -224,7 +224,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     #endif
   }
 
-  /// Configure scrollview and composite views with new size.
+  /// Configure scrollview with new size.
   ///
   /// - parameter size: The size that should be used to configure the views.
   func configure(withSize size: CGSize) {
@@ -233,10 +233,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
     components.forEach { component in
       component.layout(with: size)
-
-      component.compositeComponents.forEach {
-        $0.component.layout(with: component.view.frame.size)
-      }
     }
   }
 
@@ -343,11 +339,6 @@ extension SpotsController {
     components.forEach {
       $0.delegate = delegate
       $0.focusDelegate = self
-
-      $0.compositeComponents.forEach {
-        $0.component.delegate = delegate
-        $0.component.focusDelegate = self
-      }
     }
 
     if focusedComponent == nil {

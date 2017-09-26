@@ -2,23 +2,12 @@ import UIKit
 
 extension UITableView: UserInterface {
 
-  public static var compositeIdentifier: String {
-    return "list-composite"
-  }
-
   public func register() {
-    Configuration.register(view: ListWrapper.self, identifier: TableView.compositeIdentifier)
-    register(ListWrapper.self, forCellReuseIdentifier: TableView.compositeIdentifier)
-
     if Configuration.views.defaultItem == nil {
       register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
     }
 
     for (identifier, item) in Configuration.views.storage {
-      if identifier.contains(CompositeComponent.identifier) {
-        continue
-      }
-
       switch item {
       case .classType(let type):
         if type is UITableViewCell.Type {
@@ -225,8 +214,7 @@ extension UITableView: UserInterface {
     if insertions.isEmpty &&
       reloads.isEmpty &&
       deletions.isEmpty &&
-      changes.moved.isEmpty &&
-      changes.childUpdates.isEmpty {
+      changes.moved.isEmpty {
       completion?()
       return
     }

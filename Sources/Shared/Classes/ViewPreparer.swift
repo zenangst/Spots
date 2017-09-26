@@ -42,11 +42,7 @@ class ViewPreparer {
   func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: Component, parentFrame: CGRect = CGRect.zero) {
     let identifier = component.identifier(at: index)
 
-    if identifier.contains(CompositeComponent.identifier),
-      let composite = component.compositeComponents.filter({ $0.itemIndex == index }).first {
-      view.configure(with: composite.component.view)
-      component.model.items[index].size.height = composite.component.computedHeight
-    } else if let wrappedView = Configuration.views.make(identifier, parentFrame: parentFrame)?.view {
+    if let wrappedView = Configuration.views.make(identifier, parentFrame: parentFrame)?.view {
       view.configure(with: wrappedView)
       if let configurableView = wrappedView as? ItemConfigurable {
         prepareItemConfigurableView(configurableView, atIndex: index, in: component)

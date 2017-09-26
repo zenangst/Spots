@@ -25,12 +25,12 @@ public class ItemManager {
     return max((componentWidth / CGFloat(component.model.layout.span)) - CGFloat(component.model.layout.itemSpacing), 0)
   }
 
-  func prepareItems(component: Component, recreateComposites: Bool = true) {
-    component.model.items = prepare(component: component, items: component.model.items, recreateComposites: recreateComposites)
+  func prepareItems(component: Component) {
+    component.model.items = prepare(component: component, items: component.model.items)
     Configuration.views.purge()
   }
 
-  func prepare(component: Component, items: [Item], recreateComposites: Bool) -> [Item] {
+  func prepare(component: Component, items: [Item]) -> [Item] {
     var preparedItems = items
     let spanWidth: CGFloat? = calculateSpanWidth(for: component)
     let shouldAdjustHeight = component.model.kind == .carousel
@@ -42,7 +42,7 @@ public class ItemManager {
         item.size.width = spanWidth
       }
 
-      if let configuredItem = configure(component: component, item: item, at: index, usesViewSize: true, recreateComposites: recreateComposites) {
+      if let configuredItem = configure(component: component, item: item, at: index, usesViewSize: true) {
         preparedItems[index].index = index
         preparedItems[index] = configuredItem
       }
@@ -67,10 +67,9 @@ public class ItemManager {
   ///   - index: The index of the item.
   ///   - component: The component that the item belongs to.
   ///   - usesViewSize: Determines if the views frame should be used when preparing the item.
-  ///   - recreateComposites: Determines if composite components should be reconstructed.
-  public func configureItem(at index: Int, component: Component, usesViewSize: Bool = false, recreateComposites: Bool = true) {
+  public func configureItem(at index: Int, component: Component, usesViewSize: Bool = false) {
     guard let item = component.item(at: index),
-      var configuredItem = configure(component: component, item: item, at: index, usesViewSize: usesViewSize, recreateComposites: recreateComposites)
+      var configuredItem = configure(component: component, item: item, at: index, usesViewSize: usesViewSize)
       else {
         return
     }
@@ -92,7 +91,7 @@ public class ItemManager {
     }
   }
 
-  func configure(component: Component, item: Item, at index: Int, usesViewSize: Bool = false, recreateComposites: Bool) -> Item? {
+  func configure(component: Component, item: Item, at index: Int, usesViewSize: Bool = false) -> Item? {
     var item = item
     item.index = index
 
@@ -117,37 +116,24 @@ public class ItemManager {
         prepare(component: component, item: item, view: view)
       }
 
-      prepare(component: component, kind: kind, view: view as Any, item: &item, recreateComposites: recreateComposites)
+      prepare(component: component, kind: kind, view: view as Any, item: &item)
     #else
       if fullWidth == 0.0 {
         fullWidth = component.view.superview?.frame.size.width ?? component.view.frame.size.width
       }
 
-      if kind.contains(CompositeComponent.identifier) {
-        let wrappable: Wrappable
-        if kind.contains("list") {
-          wrappable = ListWrapper()
-        } else {
-          wrappable = GridWrapper()
-        }
-
-        prepare(component: component, kind: kind, view: wrappable as Any, item: &item, recreateComposites: recreateComposites)
+      if let resolvedView = Configuration.views.make(kind, parentFrame: component.view.frame, useCache: true)?.view {
+        prepare(component: component, kind: kind, view: resolvedView as Any, item: &item)
       } else {
-        if let resolvedView = Configuration.views.make(kind, parentFrame: component.view.frame, useCache: true)?.view {
-          prepare(component: component, kind: kind, view: resolvedView as Any, item: &item, recreateComposites: recreateComposites)
-        } else {
-          return nil
-        }
+        return nil
       }
     #endif
 
     return item
   }
 
-  func prepare(component: Component, kind: String, view: Any, item: inout Item, recreateComposites: Bool) {
-    if let view = view as? Wrappable, kind.contains(CompositeComponent.identifier) {
-      prepare(component: component, wrappable: view, item: &item, recreateComposites: recreateComposites)
-    } else if let view = view as? ItemConfigurable {
+  func prepare(component: Component, kind: String, view: Any, item: inout Item) {
+    if let view = view as? ItemConfigurable {
       view.configure(with: item)
       item.size.height = view.computeSize(for: item, containerSize: component.view.frame.size).height
       setFallbackViewSize(component: component, item: &item, with: view)
@@ -174,55 +160,6 @@ public class ItemManager {
     (view as? UICollectionViewCell)?.contentView.frame = view.bounds
   }
   #endif
-
-  /// Prepares a composable view and returns the height for the item
-  ///
-  /// - parameter composable:        A composable object
-  /// - parameter usesViewSize:      A boolean value to determine if the view uses the views height
-  ///
-  /// - returns: The height for the item based of the composable components
-  func prepare(component: Component, wrappable: Wrappable, item: inout Item, recreateComposites: Bool) {
-    var height: CGFloat = 0.0
-
-    if recreateComposites {
-      component.compositeComponents.filter({ $0.itemIndex == item.index }).forEach {
-        $0.component.view.removeFromSuperview()
-
-        if let index = component.compositeComponents.index(of: $0) {
-          component.compositeComponents.remove(at: index)
-        }
-      }
-    }
-
-    let components: [Component] = Parser.parse(item)
-    var size = component.view.frame.size
-
-    if let spanWidth = calculateSpanWidth(for: component) {
-      size.width = spanWidth
-    }
-
-    size.width = round(size.width)
-
-    components.forEach { childComponent in
-      let compositeSpot = CompositeComponent(component: childComponent,
-                                             itemIndex: item.index)
-      compositeSpot.component.parentComponent = component
-      compositeSpot.component.setup(with: size)
-
-      #if !os(OSX)
-        /// Disable scrolling for listable objects
-        compositeSpot.component.view.isScrollEnabled = !(compositeSpot.component.view is TableView)
-      #endif
-
-      height += compositeSpot.component.computedHeight
-
-      if recreateComposites {
-        component.compositeComponents.append(compositeSpot)
-      }
-    }
-
-    item.size.height = height
-  }
 
   /// Set fallback size to view
   ///

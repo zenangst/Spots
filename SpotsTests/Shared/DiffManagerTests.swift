@@ -27,7 +27,6 @@ class DiffManagerTests: XCTestCase {
     XCTAssertEqual(changes.updates.count, 1)
     XCTAssertEqual(changes.reloads.count, 0)
     XCTAssertEqual(changes.deletions.count, 0)
-    XCTAssertEqual(changes.childUpdates.count, 0)
     XCTAssertEqual(changes.moved.count, 0)
   }
 
@@ -41,7 +40,6 @@ class DiffManagerTests: XCTestCase {
     XCTAssertTrue(changes.reloads.contains(0))
     XCTAssertEqual(changes.reloads.count, 1)
     XCTAssertEqual(changes.deletions.count, 0)
-    XCTAssertEqual(changes.childUpdates.count, 0)
     XCTAssertEqual(changes.moved.count, 0)
   }
 
@@ -55,7 +53,6 @@ class DiffManagerTests: XCTestCase {
     XCTAssertTrue(changes.reloads.contains(0))
     XCTAssertEqual(changes.reloads.count, 1)
     XCTAssertEqual(changes.deletions.count, 0)
-    XCTAssertEqual(changes.childUpdates.count, 0)
     XCTAssertEqual(changes.moved.count, 0)
   }
 
@@ -74,7 +71,6 @@ class DiffManagerTests: XCTestCase {
     XCTAssertEqual(changes.updates.count, 0)
     XCTAssertEqual(changes.reloads.count, 0)
     XCTAssertEqual(changes.deletions.count, 0)
-    XCTAssertEqual(changes.childUpdates.count, 0)
     XCTAssertEqual(changes.moved.count, 0)
   }
 
@@ -93,7 +89,6 @@ class DiffManagerTests: XCTestCase {
     XCTAssertEqual(changes.deletions.count, 2)
     XCTAssertTrue(changes.deletions.contains(1))
     XCTAssertTrue(changes.deletions.contains(2))
-    XCTAssertEqual(changes.childUpdates.count, 0)
     XCTAssertEqual(changes.moved.count, 0)
   }
 
@@ -111,7 +106,6 @@ class DiffManagerTests: XCTestCase {
     XCTAssertEqual(changes.updates.count, 0)
     XCTAssertEqual(changes.reloads.count, 0)
     XCTAssertEqual(changes.deletions.count, 0)
-    XCTAssertEqual(changes.childUpdates.count, 0)
     XCTAssertEqual(changes.moved.count, 2)
     XCTAssertEqual(changes.moved[0], 2)
     XCTAssertEqual(changes.moved[2], 0)
@@ -133,7 +127,6 @@ class DiffManagerTests: XCTestCase {
     XCTAssertTrue(changes.updates.contains(0))
     XCTAssertEqual(changes.reloads.count, 0)
     XCTAssertEqual(changes.deletions.count, 0)
-    XCTAssertEqual(changes.childUpdates.count, 0)
     XCTAssertEqual(changes.moved.count, 0)
   }
 }

@@ -69,13 +69,4 @@ public struct Parser {
       Component(model: model)
     }
   }
-
-  /// Parse view model children into components.
-  /// - parameter item: A view model with children
-  ///
-  ///  - returns: A collection of components.
-  public static func parse(_ item: Item) -> [Component] {
-    let components: [Component] = Parser.parse(item.children)
-    return components
-  }
 }

@@ -82,9 +82,7 @@ extension Delegate: UICollectionViewDelegate {
       return true
     }
 
-    if let component = component,
-      component.model.items[indexPath.item].kind != CompositeComponent.identifier,
-      indexPath.item < component.model.items.count {
+    if let component = component, indexPath.item < component.model.items.count {
       component.focusDelegate?.focusedComponent = component
       component.focusDelegate?.focusedItemIndex = indexPath.item
     }
@@ -197,9 +195,7 @@ extension Delegate: UITableViewDelegate {
       return true
     }
 
-    if let component = component,
-      component.model.items[indexPath.item].kind != CompositeComponent.identifier,
-      indexPath.item < component.model.items.count {
+    if let component = component, indexPath.item < component.model.items.count {
       component.focusDelegate?.focusedComponent = component
       component.focusDelegate?.focusedItemIndex = indexPath.item
     }

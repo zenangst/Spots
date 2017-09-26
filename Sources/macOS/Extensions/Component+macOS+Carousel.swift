@@ -32,7 +32,7 @@ extension Component {
   }
 
   func resizeHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
-    prepareItems(recreateComposites: false)
+    prepareItems()
     layout(with: size, animated: false)
   }
 
