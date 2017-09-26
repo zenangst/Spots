@@ -153,16 +153,13 @@ extension NSCollectionView: UserInterface {
       .map { IndexPath(item: $0, section: 0) })
     let reloadSets = Set<IndexPath>(changes.reloads
       .map { IndexPath(item: $0, section: 0) })
-    let childUpdates = Set<IndexPath>(changes.childUpdates
-      .map { IndexPath(item: $0, section: 0) })
 
     updateDataSource()
 
     if insertionsSets.isEmpty &&
       reloadSets.isEmpty &&
       deletionSets.isEmpty &&
-      changes.moved.isEmpty &&
-      changes.childUpdates.isEmpty {
+      changes.moved.isEmpty {
       completion?()
       return
     }
@@ -178,9 +175,6 @@ extension NSCollectionView: UserInterface {
         self?.moveItem(at: IndexPath(item: move.key, section: 0),
                       to: IndexPath(item: move.value, section: 0))
       }
-
-      /// Use reload items for child updates, this might need improvements in the future.
-      self?.reloadItems(at: childUpdates)
     }, completionHandler: nil)
     completion?()
     removeAnimation()

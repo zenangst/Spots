@@ -237,33 +237,7 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
       return .items
     }
 
-    // Check children
-    let lhsChildren = items.flatMap { $0.children }
-    let rhsChildren = model.items.flatMap { $0.children }
-
-    if !(lhsChildren as NSArray).isEqual(to: rhsChildren) {
-      return .items
-    }
-
     return .none
-  }
-
-  /// Add child component for composition.
-  ///
-  /// - Parameter child: The child component model that will be added.
-  mutating public func add(child: ComponentModel) {
-    var item = Item(kind: CompositeComponent.identifier)
-    item.children = [child.dictionary]
-    items.append(item)
-  }
-
-  /// Add child components for composition.
-  ///
-  /// - Parameter children: A collection of component models that will be added.
-  mutating public func add(children: [ComponentModel]) {
-    for child in children {
-      add(child: child)
-    }
   }
 
   /// Add layout to component.

@@ -126,8 +126,7 @@ extension NSTableView: UserInterface {
     if !insertionsSets.isEmpty &&
       !reloadSets.isEmpty &&
       !deletionSets.isEmpty &&
-      changes.moved.isEmpty &&
-      changes.childUpdates.isEmpty {
+      changes.moved.isEmpty {
       completion?()
       return
     }

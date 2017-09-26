@@ -24,13 +24,6 @@ public struct Registry {
     }
   }
 
-  /// A composite item
-  var composite: Item? {
-    didSet {
-      storage[CompositeComponent.identifier] = composite
-    }
-  }
-
   /// The default identifier for the registry
   var defaultIdentifier: String {
     guard defaultItem != nil else {

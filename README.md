@@ -74,7 +74,6 @@ Use the following links to dive a bit deeper into how Spots works.
 
 * [Building views in Spots](https://github.com/hyperoslo/Spots/blob/master/Documentation/Building%20views%20in%20Spots.md)
 * [Caching](https://github.com/hyperoslo/Spots/blob/master/Documentation/Caching.md)
-* [Composition](https://github.com/hyperoslo/Spots/blob/master/Documentation/Composition.md)
 * [Delegates](https://github.com/hyperoslo/Spots/blob/master/Documentation/Delegates.md)
 * [Live Editing](https://github.com/hyperoslo/Spots/blob/master/Documentation/Live%20Editing.md)
 * [JSON Structure](https://github.com/hyperoslo/Spots/blob/master/Documentation/JSON%20Structure.md)

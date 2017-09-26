@@ -1,8 +1,6 @@
 ///// A protocol used for composition inside components.
 public protocol UserInterface: class {
 
-  static var compositeIdentifier: String { get }
-
   var visibleViews: [View] { get }
 
   #if !os(OSX)

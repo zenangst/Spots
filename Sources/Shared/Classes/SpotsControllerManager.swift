@@ -154,12 +154,6 @@ public class SpotsControllerManager {
     let component = Component(model: newComponentModels[index])
     let oldComponent = controller.components[index]
 
-    /// Remove old composite components from superview and empty container
-    for compositeComponent in oldComponent.compositeComponents {
-      compositeComponent.component.view.removeFromSuperview()
-    }
-    oldComponent.compositeComponents = []
-
     component.view.frame = oldComponent.view.frame
 
     oldComponent.view.removeFromSuperview()
@@ -234,34 +228,7 @@ public class SpotsControllerManager {
                       completion: (() -> Void)? = nil) {
     var offsets = [CGPoint]()
 
-    let completion = {
-      for (index, item) in newItems.enumerated() {
-        guard index < controller.components.count else {
-          break
-        }
-
-        let compositeComponents = controller.components[item.index].compositeComponents
-          .filter({ $0.itemIndex == item.index })
-        for (index, compositeComponent) in compositeComponents.enumerated() {
-          guard index < offsets.count else {
-            continue
-          }
-
-          compositeComponent.component.view.contentOffset = offsets[index]
-        }
-      }
-
-      completion?()
-    }
-
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      for item in newItems {
-        let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
-        for compositeComponent in results {
-          offsets.append(compositeComponent.component.view.contentOffset)
-        }
-      }
-
       component.model.items = newItems
     }, completion: completion)
   }
@@ -283,43 +250,6 @@ public class SpotsControllerManager {
 
     let updateDatasource = {
       component.model.items = newItems
-    }
-
-    let completion = {
-      guard !newItems.isEmpty else {
-        completion?()
-        return
-      }
-
-      let executeClosure = newItems.count - 1
-      for (index, item) in newItems.enumerated() {
-        let components = Parser.parse(item.children).map { $0.model }
-
-        let oldComponents = controller.components.flatMap({
-          $0.compositeComponents
-        })
-
-        for removedComponent in oldComponents {
-          guard !components.contains(removedComponent.component.model) else {
-            continue
-          }
-
-          if let index = removedComponent.component.parentComponent?.compositeComponents.index(of: removedComponent) {
-            removedComponent.component.parentComponent?.compositeComponents.remove(at: index)
-          }
-        }
-
-        if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
-          component.reload(nil, withAnimation: animation, completion: completion)
-        } else {
-          component.update(item, index: index, withAnimation: animation) {
-            guard index == executeClosure else {
-              return
-            }
-            completion?()
-          }
-        }
-      }
     }
 
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: completion)
@@ -344,15 +274,8 @@ public class SpotsControllerManager {
     }
 
     let completion = {
-      if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
-        component.reload(nil, withAnimation: animation) {
-          controller.scrollView.layoutSubviews()
-          completion?()
-        }
-      } else {
-        controller.scrollView.layoutSubviews()
-        completion?()
-      }
+      controller.scrollView.layoutSubviews()
+      completion?()
     }
 
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
@@ -452,7 +375,6 @@ public class SpotsControllerManager {
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = controller.components.flatMap { $0.compositeComponents }
 
       if newComponentModels.count == oldComponentModels.count {
         offsets = controller.components.map { $0.view.contentOffset }
@@ -466,16 +388,6 @@ public class SpotsControllerManager {
 
       strongSelf.cleanUpComponentView(controller: controller)
       controller.setupComponents(animated: animated)
-
-      let newComposites = controller.components.flatMap { $0.compositeComponents }
-
-      for (index, compositeComponent) in oldComposites.enumerated() {
-        if index == newComposites.count {
-          break
-        }
-
-        newComposites[index].component.view.contentOffset = compositeComponent.component.view.contentOffset
-      }
 
       completion?()
 
@@ -802,12 +714,6 @@ public class SpotsControllerManager {
     }
 
     let newItems = tempComponent.model.items
-
-    for index in Array(changes.childUpdates) where index < tempComponent.compositeComponents.count {
-      component.compositeComponents[index].component.view.removeFromSuperview()
-      component.compositeComponents[index] = tempComponent.compositeComponents[index]
-      component.compositeComponents[index].component.parentComponent = component
-    }
 
     if newItems.count == component.model.items.count {
       reload(with: changes,

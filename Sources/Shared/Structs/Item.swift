@@ -53,8 +53,6 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
   public var action: String?
   /// The width and height of the view model, usually calculated and updated by the UI component
   public var size = CGSize(width: 0, height: 0)
-  /// A collection of items used for composition
-  public var children: [[String : Any]] = []
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
   /// A key-value dictionary for related view models
@@ -83,10 +81,6 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
 
     if let action = action {
       dictionary[Key.action.string] = action
-    }
-
-    if !children.isEmpty {
-      dictionary[Key.children.string] = children
     }
 
     var relationItems = [String: [[String: Any]]]()
@@ -120,7 +114,6 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     kind     <- map.string(Key.kind.rawValue)
     action   = map.string(Key.action.rawValue)
     meta     <- map.property(Key.meta.rawValue)
-    children = map[.children] as? [[String : Any]] ?? []
 
     if let relation = map[.relations] as? [String : [Item]] {
       relations = relation
@@ -157,7 +150,6 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),
               meta: [String : Any] = [:],
-              children: [DictionaryConvertible] = [],
               relations: [String : [Item]] = [:]) {
     self.identifier = identifier
     self.title = title
@@ -168,7 +160,6 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     self.action = action
     self.size = size
     self.meta = meta
-    self.children = children.map { $0.dictionary }
     self.relations = relations
   }
 
@@ -361,7 +352,6 @@ public func === (lhs: Item, rhs: Item) -> Bool {
     lhs.kind == rhs.kind &&
     lhs.action == rhs.action &&
     lhs.size == rhs.size &&
-    (lhs.children as NSArray).isEqual(to: rhs.children) &&
     (lhs.meta as NSDictionary).isEqual(to: rhs.meta) &&
     compareRelations(lhs, rhs)
 

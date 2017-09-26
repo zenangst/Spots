@@ -23,25 +23,7 @@ public extension SpotsController {
     var result = [[String: Any]]()
 
     for component in components {
-      var componentJSON = component.model.dictionary(amountOfItems)
-      for item in component.model.items where item.kind == CompositeComponent.identifier {
-        let results = component.compositeComponents
-          .filter({ $0.itemIndex == item.index })
-
-        var newItem = item
-        var children = [[String: Any]]()
-
-        for compositeSpot in results {
-          children.append(compositeSpot.component.dictionary)
-        }
-
-        newItem.children = children
-
-        var newItems = componentJSON[ComponentModel.Key.items] as? [[String : Any]]
-        newItems?[item.index] = newItem.dictionary
-        componentJSON[ComponentModel.Key.items] = newItems
-      }
-
+      let componentJSON = component.model.dictionary(amountOfItems)
       result.append(componentJSON)
     }
 
@@ -58,13 +40,6 @@ public extension SpotsController {
       if let first = component.model.items.filter(includeElement).first {
         return component.ui(at: first.index)
       }
-
-      let cSpots = component.compositeComponents.map { $0.component }
-      for compositeSpot in cSpots {
-        if let first = compositeSpot.model.items.filter(includeElement).first {
-          return compositeSpot.ui(at: first.index)
-        }
-      }
     }
 
     return nil
@@ -77,12 +52,6 @@ public extension SpotsController {
   /// - returns: A collection of components. that match the includeElements predicate
   public func filter(components includeElement: (Component) -> Bool) -> [Component] {
     var result = components.filter(includeElement)
-
-    let cSpots = components.flatMap({ $0.compositeComponents.map { $0.component } })
-    let compositeResults: [Component] = cSpots.filter(includeElement)
-
-    result.append(contentsOf: compositeResults)
-
     return result
   }
 
@@ -97,14 +66,6 @@ public extension SpotsController {
       let items = component.model.items.filter(includeElement)
       if !items.isEmpty {
         result.append((component: component, items: items))
-      }
-
-      let childSpots = component.compositeComponents.map { $0.component }
-      for component in childSpots {
-        let items = component.model.items.filter(includeElement)
-        if !items.isEmpty {
-          result.append((component: component, items: items))
-        }
       }
     }
 

@@ -115,9 +115,6 @@ public func === (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
     return false
   }
 
-  let lhsChildren = lhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
-  let rhsChildren = rhs.items.flatMap { $0.children.flatMap({ ComponentModel($0) }) }
-
   let headersAreEqual = optionalCompare(lhs: lhs.header, rhs: rhs.header)
   let footersAreEqual = optionalCompare(lhs: lhs.footer, rhs: rhs.footer)
 
@@ -126,7 +123,6 @@ public func === (lhs: ComponentModel, rhs: ComponentModel) -> Bool {
     lhs.kind == rhs.kind &&
     lhs.layout == rhs.layout &&
     (lhs.meta as NSDictionary).isEqual(rhs.meta as NSDictionary) &&
-    lhsChildren === rhsChildren &&
     lhs.items == rhs.items
 }
 

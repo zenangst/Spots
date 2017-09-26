@@ -231,43 +231,33 @@ public class ComponentManager {
       var updateHeightAndIndexes: Bool = false
       component.model.items[index] = item
 
-      if component.model.items[index].kind == CompositeComponent.identifier {
-        for compositeSpot in component.compositeComponents {
-          compositeSpot.component.reload([]) {
-            component.model.items[index].size.height = compositeSpot.component.computedHeight
-          }
-        }
-        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
-        return
-      } else {
-        self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
-        let newItem = component.model.items[index]
+      self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
+      let newItem = component.model.items[index]
 
-        if newItem.kind != oldItem.kind {
-          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
-        } else if newItem.size.height != oldItem.size.height {
-          if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
-            component.userInterface?.performUpdates({
-              view.configure(with: component.model.items[index])
-              component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
-            }, completion: nil)
-          } else {
-            component.userInterface?.reload([index], withAnimation: animation, completion: nil)
-          }
-
-          updateHeightAndIndexes = true
-        } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
+      if newItem.kind != oldItem.kind {
+        component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+      } else if newItem.size.height != oldItem.size.height {
+        if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
           component.userInterface?.performUpdates({
             view.configure(with: component.model.items[index])
             component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
-          }, completion: {
-            self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
-          })
-          return
+          }, completion: nil)
+        } else {
+          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
         }
 
-        self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
+        updateHeightAndIndexes = true
+      } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
+        component.userInterface?.performUpdates({
+          view.configure(with: component.model.items[index])
+          component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
+        }, completion: {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
+        })
+        return
       }
+
+      self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
     }
   }
 
@@ -332,9 +322,7 @@ public class ComponentManager {
         }
       } else {
         strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
-          strongSelf.process(Array(changes.childUpdates), component: component, withAnimation: animation) {
-            strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-          }
+          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -430,28 +418,15 @@ public class ComponentManager {
   ///   - completion: A completion closure that is run when the operation is done.
   private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
     if updateHeightAndIndexes {
-      component.updateHeightAndIndexes { [weak self] in
+      component.updateHeightAndIndexes {
         component.afterUpdate()
         component.view.superview?.layoutSubviews()
         completion?()
-        self?.refreshHeightInParentComponent(component)
       }
     } else {
       component.afterUpdate()
       component.view.superview?.layoutSubviews()
       completion?()
-      refreshHeightInParentComponent(component)
-    }
-  }
-
-  /// Refresh height in parent component.
-  ///
-  /// - Parameter component: A composite component.
-  private func refreshHeightInParentComponent(_ component: Component) {
-    if let parentComponent = component.parentComponent {
-      for compositeComponent in parentComponent.compositeComponents {
-        parentComponent.model.items[compositeComponent.itemIndex].size.height = compositeComponent.component.computedHeight
-      }
     }
   }
 }

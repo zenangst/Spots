@@ -25,7 +25,7 @@ extension Component {
 
     switch type {
     case .live:
-      prepareItems(recreateComposites: false)
+      prepareItems()
       layout(with: size, animated: false)
     case .end:
       layout(with: size, animated: false)

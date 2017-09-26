@@ -133,18 +133,10 @@ class DiffManager {
   ///   - newItem: The new item
   /// - Returns: An item diff depending on which attribute changed.
   private func diff(oldModel: Item, newModel: Item) -> ItemDiff {
-    let oldChildComponentModels: [ComponentModel] = oldModel.children.map { ComponentModel($0) }
-    let newChildComponentModels: [ComponentModel] = newModel.children.map { ComponentModel($0) }
-
     // Indicates that the view identifier changed, this will later lead to the view
     // being reloaded.
     if newModel.kind != oldModel.kind {
       return .kind
-    }
-
-    // Indicates that a composite component inside of the item has been updated.
-    if newChildComponentModels !== oldChildComponentModels {
-      return .children
     }
 
     // The items unique identifier has changed which means that the item cannot match.
