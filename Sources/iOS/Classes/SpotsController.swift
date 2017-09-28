@@ -69,6 +69,16 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// An optional StateCache used for view controller caching.
   public var stateCache: StateCache?
 
+  #if os(tvOS)
+  /// A default focus guide that is constrained to the controllers
+  ///
+  public lazy var focusGuide: UIFocusGuide = {
+    let focusGuide = UIFocusGuide()
+    focusGuide.isEnabled = false
+    return focusGuide
+  }()
+  #endif
+
   /// A delegate for when an item is tapped within a Spot.
   weak open var delegate: ComponentDelegate? {
     didSet { componentsDelegateDidChange() }
@@ -198,8 +208,11 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     scrollView.clipsToBounds = true
     scrollView.delegate = self
 
-    setupComponents()
+    #if os(tvOS)
+      configure(focusGuide: focusGuide, for: scrollView, enabled: false)
+    #endif
 
+    setupComponents()
     SpotsController.configure?(scrollView)
   }
 
