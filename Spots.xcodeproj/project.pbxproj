@@ -93,6 +93,8 @@
 		BD677E8F1DC65D63006D1654 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E8E1DC65D63006D1654 /* Helpers.swift */; };
 		BD677E901DC65D63006D1654 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E8E1DC65D63006D1654 /* Helpers.swift */; };
 		BD677E911DC65D63006D1654 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD677E8E1DC65D63006D1654 /* Helpers.swift */; };
+		BD6857A41F7CCCFC008EA9B5 /* SpotsController+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6857A31F7CCCFC008EA9B5 /* SpotsController+tvOS.swift */; };
+		BD6857A81F7CCEF5008EA9B5 /* SpotsControllerTVOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6857A61F7CCE98008EA9B5 /* SpotsControllerTVOSTests.swift */; };
 		BD6CB2661ED77F8200FC78C8 /* SpotsScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6CB2651ED77F8200FC78C8 /* SpotsScrollViewTests.swift */; };
 		BD7397381D718CDB000AF2DE /* TestComponentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* TestComponentModel.swift */; };
 		BD7397401D718CDB000AF2DE /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -471,6 +473,8 @@
 		BD677E881DC61EFC006D1654 /* TestStateCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStateCache.swift; sourceTree = "<group>"; };
 		BD677E8C1DC62575006D1654 /* TestUIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		BD677E8E1DC65D63006D1654 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Helpers.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		BD6857A31F7CCCFC008EA9B5 /* SpotsController+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpotsController+tvOS.swift"; sourceTree = "<group>"; };
+		BD6857A61F7CCE98008EA9B5 /* SpotsControllerTVOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotsControllerTVOSTests.swift; sourceTree = "<group>"; };
 		BD6CB2651ED77F8200FC78C8 /* SpotsScrollViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollViewTests.swift; sourceTree = "<group>"; };
 		BD73972F1D718CD2000AF2DE /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD7397461D718CDB000AF2DE /* Spots-tvOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-tvOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -711,6 +715,14 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
+		BD6857A51F7CCE86008EA9B5 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				BD6857A61F7CCE98008EA9B5 /* SpotsControllerTVOSTests.swift */,
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
 		BDAD847E1E3E701B008289AE /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -943,6 +955,7 @@
 			isa = PBXGroup;
 			children = (
 				BDAD85F51E3E703A008289AE /* Component+tvOS.swift */,
+				BD6857A31F7CCCFC008EA9B5 /* SpotsController+tvOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1051,6 +1064,7 @@
 		D58478251C43FF34006EBA49 /* SpotsTests */ = {
 			isa = PBXGroup;
 			children = (
+				BD6857A51F7CCE86008EA9B5 /* tvOS */,
 				BDDF2CCE1DC7C4FC00B766BA /* macOS */,
 				BDB648551D75EF150041449A /* Info-tvOS.plist */,
 				D58478511C43FFA8006EBA49 /* Info-macOS.plist */,
@@ -1601,6 +1615,7 @@
 				BD5D69D61F398C370078AC19 /* Changes.swift in Sources */,
 				BD9ECEC51E6EC8B8003E4388 /* Component+iOS+List.swift in Sources */,
 				BDAD84D11E3E701C008289AE /* DataSource+iOS+Extensions.swift in Sources */,
+				BD6857A41F7CCCFC008EA9B5 /* SpotsController+tvOS.swift in Sources */,
 				BDAD85D41E3E7032008289AE /* ComponentModel.swift in Sources */,
 				BDAD85F61E3E703A008289AE /* Component+tvOS.swift in Sources */,
 				BDAD85E31E3E7032008289AE /* Interaction.swift in Sources */,
@@ -1651,6 +1666,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD45D98C1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */,
+				BD6857A81F7CCEF5008EA9B5 /* SpotsControllerTVOSTests.swift in Sources */,
 				BDE44B181EA0F0E60021EAC8 /* TestComponentManager.swift in Sources */,
 				BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */,
 				BD650CF81ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */,
