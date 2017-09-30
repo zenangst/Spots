@@ -208,10 +208,10 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     scrollView.clipsToBounds = true
     scrollView.delegate = self
 
+
     #if os(tvOS)
       configure(focusGuide: focusGuide, for: scrollView, enabled: false)
     #endif
-
     setupComponents()
     SpotsController.configure?(scrollView)
   }
@@ -222,12 +222,12 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    if let tabBarController = self.tabBarController, tabBarController.tabBar.isTranslucent {
-      scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
-      scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
-    }
-
     #if os(iOS)
+      if let tabBarController = self.tabBarController, tabBarController.tabBar.isTranslucent {
+        scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
+        scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
+      }
+
       refreshControl.addTarget(self, action: #selector(refreshComponent(_:)), for: .valueChanged)
 
       guard refreshDelegate != nil, refreshControl.superview == nil else {
@@ -251,7 +251,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
   open override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
-
     scrollView.frame = view.bounds
     scrollView.componentsView.frame = scrollView.bounds
   }
