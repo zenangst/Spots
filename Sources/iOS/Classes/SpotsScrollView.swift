@@ -212,7 +212,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
     componentsView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
-
     let lastView = subviewsInLayoutOrder.last
 
     for subview in subviewsInLayoutOrder {
