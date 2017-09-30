@@ -212,6 +212,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
     collectionView.layer.masksToBounds = false
+
     if #available(iOS 9.0, *) {
       collectionView.remembersLastFocusedIndexPath = true
     }
@@ -220,7 +221,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       return
     }
 
-    collectionView.showsHorizontalScrollIndicator = false
+
     self.model.interaction.scrollDirection = .horizontal
     setupHorizontalCollectionView(collectionView, with: size)
   }
