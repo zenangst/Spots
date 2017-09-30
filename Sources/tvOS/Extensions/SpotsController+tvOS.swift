@@ -36,4 +36,45 @@ extension SpotsController {
     focusGuide.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     focusGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
   }
+
+  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+    guard let focusedComponent = focusedComponent else {
+      return
+    }
+
+    if focusedComponent == components.first {
+      if #available(tvOS 11.0, *) {
+        targetContentOffset.pointee.y = -scrollView.adjustedContentInset.top
+      } else {
+        targetContentOffset.pointee.y = -scrollView.contentInset.top
+      }
+      return
+    }
+
+    guard focusedComponent != components.last
+      else {
+      return
+    }
+
+    var offset: CGFloat = 0.0
+    if components.count > 3, focusedComponent === components[1] {
+      offset = scrollView.contentInset.top / 2
+    }
+
+    let directionUp = velocity.y < 0
+    let directionDown = velocity.y > 0
+
+    guard scrollView.contentOffset != targetContentOffset.pointee else {
+      return
+    }
+
+    if directionUp {
+      targetContentOffset.pointee.y = scrollView.contentOffset.y - focusedComponent.view.contentSize.height
+    } else if directionDown {
+      targetContentOffset.pointee.y = scrollView.contentOffset.y + focusedComponent.view.contentSize.height + offset
+    } else {
+      targetContentOffset.pointee.y = scrollView.contentOffset.y
+    }
+  }
 }
