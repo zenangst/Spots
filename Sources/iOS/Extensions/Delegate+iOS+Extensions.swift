@@ -9,7 +9,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter indexPath: The index path of the item.
   ///
   /// - returns: The width and height of the specified item. Both values must be greater than 0.
-  @objc(collectionView:layout:sizeForItemAtIndexPath:) public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+ public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let sizeForItem = resolveComponent({ component in
       component.sizeForItem(at: indexPath)
     }, fallback: .zero)
@@ -56,19 +56,6 @@ extension Delegate: UICollectionViewDelegate {
     }
   }
 
-  /// Asks the delegate whether the item at the specified index path can be focused.
-  ///
-  /// - parameter collectionView: The collection view object requesting this information.
-  /// - parameter indexPath:      The index path of an item in the collection view.
-  ///
-  /// - returns: YES if the item can receive be focused or NO if it can not.
-  public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    let canFocusItem = resolveComponent({ component in
-      return component.item(at: indexPath) != nil
-    }, fallback: false)
-    return canFocusItem
-  }
-
   ///Asks the delegate whether a change in focus should occur.
   ///
   /// - parameter collectionView: The collection view object requesting this information.
@@ -76,49 +63,27 @@ extension Delegate: UICollectionViewDelegate {
   /// This object contains the index path of the previously focused item and the item targeted to receive focus next. Use this information to determine if the focus change should occur.
   ///
   /// - returns: YES if the focus change should occur or NO if it should not.
-  @available(iOS 9.0, *)
   public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
-    guard let indexPath = context.nextFocusedIndexPath else {
+    guard let indexPaths = collectionView.indexPathsForSelectedItems else {
       return true
     }
 
-    if let component = component, indexPath.item < component.model.items.count {
+    if let component = component, let nextIndexPath = context.nextFocusedIndexPath {
       component.focusDelegate?.focusedComponent = component
-      component.focusDelegate?.focusedItemIndex = indexPath.item
+      component.focusDelegate?.focusedItemIndex = nextIndexPath.item
     }
 
-    return context.nextFocusedView?.canBecomeFocused ?? false
+    return indexPaths.isEmpty
   }
 
-  #if os(tvOS)
-  public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-    // When scrolling on tvOS, the collection can lose its focus when scrolling fast in either direction,
-    // to help fight this issue, we now tell the collection view to scroll to the item that gained focus.
-    guard context.focusHeading == .up else {
-      return
-    }
-
-    guard let component = component else {
-      return
-    }
-
-    guard let indexPath = context.nextFocusedIndexPath else {
-      return
-    }
-
-    guard let spotsScrollView = collectionView.superview?.superview as? SpotsScrollView else {
-      return
-    }
-
-    if spotsScrollView.contentOffset.y > 0 {
-      spotsScrollView.isScrollEnabled = false
-      var currentOffset = spotsScrollView.contentOffset
-      currentOffset.y -= component.sizeForItem(at: indexPath).height
-      spotsScrollView.setContentOffset(currentOffset, animated: true)
-      spotsScrollView.isScrollEnabled = true
+  public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    if let indexPath = collectionView.indexPathsForSelectedItems?.first {
+      collectionView.deselectItem(at: indexPath, animated: true)
+      return false
+    } else {
+      return true
     }
   }
-  #endif
 }
 
 extension Delegate: UITableViewDelegate {
