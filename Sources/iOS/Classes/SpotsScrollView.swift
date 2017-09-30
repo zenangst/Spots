@@ -123,7 +123,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///
   /// - Parameter subview: The subview that should no longer be observed.
   private func observeView(view: UIView) {
-    guard observedViews.contains(where: { $0 == view }) else {
+    guard !observedViews.contains(where: { $0 == view }) else {
       return
     }
 
