@@ -249,14 +249,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           frame.size.height = 0
         }
 
-        #if os(tvOS)
-          // To avoid "aggressive" scrolling on tvOS, we now give the component view extra
-          // height so that the focus engine will pick the correct perferred view.
-          if remainingContentHeight > frame.size.height {
-            frame.size.height += UIScreen.main.bounds.height / 2
-          }
-        #endif
-
         scrollView.frame = frame
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
