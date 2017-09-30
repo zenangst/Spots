@@ -3,7 +3,6 @@ import Cache
 
 /// A controller powered by components.
 open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
-
   open var contentView: View {
     return view
   }
