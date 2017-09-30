@@ -221,7 +221,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       return
     }
 
-
     self.model.interaction.scrollDirection = .horizontal
     setupHorizontalCollectionView(collectionView, with: size)
   }
