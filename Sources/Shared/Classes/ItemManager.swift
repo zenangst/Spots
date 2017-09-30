@@ -220,6 +220,14 @@ public class ItemManager {
         }
       }
     #endif
+
+
+    #if os(tvOS)
+      if size.height > component.view.frame.size.height {
+        size.height = component.view.frame.size.height - CGFloat(component.model.layout.inset.bottom)
+      }
+    #endif
+
     return size
   }
 }
