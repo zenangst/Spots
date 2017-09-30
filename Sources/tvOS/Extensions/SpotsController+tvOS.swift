@@ -54,6 +54,11 @@ extension SpotsController {
 
     guard focusedComponent != components.last
       else {
+        if #available(tvOS 11.0, *) {
+          targetContentOffset.pointee.y += scrollView.adjustedContentInset.bottom / 2
+        } else {
+          targetContentOffset.pointee.y += scrollView.contentInset.bottom / 2
+        }
       return
     }
 
