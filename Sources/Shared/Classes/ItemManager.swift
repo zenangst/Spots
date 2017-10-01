@@ -224,7 +224,7 @@ public class ItemManager {
 
     #if os(tvOS)
       // This ensures that the height of the item never exceeds the size of the component view.
-      if size.height > component.view.frame.size.height {
+      if size.height > component.view.frame.size.height, component.view.superview != nil {
         size.height = component.view.frame.size.height - CGFloat(component.model.layout.inset.bottom)
       }
     #endif
