@@ -38,7 +38,6 @@ extension SpotsController {
   }
 
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-
     guard let focusedComponent = focusedComponent else {
       return
     }
@@ -52,34 +51,42 @@ extension SpotsController {
       return
     }
 
-    guard focusedComponent != components.last
-      else {
-        if #available(tvOS 11.0, *) {
-          targetContentOffset.pointee.y += scrollView.adjustedContentInset.bottom / 2
-        } else {
-          targetContentOffset.pointee.y += scrollView.contentInset.bottom / 2
-        }
+    guard focusedComponent != components.last else {
+      targetContentOffset.pointee.y = scrollView.contentSize.height - scrollView.frame.size.height
       return
-    }
-
-    var offset: CGFloat = 0.0
-    if components.count > 3, focusedComponent === components[1] {
-      offset = scrollView.contentInset.top / 2
     }
 
     let directionUp = velocity.y < 0
     let directionDown = velocity.y > 0
+    let itemSize = focusedComponent.item(at: 0)?.size ?? focusedComponent.view.contentSize
+    var layoutOffset = CGFloat(focusedComponent.model.layout.inset.top + focusedComponent.model.layout.inset.bottom)
+    layoutOffset += focusedComponent.headerHeight
+    layoutOffset += focusedComponent.footerHeight
+
+    var offset: CGFloat = 0.0
+    if scrollView.contentInset.top > 0, components.count > 3, focusedComponent === components[1] {
+      offset = scrollView.contentInset.top - layoutOffset
+      if #available(tvOS 11.0, *) {
+        offset = scrollView.frame.size.height - scrollView.adjustedContentInset.top - layoutOffset
+      } else {
+        offset = scrollView.frame.size.height - scrollView.contentInset.top - layoutOffset
+      }
+    }
 
     guard scrollView.contentOffset != targetContentOffset.pointee else {
       return
     }
 
     if directionUp {
-      targetContentOffset.pointee.y = scrollView.contentOffset.y - focusedComponent.view.contentSize.height
+      targetContentOffset.pointee.y = scrollView.contentOffset.y - itemSize.height - layoutOffset
     } else if directionDown {
-      targetContentOffset.pointee.y = scrollView.contentOffset.y + focusedComponent.view.contentSize.height + offset
+      targetContentOffset.pointee.y = scrollView.contentOffset.y + itemSize.height + offset + layoutOffset
     } else {
       targetContentOffset.pointee.y = scrollView.contentOffset.y
+    }
+
+    components.forEach { component in
+      component.view.layoutSubviews()
     }
   }
 }
