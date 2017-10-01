@@ -70,7 +70,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
   #if os(tvOS)
   /// A default focus guide that is constrained to the controllers
-  ///
   public lazy var focusGuide: UIFocusGuide = {
     let focusGuide = UIFocusGuide()
     focusGuide.isEnabled = false
