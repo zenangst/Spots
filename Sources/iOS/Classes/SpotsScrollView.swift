@@ -123,39 +123,48 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
     switch view {
     case let scrollView as UIScrollView:
-      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.old], changeHandler: { [weak self] (scrollView, value) in
-        guard !(scrollView.contentSize == value.oldValue) else {
+      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.new], changeHandler: { [weak self] (scrollView, value) in
+        guard let `self` = self else {
           return
         }
-        self?.layoutSubviews()
+
+        guard !(self.compare(size: scrollView.contentSize, to: value.newValue)) else {
+          return
+        }
+
+        self.layoutViews()
       })
 
-      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.old], changeHandler: { [weak self] (scrollView, value) in
-        guard !(scrollView.contentOffset == value.oldValue) else {
+      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.new], changeHandler: { [weak self] (scrollView, value) in
+        guard let `self` = self else {
           return
         }
-        self?.layoutSubviews()
+
+        guard !(self.compare(point: scrollView.contentOffset, to: value.newValue)) else {
+          return
+        }
+
+        self.layoutViews()
       })
 
       observers.append(contentSizeObserver)
       observers.append(contentOffsetObserver)
       fallthrough
     default:
-      let frameObserver = view.observe(\.frame, options: [.old], changeHandler: { [weak self] (view, value) in
-        guard !(view.frame == value.oldValue) else {
+      let boundsObserver = view.observe(\.bounds, options: [.new], changeHandler: { [weak self] (view, value) in
+        guard let `self` = self else {
           return
         }
-        self?.layoutSubviews()
-      })
 
-      let boundsObserver = view.observe(\.bounds, options: [.old], changeHandler: { [weak self] (view, value) in
-        guard !(view.bounds == value.oldValue) else {
+        if !self.compare(rect: view.bounds, to: value.oldValue) {
+          self.layoutViews()
           return
         }
-        self?.layoutSubviews()
-      })
 
-      observers.append(frameObserver)
+        if !self.compare(rect: view.bounds, to: value.newValue) {
+          self.layoutViews()
+        }
+      })
       observers.append(boundsObserver)
     }
   }
