@@ -20,13 +20,9 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///  --------   --------
   /// ```
   public var stretchLastComponent = Configuration.stretchLastComponent
-
-  /// A KVO context used to monitor changes in contentSize, frames and bounds
-  let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
-
   /// A collection of UIView's that resemble the order of the views in the scroll view
   fileprivate var subviewsInLayoutOrder = [UIView]()
-  fileprivate var observedViews = [UIView]()
+  fileprivate var observers = [NSKeyValueObservation]()
 
   /// The distance that the content view is inset from the enclosing scroll view.
   open override var contentInset: UIEdgeInsets {
@@ -45,11 +41,10 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
-    for subview in observedViews {
-      unobserveView(view: subview)
-    }
-
     subviewsInLayoutOrder.removeAll()
+    for observer in observers {
+      observer.invalidate()
+    }
   }
 
   /// Initializes and returns a newly allocated view object with the specified frame rectangle.
@@ -81,10 +76,11 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
       return
     }
 
+    observeView(view: subview)
+
     subviewsInLayoutOrder.removeAll()
     for subview in componentsView.subviews {
       subviewsInLayoutOrder.append(subview)
-      observeView(view: subview)
     }
 
     guard let scrollView = subview as? UIScrollView else {
@@ -109,8 +105,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///
   /// - parameter subview: - parameter subview: The subview that will be removed.
   open override func willRemoveSubview(_ subview: UIView) {
-    unobserveView(view: subview)
-
     if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
       subviewsInLayoutOrder.remove(at: index)
     }
@@ -123,82 +117,46 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///
   /// - Parameter subview: The subview that should no longer be observed.
   private func observeView(view: UIView) {
-    guard observedViews.contains(where: { $0 == view }) else {
+    guard view.superview == componentsView else {
       return
     }
 
-    if view is UIScrollView && view.superview == componentsView {
-      view.addObserver(self, forKeyPath: #keyPath(contentSize), options: .old, context: subviewContext)
-      view.addObserver(self, forKeyPath: #keyPath(contentOffset), options: .old, context: subviewContext)
-    } else if view.superview == componentsView {
-      view.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
-      view.addObserver(self, forKeyPath: #keyPath(bounds), options: .old, context: subviewContext)
-    }
-
-    observedViews.append(view)
-  }
-
-  private func unobserveView(view: UIView) {
-    guard let index = observedViews.index(where: { $0 == view }) else {
-      return
-    }
-
-    if view is UIScrollView {
-      view.removeObserver(self, forKeyPath: #keyPath(contentSize), context: subviewContext)
-      view.removeObserver(self, forKeyPath: #keyPath(contentOffset), context: subviewContext)
-    } else {
-      view.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
-      view.removeObserver(self, forKeyPath: #keyPath(bounds), context: subviewContext)
-    }
-
-    observedViews.remove(at: index)
-  }
-
-  /// This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
-  ///
-  /// - parameter keyPath: The key path, relative to object, to the value that has changed.
-  /// - parameter object:  The source object of the key path keyPath.
-  /// - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
-  /// - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
-  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-    guard let keyPath = keyPath else {
-      return
-    }
-
-    if let change = change, context == subviewContext {
-      if let scrollView = object as? UIScrollView {
-        guard let newValue = change[NSKeyValueChangeKey.oldKey] else {
+    switch view {
+    case let scrollView as UIScrollView:
+      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.old], changeHandler: { [weak self] (scrollView, value) in
+        guard !(scrollView.contentSize == value.oldValue) else {
           return
         }
-        if #keyPath(contentSize) == keyPath {
+        self?.layoutSubviews()
+      })
 
-          let newContentSize = scrollView.contentSize
-          let oldContentSize = (newValue as AnyObject).cgSizeValue
-          if !compare(size: newContentSize, to: oldContentSize) {
-            setNeedsLayout()
-            layoutIfNeeded()
-          }
-        } else if #keyPath(contentOffset) == keyPath
-          && (isDragging == false && isTracking == false) {
-          let oldOffset = (newValue as AnyObject).cgPointValue
-          let newOffset = scrollView.contentOffset
-
-          if !compare(point: newOffset, to: oldOffset) {
-            setNeedsLayout()
-            layoutIfNeeded()
-          }
+      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.old], changeHandler: { [weak self] (scrollView, value) in
+        guard !(scrollView.contentOffset == value.oldValue) else {
+          return
         }
-      } else if let view = object as? UIView {
-        let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue
-        let newFrame = view.frame
+        self?.layoutSubviews()
+      })
 
-        if !compare(rect: newFrame, to: oldFrame) {
-          setNeedsLayout()
-          layoutIfNeeded()
+      observers.append(contentSizeObserver)
+      observers.append(contentOffsetObserver)
+      fallthrough
+    default:
+      let frameObserver = view.observe(\.frame, options: [.old], changeHandler: { [weak self] (view, value) in
+        guard !(view.frame == value.oldValue) else {
+          return
         }
-      }
-    } else {
-      super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+        self?.layoutSubviews()
+      })
+
+      let boundsObserver = view.observe(\.bounds, options: [.old], changeHandler: { [weak self] (view, value) in
+        guard !(view.bounds == value.oldValue) else {
+          return
+        }
+        self?.layoutSubviews()
+      })
+
+      observers.append(frameObserver)
+      observers.append(boundsObserver)
     }
   }
 
