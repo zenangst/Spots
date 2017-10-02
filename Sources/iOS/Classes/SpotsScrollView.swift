@@ -22,7 +22,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   public var stretchLastComponent = Configuration.stretchLastComponent
   /// A collection of UIView's that resemble the order of the views in the scroll view
   fileprivate var subviewsInLayoutOrder = [UIView]()
-  fileprivate var observers = [NSKeyValueObservation]()
+  fileprivate var observers = [NSKeyValueObservation?]()
 
   /// The distance that the content view is inset from the enclosing scroll view.
   open override var contentInset: UIEdgeInsets {
@@ -43,8 +43,10 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   deinit {
     subviewsInLayoutOrder.removeAll()
     for observer in observers {
-      observer.invalidate()
+      observer?.invalidate()
     }
+
+    observers.removeAll()
   }
 
   /// Initializes and returns a newly allocated view object with the specified frame rectangle.
