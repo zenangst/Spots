@@ -48,7 +48,6 @@
 		BD357EAF1F46C940002B39AB /* ItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */; };
 		BD357EB01F46C940002B39AB /* ItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */; };
 		BD357EB11F46C940002B39AB /* ItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */; };
-		BD3B4A8D1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3B4A8C1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift */; };
 		BD3DDC1F1F544E7200832469 /* ComponentMacOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3DDC1E1F544E7200832469 /* ComponentMacOSTests.swift */; };
 		BD3EC3B91F541E91009CCDF3 /* CollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */; };
 		BD3EC3BA1F541E91009CCDF3 /* CollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */; };
@@ -451,7 +450,6 @@
 		BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveAlgorithmTests.swift; sourceTree = "<group>"; };
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD357EAE1F46C940002B39AB /* ItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManagerTests.swift; sourceTree = "<group>"; };
-		BD3B4A8C1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewManagerTests.swift; sourceTree = "<group>"; };
 		BD3DDC1E1F544E7200832469 /* ComponentMacOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMacOSTests.swift; sourceTree = "<group>"; };
 		BD3EC3B81F541E8E009CCDF3 /* CollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		BD4295541D81D39700E07E1C /* ComponentiOSTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentiOSTests.swift; sourceTree = "<group>"; };
@@ -1089,7 +1087,6 @@
 				D5D282721E54773C004BF251 /* TestListWrapper.swift */,
 				BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */,
 				BD677E8C1DC62575006D1654 /* TestUIViewControllerExtensions.swift */,
-				BD3B4A8C1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -1850,7 +1847,6 @@
 				BD45D9951E30A8A000C2D6B2 /* InsetTests.swift in Sources */,
 				BD5D69D81F398E740078AC19 /* DiffManagerTests.swift in Sources */,
 				BDEA327F1E87A6FF0044B056 /* TestInteraction.swift in Sources */,
-				BD3B4A8D1EEFAB7B007ABD3B /* ScrollViewManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
