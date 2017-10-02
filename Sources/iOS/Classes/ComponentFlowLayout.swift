@@ -379,6 +379,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   ///
   /// - returns: Always returns true
   open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    guard let collectionView = collectionView else {
+      return false
+    }
+
+    guard collectionView.frame.size.height > 0 else {
+      return false
+    }
+
     return newBounds.size.height >= contentSize.height
   }
 

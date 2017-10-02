@@ -9,7 +9,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter indexPath: The index path of the item.
   ///
   /// - returns: The width and height of the specified item. Both values must be greater than 0.
-  @objc(collectionView:layout:sizeForItemAtIndexPath:) public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let sizeForItem = resolveComponent({ component in
       component.sizeForItem(at: indexPath)
     }, fallback: .zero)
@@ -89,36 +89,6 @@ extension Delegate: UICollectionViewDelegate {
 
     return context.nextFocusedView?.canBecomeFocused ?? false
   }
-
-  #if os(tvOS)
-  public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-    // When scrolling on tvOS, the collection can lose its focus when scrolling fast in either direction,
-    // to help fight this issue, we now tell the collection view to scroll to the item that gained focus.
-    guard context.focusHeading == .up else {
-      return
-    }
-
-    guard let component = component else {
-      return
-    }
-
-    guard let indexPath = context.nextFocusedIndexPath else {
-      return
-    }
-
-    guard let spotsScrollView = collectionView.superview?.superview as? SpotsScrollView else {
-      return
-    }
-
-    if spotsScrollView.contentOffset.y > 0 {
-      spotsScrollView.isScrollEnabled = false
-      var currentOffset = spotsScrollView.contentOffset
-      currentOffset.y -= component.sizeForItem(at: indexPath).height
-      spotsScrollView.setContentOffset(currentOffset, animated: true)
-      spotsScrollView.isScrollEnabled = true
-    }
-  }
-  #endif
 }
 
 extension Delegate: UITableViewDelegate {

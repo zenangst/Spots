@@ -212,7 +212,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
     componentsView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
-
     let lastView = subviewsInLayoutOrder.last
 
     for subview in subviewsInLayoutOrder {
@@ -238,6 +237,12 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         }
 
+        #if os(tvOS)
+          if (scrollView as? CollectionView)?.flowLayout?.scrollDirection == .horizontal, frame.size.height < scrollView.contentSize.height {
+            frame.size.height = scrollView.contentSize.height
+          }
+        #endif
+
         // Using `.integral` can sometimes set the height back to 1.
         // To avoid this we check if the height is zero before we run `.integral`.
         // If it was, then we set it to zero again to not have frame heights jump between
@@ -248,14 +253,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         if shouldResetFrameHeightToZero {
           frame.size.height = 0
         }
-
-        #if os(tvOS)
-          // To avoid "aggressive" scrolling on tvOS, we now give the component view extra
-          // height so that the focus engine will pick the correct perferred view.
-          if remainingContentHeight > frame.size.height {
-            frame.size.height += UIScreen.main.bounds.height / 2
-          }
-        #endif
 
         scrollView.frame = frame
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
