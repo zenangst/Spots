@@ -3,6 +3,14 @@ import QuartzCore
 
 /// The core foundation scroll view inside of Spots that manages the linear layout of all components.
 open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
+  private struct Observer: Equatable {
+    let view: UIView
+    let keyValueObservation: NSKeyValueObservation
+
+    static func == (lhs: Observer, rhs: Observer) -> Bool {
+      return lhs.view === rhs.view && lhs.keyValueObservation === rhs.keyValueObservation
+    }
+  }
 
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
   /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
@@ -22,7 +30,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   public var stretchLastComponent = Configuration.stretchLastComponent
   /// A collection of UIView's that resemble the order of the views in the scroll view
   fileprivate var subviewsInLayoutOrder = [UIView]()
-  fileprivate var observers = [NSKeyValueObservation?]()
+  private var observers = [Observer]()
 
   /// The distance that the content view is inset from the enclosing scroll view.
   open override var contentInset: UIEdgeInsets {
@@ -107,6 +115,12 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
       subviewsInLayoutOrder.remove(at: index)
     }
 
+    for observer in observers.filter({ $0.view === subview }) {
+      if let index = observers.index(where: { $0 == observer }) {
+        observers.remove(at: index)
+      }
+    }
+
     setNeedsLayout()
     layoutSubviews()
   }
@@ -145,8 +159,8 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         self.layoutViews()
       })
 
-      observers.append(contentSizeObserver)
-      observers.append(contentOffsetObserver)
+      observers.append(Observer(view: view, keyValueObservation: contentSizeObserver))
+      observers.append(Observer(view: view, keyValueObservation: contentOffsetObserver))
       fallthrough
     default:
       let boundsObserver = view.observe(\.bounds, options: [.new], changeHandler: { [weak self] (view, value) in
@@ -163,7 +177,8 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           self.layoutViews()
         }
       })
-      observers.append(boundsObserver)
+
+      observers.append(Observer(view: view, keyValueObservation: boundsObserver))
     }
   }
 
