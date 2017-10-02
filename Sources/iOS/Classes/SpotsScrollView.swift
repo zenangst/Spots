@@ -42,10 +42,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
     subviewsInLayoutOrder.removeAll()
-    for observer in observers {
-      observer?.invalidate()
-    }
-
     observers.removeAll()
   }
 
