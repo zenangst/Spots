@@ -226,8 +226,6 @@ public class SpotsControllerManager {
                       newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
-    var offsets = [CGPoint]()
-
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
       component.model.items = newItems
     }, completion: completion)
