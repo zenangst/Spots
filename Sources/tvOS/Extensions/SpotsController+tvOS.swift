@@ -85,8 +85,6 @@ extension SpotsController {
       targetContentOffset.pointee.y = scrollView.contentOffset.y
     }
 
-    components.forEach { component in
-      component.view.layoutSubviews()
-    }
+    scrollView.setNeedsLayout()
   }
 }

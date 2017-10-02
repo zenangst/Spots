@@ -108,7 +108,7 @@ public class SpotsControllerManager {
 
       strongSelf.process(changes: changes, controller: controller, components: newComponentModels, withAnimation: animation) {
         Dispatch.main {
-          controller.scrollView.layoutSubviews()
+          controller.scrollView.setNeedsLayout()
           SpotsController.componentsDidReloadComponentModels?(controller)
           completion?()
         }
@@ -272,7 +272,7 @@ public class SpotsControllerManager {
     }
 
     let completion = {
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       completion?()
     }
 
@@ -338,7 +338,7 @@ public class SpotsControllerManager {
       }
 
       if runCompletion {
-        controller.scrollView.layoutSubviews()
+        controller.scrollView.setNeedsLayout()
         finalCompletion?()
       }
     }
@@ -393,7 +393,7 @@ public class SpotsControllerManager {
         newComponents[$0.offset].view.contentOffset = $0.element
       }
 
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       SpotsController.componentsDidReloadComponentModels?(controller)
     }
   }
@@ -430,7 +430,7 @@ public class SpotsControllerManager {
       }
 
       SpotsController.componentsDidReloadComponentModels?(controller)
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
 
       if performCleanup {
         controller.scrollView.contentOffset = previousContentOffset
@@ -467,7 +467,7 @@ public class SpotsControllerManager {
       }
 
       SpotsController.componentsDidReloadComponentModels?(controller)
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       controller.scrollView.contentOffset = previousContentOffset
       completion?()
     }
@@ -483,7 +483,7 @@ public class SpotsControllerManager {
   public func update(componentAtIndex index: Int = 0, controller: SpotsController, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ component: Component) -> Void) {
     guard let component = controller.component(at: index) else {
       assertionFailure("Could not resolve component at index: \(index).")
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       completion?()
       return
     }
@@ -502,7 +502,7 @@ public class SpotsControllerManager {
       #endif
 
       component.reload(nil, withAnimation: animation) {
-        controller.scrollView.layoutSubviews()
+        controller.scrollView.setNeedsLayout()
         completion?()
       }
     }
@@ -520,7 +520,7 @@ public class SpotsControllerManager {
   public func updateIfNeeded(componentAtIndex index: Int = 0, controller: SpotsController, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let component = controller.component(at: index) else {
       assertionFailure("Could not resolve component at index: \(index).")
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       completion?()
       return
     }
@@ -529,7 +529,7 @@ public class SpotsControllerManager {
     newModel.items = items
 
     let didUpdate = updateComponentModel(newModel, on: component, in: controller, withAnimation: animation) {
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       completion?()
     }
 

@@ -420,12 +420,12 @@ public class ComponentManager {
     if updateHeightAndIndexes {
       component.updateHeightAndIndexes {
         component.afterUpdate()
-        component.view.superview?.layoutSubviews()
+        component.view.superview?.setNeedsLayout()
         completion?()
       }
     } else {
       component.afterUpdate()
-      component.view.superview?.layoutSubviews()
+      component.view.superview?.setNeedsLayout()
       completion?()
     }
   }
