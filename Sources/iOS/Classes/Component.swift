@@ -175,6 +175,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     layoutHeaderFooterViews(size)
 
     view.setNeedsLayout()
+    view.layoutIfNeeded()
   }
 
   /// This method is invoked by `ComponentCollectionView.layoutSubviews()`.

@@ -421,11 +421,13 @@ public class ComponentManager {
       component.updateHeightAndIndexes {
         component.afterUpdate()
         component.view.superview?.setNeedsLayout()
+        component.view.superview?.layoutIfNeeded()
         completion?()
       }
     } else {
       component.afterUpdate()
       component.view.superview?.setNeedsLayout()
+      component.view.superview?.layoutIfNeeded()
       completion?()
     }
   }
