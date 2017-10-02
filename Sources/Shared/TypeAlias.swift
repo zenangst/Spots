@@ -24,17 +24,6 @@ public typealias Completion = (() -> Void)?
   public typealias FlowLayout = NSCollectionViewFlowLayout
   /// A type alias for scrollable views
   public typealias ScrollableView = SpotsScrollView
-
-  /// Extension for macOS to gain layoutSubviews
-  public extension NSView {
-    func layoutSubviews() {
-      layoutSubtreeIfNeeded()
-    }
-
-    func layoutIfNeeded() {
-      layoutSubtreeIfNeeded()
-    }
-  }
 #else
   /// A type alias to reference a view passed to delegate method
   public typealias ComponentView = UIView

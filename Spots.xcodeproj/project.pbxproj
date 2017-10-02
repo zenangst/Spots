@@ -358,6 +358,7 @@
 		BDEFF54F1DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */; };
 		BDF404D11F4EA2DE00F9E3B9 /* ComponentScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF404D01F4EA2DE00F9E3B9 /* ComponentScrollView.swift */; };
+		BDF432991F82DE4600332E20 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF432981F82DE4600332E20 /* NSView+Extensions.swift */; };
 		BDFBB76D1F75094600421BCF /* ComponentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFBB76C1F75094600421BCF /* ComponentTableView.swift */; };
 		BDFBB76E1F75094600421BCF /* ComponentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFBB76C1F75094600421BCF /* ComponentTableView.swift */; };
 		BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474C1E747B2B008700BF /* TestGridWrapper.swift */; };
@@ -591,6 +592,7 @@
 		BDEFF54E1DD1C85300FC0537 /* TestDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataSource.swift; sourceTree = "<group>"; };
 		BDEFF5511DD1DA8000FC0537 /* TestComponentDelegate+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TestComponentDelegate+iOS.swift"; sourceTree = "<group>"; };
 		BDF404D01F4EA2DE00F9E3B9 /* ComponentScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentScrollView.swift; sourceTree = "<group>"; };
+		BDF432981F82DE4600332E20 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
 		BDFBB76C1F75094600421BCF /* ComponentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTableView.swift; sourceTree = "<group>"; };
 		BDFC474C1E747B2B008700BF /* TestGridWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestGridWrapper.swift; sourceTree = "<group>"; };
 		BDFC474D1E747B2B008700BF /* TestListWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestListWrapper.swift; sourceTree = "<group>"; };
@@ -818,6 +820,7 @@
 				BDAD85021E3E7025008289AE /* NSScrollView+Extensions.swift */,
 				BDAD85031E3E7025008289AE /* NSTableView+UserInterface.swift */,
 				BDA25E8F1EB5070F002B21C0 /* Wrappable+macOS.swift */,
+				BDF432981F82DE4600332E20 /* NSView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1920,6 +1923,7 @@
 				BD9ECEB81E6EC6BC003E4388 /* Component+macOS+List.swift in Sources */,
 				BD91A94F1F2FAB68005B6A38 /* ComponentResolvable.swift in Sources */,
 				BD44D1E41EADC48200F7205E /* HeaderMode.swift in Sources */,
+				BDF432991F82DE4600332E20 /* NSView+Extensions.swift in Sources */,
 				BDAD851E1E3E7025008289AE /* Delegate+macOS+Extensions.swift in Sources */,
 				BD9ECEBA1E6EC6D1003E4388 /* Component+macOS+Grid.swift in Sources */,
 				BDAD85941E3E7032008289AE /* ComponentDelegate+Extensions.swift in Sources */,
