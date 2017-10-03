@@ -2,41 +2,29 @@ import Cocoa
 
 extension Component {
 
-  func setupHeader(with model: inout ComponentModel) {
+  func setupHeader() {
     guard let header = model.header, headerView == nil else {
       return
     }
 
-    if let (_, headerView) = Configuration.views.make(header.kind) {
-      if let headerView = headerView,
-        let itemConfigurable = headerView as? ItemConfigurable {
-        itemConfigurable.configure(with: header)
-        let size = CGSize(width: view.frame.width,
-                          height: itemConfigurable.computeSize(for: header).height)
-        headerView.frame.size = size
-        model.header = header
-        self.headerView = headerView
-        scrollView.addSubview(headerView)
-      }
+    if let headerView = Configuration.views.make(header.kind)?.view {
+      self.headerView = headerView
+      reloadHeader()
+      (collectionView?.flowLayout)?.headerReferenceSize = headerView.frame.size
+      scrollView.documentView?.addSubview(headerView)
     }
   }
 
-  func setupFooter(with model: inout ComponentModel) {
+  func setupFooter() {
     guard let footer = model.footer, footerView == nil else {
       return
     }
 
-    if let (_, footerView) = Configuration.views.make(footer.kind) {
-      if let footerView = footerView,
-        let itemConfigurable = footerView as? ItemConfigurable {
-        itemConfigurable.configure(with: footer)
-        let size = CGSize(width: view.frame.width,
-                          height: itemConfigurable.computeSize(for: footer).height)
-        footerView.frame.size = size
-        model.footer = footer
-        self.footerView = footerView
-        scrollView.addSubview(footerView)
-      }
+    if let footerView = Configuration.views.make(footer.kind)?.view {
+      self.footerView = footerView
+      reloadFooter()
+      (collectionView?.flowLayout)?.footerReferenceSize = footerView.frame.size
+      scrollView.documentView?.addSubview(footerView)
     }
   }
 

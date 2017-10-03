@@ -30,7 +30,7 @@ class HeaderView: NSView, ItemConfigurable {
     titleLabel.centerYAnchor.constraint(equalTo: titleLabel.superview!.centerYAnchor).isActive = true
   }
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 200, height: 50)
   }
 
@@ -72,7 +72,7 @@ class TextView: NSView, ItemConfigurable {
     titleLabel.stringValue = item.title
   }
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 200, height: 50)
   }
 }
@@ -110,7 +110,7 @@ class FooterView: NSView, ItemConfigurable {
     titleLabel.stringValue = item.title
   }
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 200, height: 50)
   }
 

@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
     ss.ios.source_files = 'Sources/{iOS,Shared}/**/*'
     ss.osx.source_files = 'Sources/{macOS,Shared}/**/*'
     ss.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
-    ss.dependency 'Tailor', '~> 2.0'
+    ss.dependency 'Tailor', '~> 3.0'
     ss.dependency 'Cache', '~> 3.0'
     ss.framework  = "Foundation"
   end

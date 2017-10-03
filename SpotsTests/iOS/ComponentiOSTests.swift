@@ -3,6 +3,12 @@ import Foundation
 import XCTest
 
 class ComponentiOSTests: XCTestCase {
+  class ComponentTestView: View, ItemConfigurable {
+    func configure(with item: Item) {}
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
+      return CGSize(width: 100, height: 100)
+    }
+  }
 
   var component: Component!
   var cachedSpot: Component!
@@ -139,7 +145,7 @@ class ComponentiOSTests: XCTestCase {
     let parentSize = CGSize(width: 667, height: 225)
 
     // Check `span` mapping
-    XCTAssertEqual(component.model.layout!.span, 4.0)
+    XCTAssertEqual(component.model.layout.span, 4.0)
 
     component.setup(with: parentSize)
     component.prepareItems()
@@ -202,7 +208,7 @@ class ComponentiOSTests: XCTestCase {
     component.view.layoutSubviews()
 
     // Sanity check, to make sure we have our page indicator in overlay mode
-    XCTAssertEqual(model.layout!.pageIndicatorPlacement, .overlay)
+    XCTAssertEqual(model.layout.pageIndicatorPlacement, .overlay)
 
     // Assert item layout (derived from preferred view size)
     XCTAssertEqual(component.model.items[0].size.height, 88)
@@ -302,8 +308,8 @@ class ComponentiOSTests: XCTestCase {
     XCTAssertEqual(targetContentOffset.pointee.y, 100000)
 
     // Make sure that minimum item spacing is taken into account when snapping to an item.
-    model.layout?.itemSpacing = 10
-    model.layout?.span = 2
+    model.layout.itemSpacing = 10
+    model.layout.span = 2
     collectionView.itemSize = CGSize(width: 140, height: 100)
     component = Component(model: model, view: collectionView)
     component.setup(with: parentSize)
@@ -493,5 +499,38 @@ class ComponentiOSTests: XCTestCase {
     component.scrollTo(item: { $0.title == "item5" })
 
     XCTAssertEqual(component.view.contentOffset.x, 400)
+  }
+
+  func testComponentComputedHeightConstraint() {
+    let identifier = "testComponentComputedHeightConstraint"
+    Configuration.register(view: ComponentTestView.self, identifier: identifier)
+
+    let spotsContentView = SpotsContentView(frame: .init(origin: .zero, size: CGSize(width: 500, height: 500)))
+    let items = [
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      Item(kind: identifier),
+      ]
+    let model = ComponentModel(kind: .grid, items: items)
+    let component = Component(model: model)
+    component.setup(with: .init(width: 100, height: 100))
+
+    let initalExpectation = self.expectation(description: "Expect component height to be 600")
+    let secondExpectation = self.expectation(description: "Expect component to be constrainted to its superview, which should be 500")
+
+    component.updateHeight {
+      XCTAssertEqual(component.view.frame.size.height, 600)
+      initalExpectation.fulfill()
+      spotsContentView.addSubview(component.view)
+
+      component.updateHeight {
+        XCTAssertEqual(component.view.frame.size.height, 500)
+        secondExpectation.fulfill()
+      }
+    }
+    wait(for: [initalExpectation, secondExpectation], timeout: 10.0)
   }
 }

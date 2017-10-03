@@ -3,9 +3,6 @@
 import UIKit
 
 public class Component: NSObject, ComponentHorizontallyScrollable {
-  /// The default layout that should be used for components.
-  /// It will default to this one if `Layout` is absent during init.
-  public static var layout: Layout = Layout(span: 0.0)
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
   open static var configure: ((Component) -> Void)?
@@ -21,21 +18,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// A horizontal scroll view delegate that will invoke methods when a user scrolls
   /// a collection view with horizontal scrolling.
   weak public var carouselScrollDelegate: CarouselScrollDelegate?
-  /// A parent component used for composition.
-  public var parentComponent: Component? {
-    didSet {
-      self.view.frame.size.height = self.computedHeight
-      self.focusDelegate = parentComponent?.focusDelegate
-    }
-  }
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
   /// An engine that handles mutation of the component model data source.
   public var manager: ComponentManager = ComponentManager()
-  /// A collection of composite components, dynamically constructed and mutated based of
-  /// the contents of the `.model`.
-  public var compositeComponents: [CompositeComponent] = []
   /// A configuration closure that will be invoked when views are added to the component.
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -79,7 +66,16 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     return footerView.frame.size.height
   }
-  public var view: ScrollView
+
+  /// The underlying view for this component, usually UITableView or UICollectionView
+  public var view: ScrollView {
+    didSet {
+      if let userInterface = view as? UserInterface {
+        userInterface.register()
+      }
+    }
+  }
+
   /// A computed variable that casts the current `userInterface` into a `UITableView`.
   /// It will return `nil` if the model kind is not `.list`.
   public var tableView: TableView? {
@@ -100,21 +96,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public required init(model: ComponentModel, view: ScrollView, parentComponent: Component? = nil) {
     self.model = model
     self.view = view
-    self.parentComponent = parentComponent
-
     super.init()
-
-    if model.layout == nil {
-      self.model.layout = Component.layout
-    }
-
     registerDefaultIfNeeded(view: DefaultItemView.self)
-
     userInterface?.register()
 
-    if let componentLayout = self.model.layout,
-      let collectionViewLayout = collectionView?.collectionViewLayout as? ComponentFlowLayout {
-      componentLayout.configure(collectionViewLayout: collectionViewLayout)
+    if let collectionViewLayout = collectionView?.flowLayout {
+      model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 
     self.componentDataSource = DataSource(component: self)
@@ -126,11 +113,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// - Parameter model: A component model that is used for constructing and configurating the component.
   public required convenience init(model: ComponentModel) {
     let view = model.kind == .list
-      ? TableView()
+      ? ComponentTableView()
       : ComponentCollectionView(frame: .zero, collectionViewLayout: CollectionLayout())
 
     self.init(model: model, view: view)
 
+    (tableView as? ComponentTableView)?.component = self
     (collectionView as? ComponentCollectionView)?.component = self
   }
 
@@ -155,8 +143,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public func setup(with size: CGSize) {
     view.frame.size = size
 
-    setupFooter(with: &model)
-    setupHeader(with: &model)
+    setupFooter()
+    setupHeader()
 
     if let tableView = self.tableView {
       setupTableView(tableView, with: size)
@@ -168,9 +156,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     configurePageControl()
     Component.configure?(self)
 
-    if let layout = model.layout, layout.infiniteScrolling {
+    if model.layout.infiniteScrolling {
       let size = sizeForItem(at: IndexPath(item: 0, section: 0))
-      collectionView?.contentOffset.x = size.width + CGFloat(layout.itemSpacing)
+      collectionView?.contentOffset.x = size.width + CGFloat(model.layout.itemSpacing)
     }
   }
 
@@ -186,14 +174,15 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     layoutHeaderFooterViews(size)
 
-    view.layoutSubviews()
+    view.setNeedsLayout()
+    view.layoutIfNeeded()
   }
 
   /// This method is invoked by `ComponentCollectionView.layoutSubviews()`.
   /// It is used to invoke `handleInfiniteScrolling` when the users scrolls a horizontal
   /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
-    guard model.kind == .carousel, model.layout?.infiniteScrolling == true else {
+    guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
       return
     }
 
@@ -223,12 +212,16 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.backgroundView = backgroundView
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.showsVerticalScrollIndicator = false
+    collectionView.layer.masksToBounds = false
+
+    if #available(iOS 9.0, *) {
+      collectionView.remembersLastFocusedIndexPath = true
+    }
 
     guard model.kind == .carousel else {
       return
     }
 
-    collectionView.showsHorizontalScrollIndicator = false
     self.model.interaction.scrollDirection = .horizontal
     setupHorizontalCollectionView(collectionView, with: size)
   }
@@ -239,13 +232,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - collectionView: The collection view that should be configured.
   ///   - size: The size that should be used for setting the new layout for the collection view.
   fileprivate func layoutCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    if compositeComponents.isEmpty {
-      prepareItems(recreateComposites: true)
-    }
+    prepareItems()
 
     switch model.interaction.scrollDirection {
     case .horizontal:
-      if let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement {
+      if let pageIndicatorPlacement = model.layout.pageIndicatorPlacement {
         switch pageIndicatorPlacement {
         case .below:
           pageControl.frame.origin.y = collectionView.frame.height - pageControl.frame.height
@@ -275,7 +266,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// Configure the page control for the component.
   /// Page control is only supported in horizontal collection views.
   func configurePageControl() {
-    guard let placement = model.layout?.pageIndicatorPlacement else {
+    guard let placement = model.layout.pageIndicatorPlacement else {
       pageControl.removeFromSuperview()
       return
     }
@@ -296,17 +287,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       pageControl.currentPageIndicatorTintColor = nil
       view.addSubview(pageControl)
     }
-  }
-
-  /// Get the size of the item at index path.
-  ///
-  /// - Parameter indexPath: The index path of the item that should be resolved.
-  /// - Returns: A `CGSize` based of the `Item`'s width and height.
-  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    return CGSize(
-      width:  item(at: indexPath)?.size.width  ?? 0.0,
-      height: item(at: indexPath)?.size.height ?? 0.0
-    )
   }
 
   /// Scroll to a specific item based on predicate.
@@ -334,8 +314,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
   /// This method is invoked after mutations has been performed on a component.
   public func afterUpdate() {
-    if !compositeComponents.isEmpty {
-      setup(with: view.frame.size)
-    }
+    reloadHeader()
+    reloadFooter()
+
+    pageControl.numberOfPages = model.items.count
+    view.superview?.layoutIfNeeded()
   }
 }

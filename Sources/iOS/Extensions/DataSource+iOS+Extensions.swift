@@ -10,27 +10,27 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let component = component, let layout = component.model.layout else {
-        return 0
-    }
+    let numberOfItemsInSection: Int = resolveComponent({ component in
+      if component.model.layout.infiniteScrolling {
+        var additionalIndexes: Int = 0
+        var remainingWidth: CGFloat = 0
+        for item in component.model.items {
+          remainingWidth += item.size.width
 
-    if layout.infiniteScrolling {
-      var additionalIndexes: Int = 0
-      var remainingWidth: CGFloat = 0
-      for item in component.model.items {
-        remainingWidth += item.size.width
+          if remainingWidth >= collectionView.frame.size.width {
+            break
+          }
 
-        if remainingWidth >= collectionView.frame.size.width {
-          break
+          additionalIndexes += 1
         }
 
-        additionalIndexes += 1
+        return component.model.items.count + additionalIndexes
       }
 
-      return component.model.items.count + additionalIndexes
-    }
+      return component.model.items.count
+    }, fallback: 0)
 
-    return component.model.items.count
+    return numberOfItemsInSection
   }
 
   /// Asks the data source for the number of items in the specified section. (required)
@@ -40,14 +40,13 @@ extension DataSource: UICollectionViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let component = component,
-      let layout = component.model.layout else {
-        return UICollectionViewCell()
+    guard let component = component else {
+      return UICollectionViewCell()
     }
 
     let currentIndexPath: IndexPath
 
-    if layout.infiniteScrolling {
+    if component.model.layout.infiniteScrolling {
       /// Compute the first and last item in the list, it should start with the last
       /// item instead of the first on the model. The last item in the list should
       /// also be resolved to the last on the model.
@@ -91,11 +90,8 @@ extension DataSource: UITableViewDataSource {
   ///
   /// - returns: The number of rows in section.
   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard let component = component else {
-      return 0
-    }
-
-    return component.model.items.count
+    let numberOfRowsInSection = resolveComponent({ $0.model.items.count }, fallback: 0)
+    return numberOfRowsInSection
   }
 
   /// Asks the data source for a cell to insert in a particular location of the table view. (required)

@@ -3,6 +3,14 @@ import QuartzCore
 
 /// The core foundation scroll view inside of Spots that manages the linear layout of all components.
 open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
+  private struct Observer: Equatable {
+    let view: UIView
+    let keyValueObservation: NSKeyValueObservation
+
+    static func == (lhs: Observer, rhs: Observer) -> Bool {
+      return lhs.view === rhs.view && lhs.keyValueObservation === rhs.keyValueObservation
+    }
+  }
 
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
   /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
@@ -20,13 +28,9 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///  --------   --------
   /// ```
   public var stretchLastComponent = Configuration.stretchLastComponent
-
-  /// A KVO context used to monitor changes in contentSize, frames and bounds
-  let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
-
   /// A collection of UIView's that resemble the order of the views in the scroll view
   fileprivate var subviewsInLayoutOrder = [UIView]()
-  fileprivate var observedViews = [UIView]()
+  private var observers = [Observer]()
 
   /// The distance that the content view is inset from the enclosing scroll view.
   open override var contentInset: UIEdgeInsets {
@@ -45,11 +49,8 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
-    for subview in observedViews {
-      unobserveView(view: subview)
-    }
-
     subviewsInLayoutOrder.removeAll()
+    observers.removeAll()
   }
 
   /// Initializes and returns a newly allocated view object with the specified frame rectangle.
@@ -81,10 +82,11 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
       return
     }
 
+    observeView(view: subview)
+
     subviewsInLayoutOrder.removeAll()
     for subview in componentsView.subviews {
       subviewsInLayoutOrder.append(subview)
-      observeView(view: subview)
     }
 
     guard let scrollView = subview as? UIScrollView else {
@@ -109,10 +111,14 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///
   /// - parameter subview: - parameter subview: The subview that will be removed.
   open override func willRemoveSubview(_ subview: UIView) {
-    unobserveView(view: subview)
-
     if let index = subviewsInLayoutOrder.index(where: { $0 == subview }) {
       subviewsInLayoutOrder.remove(at: index)
+    }
+
+    for observer in observers.filter({ $0.view === subview }) {
+      if let index = observers.index(where: { $0 == observer }) {
+        observers.remove(at: index)
+      }
     }
 
     setNeedsLayout()
@@ -123,82 +129,56 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///
   /// - Parameter subview: The subview that should no longer be observed.
   private func observeView(view: UIView) {
-    guard observedViews.contains(where: { $0 == view }) else {
+    guard view.superview == componentsView else {
       return
     }
 
-    if view is UIScrollView && view.superview == componentsView {
-      view.addObserver(self, forKeyPath: #keyPath(contentSize), options: .old, context: subviewContext)
-      view.addObserver(self, forKeyPath: #keyPath(contentOffset), options: .old, context: subviewContext)
-    } else if view.superview == componentsView {
-      view.addObserver(self, forKeyPath: #keyPath(frame), options: .old, context: subviewContext)
-      view.addObserver(self, forKeyPath: #keyPath(bounds), options: .old, context: subviewContext)
-    }
-
-    observedViews.append(view)
-  }
-
-  private func unobserveView(view: UIView) {
-    guard let index = observedViews.index(where: { $0 == view }) else {
-      return
-    }
-
-    if view is UIScrollView {
-      view.removeObserver(self, forKeyPath: #keyPath(contentSize), context: subviewContext)
-      view.removeObserver(self, forKeyPath: #keyPath(contentOffset), context: subviewContext)
-    } else {
-      view.removeObserver(self, forKeyPath: #keyPath(frame), context: subviewContext)
-      view.removeObserver(self, forKeyPath: #keyPath(bounds), context: subviewContext)
-    }
-
-    observedViews.remove(at: index)
-  }
-
-  /// This message is sent to the receiver when the value at the specified key path relative to the given object has changed.
-  ///
-  /// - parameter keyPath: The key path, relative to object, to the value that has changed.
-  /// - parameter object:  The source object of the key path keyPath.
-  /// - parameter change:  A dictionary that describes the changes that have been made to the value of the property at the key path keyPath relative to object.
-  /// - parameter context: The value that was provided when the receiver was registered to receive key-value observation notifications.
-  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-    guard let keyPath = keyPath else {
-      return
-    }
-
-    if let change = change, context == subviewContext {
-      if let scrollView = object as? UIScrollView {
-        guard let newValue = change[NSKeyValueChangeKey.oldKey] else {
+    switch view {
+    case let scrollView as UIScrollView:
+      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.new], changeHandler: { [weak self] (scrollView, value) in
+        guard let `self` = self else {
           return
         }
-        if #keyPath(contentSize) == keyPath {
 
-          let newContentSize = scrollView.contentSize
-          let oldContentSize = (newValue as AnyObject).cgSizeValue
-          if !compare(size: newContentSize, to: oldContentSize) {
-            setNeedsLayout()
-            layoutIfNeeded()
-          }
-        } else if #keyPath(contentOffset) == keyPath
-          && (isDragging == false && isTracking == false) {
-          let oldOffset = (newValue as AnyObject).cgPointValue
-          let newOffset = scrollView.contentOffset
-
-          if !compare(point: newOffset, to: oldOffset) {
-            setNeedsLayout()
-            layoutIfNeeded()
-          }
+        guard !(self.compare(size: scrollView.contentSize, to: value.newValue)) else {
+          return
         }
-      } else if let view = object as? UIView {
-        let oldFrame = (change[NSKeyValueChangeKey.oldKey] as AnyObject).cgRectValue
-        let newFrame = view.frame
 
-        if !compare(rect: newFrame, to: oldFrame) {
-          setNeedsLayout()
-          layoutIfNeeded()
+        self.layoutViews()
+      })
+
+      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.new], changeHandler: { [weak self] (scrollView, value) in
+        guard let `self` = self else {
+          return
         }
-      }
-    } else {
-      super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+
+        guard !(self.compare(point: scrollView.contentOffset, to: value.newValue)) else {
+          return
+        }
+
+        self.layoutViews()
+      })
+
+      observers.append(Observer(view: view, keyValueObservation: contentSizeObserver))
+      observers.append(Observer(view: view, keyValueObservation: contentOffsetObserver))
+      fallthrough
+    default:
+      let boundsObserver = view.observe(\.bounds, options: [.new], changeHandler: { [weak self] (view, value) in
+        guard let `self` = self else {
+          return
+        }
+
+        if !self.compare(rect: view.bounds, to: value.oldValue) {
+          self.layoutViews()
+          return
+        }
+
+        if !self.compare(rect: view.bounds, to: value.newValue) {
+          self.layoutViews()
+        }
+      })
+
+      observers.append(Observer(view: view, keyValueObservation: boundsObserver))
     }
   }
 
@@ -212,7 +192,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
     componentsView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
-
     let lastView = subviewsInLayoutOrder.last
 
     for subview in subviewsInLayoutOrder {
@@ -238,9 +217,24 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         }
 
-        frame.size.width = ceil(componentsView.frame.size.width)
+        #if os(tvOS)
+          if (scrollView as? CollectionView)?.flowLayout?.scrollDirection == .horizontal, frame.size.height < scrollView.contentSize.height {
+            frame.size.height = scrollView.contentSize.height
+          }
+        #endif
 
-        scrollView.frame = frame.integral
+        // Using `.integral` can sometimes set the height back to 1.
+        // To avoid this we check if the height is zero before we run `.integral`.
+        // If it was, then we set it to zero again to not have frame heights jump between
+        // one and zero when scrolling. Jump frame heights can cause rendering issues and
+        // make `UICollectionView` not render corretly when you use multiple components.
+        let shouldResetFrameHeightToZero = frame.size.height == 0
+        frame = frame.integral
+        if shouldResetFrameHeightToZero {
+          frame.size.height = 0
+        }
+
+        scrollView.frame = frame
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
         yOffsetOfCurrentSubview += scrollView.contentSize.height
@@ -248,7 +242,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         var frame = subview.frame
         frame.origin.x = 0
         frame.origin.y = yOffsetOfCurrentSubview
-        frame.size.width = componentsView.bounds.size.width
         subview.frame = frame
 
         yOffsetOfCurrentSubview += frame.size.height
@@ -267,15 +260,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   /// It does this by iterating over subviewsInLayoutOrder and sets the current offset for each individual view within the container.
   open override func layoutSubviews() {
     super.layoutSubviews()
-
-    let initialContentOffset = contentOffset
     layoutViews()
-
-    guard !initialContentOffset.equalTo(contentOffset) else {
-      return
-    }
-    setNeedsLayout()
-    layoutIfNeeded()
   }
 
   /// Compare points
@@ -312,6 +297,9 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   }
 
   public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-    return true
+    // Restrict the use of other gesture recognizer to components.
+    // This is done by checking the super view of the view that the gesture belongs to.
+    // All `Component`'s are added to `SpotsContentView` (`.componentsView`).
+    return otherGestureRecognizer.view?.superview === componentsView
   }
 }

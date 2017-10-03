@@ -2,31 +2,35 @@ import UIKit
 
 extension UICollectionView: UserInterface {
 
-  public static var compositeIdentifier: String {
-    return "collection-composite"
-  }
-
   public func register() {
-    Configuration.register(view: GridWrapper.self, identifier: CollectionView.compositeIdentifier)
-    register(GridWrapper.self, forCellWithReuseIdentifier: CollectionView.compositeIdentifier)
+    if Configuration.views.defaultItem == nil {
+      register(GridWrapper.self, forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
+    }
 
     for (identifier, item) in Configuration.views.storage {
-      if identifier.contains(CompositeComponent.identifier) {
-        continue
-      }
-
       switch item {
-      case .classType(_):
-        register(GridHeaderFooterWrapper.self,
-                 forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                 withReuseIdentifier: identifier)
-        register(GridHeaderFooterWrapper.self,
-                 forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                 withReuseIdentifier: identifier)
-        register(GridWrapper.self,
-                 forCellWithReuseIdentifier: identifier)
-        register(GridWrapper.self,
-                 forCellWithReuseIdentifier: Configuration.views.defaultIdentifier)
+      case .classType(let type):
+        if type is UICollectionViewCell.Type {
+          register(type, forCellWithReuseIdentifier: identifier)
+        } else {
+          register(GridWrapper.self, forCellWithReuseIdentifier: identifier)
+        }
+
+        if type is UICollectionReusableView.Type {
+          register(type,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                   withReuseIdentifier: identifier)
+          register(type,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                   withReuseIdentifier: identifier)
+        } else {
+          register(GridHeaderFooterWrapper.self,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                   withReuseIdentifier: identifier)
+          register(GridHeaderFooterWrapper.self,
+                   forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                   withReuseIdentifier: identifier)
+        }
       case .nib(let nib):
         register(nib, forCellWithReuseIdentifier: identifier)
       }
@@ -106,8 +110,6 @@ extension UICollectionView: UserInterface {
     }
   }
 
-  public func beginUpdates() {}
-  public func endUpdates() {}
   public func reloadDataSource() {
     reloadData()
     updateContentSize()
@@ -119,12 +121,24 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    let indexPaths: [IndexPath] = indexes.map { IndexPath(item: $0, section: 0) }
+    applyAnimation(animation: animation)
+    let indexPaths: [IndexPath] = indexes.map {
+      IndexPath(item: $0, section: 0)
+    }
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForInsertedIndexes(indexes, numberOfItems: numberOfItems(inSection: 0))
 
     performBatchUpdates({
       self.insertItems(at: indexPaths)
+
+      for (from, to) in movedItems {
+        self.moveItem(at: IndexPath(item: from, section: 0),
+                      to: IndexPath(item: to, section: 0))
+      }
+
     }, completion: nil)
     updateContentSize()
+    removeAnimation()
     completion?()
   }
 
@@ -134,18 +148,21 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
     switch animation {
       case .none:
         UIView.performWithoutAnimation {
           reloadItems(at: indexPaths)
+          removeAnimation()
           completion?()
       }
     default:
       reloadItems(at: indexPaths)
       collectionViewLayout.finalizeCollectionViewUpdates()
       updateContentSize()
+      removeAnimation()
       completion?()
     }
   }
@@ -156,16 +173,25 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfItems(inSection: 0))
 
     performBatchUpdates({ [weak self] in
       guard let strongSelf = self else {
         return
       }
+      for (from, to) in movedItems {
+        strongSelf.moveItem(at: IndexPath(item: from, section: 0),
+                            to: IndexPath(item: to, section: 0))
+      }
       strongSelf.deleteItems(at: indexPaths)
-      }) { _ in }
+
+      }, completion: nil)
 
     updateContentSize()
+    removeAnimation()
     completion?()
   }
 
@@ -176,10 +202,10 @@ extension UICollectionView: UserInterface {
   /// - parameter section:          The section that will be updates
   ///  - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   ///  - parameter completion:       A completion closure that will run when both data source and UI is updated
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-                      withAnimation animation: Animation = .automatic,
-                      updateDataSource: () -> Void,
-                      completion: ((()) -> Void)? = nil) {
+  public func processChanges(_ changes: Changes,
+                             withAnimation animation: Animation = .automatic,
+                             updateDataSource: () -> Void,
+                             completion: ((()) -> Void)? = nil) {
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
@@ -189,20 +215,39 @@ extension UICollectionView: UserInterface {
     if insertions.isEmpty &&
       reloads.isEmpty &&
       deletions.isEmpty &&
-      changes.childUpdates.isEmpty {
+      changes.moved.isEmpty {
       completion?()
       return
     }
 
-    UIView.performWithoutAnimation {
+    applyAnimation(animation: animation)
+
+    if animation == .none {
+      UIView.performWithoutAnimation {
+        performBatchUpdates({
+          self.insertItems(at: insertions)
+          self.reloadItems(at: reloads)
+          self.deleteItems(at: deletions)
+          for move in changes.moved {
+            self.moveItem(at: IndexPath(item: move.key, section: 0),
+                          to: IndexPath(item: move.value, section: 0))
+          }
+        }, completion: nil)
+      }
+    } else {
       performBatchUpdates({
         self.insertItems(at: insertions)
         self.reloadItems(at: reloads)
         self.deleteItems(at: deletions)
-      }) { _ in }
+        for move in changes.moved {
+          self.moveItem(at: IndexPath(item: move.key, section: 0),
+                        to: IndexPath(item: move.value, section: 0))
+        }
+      }, completion: nil)
     }
 
     updateContentSize()
+    removeAnimation()
     completion?()
   }
 
@@ -218,15 +263,48 @@ extension UICollectionView: UserInterface {
   ///  - parameter index: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func reloadSection(_ section: Int = 0, withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+
+    let completion: (Bool) -> Void = { _ in
+      completion?()
+    }
+
     UIView.performWithoutAnimation {
       performBatchUpdates({ [weak self] in
         guard let strongSelf = self else {
           return
         }
         strongSelf.reloadSections(IndexSet(integer: section))
-      }) { _ in
-        completion?()
-      }
+      }, completion: completion)
     }
+  }
+
+  private func applyAnimation(animation: Animation) {
+    guard let componentFlowLayout = flowLayout as? ComponentFlowLayout else {
+      return
+    }
+
+    componentFlowLayout.animation = animation
+  }
+
+  private func removeAnimation() {
+    guard let componentFlowLayout = flowLayout as? ComponentFlowLayout else {
+      return
+    }
+
+    componentFlowLayout.animation = nil
+  }
+
+  /// Perform batch updates on the data source.
+  ///
+  /// - Parameters:
+  ///   - updateClosure: An update closure that contains everything that should be updated just before `performBatchUpdates` is called.
+  ///   - completion: An optional completion closure that is invoked inside the completion handler.
+  public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)?) {
+    let completion: (Bool) -> Void = { _ in
+      completion?()
+    }
+
+    updateClosure()
+    performBatchUpdates({}, completion: completion)
   }
 }

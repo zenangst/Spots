@@ -16,4 +16,8 @@ class ComponentCollectionView: UICollectionView, UIGestureRecognizerDelegate {
     super.layoutSubviews()
     component?.layoutSubviews()
   }
+
+  override var canBecomeFocused: Bool {
+    return false
+  }
 }

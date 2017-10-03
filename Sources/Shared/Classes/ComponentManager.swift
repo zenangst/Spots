@@ -16,6 +16,7 @@ import Foundation
 public class ComponentManager {
 
   let itemManager = ItemManager()
+  let diffManager = DiffManager()
 
   /// Append item to collection with animation
   ///
@@ -27,12 +28,12 @@ public class ComponentManager {
     Dispatch.main { [weak self] in
       let numberOfItems = component.model.items.count
       component.model.items.append(item)
-
+      self?.itemManager.configureItem(at: numberOfItems, component: component, usesViewSize: true)
       if numberOfItems == 0 {
-        component.userInterface?.reloadDataSource()
-        self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        component.userInterface?.reloadSection(0, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        }
       } else {
-        self?.itemManager.configureItem(at: numberOfItems, component: component, usesViewSize: true)
         component.userInterface?.insert([numberOfItems], withAnimation: animation) {
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
@@ -119,8 +120,9 @@ public class ComponentManager {
         indexes.append(index)
       }
 
+      self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
+
       if numberOfItems > 0 {
-        self?.itemManager.configureItem(at: numberOfItems, component: component, usesViewSize: true)
         component.userInterface?.insert(indexes, withAnimation: animation) {
           self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
@@ -162,9 +164,9 @@ public class ComponentManager {
       var indexPaths = [Int]()
       var indexes = [Int]()
 
-      for (index, _) in items.enumerated() {
-        indexPaths.append(index)
-        indexes.append(index)
+      for element in items.indices {
+        indexPaths.append(element)
+        indexes.append(element)
       }
 
       indexes.sorted(by: { $0 > $1 }).forEach {
@@ -229,38 +231,33 @@ public class ComponentManager {
       var updateHeightAndIndexes: Bool = false
       component.model.items[index] = item
 
-      if component.model.items[index].kind == CompositeComponent.identifier {
-        for compositeSpot in component.compositeComponents {
-          compositeSpot.component.reload([]) {
-            component.model.items[index].size.height = compositeSpot.component.computedHeight
-          }
-        }
-        self?.finishComponentOperation(component, updateHeightAndIndexes: false, completion: completion)
-        return
-      } else {
-        self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
-        let newItem = component.model.items[index]
+      self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
+      let newItem = component.model.items[index]
 
-        if newItem.kind != oldItem.kind {
-          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
-        } else if newItem.size.height != oldItem.size.height {
-          if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
-            component.userInterface?.beginUpdates()
+      if newItem.kind != oldItem.kind {
+        component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+      } else if newItem.size.height != oldItem.size.height {
+        if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
+          component.userInterface?.performUpdates({
             view.configure(with: component.model.items[index])
-            component.model.items[index].size.height = view.computeSize(for: component.model.items[index]).height
-            component.userInterface?.endUpdates()
-          } else {
-            component.userInterface?.reload([index], withAnimation: animation, completion: nil)
-          }
-
-          updateHeightAndIndexes = true
-        } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
-          view.configure(with: component.model.items[index])
-          component.model.items[index].size.height = view.computeSize(for: component.model.items[index]).height
+            component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
+          }, completion: nil)
+        } else {
+          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
         }
 
-        self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
+        updateHeightAndIndexes = true
+      } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
+        component.userInterface?.performUpdates({
+          view.configure(with: component.model.items[index])
+          component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
+        }, completion: {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
+        })
+        return
       }
+
+      self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
     }
   }
 
@@ -279,8 +276,8 @@ public class ComponentManager {
             self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
           }
         } else {
-          for (index, _) in component.model.items.enumerated() {
-            self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
+          for element in component.model.items.indices {
+            self?.itemManager.configureItem(at: element, component: component, usesViewSize: true)
           }
         }
 
@@ -312,22 +309,20 @@ public class ComponentManager {
   /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
-  public func reloadIfNeeded(with changes: ItemChanges, component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
-    component.userInterface?.process((insertions: changes.insertions, reloads: changes.reloads, deletions: changes.deletions, childUpdates: changes.updatedChildren), withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
+  public func reloadIfNeeded(with changes: Changes, component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+    component.userInterface?.processChanges(changes, withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
       guard let strongSelf = self else {
         completion?()
         return
       }
 
       if changes.updates.isEmpty {
-        strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
+        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
           strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
-        strongSelf.process(changes.updates, component: component, withAnimation: animation) {
-          strongSelf.process(changes.updatedChildren, component: component, withAnimation: animation) {
-            strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-          }
+        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
+          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -340,42 +335,29 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.interactive {
-      if component.model.items == items {
-        Dispatch.main {
-          completion?()
-        }
+    Dispatch.main { [weak self] in
+      guard let `self` = self else {
+        completion?()
         return
       }
 
-      Dispatch.main { [weak self] in
-        guard let strongSelf = self else {
-          completion?()
-          return
-        }
+      let duplicatedComponent = Component(model: component.model)
+      duplicatedComponent.model.items = items
+      duplicatedComponent.setup(with: component.view.frame.size)
 
-        var indexes: [Int]? = nil
-        let oldItems = component.model.items
-        component.model.items = items
-
-        if items.count == oldItems.count {
-          for (index, item) in items.enumerated() {
-            guard !(item == oldItems[index]) else {
-              component.model.items[index].size = oldItems[index].size
-              continue
-            }
-
-            if indexes == nil {
-              indexes = [Int]()
-            }
-            indexes?.append(index)
-          }
-        }
-
-        strongSelf.reload(indexes: indexes, component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-        }
+      guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: duplicatedComponent.model.items) else {
+        completion?()
+        return
       }
+
+      let updateDatasource = {
+        component.model.items = duplicatedComponent.model.items
+      }
+      let completion = {
+        self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+      }
+
+      component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: completion)
     }
   }
 
@@ -388,7 +370,7 @@ public class ComponentManager {
     Dispatch.interactive {
       let newComponentModel = ComponentModel(json)
 
-      guard component.model != newComponentModel else {
+      guard component.model !== newComponentModel else {
         Dispatch.main {
           completion?()
         }
@@ -436,28 +418,17 @@ public class ComponentManager {
   ///   - completion: A completion closure that is run when the operation is done.
   private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
     if updateHeightAndIndexes {
-      component.updateHeightAndIndexes { [weak self] in
+      component.updateHeightAndIndexes {
         component.afterUpdate()
-        component.view.superview?.layoutSubviews()
+        component.view.superview?.setNeedsLayout()
+        component.view.superview?.layoutIfNeeded()
         completion?()
-        self?.refreshHeightInParentComponent(component)
       }
     } else {
       component.afterUpdate()
-      component.view.superview?.layoutSubviews()
+      component.view.superview?.setNeedsLayout()
+      component.view.superview?.layoutIfNeeded()
       completion?()
-      refreshHeightInParentComponent(component)
-    }
-  }
-
-  /// Refresh height in parent component.
-  ///
-  /// - Parameter component: A composite component.
-  private func refreshHeightInParentComponent(_ component: Component) {
-    if let parentComponent = component.parentComponent {
-      for compositeComponent in parentComponent.compositeComponents {
-        parentComponent.model.items[compositeComponent.itemIndex].size.height = compositeComponent.component.computedHeight
-      }
     }
   }
 }

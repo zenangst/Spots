@@ -6,7 +6,7 @@ class ItemsPerRowViewMock: View, ItemConfigurable {
 
   func configure(with item: Item) {}
 
-  func computeSize(for item: Item) -> CGSize {
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
     return CGSize(width: 100, height: 50)
   }
 }
@@ -43,20 +43,20 @@ class ComponentFlowLayoutTests: XCTestCase {
     component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
 
-    var componentFlowLayout = component.collectionView?.collectionViewLayout as? ComponentFlowLayout
+    var componentFlowLayout = component.collectionView?.flowLayout as? ComponentFlowLayout
     XCTAssertEqual(componentFlowLayout?.contentSize, CGSize(width: 1500, height: 50))
 
     model = ComponentModel(kind: .carousel, layout: Layout(itemsPerRow: 2), items: items)
     component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
-    componentFlowLayout = component.collectionView?.collectionViewLayout as? ComponentFlowLayout
+    componentFlowLayout = component.collectionView?.flowLayout as? ComponentFlowLayout
 
     XCTAssertEqual(componentFlowLayout?.contentSize, CGSize(width: 800, height: 100))
 
     model = ComponentModel(kind: .carousel, layout: Layout(itemsPerRow: 3), items: items)
     component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
-    componentFlowLayout = component.collectionView?.collectionViewLayout as? ComponentFlowLayout
+    componentFlowLayout = component.collectionView?.flowLayout as? ComponentFlowLayout
 
     XCTAssertEqual(componentFlowLayout?.contentSize, CGSize(width: 500, height: 150))
   }

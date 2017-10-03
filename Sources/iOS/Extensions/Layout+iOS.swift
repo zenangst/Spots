@@ -3,7 +3,7 @@ import UIKit
 extension Layout {
 
   public func configure(component: Component) {
-    guard let collectionViewLayout = component.collectionView?.collectionViewLayout as? FlowLayout else {
+    guard let collectionViewLayout = component.collectionView?.flowLayout else {
       return
     }
 
@@ -18,7 +18,7 @@ extension Layout {
     collectionViewLayout.minimumLineSpacing = CGFloat(lineSpacing)
   }
 
-  public func configure(collectionViewLayout: CollectionLayout) {
+  public func configure(collectionViewLayout: FlowLayout) {
     collectionViewLayout.sectionInset = UIEdgeInsets(
       top: CGFloat(inset.top),
       left: CGFloat(inset.left),

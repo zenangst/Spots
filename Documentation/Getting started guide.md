@@ -11,7 +11,7 @@ This is what we will end up with at the end of the guide:
 Let's build a small demo application called `MyContacts` to show what it is like to work with `Spots` in an application.
 
 The first thing that we need to do is adapt and register your views so that `Spots` can resolve them.
-To use views in `Spots`, they need to conform to `ItemConfigurable`. It is a very lean protocol that has two required methods. The first is `configure(with item: Item)`, this is where our view gets the model information so that we can properly set texts to your label etc. The second function is `computeSize(for item: Item) -> CGSize`. This is used to give back an appropriate size for the view. It could return a static value or be computed based of the content coming from the model.
+To use views in `Spots`, they need to conform to `ItemConfigurable`. It is a very lean protocol that has two required methods. The first is `configure(with item: Item)`, this is where our view gets the model information so that we can properly set texts to your label etc. The second function is `computeSize(for item: Item, containerSize: CGSize) -> CGSize`. This is used to give back an appropriate size for the view. It could return a static value or be computed based of the content coming from the model.
 
 Let's kick things of by making a `ContactView` that will be used to show contact information in a list.
 
@@ -46,8 +46,8 @@ class ContactView: UIView, ItemConfigurable {
     titleLabel.text = item.title
   }
 
-  func computeSize(for item: Item) -> CGSize {
-    return CGSize(width: frame.size.width,
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
+    return CGSize(width: containerSize.width,
                   height: 44)
   }
 }
@@ -217,8 +217,8 @@ class RecentContactView: UIView, ItemConfigurable {
     titleLabel.text = item.title
   }
 
-  func computeSize(for item: Item) -> CGSize {
-    return CGSize(width: frame.size.width,
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
+    return CGSize(width: containerSize.width,
                   height: 77)
   }
 }
@@ -399,8 +399,8 @@ class HeaderView: UIView, ItemConfigurable {
     titleLabel.text = item.title
   }
 
-  func computeSize(for item: Item) -> CGSize {
-    return CGSize(width: frame.size.width,
+  func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
+    return CGSize(width: containerSize.width,
                   height: 30)
   }
 }

@@ -25,4 +25,13 @@ public extension ComponentDelegate {
   /// - parameter view: The UI element that did end display.
   /// - parameter item: The data for the view that is going to be displayed.
   func component(_ component: Component, didEndDisplaying view: ComponentView, item: Item) {}
+
+  #if os(macOS)
+  /// Get notified when the selection changes in a component.
+  ///
+  /// - Parameters:
+  ///   - component: The component that changed selection.
+  ///   - selectedIndexes: The selected indexes.
+  func component(_ component: Component, didChangeSelection selectedIndexes: [Int]) {}
+  #endif
 }

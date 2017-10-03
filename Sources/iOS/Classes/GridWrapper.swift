@@ -1,7 +1,6 @@
 import UIKit
 
 public class GridWrapper: UICollectionViewCell, Wrappable, Cell {
-
   weak public var wrappedView: View?
 
   override init(frame: CGRect) {
@@ -11,13 +10,6 @@ public class GridWrapper: UICollectionViewCell, Wrappable, Cell {
 
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  public func configureWrappedView() {
-    if let cell = wrappedView as? UICollectionViewCell {
-      cell.contentView.frame = contentView.frame
-      cell.isUserInteractionEnabled = false
-    }
   }
 
   override public func layoutSubviews() {
@@ -43,4 +35,14 @@ public class GridWrapper: UICollectionViewCell, Wrappable, Cell {
       (wrappedView as? ViewStateDelegate)?.viewStateDidChange(viewState)
     }
   }
+
+  #if os(tvOS)
+  public override var canBecomeFocused: Bool {
+    return wrappedView?.canBecomeFocused ?? false
+  }
+
+  public override var preferredFocusedView: UIView? {
+    return wrappedView
+  }
+  #endif
 }

@@ -27,6 +27,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     case dynamicHeight = "dynamic-height"
     case pageIndicator = "page-indicator"
     case headerMode = "header-mode"
+    case showEmptyComponent = "show-empty-component"
     case infiniteScrolling = "infinite-scrolling"
   }
 
@@ -50,7 +51,6 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// |item 1|item 3|
   /// |item 2|item 4|
   public var itemsPerRow: Int = 1
-
   /// Defines how many items to show per row for `Gridable` components.
   public var span: Double = 0.0
   /// If enabled and the item count is less than the span, the CarouselComponent will even out the space between the items to align them.
@@ -68,6 +68,8 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// See `Component.handleInfiniteScrolling()` for more information.
   /// Note: Only available iOS and tvOS. 
   public var infiniteScrolling: Bool = false
+  /// If the `ComponentModel` is empty, it should still be shown.
+  public var showEmptyComponent: Bool = false
 
   /// A dictionary representation of the struct.
   public var dictionary: [String : Any] {
@@ -80,6 +82,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
       Key.dynamicSpan.rawValue: dynamicSpan,
       Key.dynamicHeight.rawValue: dynamicHeight,
       Key.headerMode.rawValue: headerMode.rawValue,
+      Key.showEmptyComponent.rawValue: showEmptyComponent,
       Key.infiniteScrolling.rawValue: infiniteScrolling
     ]
 
@@ -103,7 +106,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///   - itemSpacing: Sets minimum item spacing for the model.
   ///   - lineSpacing: Sets minimum lines spacing for items in model.
   ///   - inset: An inset struct used to insert margins for the model.
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemsPerRow: Int = 1, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default, infiniteScrolling: Bool = false) {
+  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemsPerRow: Int = 1, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default, showEmptyComponent: Bool = false, infiniteScrolling: Bool = false) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
@@ -113,6 +116,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.inset = inset
     self.pageIndicatorPlacement = pageIndicatorPlacement
     self.headerMode = headerMode
+    self.showEmptyComponent = showEmptyComponent
     self.infiniteScrolling = infiniteScrolling
   }
 
@@ -141,6 +145,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.span <- map.double(Key.span.rawValue)
     self.pageIndicatorPlacement = map.enum(Key.pageIndicator.rawValue)
     self.headerMode <- map.enum(Key.headerMode.rawValue)
+    self.showEmptyComponent <- map.boolean(Key.showEmptyComponent.rawValue)
     self.infiniteScrolling <- map.boolean(Key.infiniteScrolling.rawValue)
   }
 
@@ -169,6 +174,7 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     lhs.dynamicSpan == rhs.dynamicSpan &&
     lhs.dynamicHeight == rhs.dynamicHeight &&
     lhs.pageIndicatorPlacement == rhs.pageIndicatorPlacement &&
+    lhs.showEmptyComponent == rhs.showEmptyComponent &&
     lhs.headerMode == rhs.headerMode &&
     lhs.infiniteScrolling == rhs.infiniteScrolling
   }

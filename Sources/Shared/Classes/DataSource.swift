@@ -6,13 +6,22 @@ import Foundation
 /// Each `Component` have their own `DataSource`, basically it supplies a default set of
 /// implementations to use the `ComponentModel` as its source of truth. Mutating the data
 /// source is handled by the `ComponentManager` also located on the `Component`.
-public class DataSource: NSObject {
+public class DataSource: NSObject, ComponentResolvable {
   /// The component that the data source belongs to.
   weak var component: Component?
   /// An object that ensures that all views displayed for this data source are properly
   /// configured with the model data. See `ItemConfigurable` for more information
   /// about how to configure your views.
   var viewPreparer = ViewPreparer()
+
+  /// A computed value that holds the amount of items that the component model holds.
+  var numberOfItems: Int {
+    guard let component = component else {
+      return 0
+    }
+
+    return component.model.items.count
+  }
 
   /// Initialize a new instance of a data source with a component.
   ///

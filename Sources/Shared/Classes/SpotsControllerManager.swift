@@ -79,6 +79,12 @@ public class SpotsControllerManager {
       return
     }
 
+    // Opt-out from performing any kind of diffing if the controller has no components.
+    if controller.components.isEmpty {
+      reload(models: components, controller: controller, completion: completion)
+      return
+    }
+
     Dispatch.interactive { [weak self] in
       guard let strongSelf = self else {
         completion?()
@@ -87,18 +93,7 @@ public class SpotsControllerManager {
 
       let oldComponents = controller.components
       let oldComponentModels = oldComponents.map { $0.model }
-      var newComponentModels = components
-
-      /// Prepare default layouts for new components based of previous Component kind.
-      for (index, _) in newComponentModels.enumerated() {
-        guard index < oldComponentModels.count else {
-          break
-        }
-
-        if newComponentModels[index].layout == nil {
-          newComponentModels[index].layout = type(of: oldComponents[index]).layout
-        }
-      }
+      let newComponentModels = components
 
       guard compare(newComponentModels, oldComponentModels) else {
         Dispatch.main {
@@ -113,7 +108,7 @@ public class SpotsControllerManager {
 
       strongSelf.process(changes: changes, controller: controller, components: newComponentModels, withAnimation: animation) {
         Dispatch.main {
-          controller.scrollView.layoutSubviews()
+          controller.scrollView.setNeedsLayout()
           SpotsController.componentsDidReloadComponentModels?(controller)
           completion?()
         }
@@ -158,12 +153,6 @@ public class SpotsControllerManager {
   fileprivate func replaceComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
     let component = Component(model: newComponentModels[index])
     let oldComponent = controller.components[index]
-
-    /// Remove old composite components from superview and empty container
-    for compositeComponent in oldComponent.compositeComponents {
-      compositeComponent.component.view.removeFromSuperview()
-    }
-    oldComponent.compositeComponents = []
 
     component.view.frame = oldComponent.view.frame
 
@@ -231,42 +220,15 @@ public class SpotsControllerManager {
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(with changes: (ItemChanges),
+  private func reload(with changes: (Changes),
                       controller: SpotsController,
                       in component: Component,
                       newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
-    var offsets = [CGPoint]()
-
     component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
-      for item in newItems {
-        let results = component.compositeComponents.filter({ $0.itemIndex == item.index })
-        for compositeComponent in results {
-          offsets.append(compositeComponent.component.view.contentOffset)
-        }
-      }
-
       component.model.items = newItems
-    }) {
-      for (index, item) in newItems.enumerated() {
-        guard index < controller.components.count else {
-          break
-        }
-
-        let compositeComponents = controller.components[item.index].compositeComponents
-          .filter({ $0.itemIndex == item.index })
-        for (index, compositeComponent) in compositeComponents.enumerated() {
-          guard index < offsets.count else {
-            continue
-          }
-
-          compositeComponent.component.view.contentOffset = offsets[index]
-        }
-      }
-
-      completion?()
-    }
+    }, completion: completion)
   }
 
   /// Reload Component object with less items
@@ -277,50 +239,18 @@ public class SpotsControllerManager {
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(with changes: (ItemChanges),
+  private func reload(with changes: Changes,
                       controller: SpotsController,
                       in component: Component,
                       lessItems newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
-    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+
+    let updateDatasource = {
       component.model.items = newItems
-    }) {
-      guard !newItems.isEmpty else {
-        completion?()
-        return
-      }
-
-      let executeClosure = newItems.count - 1
-      for (index, item) in newItems.enumerated() {
-        let components = Parser.parse(item.children).map { $0.model }
-
-        let oldComponents = controller.components.flatMap({
-          $0.compositeComponents
-        })
-
-        for removedComponent in oldComponents {
-          guard !components.contains(removedComponent.component.model) else {
-            continue
-          }
-
-          if let index = removedComponent.component.parentComponent?.compositeComponents.index(of: removedComponent) {
-            removedComponent.component.parentComponent?.compositeComponents.remove(at: index)
-          }
-        }
-
-        if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
-          component.reload(nil, withAnimation: animation, completion: completion)
-        } else {
-          component.update(item, index: index, withAnimation: animation) {
-            guard index == executeClosure else {
-              return
-            }
-            completion?()
-          }
-        }
-      }
     }
+
+    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: completion)
   }
 
   /// Reload Component object with more items
@@ -331,25 +261,22 @@ public class SpotsControllerManager {
   /// - parameter newItems:  The new items that should be used to updated the data source.
   /// - parameter animation: The animation that should be used when updating.
   /// - parameter closure:   A completion closure.
-  private func reload(with changes: (ItemChanges),
+  private func reload(with changes: Changes,
                       controller: SpotsController,
                       in component: Component,
                       moreItems newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
-    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: {
+    let updateDataSource = {
       component.model.items = newItems
-    }) {
-      if !component.model.items.filter({ !$0.children.isEmpty }).isEmpty {
-        component.reload(nil, withAnimation: animation) {
-          controller.scrollView.layoutSubviews()
-          completion?()
-        }
-      } else {
-        controller.scrollView.layoutSubviews()
-        completion?()
-      }
     }
+
+    let completion = {
+      controller.scrollView.setNeedsLayout()
+      completion?()
+    }
+
+    component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
   /// Process a collection of component model diffs.
@@ -378,10 +305,8 @@ public class SpotsControllerManager {
       var completion: Completion = nil
       var lastItemChange: Int?
 
-      for (index, change) in changes.enumerated() {
-        if change == .items {
-          lastItemChange = index
-        }
+      for (index, change) in changes.enumerated() where change == .items {
+        lastItemChange = index
       }
 
       for (index, change) in changes.enumerated() {
@@ -413,7 +338,7 @@ public class SpotsControllerManager {
       }
 
       if runCompletion {
-        controller.scrollView.layoutSubviews()
+        controller.scrollView.setNeedsLayout()
         finalCompletion?()
       }
     }
@@ -448,7 +373,6 @@ public class SpotsControllerManager {
       }
 
       var offsets = [CGPoint]()
-      let oldComposites = controller.components.flatMap { $0.compositeComponents }
 
       if newComponentModels.count == oldComponentModels.count {
         offsets = controller.components.map { $0.view.contentOffset }
@@ -463,23 +387,13 @@ public class SpotsControllerManager {
       strongSelf.cleanUpComponentView(controller: controller)
       controller.setupComponents(animated: animated)
 
-      let newComposites = controller.components.flatMap { $0.compositeComponents }
-
-      for (index, compositeComponent) in oldComposites.enumerated() {
-        if index == newComposites.count {
-          break
-        }
-
-        newComposites[index].component.view.contentOffset = compositeComponent.component.view.contentOffset
-      }
-
       completion?()
 
       offsets.enumerated().forEach {
         newComponents[$0.offset].view.contentOffset = $0.element
       }
 
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       SpotsController.componentsDidReloadComponentModels?(controller)
     }
   }
@@ -497,23 +411,30 @@ public class SpotsControllerManager {
         return
       }
 
-      controller.components = Parser.parse(models)
-
-      if controller.scrollView.superview == nil {
-        controller.view.addSubview(controller.scrollView)
-      }
-
+      // Opt-out of doing component cleanup if the controller has no components.
+      let performCleanup = !controller.components.isEmpty
       let previousContentOffset = controller.scrollView.contentOffset
 
-      strongSelf.cleanUpComponentView(controller: controller)
+      controller.components = Parser.parse(models)
+
+      if performCleanup {
+        if controller.scrollView.superview == nil {
+          controller.view.addSubview(controller.scrollView)
+        }
+        strongSelf.cleanUpComponentView(controller: controller)
+      }
+
       controller.setupComponents(animated: animated)
       controller.components.forEach { component in
         component.afterUpdate()
       }
 
       SpotsController.componentsDidReloadComponentModels?(controller)
-      controller.scrollView.layoutSubviews()
-      controller.scrollView.contentOffset = previousContentOffset
+      controller.scrollView.setNeedsLayout()
+
+      if performCleanup {
+        controller.scrollView.contentOffset = previousContentOffset
+      }
       completion?()
     }
   }
@@ -546,7 +467,7 @@ public class SpotsControllerManager {
       }
 
       SpotsController.componentsDidReloadComponentModels?(controller)
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       controller.scrollView.contentOffset = previousContentOffset
       completion?()
     }
@@ -562,7 +483,7 @@ public class SpotsControllerManager {
   public func update(componentAtIndex index: Int = 0, controller: SpotsController, withAnimation animation: Animation = .automatic, withCompletion completion: Completion = nil, _ closure: (_ component: Component) -> Void) {
     guard let component = controller.component(at: index) else {
       assertionFailure("Could not resolve component at index: \(index).")
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       completion?()
       return
     }
@@ -581,7 +502,7 @@ public class SpotsControllerManager {
       #endif
 
       component.reload(nil, withAnimation: animation) {
-        controller.scrollView.layoutSubviews()
+        controller.scrollView.setNeedsLayout()
         completion?()
       }
     }
@@ -599,7 +520,7 @@ public class SpotsControllerManager {
   public func updateIfNeeded(componentAtIndex index: Int = 0, controller: SpotsController, items: [Item], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let component = controller.component(at: index) else {
       assertionFailure("Could not resolve component at index: \(index).")
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       completion?()
       return
     }
@@ -608,7 +529,7 @@ public class SpotsControllerManager {
     newModel.items = items
 
     let didUpdate = updateComponentModel(newModel, on: component, in: controller, withAnimation: animation) {
-      controller.scrollView.layoutSubviews()
+      controller.scrollView.setNeedsLayout()
       completion?()
     }
 
@@ -786,20 +707,11 @@ public class SpotsControllerManager {
       width: controller.view.frame.width,
       height: ceil(tempComponent.view.frame.height))
 
-    guard let diff = Item.evaluate(tempComponent.model.items, oldModels: component.model.items) else {
+    guard let changes = component.manager.diffManager.compare(oldItems: component.model.items, newItems: tempComponent.model.items) else {
       return false
     }
 
     let newItems = tempComponent.model.items
-    let changes: (ItemChanges) = Item.processChanges(diff)
-
-    for index in changes.updatedChildren {
-      if index < tempComponent.compositeComponents.count {
-        component.compositeComponents[index].component.view.removeFromSuperview()
-        component.compositeComponents[index] = tempComponent.compositeComponents[index]
-        component.compositeComponents[index].component.parentComponent = component
-      }
-    }
 
     if newItems.count == component.model.items.count {
       reload(with: changes,

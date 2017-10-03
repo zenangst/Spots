@@ -1,7 +1,5 @@
-/// A protocol used for composition inside components.
+///// A protocol used for composition inside components.
 public protocol UserInterface: class {
-
-  static var compositeIdentifier: String { get }
 
   var visibleViews: [View] { get }
 
@@ -67,10 +65,10 @@ public protocol UserInterface: class {
   /// - parameter section:          The section that will be updates
   /// - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   /// - parameter completion:       A completion closure that will run when both data source and UI is updated
-  func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-               withAnimation animation: Animation,
-               updateDataSource: () -> Void,
-               completion: ((()) -> Void)?)
+  func processChanges(_ changes: Changes,
+                      withAnimation animation: Animation,
+                      updateDataSource: () -> Void,
+                      completion: ((()) -> Void)?)
 
   /// A convenience method for performing inserts on a UserInterface.
   ///
@@ -79,13 +77,18 @@ public protocol UserInterface: class {
   /// - parameter completino: A completion closure that will run when the reload is done.
   func reloadSection(_ section: Int, withAnimation animation: Animation, completion: (() -> Void)?)
 
-  /// A method that is invoked before the update occures.
-  func beginUpdates()
-  /// A method that is invoked after the update occures.
-  func endUpdates()
+  /// Perform updates on the user interface.
+  ///
+  /// - Parameters:
+  ///   - updateClosure: An update closure that is invoked when the interface has began updating itself.
+  ///   - completion: An optional completion closure that is invoked when the update is done.
+  func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)?)
   /// A proxy method to call reloadData
   func reloadDataSource()
 
   /// Register all views from Configuration on user interface object.
   func register()
+
+  /// Recalculate the receiver’s layout, if required.
+  func layoutIfNeeded()
 }

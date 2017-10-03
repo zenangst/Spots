@@ -3,12 +3,11 @@ import Cache
 
 /// A controller powered by components.
 open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDelegate, UIScrollViewDelegate {
-
   open var contentView: View {
     return view
   }
 
-  public weak var focusedSpot: Component?
+  public weak var focusedComponent: Component?
   public var focusedItemIndex: Int?
 
   /// A closure that is called when the controller is reloaded with components
@@ -69,6 +68,15 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// An optional StateCache used for view controller caching.
   public var stateCache: StateCache?
 
+  #if os(tvOS)
+  /// A default focus guide that is constrained to the controllers
+  public lazy var focusGuide: UIFocusGuide = {
+    let focusGuide = UIFocusGuide()
+    focusGuide.isEnabled = false
+    return focusGuide
+  }()
+  #endif
+
   /// A delegate for when an item is tapped within a Spot.
   weak open var delegate: ComponentDelegate? {
     didSet { componentsDelegateDidChange() }
@@ -92,7 +100,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
-  public lazy private(set) var refreshControl: UIRefreshControl = SpotsRefreshControl()
+  open lazy private(set) var refreshControl: UIRefreshControl = SpotsRefreshControl()
   #endif
 
   // MARK: Initializer
@@ -198,8 +206,11 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     scrollView.clipsToBounds = true
     scrollView.delegate = self
 
-    setupComponents()
 
+    #if os(tvOS)
+      configure(focusGuide: focusGuide, for: scrollView, enabled: false)
+    #endif
+    setupComponents()
     SpotsController.configure?(scrollView)
   }
 
@@ -209,23 +220,22 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   open override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
-    if let tabBarController = self.tabBarController, tabBarController.tabBar.isTranslucent {
-      scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
-      scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
-    }
-
     #if os(iOS)
+      if let tabBarController = self.tabBarController, tabBarController.tabBar.isTranslucent {
+        scrollView.contentInset.bottom = tabBarController.tabBar.frame.size.height
+        scrollView.scrollIndicatorInsets.bottom = scrollView.contentInset.bottom
+      }
+
       refreshControl.addTarget(self, action: #selector(refreshComponent(_:)), for: .valueChanged)
 
-      guard let _ = refreshDelegate, refreshControl.superview == nil
-        else {
-          return
+      guard refreshDelegate != nil, refreshControl.superview == nil else {
+        return
       }
       scrollView.insertSubview(refreshControl, at: 0)
     #endif
   }
 
-  /// Configure scrollview and composite views with new size.
+  /// Configure scrollview with new size.
   ///
   /// - parameter size: The size that should be used to configure the views.
   func configure(withSize size: CGSize) {
@@ -234,11 +244,13 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
     components.forEach { component in
       component.layout(with: size)
-
-      component.compositeComponents.forEach {
-        $0.component.layout(with: component.view.frame.size)
-      }
     }
+  }
+
+  open override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    scrollView.frame = view.bounds
+    scrollView.componentsView.frame = scrollView.bounds
   }
 
   /// Notifies the container that the size of tis view is about to change.
@@ -254,14 +266,16 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       }
     #endif
 
-    coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
-      self.configure(withSize: size)
-    }) { (UIViewControllerTransitionCoordinatorContext) in
+    let completion: (UIViewControllerTransitionCoordinatorContext) -> Void = { _ in
       self.configure(withSize: size)
       NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
                                       object: nil,
                                       userInfo: ["size": RotationSize(size: size)])
     }
+
+    coordinator.animate(alongsideTransition: { _ in
+      self.configure(withSize: size)
+    }, completion: completion)
   }
 
   /// Set up components.
@@ -335,11 +349,10 @@ extension SpotsController {
     components.forEach {
       $0.delegate = delegate
       $0.focusDelegate = self
+    }
 
-      $0.compositeComponents.forEach {
-        $0.component.delegate = delegate
-        $0.component.focusDelegate = self
-      }
+    if focusedComponent == nil {
+      focusedComponent = components.first
     }
   }
 

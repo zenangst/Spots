@@ -29,10 +29,6 @@ extension Delegate: UIScrollViewDelegate {
     }
 
     if let component = component {
-      if component.model.interaction.scrollDirection == .horizontal {
-        scrollViewManager.constrainScrollViewYOffset(scrollView, parentScrollView: scrollView.superview?.superview as? ScrollView)
-      }
-
       if let footerView = component.footerView {
         scrollViewManager.positionFooterView(footerView, in: scrollView)
       }
@@ -44,7 +40,7 @@ extension Delegate: UIScrollViewDelegate {
 
     performPaginatedScrolling { component, _, _ in
       component.carouselScrollDelegate?.componentCarouselDidScroll(component)
-      if component.model.layout?.pageIndicatorPlacement == .overlay {
+      if component.model.layout.pageIndicatorPlacement == .overlay {
         component.pageControl.frame.origin.x = scrollView.contentOffset.x
       }
     }

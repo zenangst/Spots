@@ -37,11 +37,26 @@ extension NSTableView: UserInterface {
   }
 
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    guard let dataSource = dataSource else {
+      assertionFailure("Data source could not be resolved.")
+      return
+    }
+
+    let numberOfRows = dataSource.numberOfRows!(in: self) - indexes.count
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForInsertedIndexes(indexes, numberOfItems: numberOfRows)
+
     var indexSet = IndexSet()
-    indexes.forEach { indexSet.insert($0) }
+    indexes.forEach {
+      indexSet.insert($0)
+    }
+
     performUpdates({
       insertRows(at: indexSet, withAnimation: animation.tableViewAnimation)
-    }, endClosure: completion)
+      for (from, to) in movedItems {
+        moveRow(at: from, to: to)
+      }
+    }, completion: completion)
 
   }
 
@@ -75,32 +90,54 @@ extension NSTableView: UserInterface {
   }
 
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    guard let dataSource = dataSource else {
+      assertionFailure("Data source could not be resolved.")
+      return
+    }
+
     var indexSet = IndexSet()
+    let numberOfRows = dataSource.numberOfRows!(in: self)
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfRows)
     indexes.forEach { indexSet.insert($0) }
+
     performUpdates({
+      for (from, to) in movedItems {
+        moveRow(at: from, to: to)
+      }
       removeRows(at: indexSet, withAnimation: animation.tableViewAnimation)
-    }, endClosure: completion)
+    }, completion: completion)
   }
 
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-                      withAnimation animation: Animation = .automatic,
-                      updateDataSource: () -> Void,
-                      completion: ((()) -> Void)? = nil) {
+  public func processChanges(_ changes: Changes,
+                             withAnimation animation: Animation = .automatic,
+                             updateDataSource: () -> Void,
+                             completion: ((()) -> Void)? = nil) {
     guard let component = (dataSource as? DataSource)?.component else {
       return
     }
 
-    let insertionsSets = NSMutableIndexSet()
-    changes.insertions.forEach { insertionsSets.add($0) }
-    let reloadSets = NSMutableIndexSet()
-    changes.reloads.forEach { reloadSets.add($0) }
-    let deletionSets = NSMutableIndexSet()
-    changes.deletions.forEach { deletionSets.add($0) }
+    let insertionsSets = IndexSet(changes.insertions)
+    let reloadSets = IndexSet(changes.reloads)
+    let deletionSets = IndexSet(changes.deletions)
 
     updateDataSource()
+
+    if !insertionsSets.isEmpty &&
+      !reloadSets.isEmpty &&
+      !deletionSets.isEmpty &&
+      changes.moved.isEmpty {
+      completion?()
+      return
+    }
+
     beginUpdates()
     removeRows(at: deletionSets as IndexSet, withAnimation: animation.tableViewAnimation)
     insertRows(at: insertionsSets as IndexSet, withAnimation: animation.tableViewAnimation)
+
+    for move in changes.moved {
+      moveRow(at: move.key, to: move.value)
+    }
 
     for index in reloadSets {
       guard let view = rowView(atRow: index, makeIfNecessary: false) else {
@@ -128,11 +165,16 @@ extension NSTableView: UserInterface {
     reloadData()
   }
 
-  fileprivate func performUpdates( _ closure: () -> Void, endClosure: (() -> Void)? = nil) {
+  /// Perform batch updates on the data source.
+  ///
+  /// - Parameters:
+  ///   - updateClosure: An update closure that is invoked inbetween `beginUpdates` and `endUpdates`.
+  ///   - completion: An optional completion closure that is invoked after `endUpdates.
+  public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)? = nil) {
     beginUpdates()
-    closure()
+    updateClosure()
     endUpdates()
-    endClosure?()
+    completion?()
   }
 
   fileprivate func configure(view: View, with item: inout Item) {

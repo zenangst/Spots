@@ -4,14 +4,11 @@ extension Component {
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
     let newCollectionViewHeight = calculateCollectionViewHeight()
 
-    scrollView.scrollingEnabled = (model.items.count > 1)
-    scrollView.hasHorizontalScroller = (model.items.count > 1)
-
     collectionView.frame.size.height = newCollectionViewHeight
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout else {
+    guard let collectionViewLayout = collectionView.flowLayout else {
       return
     }
 
@@ -26,30 +23,17 @@ extension Component {
 
     collectionView.frame.size.width = collectionViewContentSize.width
     collectionView.frame.size.height = newCollectionViewHeight
-
-    documentView.frame.size = collectionView.frame.size
-    documentView.frame.size.height = collectionView.frame.size.height + headerHeight + footerHeight
-
-    if let layout = model.layout {
-      documentView.frame.size.width += CGFloat(layout.inset.right)
-    }
-
-    collectionView.frame.size.height += headerHeight
+    collectionView.frame.size.height += headerHeight + footerHeight
 
     scrollView.frame.size.width = size.width
-    scrollView.frame.size.height = documentView.frame.size.height
+    scrollView.contentView.frame.size.width = collectionView.frame.size.width
+    scrollView.scrollingEnabled = true
     scrollView.scrollerInsets.bottom = footerHeight
   }
 
   func resizeHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
-    switch type {
-    case .live:
-      layout(with: size)
-      prepareItems(recreateComposites: false)
-    case .end:
-      layout(with: size)
-      prepareItems(recreateComposites: false)
-    }
+    prepareItems()
+    layout(with: size, animated: false)
   }
 
   private func calculateCollectionViewHeight() -> CGFloat {
@@ -57,13 +41,11 @@ extension Component {
       $0.size.height > $1.size.height
     }).first?.size.height ?? 0.0
 
-    if let layout = model.layout {
-      newCollectionViewHeight *= CGFloat(layout.itemsPerRow)
-      newCollectionViewHeight += CGFloat(layout.inset.top + layout.inset.bottom)
+    newCollectionViewHeight *= CGFloat(model.layout.itemsPerRow)
+    newCollectionViewHeight += CGFloat(model.layout.inset.top + model.layout.inset.bottom)
 
-      if layout.itemsPerRow > 1 {
-        newCollectionViewHeight += CGFloat(layout.lineSpacing * Double(layout.itemsPerRow - 2))
-      }
+    if model.layout.itemsPerRow > 1 {
+      newCollectionViewHeight += CGFloat(model.layout.lineSpacing * Double(model.layout.itemsPerRow - 2))
     }
 
     return newCollectionViewHeight

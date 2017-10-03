@@ -16,7 +16,8 @@ class LayoutTests: XCTestCase {
       "right": 4.0
     ],
     "header-mode": "sticky",
-    "infinite-scrolling": true
+    "infinite-scrolling": true,
+    "show-empty-component": true
   ]
 
   func testDefaultValues() {
@@ -32,6 +33,7 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.headerMode, .default)
     XCTAssertEqual(layout.pageIndicatorPlacement, nil)
     XCTAssertEqual(layout.infiniteScrolling, false)
+    XCTAssertEqual(layout.showEmptyComponent, false)
   }
 
   func testRegularInit() {
@@ -42,6 +44,7 @@ class LayoutTests: XCTestCase {
                         lineSpacing: 20.0,
                         inset: Inset(top: 10.0),
                         headerMode: .sticky,
+                        showEmptyComponent: true,
                         infiniteScrolling: true)
 
     XCTAssertEqual(layout.span, 2.0)
@@ -51,6 +54,7 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.dynamicHeight, true)
     XCTAssertEqual(layout.headerMode, .sticky)
     XCTAssertEqual(layout.infiniteScrolling, true)
+    XCTAssertEqual(layout.showEmptyComponent, true)
   }
 
   func testJSONMapping() {
@@ -64,6 +68,7 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.inset, Inset(top: 1, left: 2, bottom: 3, right: 4))
     XCTAssertEqual(layout.headerMode, .sticky)
     XCTAssertEqual(layout.infiniteScrolling, true)
+    XCTAssertEqual(layout.showEmptyComponent, true)
   }
 
   func testDictionary() {
@@ -81,6 +86,7 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["right"], layout.inset.right)
     XCTAssertEqual(layoutJSON["header-mode"] as? String, layout.headerMode.rawValue)
     XCTAssertEqual(layoutJSON["infinite-scrolling"] as? Bool, layout.infiniteScrolling)
+    XCTAssertEqual(layoutJSON["show-empty-component"] as? Bool, layout.showEmptyComponent)
   }
 
   func testConfigureWithJSON() {

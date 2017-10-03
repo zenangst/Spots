@@ -2,24 +2,25 @@ import UIKit
 
 extension UITableView: UserInterface {
 
-  public static var compositeIdentifier: String {
-    return "list-composite"
-  }
-
   public func register() {
-    Configuration.register(view: ListWrapper.self, identifier: TableView.compositeIdentifier)
-    register(ListWrapper.self, forCellReuseIdentifier: TableView.compositeIdentifier)
+    if Configuration.views.defaultItem == nil {
+      register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
+    }
 
     for (identifier, item) in Configuration.views.storage {
-      if identifier.contains(CompositeComponent.identifier) {
-        continue
-      }
-
       switch item {
-      case .classType(_):
-        register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
-        register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
-        register(ListWrapper.self, forCellReuseIdentifier: identifier)
+      case .classType(let type):
+        if type is UITableViewCell.Type {
+          register(type, forCellReuseIdentifier: identifier)
+        } else {
+          register(ListWrapper.self, forCellReuseIdentifier: identifier)
+        }
+
+        if type is UITableViewHeaderFooterView.Type {
+          register(type, forHeaderFooterViewReuseIdentifier: identifier)
+        } else {
+          register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
+        }
       case .nib(let nib):
         register(nib, forCellReuseIdentifier: identifier)
       }
@@ -104,11 +105,34 @@ extension UITableView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter animation: A constant that indicates how the reloading is to be animated
   public func insert(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { IndexPath(row: $0, section: 0) }
+    guard let dataSource = dataSource else {
+      assertionFailure("Datasource could not be resolved.")
+      return
+    }
 
-    if animation == .none { UIView.setAnimationsEnabled(false) }
-    performUpdates { insertRows(at: indexPaths, with: animation.tableViewAnimation) }
-    if animation == .none { UIView.setAnimationsEnabled(true) }
+    let numberOfRows = dataSource.tableView(self, numberOfRowsInSection: 0) - indexes.count
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForInsertedIndexes(indexes, numberOfItems: numberOfRows)
+    let indexPaths = indexes.map {
+      IndexPath(row: $0, section: 0)
+    }
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(false)
+    }
+
+    performUpdates({
+      insertRows(at: indexPaths, with: animation.tableViewAnimation)
+      for (from, to) in movedItems {
+        moveRow(at: IndexPath(row: from, section: 0),
+                to: IndexPath(row: to, section: 0))
+      }
+    })
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(true)
+    }
+
     completion?()
   }
 
@@ -125,9 +149,9 @@ extension UITableView: UserInterface {
     }
 
     if !indexPaths.isEmpty {
-      performUpdates {
+      performUpdates({
         reloadRows(at: indexPaths, with: animation.tableViewAnimation)
-      }
+      })
     } else {
       reloadDataSource()
     }
@@ -145,10 +169,28 @@ extension UITableView: UserInterface {
   /// - parameter section: The section you want to update
   /// - parameter animation: A constant that indicates how the reloading is to be animated
   public func delete(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    let indexPaths = indexes.map { IndexPath(row: $0, section: 0) }
-    if animation == .none { UIView.setAnimationsEnabled(false) }
-    performUpdates { deleteRows(at: indexPaths, with: animation.tableViewAnimation) }
-    if animation == .none { UIView.setAnimationsEnabled(true) }
+    let indexPaths = indexes.map {
+      IndexPath(row: $0, section: 0)
+    }
+    let algorithm = MoveAlgorithm()
+    let movedItems = algorithm.calculateMoveForDeletedIndexes(indexes, numberOfItems: numberOfRows(inSection: 0))
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(false)
+    }
+
+    performUpdates({
+      deleteRows(at: indexPaths, with: animation.tableViewAnimation)
+      for (from, to) in movedItems {
+        moveRow(at: IndexPath(item: from, section: 0),
+                to: IndexPath(item: to, section: 0))
+      }
+    })
+
+    if animation == .none {
+      UIView.setAnimationsEnabled(true)
+    }
+
     completion?()
   }
 
@@ -159,10 +201,10 @@ extension UITableView: UserInterface {
   /// - parameter section:          The section that will be updated
   /// - parameter updateDataSource: A closure that is used to update the data source before performing the updates on the UI
   /// - parameter completion:       A completion closure that will run when both data source and UI is updated
-  public func process(_ changes: (insertions: [Int], reloads: [Int], deletions: [Int], childUpdates: [Int]),
-                      withAnimation animation: Animation = .automatic,
-                      updateDataSource: () -> Void,
-                      completion: ((()) -> Void)? = nil) {
+  public func processChanges(_ changes: Changes,
+                             withAnimation animation: Animation = .automatic,
+                             updateDataSource: () -> Void,
+                             completion: ((()) -> Void)? = nil) {
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }
@@ -172,7 +214,7 @@ extension UITableView: UserInterface {
     if insertions.isEmpty &&
       reloads.isEmpty &&
       deletions.isEmpty &&
-      changes.childUpdates.isEmpty {
+      changes.moved.isEmpty {
       completion?()
       return
     }
@@ -181,6 +223,12 @@ extension UITableView: UserInterface {
     deleteRows(at: deletions, with: animation.tableViewAnimation)
     insertRows(at: insertions, with: animation.tableViewAnimation)
     reloadRows(at: reloads, with: animation.tableViewAnimation)
+
+    for move in changes.moved {
+      moveRow(at: IndexPath(row: move.key, section: 0),
+              to: IndexPath(row: move.value, section: 0))
+    }
+
     endUpdates()
     completion?()
   }
@@ -195,21 +243,26 @@ extension UITableView: UserInterface {
       UIView.setAnimationsEnabled(false)
     }
 
-    performUpdates {
+    performUpdates({
       reloadSections(IndexSet(integer: section), with: animation.tableViewAnimation)
-    }
+    })
+
     if animation == .none {
       UIView.setAnimationsEnabled(true)
     }
+
     completion?()
   }
 
-  /// Perform updates with closure
+  /// Perform batch updates on the data source.
   ///
-  /// - parameter closure: A closure that contains the operations that should be performed within the context
-  fileprivate func performUpdates(_ closure: () -> Void) {
+  /// - Parameters:
+  ///   - updateClosure: An update closure that is invoked inbetween `beginUpdates` and `endUpdates`.
+  ///   - completion: An optional completion closure that is invoked after `endUpdates.
+  public func performUpdates( _ updateClosure: () -> Void, completion: (() -> Void)? = nil) {
     beginUpdates()
-    closure()
+    updateClosure()
     endUpdates()
+    completion?()
   }
 }

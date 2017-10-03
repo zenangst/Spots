@@ -1,5 +1,5 @@
 import XCTest
-import Spots
+@testable import Spots
 
 class TestComponentEngine: XCTestCase {
 
@@ -101,6 +101,7 @@ class TestComponentEngine: XCTestCase {
   func testPrependItemsWithExistingItems() {
     let model = ComponentModel(kind: .list, items: [Item(title: "f00")])
     let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
     let expectation = self.expectation(description: "Wait for completion")
     let items = [
       Item(title: "foo"),
@@ -277,13 +278,10 @@ class TestComponentEngine: XCTestCase {
   func testReloadIfNeededWithChanges() {
     var view: TestView?
 
-    var childItem = Item(title: "baz")
-    childItem.children.append(ComponentModel(kind: .carousel).dictionary)
-
     let items = [
       Item(title: "foo"),
       Item(title: "bar"),
-      childItem
+      Item(title: "baz")
     ]
 
     component = Component(model: ComponentModel(kind: .list, items: items))
@@ -296,20 +294,15 @@ class TestComponentEngine: XCTestCase {
       Item(title: "new with child")
     ]
 
-
-    guard let diff = Item.evaluate(newItems, oldModels: component.model.items)
-      else {
-        XCTFail("Unable to resolve diff")
-        return
+    guard let changes = DiffManager().compare(oldItems: component.model.items, newItems: newItems) else {
+      XCTFail("Unable to resolve diff")
+      return
     }
 
-    let changes: (ItemChanges) = Item.processChanges(diff)
-
     XCTAssertEqual(changes.insertions, [3])
-    XCTAssertEqual(changes.updates, [0])
+    XCTAssertEqual(changes.updates, [2, 0])
     XCTAssertEqual(changes.reloads, [1])
     XCTAssertEqual(changes.deletions, [])
-    XCTAssertEqual(changes.updatedChildren, [2])
 
     let expectation = self.expectation(description: "Wait for completion")
     component.manager.reloadIfNeeded(with: changes, component: component, updateDataSource: {

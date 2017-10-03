@@ -6,20 +6,12 @@
 
 /// A type alias for a anonymous completion
 public typealias Completion = (() -> Void)?
-@available(*, deprecated, message: "Use Component instead.")
-public typealias CarouselComponent = Component
-@available(*, deprecated, message: "Use Component instead.")
-public typealias ListComponent = Component
-@available(*, deprecated, message: "Use Component instead.")
-public typealias GridComponent = Component
-@available(*, deprecated, message: "Use Component instead.")
-public typealias RowComponent = Component
 
 #if os(OSX)
   /// A type alias to reference a normal platform view
   public typealias View = NSView
   /// A type alias to reference a custom scroll view
-  public typealias ScrollView = NoScrollView
+  public typealias ScrollView = ComponentScrollView
   /// A type alias to reference a table view
   public typealias TableView = NSTableView
   /// A type alias to reference a collection view
@@ -32,17 +24,6 @@ public typealias RowComponent = Component
   public typealias FlowLayout = NSCollectionViewFlowLayout
   /// A type alias for scrollable views
   public typealias ScrollableView = SpotsScrollView
-
-  /// Extension for macOS to gain layoutSubviews
-  public extension NSView {
-    func layoutSubviews() {
-      layoutSubtreeIfNeeded()
-    }
-
-    func layoutIfNeeded() {
-      layoutSubtreeIfNeeded()
-    }
-  }
 #else
   /// A type alias to reference a view passed to delegate method
   public typealias ComponentView = UIView

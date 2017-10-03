@@ -14,15 +14,16 @@ public extension Component {
 
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
-    guard model.layout?.dynamicHeight == true else {
+    guard model.layout.dynamicHeight == true else {
       return self.view.frame.height
     }
 
     var height: CGFloat = 0
 
-    if tableView != nil {
+    switch model.kind {
+    case .list:
       #if !os(OSX)
-        let superViewHeight = self.view.superview?.frame.size.height ?? UIScreen.main.bounds.height
+        let superViewHeight = UIScreen.main.bounds.height
       #endif
 
       for item in model.items {
@@ -49,28 +50,15 @@ public extension Component {
           height += 28
         }
       #endif
-    } else if let collectionView = collectionView {
-      #if os(macOS)
-        if let collectionViewLayout = collectionView.collectionViewLayout {
-          height = collectionViewLayout.collectionViewContentSize.height
-        }
-
-          height += headerView?.frame.size.height ?? 0
-          height += footerView?.frame.size.height ?? 0
-      #else
-        if let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
-          switch collectionViewLayout.scrollDirection {
-          case .horizontal:
-            if let firstItem = item(at: 0), firstItem.size.height > collectionViewLayout.collectionViewContentSize.height {
-              height = firstItem.size.height + collectionViewLayout.sectionInset.top + collectionViewLayout.sectionInset.bottom
-            } else {
-              height = collectionViewLayout.collectionViewContentSize.height
-            }
-          case .vertical:
-            height = collectionView.collectionViewLayout.collectionViewContentSize.height
-          }
-        }
-      #endif
+    case .grid:
+      height = model.size?.height ?? 0
+    case .carousel:
+        height = model.size?.height ?? 0
+        if let firstItem = item(at: 0), firstItem.size.height > height {
+          height = firstItem.size.height
+          height += CGFloat(model.layout.inset.top)
+          height += CGFloat(model.layout.inset.bottom)
+      }
     }
 
     return height
@@ -95,8 +83,8 @@ public extension Component {
     }
   }
 
-  public func prepareItems(recreateComposites: Bool = true) {
-    manager.itemManager.prepareItems(component: self, recreateComposites: recreateComposites)
+  public func prepareItems() {
+    manager.itemManager.prepareItems(component: self)
   }
 
   /// A helper method to return self as a Component type.
@@ -145,28 +133,60 @@ public extension Component {
   ///
   /// - parameter completion: A completion closure that will be run in the main queue when the size has been updated.
   public func updateHeight(_ completion: Completion = nil) {
-    Dispatch.main { [weak self] in
+    Dispatch.interactive { [weak self] in
       guard let `self` = self else {
         completion?()
         return
       }
 
       let componentHeight = self.computedHeight
-      self.view.frame.size.height = componentHeight
-      completion?()
+      Dispatch.main {
+        #if os(macOS)
+          if let enclosingScrollView = self.view.enclosingScrollView {
+            let maxHeight = enclosingScrollView.frame.size.height - enclosingScrollView.contentInsets.top
+            let newHeight: CGFloat = min(maxHeight, componentHeight)
+
+            if self.view.frame.size.height != newHeight {
+              self.view.frame.size.height = newHeight
+            }
+          }
+        #else
+          if let spotsContentView = self.view.superview {
+            let maxHeight = spotsContentView.frame.size.height
+            let newHeight: CGFloat = min(maxHeight, componentHeight)
+            if self.view.frame.size.height != newHeight {
+              self.view.frame.size.height = newHeight
+            }
+          } else {
+            self.view.frame.size.height = componentHeight
+          }
+
+        #endif
+
+        completion?()
+      }
     }
   }
 
   /// Refresh indexes for all items to ensure that the indexes are unique and in ascending order.
   public func refreshIndexes(completion: Completion = nil) {
-    var updatedItems = model.items
+    Dispatch.interactive { [weak self] in
+      guard let `self` = self else {
+        return
+      }
 
-    updatedItems.enumerated().forEach {
-      updatedItems[$0.offset].index = $0.offset
+      var updatedItems = self.model.items
+
+      updatedItems.enumerated().forEach {
+        updatedItems[$0.offset].index = $0.offset
+      }
+
+      self.model.items = updatedItems
+
+      Dispatch.main {
+        completion?()
+      }
     }
-
-    model.items = updatedItems
-    completion?()
   }
 
   /// Caches the current state of the component
@@ -198,9 +218,7 @@ public extension Component {
       return ""
     }
 
-    if let item = item(at: index), item.kind.contains(CompositeComponent.identifier) {
-      return type(of: userInterface).compositeIdentifier
-    } else if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
+    if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
     } else {
       return Configuration.views.defaultIdentifier
@@ -231,8 +249,20 @@ public extension Component {
   /// - parameter completion: A completion closure that will be run when the computations are complete.
   public func updateHeightAndIndexes(completion: Completion = nil) {
     updateHeight { [weak self] in
-      self?.refreshIndexes(completion: completion)
+      guard let `self` = self else {
+        return
+      }
+
+      self.refreshIndexes(completion: completion)
     }
+  }
+
+  /// Get the size of the item at index path.
+  ///
+  /// - Parameter indexPath: The index path of the item that should be resolved.
+  /// - Returns: A `CGSize` based of the `Item`'s width and height.
+  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    return manager.itemManager.sizeForItem(at: indexPath, in: self)
   }
 
   func configure(with layout: Layout) {}

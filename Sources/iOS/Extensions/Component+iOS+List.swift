@@ -6,25 +6,22 @@ extension Component {
     tableView.dataSource = componentDataSource
     tableView.delegate = componentDelegate
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.layer.masksToBounds = false
     tableView.frame.size = size
     tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
     tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
 
     #if os(tvOS)
+      tableView.remembersLastFocusedIndexPath = true
       tableView.layoutMargins = .zero
     #endif
 
-    prepareItems(recreateComposites: true)
+    prepareItems()
 
     var height: CGFloat = 0.0
 
-    if parentComponent != nil {
-      height = computedHeight
-      tableView.frame.size.height = height
-    } else {
-      for item in model.items {
-        height += item.size.height
-      }
+    for item in model.items {
+      height += item.size.height
     }
 
     height += headerHeight
@@ -45,7 +42,7 @@ extension Component {
   }
 
   func layoutTableView(_ tableView: TableView, with size: CGSize) {
-    tableView.frame.size.width = round(size.width - (tableView.contentInset.left))
-    tableView.frame.origin.x = round(size.width / 2 - tableView.frame.width / 2)
+    tableView.frame.size.width = round(size.width - CGFloat(model.layout.inset.left + model.layout.inset.right))
+    tableView.frame.origin.x = CGFloat(model.layout.inset.left)
   }
 }

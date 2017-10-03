@@ -4,10 +4,6 @@ import Cocoa
 import Tailor
 
 @objc(SpotsComponent) public class Component: NSObject {
-
-  /// The default layout that should be used for components.
-  /// It will default to this one if `Layout` is absent during init.
-  public static var layout: Layout = Layout(span: 0.0)
   /// A configuration closure that can be used to pinpoint configuration of
   /// views used inside of the component.
   open static var configure: ((Component) -> Void)?
@@ -20,21 +16,11 @@ import Tailor
   var headerView: View?
   /// A reference to the footer view that should be used for the component.
   var footerView: View?
-  /// A parent component used for composition.
-  public var parentComponent: Component? {
-    didSet {
-      self.view.frame.size.height = self.computedHeight
-    }
-  }
   /// The component model, it contains all the information for configuring `Component`
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
   /// An engine that handles mutation of the component model data source.
   public var manager: ComponentManager = ComponentManager()
-  /// A collection of composite components, dynamically constructed and mutated based of
-  /// the contents of the `.model`.
-  public var compositeComponents: [CompositeComponent] = []
-
   /// A configuration closure that will be invoked when views are added to the component.
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -102,9 +88,7 @@ import Tailor
   }
   /// A scroll view container that is used to construct a unified scrolling experience
   /// when using multiple components inside of a controller.
-  open lazy var scrollView: ScrollView = ScrollView(documentView: self.documentView)
-  /// A normal view with a flipped coordinates system.
-  open lazy var documentView: FlippedView = FlippedView()
+  open lazy var scrollView: ComponentScrollView = ComponentScrollView()
   /// The height of the header view.
   var headerHeight: CGFloat {
     guard let headerView = headerView else {
@@ -148,13 +132,7 @@ import Tailor
     self.userInterface = userInterface
 
     super.init()
-
-    if model.layout == nil {
-      self.model.layout = Component.layout
-    }
-
     registerDefaultIfNeeded(view: DefaultItemView.self)
-
     userInterface.register()
 
     self.componentDataSource = DataSource(component: self)
@@ -177,9 +155,11 @@ import Tailor
 
     self.init(model: model, userInterface: userInterface!)
 
+    scrollView.documentView = userInterface as? View
+
     if model.kind == .carousel {
       self.model.interaction.scrollDirection = .horizontal
-      (collectionView?.collectionViewLayout as? FlowLayout)?.scrollDirection = .horizontal
+      collectionView?.flowLayout?.scrollDirection = .horizontal
     }
   }
 
@@ -199,6 +179,7 @@ import Tailor
     userInterface = nil
   }
 
+  /// Configure user interface data source and delegate.
   fileprivate func configureDataSourceAndDelegate() {
     if let tableView = self.tableView {
       tableView.dataSource = componentDataSource
@@ -215,36 +196,50 @@ import Tailor
   public func setup(with size: CGSize) {
     scrollView.frame.size = size
 
-    setupHeader(with: &model)
-    setupFooter(with: &model)
+    setupHeader()
+    setupFooter()
 
     configureDataSourceAndDelegate()
 
     if let tableView = self.tableView {
-      documentView.addSubview(tableView)
       setupTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
-      documentView.addSubview(collectionView)
       setupCollectionView(collectionView, with: size)
     }
 
-    layout(with: size)
+    layout(with: size, animated: false)
     Component.configure?(self)
   }
 
   /// Configure the view frame with a given size.
   ///
   /// - Parameter size: A `CGSize` used to set a new size to the user interface.
-  public func layout(with size: CGSize) {
+  /// - Parameter animated: Determines if the `Component` should perform animation when
+  ///                       applying its new size.
+  public func layout(with size: CGSize, animated: Bool = true) {
+    userInterface?.layoutIfNeeded()
+
     if let tableView = self.tableView {
-      layoutTableView(tableView, with: size)
+      let instance = animated ? tableView.animator() : tableView
+      layoutTableView(instance, with: size)
     } else if let collectionView = self.collectionView {
-      layoutCollectionView(collectionView, with: size)
+      let instance = animated ? collectionView.animator() : collectionView
+      layoutCollectionView(instance, with: size)
     }
 
     layoutHeaderFooterViews(size)
 
-    view.layoutSubviews()
+    if model.items.isEmpty, !model.layout.showEmptyComponent {
+      if animated {
+        view.animator().frame.size.height = 0
+        DispatchQueue.main.asyncAfter(deadline: .now() + NSAnimationContext.current().duration) { [weak self] in
+          self?.view.superview?.animator().layoutSubviews()
+        }
+      } else {
+        view.frame.size.height = 0
+        view.superview?.layoutSubviews()
+      }
+    }
   }
 
   /// Setup a collection view with a specific size.
@@ -253,14 +248,13 @@ import Tailor
   ///   - collectionView: The collection view that should be configured.
   ///   - size: The size that should be used for setting up the collection view.
   fileprivate func setupCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    if let componentLayout = self.model.layout,
-      let collectionViewLayout = collectionView.collectionViewLayout as? FlowLayout {
-      componentLayout.configure(collectionViewLayout: collectionViewLayout)
+    if let collectionViewLayout = collectionView.flowLayout {
+      model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 
     collectionView.frame.size = size
 
-    prepareItems(recreateComposites: true)
+    prepareItems()
 
     collectionView.backgroundColors = [NSColor.clear]
     collectionView.isSelectable = true
@@ -293,6 +287,12 @@ import Tailor
     }
   }
 
+  /// Handle resizing of component when the window size changes.
+  ///
+  /// - Parameters:
+  ///   - collectionView: The collection view instance.
+  ///   - size: The new size of the parent.
+  ///   - type: Determines if resizing is live or if it ended.
   fileprivate func resizeCollectionView(_ collectionView: CollectionView, with size: CGSize, type: ComponentResize) {
     if model.kind == .carousel {
       resizeHorizontalCollectionView(collectionView, with: size, type: type)
@@ -344,33 +344,17 @@ import Tailor
     delegate?.component(self, itemSelected: item)
   }
 
-  /// Get the size of the item at index path.
+  /// This method is invoked when the window is resized. It is called inside `SpotsController`.
   ///
-  /// - Parameter indexPath: The index path of the item that should be resolved.
-  /// - Returns: A `CGSize` based of the `Item`'s width and height.
-  public func sizeForItem(at indexPath: IndexPath) -> CGSize {
-    var size = CGSize(
-      width:  round(item(at: indexPath)?.size.width ?? 0.0),
-      height: round(item(at: indexPath)?.size.height ?? 0.0)
-    )
-
-    // Make sure that the item width never exceeds the frame view width.
-    // If it does exceed the maximum width, the layout span will be used to reduce the size to make sure
-    // that all items fit on the same row.
-    if let layout = model.layout, layout.span > 0 {
-      let maxWidth = size.width * CGFloat(layout.span) + CGFloat(layout.inset.left) + CGFloat(layout.inset.right)
-
-      if maxWidth > view.frame.size.width {
-        size.width -= CGFloat(layout.span)
-        size.width = round(size.width)
-      }
-    }
-
-    return size
-  }
-
+  /// - Parameters:
+  ///   - size: The new size of the parent frame.
+  ///   - type: The resizing context determines if the user is currently resizing the window or
+  ///           if they stopped resizing. It contains the following cases: `.live`, `.end`.
+  ///           `.live` is when the user is activly resizing and `.ended` is what the name implies,
+  ///           when the user stopped resizing the window and the `Component` should get its final
+  ///           size.
   public func didResize(size: CGSize, type: ComponentResize) {
-    if !compositeComponents.isEmpty && type == .end {
+    if type == .end {
       reload(nil)
     } else {
       if let tableView = tableView {
@@ -387,6 +371,14 @@ import Tailor
       let size = CGSize(width: superview.frame.width,
                         height: view.frame.height)
       layout(with: size)
+      reloadHeader()
+      reloadFooter()
     }
+
+    guard model.kind == .carousel else {
+      return
+    }
+    scrollView.scrollingEnabled = (model.items.count > 1)
+    scrollView.hasHorizontalScroller = (model.items.count > 1)
   }
 }

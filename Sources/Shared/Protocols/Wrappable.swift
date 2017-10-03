@@ -7,5 +7,4 @@ public protocol Wrappable: class {
   var wrappedView: View? { get set }
 
   func configure(with view: View)
-  func configureWrappedView()
 }

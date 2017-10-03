@@ -10,7 +10,7 @@ class RegistryTests: XCTestCase {
       title = item.title
     }
 
-    func computeSize(for item: Item) -> CGSize {
+    func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
       return .zero
     }
   }

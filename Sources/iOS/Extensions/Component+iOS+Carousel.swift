@@ -3,7 +3,7 @@ import UIKit
 extension Component {
 
   func setupHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? ComponentFlowLayout else {
+    guard let collectionViewLayout = collectionView.flowLayout else {
       return
     }
 
@@ -25,13 +25,11 @@ extension Component {
       }
     }
 
-    if let componentLayout = model.layout {
-      collectionView.frame.size.height += CGFloat(componentLayout.inset.top + componentLayout.inset.bottom)
-    }
+    collectionView.frame.size.height += CGFloat(model.layout.inset.top + model.layout.inset.bottom)
   }
 
   func layoutHorizontalCollectionView(_ collectionView: CollectionView, with size: CGSize) {
-    guard let collectionViewLayout = collectionView.collectionViewLayout as? ComponentFlowLayout else {
+    guard let collectionViewLayout = collectionView.flowLayout as? ComponentFlowLayout else {
       return
     }
 
@@ -50,7 +48,7 @@ extension Component {
   }
 
   private func configurePageControl(collectionView: UICollectionView, collectionViewLayout: UICollectionViewFlowLayout) {
-    guard let pageIndicatorPlacement = model.layout?.pageIndicatorPlacement else {
+    guard let pageIndicatorPlacement = model.layout.pageIndicatorPlacement else {
       return
     }
 
