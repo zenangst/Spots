@@ -16,10 +16,18 @@ extension UITableView: UserInterface {
       }
 
       switch item {
-      case .classType(_):
-        register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
-        register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
-        register(ListWrapper.self, forCellReuseIdentifier: identifier)
+      case .classType(let type):
+        if type is UITableViewCell.Type {
+          register(type, forCellReuseIdentifier: identifier)
+        } else {
+          register(ListWrapper.self, forCellReuseIdentifier: identifier)
+        }
+        
+        if type is UITableViewHeaderFooterView.Type {
+          register(type, forHeaderFooterViewReuseIdentifier: identifier)
+        } else {
+          register(ListHeaderFooterWrapper.self, forHeaderFooterViewReuseIdentifier: identifier)
+        }
       case .nib(let nib):
         register(nib, forCellReuseIdentifier: identifier)
       }

@@ -24,7 +24,7 @@ class CompositionTests: XCTestCase {
   }
 
   func testCoreComponentCreation() {
-    let layout = Layout().mutate { $0.span = 2.0 }
+    let layout = Layout(span: 2.0)
     var model = ComponentModel(kind: .grid, layout: layout)
 
     model.add(children: [
