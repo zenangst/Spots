@@ -218,7 +218,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         }
 
         #if os(tvOS)
-          if (scrollView as? CollectionView)?.flowLayout?.scrollDirection == .horizontal, frame.size.height < scrollView.contentSize.height {
+          if ((scrollView as? CollectionView)?.collectionViewLayout as? UICollectionViewFlowLayout)?.scrollDirection == .horizontal, frame.size.height < scrollView.contentSize.height {
             frame.size.height = scrollView.contentSize.height
           }
         #endif
