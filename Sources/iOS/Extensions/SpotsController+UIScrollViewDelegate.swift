@@ -10,6 +10,12 @@ extension SpotsController {
   /// - parameter scrollView: The scroll-view object in which the scrolling occurred.
 
   open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    #if os(tvOS)
+      guard scrollDelegate?.didScroll(in: scrollView) == false else {
+        return
+      }
+    #endif
+
     let offset = scrollView.contentOffset
     let size = scrollView.contentSize
     let multiplier: CGFloat = !refreshPositions.isEmpty

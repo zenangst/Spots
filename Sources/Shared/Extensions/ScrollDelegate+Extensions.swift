@@ -7,4 +7,12 @@ public extension ScrollDelegate {
   func didReachBeginning(in scrollView: ScrollableView, completion: Completion) {
     completion?()
   }
+
+  func didReachEnd(in scrollView: ScrollableView, completion: Completion) {
+    completion?()
+  }
+
+  func didScroll(in scrollView: ScrollView) -> Bool {
+    return false
+  }
 }
