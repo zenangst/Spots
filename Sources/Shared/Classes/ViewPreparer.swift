@@ -47,7 +47,16 @@ class ViewPreparer {
       if let configurableView = wrappedView as? ItemConfigurable {
         prepareItemConfigurableView(configurableView, atIndex: index, in: component)
       } else {
-        component.model.items[index].size.height = wrappedView.frame.size.height
+        if let model = component.model.items[index].model {
+
+          guard let configurator = Configuration.configurators[component.model.items[index].kind] else {
+            return
+          }
+
+          component.model.items[index].size = configurator(wrappedView, model, component.view.frame.size)
+        } else {
+          component.model.items[index].size.height = wrappedView.frame.size.height
+        }
       }
     }
   }
