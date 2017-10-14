@@ -359,9 +359,9 @@
 		BDE44B0F1EA0E5E80021EAC8 /* ComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B0E1EA0E5E80021EAC8 /* ComponentManager.swift */; };
 		BDE44B101EA0E5E80021EAC8 /* ComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B0E1EA0E5E80021EAC8 /* ComponentManager.swift */; };
 		BDE44B111EA0E5E80021EAC8 /* ComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B0E1EA0E5E80021EAC8 /* ComponentManager.swift */; };
-		BDE44B161EA0F0E40021EAC8 /* TestComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */; };
-		BDE44B171EA0F0E50021EAC8 /* TestComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */; };
-		BDE44B181EA0F0E60021EAC8 /* TestComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */; };
+		BDE44B161EA0F0E40021EAC8 /* ComponentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B121EA0F0C90021EAC8 /* ComponentManagerTests.swift */; };
+		BDE44B171EA0F0E50021EAC8 /* ComponentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B121EA0F0C90021EAC8 /* ComponentManagerTests.swift */; };
+		BDE44B181EA0F0E60021EAC8 /* ComponentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE44B121EA0F0C90021EAC8 /* ComponentManagerTests.swift */; };
 		BDEA327C1E86FC850044B056 /* ComponentDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA327B1E86FC850044B056 /* ComponentDelegateTests.swift */; };
 		BDEA327F1E87A6FF0044B056 /* TestInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA327E1E87A6FF0044B056 /* TestInteraction.swift */; };
 		BDEA32801E87A6FF0044B056 /* TestInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA327E1E87A6FF0044B056 /* TestInteraction.swift */; };
@@ -601,7 +601,7 @@
 		BDDF2CCF1DC7C50700B766BA /* TestAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAnimations.swift; sourceTree = "<group>"; };
 		BDE386491EFAEA5200320A6D /* RegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistryTests.swift; sourceTree = "<group>"; };
 		BDE44B0E1EA0E5E80021EAC8 /* ComponentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentManager.swift; sourceTree = "<group>"; };
-		BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestComponentManager.swift; sourceTree = "<group>"; };
+		BDE44B121EA0F0C90021EAC8 /* ComponentManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentManagerTests.swift; sourceTree = "<group>"; };
 		BDEA327B1E86FC850044B056 /* ComponentDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentDelegateTests.swift; sourceTree = "<group>"; };
 		BDEA327E1E87A6FF0044B056 /* TestInteraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestInteraction.swift; sourceTree = "<group>"; };
 		BDEED2E71D8446400030B475 /* TestSpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSpotsScrollView.swift; sourceTree = "<group>"; };
@@ -1123,7 +1123,7 @@
 				BD650CF51ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift */,
 				BD45D9861E30906300C2D6B2 /* LayoutTests.swift */,
 				BDE386491EFAEA5200320A6D /* RegistryTests.swift */,
-				BDE44B121EA0F0C90021EAC8 /* TestComponentManager.swift */,
+				BDE44B121EA0F0C90021EAC8 /* ComponentManagerTests.swift */,
 				D584782B1C43FF34006EBA49 /* TestComponentModel.swift */,
 				BDEA327E1E87A6FF0044B056 /* TestInteraction.swift */,
 				BDB8D5921E4DFADC00220BC3 /* TestItem.swift */,
@@ -1689,7 +1689,7 @@
 			files = (
 				BD45D98C1E30909700C2D6B2 /* TestLayoutExtensions.swift in Sources */,
 				BD6857A81F7CCEF5008EA9B5 /* SpotsControllerTVOSTests.swift in Sources */,
-				BDE44B181EA0F0E60021EAC8 /* TestComponentManager.swift in Sources */,
+				BDE44B181EA0F0E60021EAC8 /* ComponentManagerTests.swift in Sources */,
 				BDEFF5501DD1C85300FC0537 /* TestDataSource.swift in Sources */,
 				BD650CF81ECAC2C100DFD220 /* ItemConfigurableComputeSizeTests.swift in Sources */,
 				BD45D9891E30906300C2D6B2 /* LayoutTests.swift in Sources */,
@@ -1873,7 +1873,7 @@
 				D5D282731E54773C004BF251 /* TestListWrapper.swift in Sources */,
 				BDCFCD441DCA7F830047E84C /* TestSpotsController.swift in Sources */,
 				BD21C2541E4358CD00FE2B26 /* ComponentFlowLayoutTests.swift in Sources */,
-				BDE44B161EA0F0E40021EAC8 /* TestComponentManager.swift in Sources */,
+				BDE44B161EA0F0E40021EAC8 /* ComponentManagerTests.swift in Sources */,
 				BDCA3CF31E8295EB00A98A76 /* TestUserInterface.swift in Sources */,
 				BD45D9951E30A8A000C2D6B2 /* InsetTests.swift in Sources */,
 				BD5D69D81F398E740078AC19 /* DiffManagerTests.swift in Sources */,
@@ -1999,7 +1999,7 @@
 				BD357EB01F46C940002B39AB /* ItemManagerTests.swift in Sources */,
 				BD31BB9E1EA6209D00D1FC8A /* DelegateConfigurationClosureTests.swift in Sources */,
 				BDCFCD421DCA7EFF0047E84C /* TestSpotsController.swift in Sources */,
-				BDE44B171EA0F0E50021EAC8 /* TestComponentManager.swift in Sources */,
+				BDE44B171EA0F0E50021EAC8 /* ComponentManagerTests.swift in Sources */,
 				BD3DDC1F1F544E7200832469 /* ComponentMacOSTests.swift in Sources */,
 				BD165A371E6EAAA60023AF82 /* TestSpot.swift in Sources */,
 				BDFC474F1E747B2B008700BF /* TestGridWrapper.swift in Sources */,
