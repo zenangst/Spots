@@ -282,10 +282,13 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
 public func == (lhs: [Item], rhs: [Item]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
-  for (index, item) in lhs.enumerated() {
-    if item != rhs[index] { equal = false; break }
+  for (index, item) in lhs.enumerated() where item != rhs[index] {
+    equal = false
+    break
   }
 
   return equal
@@ -300,13 +303,13 @@ public func == (lhs: [Item], rhs: [Item]) -> Bool {
 public func === (lhs: [Item], rhs: [Item]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
-  for (index, item) in lhs.enumerated() {
-    if !(item === rhs[index]) {
-      equal = false
-      break
-    }
+  for (index, item) in lhs.enumerated() where !(item === rhs[index]) {
+    equal = false
+    break
   }
 
   return equal

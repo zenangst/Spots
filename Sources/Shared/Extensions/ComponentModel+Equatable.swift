@@ -18,11 +18,9 @@ public func == (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
     return false
   }
 
-  for (index, item) in lhs.enumerated() {
-    if item != rhs[index] {
-      equal = false
-      break
-    }
+  for (index, item) in lhs.enumerated() where item != rhs[index] {
+    equal = false
+    break
   }
 
   return equal
@@ -41,11 +39,9 @@ public func === (lhs: [ComponentModel], rhs: [ComponentModel]) -> Bool {
     return false
   }
 
-  for (index, item) in lhs.enumerated() {
-    if item !== rhs[index] {
-      equal = false
-      break
-    }
+  for (index, item) in lhs.enumerated() where item !== rhs[index] {
+    equal = false
+    break
   }
 
   return equal
