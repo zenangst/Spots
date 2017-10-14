@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class ItemModelConfigurationTests: XCTestCase {
+class ItemModelPresenterTests: XCTestCase {
   class MockView: View {
     var firstName = ""
     var lastName = ""
