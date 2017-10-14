@@ -5,7 +5,7 @@ public class Presenter<T: View, U: ItemModel> {
 
   private let closure: ConfigurationClosure
 
-  public init(closure: @escaping ConfigurationClosure) {
+  public init(_ closure: @escaping ConfigurationClosure) {
     self.closure = closure
   }
 
