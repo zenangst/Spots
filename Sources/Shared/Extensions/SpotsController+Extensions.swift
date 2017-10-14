@@ -66,7 +66,7 @@ public extension SpotsController {
   ///
   /// - returns: A collection of components. that match the includeElements predicate
   public func filter(components includeElement: (Component) -> Bool) -> [Component] {
-    var result = components.filter(includeElement)
+    let result = components.filter(includeElement)
     return result
   }
 

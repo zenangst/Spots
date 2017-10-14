@@ -217,11 +217,6 @@ public extension Component {
   ///
   /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the component.
   public func identifier(at index: Int) -> String {
-    guard let userInterface = userInterface else {
-      assertionFailure("Unable to resolve userinterface.")
-      return ""
-    }
-
     if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
     } else {
