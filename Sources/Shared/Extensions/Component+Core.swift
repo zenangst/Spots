@@ -103,6 +103,10 @@ public extension Component {
     return userInterface?.view(at: index)
   }
 
+  public func itemModel<T>(at index: Int) -> T? {
+    return item(at: index)?.model as? T
+  }
+
   /// Resolve item at index.
   ///
   /// - parameter index: The index of the item that should be resolved.
