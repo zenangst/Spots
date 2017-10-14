@@ -48,7 +48,7 @@ class ViewPreparer {
         prepareItemConfigurableView(configurableView, atIndex: index, in: component)
       } else {
         if let model = component.model.items[index].model {
-          guard let configurator = Configuration.configurators[component.model.items[index].kind] else {
+          guard let configurator = Configuration.presenters[component.model.items[index].kind] else {
             return
           }
 
@@ -81,10 +81,10 @@ class ViewPreparer {
         return
       }
 
-      guard let configurator = Configuration.configurators[item.kind] else {
+      guard let presenter = Configuration.presenters[item.kind] else {
         return
       }
 
-      component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
+      component.model.items[index].size.height = presenter(view, model, component.view.frame.size).height
   }
 }

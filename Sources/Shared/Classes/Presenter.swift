@@ -1,6 +1,6 @@
 import CoreGraphics
 
-public class Configurator<T: View, U: ItemModel> {
+public class Presenter<T: View, U: ItemModel> {
   public typealias ConfigurationClosure = ((_ view: T, _ model: U, _ containerSize: CGSize) -> CGSize)
 
   private let closure: ConfigurationClosure
@@ -9,7 +9,7 @@ public class Configurator<T: View, U: ItemModel> {
     self.closure = closure
   }
 
-  func configure(_ view: View,_ model: ItemModel, _ containerSize: CGSize) -> CGSize {
+  func configure(_ view: View, _ model: ItemModel, _ containerSize: CGSize) -> CGSize {
     guard let view = view as? T else {
       return .zero
     }

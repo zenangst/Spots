@@ -245,7 +245,7 @@ public class ComponentManager {
         } else {
           if let view: View = component.userInterface?.view(at: index),
             let model = newItem.model,
-            let configurator = Configuration.configurators[item.kind] {
+            let configurator = Configuration.presenters[item.kind] {
             component.userInterface?.performUpdates({
               component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
             }, completion: nil)
@@ -265,7 +265,7 @@ public class ComponentManager {
       } else {
         if let view: View = component.userInterface?.view(at: index),
           let model = newItem.model,
-          let configurator = Configuration.configurators[item.kind] {
+          let configurator = Configuration.presenters[newItem.kind] {
           component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
         }
       }

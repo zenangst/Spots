@@ -147,7 +147,7 @@ public class ItemManager {
         return
       }
 
-      guard let configurator = Configuration.configurators[item.kind] else {
+      guard let configurator = Configuration.presenters[item.kind] else {
         return
       }
 

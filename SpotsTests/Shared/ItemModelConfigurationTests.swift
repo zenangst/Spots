@@ -17,7 +17,7 @@ class ItemModelConfigurationTests: XCTestCase {
     Configuration.register(view: MockView.self,
                            identifier: "Mock",
                            model: MockModel.self,
-                           configurator: Configurator(closure: { (view, model, containerSize) -> CGSize in
+                           presenter: Presenter(closure: { (view, model, containerSize) -> CGSize in
                             view.firstName = model.firstName
                             view.lastName = model.lastName
                             return .init(width: 200, height: 200)

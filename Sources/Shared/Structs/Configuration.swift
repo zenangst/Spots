@@ -24,7 +24,7 @@ public struct Configuration {
   public static var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
   public static var views: Registry = .init()
   public static var models: [String: ItemModel.Type] = .init()
-  public static var configurators: [String: ConfigurationClosure] = .init()
+  public static var presenters: [String: ConfigurationClosure] = .init()
 
   /// Register a nib file with identifier on the component.
   ///
@@ -38,15 +38,15 @@ public struct Configuration {
   ///
   /// - parameter view:       The view type that should be registered with an identifier.
   /// - parameter identifier: A StringConvertible identifier for the registered view type.
-  public static func register<T, U>(view: T.Type, identifier: StringConvertible, model: U.Type? = nil, configurator: Configurator<T, U>? = nil) {
+  public static func register<T, U: ItemEquatable>(view: T.Type, identifier: StringConvertible, model: U.Type?, presenter: Presenter<T, U>? = nil) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
 
     if let model = model {
       self.models[identifier.string] = model
     }
 
-    if let configurator = configurator {
-      self.configurators[identifier.string] = configurator.configure(_:_:_:)
+    if let presenter = presenter {
+      self.presenters[identifier.string] = presenter.configure(_:_:_:)
     }
   }
 

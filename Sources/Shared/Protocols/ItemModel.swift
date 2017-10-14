@@ -1,5 +1,7 @@
 import Tailor
 
+public typealias ItemEquatable = Equatable & ItemModel & Codable
+
 public protocol ItemModel {}
 
 public func == (lhs: ItemModel, rhs: ItemModel) -> Bool {
