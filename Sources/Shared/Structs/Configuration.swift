@@ -14,7 +14,7 @@ struct PlatformDefaults {
 
 public struct Configuration {
 
-  public typealias ConfigurationClosure = (_ view: View, _ model: ItemModel, _ containerSize: CGSize) -> CGSize
+  public typealias ConfigurationClosure = (_ view: View, _ model: ItemCodable, _ containerSize: CGSize) -> CGSize
 
   /// Default setting for stretching the last `Component` to occupy the full height of `SpotsScrollView`.
   /// See `SpotsScrollView.stretchLastComponent` for more details.
@@ -23,7 +23,7 @@ public struct Configuration {
   public static var defaultComponentKind: ComponentKind = .grid
   public static var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
   public static var views: Registry = .init()
-  public static var models: [String: ItemModel.Type] = .init()
+  public static var models: [String: ItemCodable.Type] = .init()
   public static var presenters: [String: ConfigurationClosure] = .init()
 
   /// Register a nib file with identifier on the component.
@@ -38,7 +38,7 @@ public struct Configuration {
   ///
   /// - parameter view:       The view type that should be registered with an identifier.
   /// - parameter identifier: A StringConvertible identifier for the registered view type.
-  public static func register<T, U: ItemEquatable>(view: T.Type, identifier: StringConvertible, model: U.Type?, presenter: Presenter<T, U>? = nil) {
+  public static func register<T, U: ItemModel>(view: T.Type, identifier: StringConvertible, model: U.Type?, presenter: Presenter<T, U>? = nil) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
 
     if let model = model {

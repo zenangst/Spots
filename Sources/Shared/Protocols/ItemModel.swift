@@ -1,10 +1,9 @@
 import Tailor
 
-public typealias ItemEquatable = Equatable & ItemModel & Codable
+public protocol ItemModel: ItemCodable, Equatable {}
+public protocol ItemCodable: Codable {}
 
-public protocol ItemModel {}
-
-public func == (lhs: ItemModel, rhs: ItemModel) -> Bool {
+public func == (lhs: ItemCodable, rhs: ItemCodable) -> Bool {
   guard type(of: lhs) == type(of: rhs) else {
     return false
   }

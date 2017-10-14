@@ -59,7 +59,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
   /// A key-value dictionary for related view models
   public var relations = [String: [Item]]()
 
-  public var model: ItemModel?
+  var model: ItemCodable?
 
   /// A dictionary representation of the view model
   public var dictionary: [String : Any] {
@@ -149,7 +149,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               subtitle: String = "",
               text: String = "",
               image: String = "",
-              model: ItemModel? = nil,
+              model: ItemCodable? = nil,
               kind: StringConvertible = "",
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),
@@ -180,7 +180,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               subtitle: String = "",
               text: String = "",
               image: String = "",
-              model: ItemModel? = nil,
+              model: ItemCodable? = nil,
               kind: StringConvertible = "",
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),

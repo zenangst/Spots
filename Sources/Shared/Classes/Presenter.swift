@@ -9,7 +9,7 @@ public class Presenter<T: View, U: ItemModel> {
     self.closure = closure
   }
 
-  func configure(_ view: View, _ model: ItemModel, _ containerSize: CGSize) -> CGSize {
+  func configure(_ view: View, _ model: ItemCodable, _ containerSize: CGSize) -> CGSize {
     guard let view = view as? T else {
       return .zero
     }

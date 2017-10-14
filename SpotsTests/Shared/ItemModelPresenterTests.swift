@@ -8,9 +8,12 @@ class ItemModelPresenterTests: XCTestCase {
     var lastName = ""
   }
   struct MockModel: ItemModel {
-    var itemIdentifier: String
     var firstName: String
     var lastName: String
+
+    static func ==(lhs: MockModel, rhs: MockModel) -> Bool {
+      return lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName
+    }
   }
 
   func testConfiguringViewWithItemModel() {
@@ -23,7 +26,7 @@ class ItemModelPresenterTests: XCTestCase {
                             return .init(width: 200, height: 200)
                            }))
 
-    let mockModel = MockModel(itemIdentifier: "1", firstName: "Foo", lastName: "Bar")
+    let mockModel = MockModel(firstName: "Foo", lastName: "Bar")
     let items = [
       Item(model: mockModel, kind: "Mock")
     ]
