@@ -20,7 +20,7 @@ class ItemModelPresenterTests: XCTestCase {
     Configuration.register(view: MockView.self,
                            identifier: "Mock",
                            model: MockModel.self,
-                           presenter: Presenter(closure: { (view, model, containerSize) -> CGSize in
+                           presenter: Presenter({ (view, model, containerSize) -> CGSize in
                             view.firstName = model.firstName
                             view.lastName = model.lastName
                             return .init(width: 200, height: 200)
