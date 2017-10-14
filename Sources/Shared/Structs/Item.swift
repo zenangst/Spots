@@ -323,7 +323,7 @@ public func == (lhs: Item, rhs: Item) -> Bool {
   var modelsAreEqual: Bool = true
   if let lhsModel = lhs.model {
     if let rhsModel = rhs.model {
-      modelsAreEqual = lhsModel.equal(to: rhsModel)
+      modelsAreEqual = lhsModel == rhsModel
     } else {
       modelsAreEqual = false
     }
@@ -364,7 +364,7 @@ public func === (lhs: Item, rhs: Item) -> Bool {
   var modelsAreEqual: Bool = true
   if let lhsModel = lhs.model {
     if let rhsModel = rhs.model {
-      modelsAreEqual = lhsModel.equal(to: rhsModel)
+      modelsAreEqual = lhsModel == rhsModel
     } else {
       modelsAreEqual = false
     }

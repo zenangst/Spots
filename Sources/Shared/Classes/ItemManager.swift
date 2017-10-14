@@ -151,7 +151,7 @@ public class ItemManager {
         return
       }
 
-      item.size = configurator(view, model, component.view.frame.size)
+      item.size.height = configurator(view, model, component.view.frame.size).height
     }
   }
 

@@ -1,21 +1,11 @@
 import Tailor
 
-public protocol ItemModel {
-  var identifier: String { get }
-}
+public protocol ItemModel {}
 
-public extension ItemModel {
-  func equal(to rhs: ItemModel) -> Bool {
-    guard type(of: self) == type(of: rhs) else {
-      return false
-    }
-
-    return identifier == rhs.identifier
+public func == (lhs: ItemModel, rhs: ItemModel) -> Bool {
+  guard type(of: lhs) == type(of: rhs) else {
+    return false
   }
-}
 
-public extension ItemModel where Self : Equatable {
-  func equal(to rhs: Self) -> Bool {
-    return self == rhs
-  }
+  return String(describing: lhs).hashValue == String(describing: rhs).hashValue
 }

@@ -243,9 +243,16 @@ public class ComponentManager {
             component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
           }, completion: nil)
         } else {
-          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+          if let view: View = component.userInterface?.view(at: index),
+            let model = newItem.model,
+            let configurator = Configuration.configurators[item.kind] {
+            component.userInterface?.performUpdates({
+              component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
+            }, completion: nil)
+          } else {
+            component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+          }
         }
-
         updateHeightAndIndexes = true
       } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
         component.userInterface?.performUpdates({
@@ -255,6 +262,12 @@ public class ComponentManager {
           self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
         })
         return
+      } else {
+        if let view: View = component.userInterface?.view(at: index),
+          let model = newItem.model,
+          let configurator = Configuration.configurators[item.kind] {
+          component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
+        }
       }
 
       self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)

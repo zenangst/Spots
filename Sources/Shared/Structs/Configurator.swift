@@ -3,9 +3,9 @@ import CoreGraphics
 public class Configurator<T: View, U: ItemModel> {
   public typealias ConfigurationClosure = ((_ view: T, _ model: U, _ containerSize: CGSize) -> CGSize)
 
-  let closure: ConfigurationClosure
+  private let closure: ConfigurationClosure
 
-  init(closure: @escaping ConfigurationClosure) {
+  public init(closure: @escaping ConfigurationClosure) {
     self.closure = closure
   }
 

@@ -8,7 +8,7 @@ class ItemModelConfigurationTests: XCTestCase {
     var lastName = ""
   }
   struct MockModel: ItemModel {
-    var identifier: String
+    var itemIdentifier: String
     var firstName: String
     var lastName: String
   }
@@ -23,7 +23,7 @@ class ItemModelConfigurationTests: XCTestCase {
                             return .init(width: 200, height: 200)
                            }))
 
-    let mockModel = MockModel(identifier: "1", firstName: "Foo", lastName: "Bar")
+    let mockModel = MockModel(itemIdentifier: "1", firstName: "Foo", lastName: "Bar")
     let items = [
       Item(model: mockModel, kind: "Mock")
     ]
