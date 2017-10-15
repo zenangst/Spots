@@ -45,13 +45,28 @@ public extension SpotsController {
     return nil
   }
 
+  /// Resolve item model on item
+  ///
+  /// - parameter includeElement: A filter predicate used to match the item model that should be resolved.
+  ///
+  /// - returns: An optional item model with inferred type.
+  public func itemModel<T>(_ includeElement: (Item) -> Bool) -> T? {
+    for component in components {
+      if let match = component.model.items.filter(includeElement).first {
+        return match.model as? T
+      }
+    }
+
+    return nil
+  }
+
   /// Filter components. inside of controller
   ///
   /// - parameter includeElement: A filter predicate to find a component
   ///
   /// - returns: A collection of components. that match the includeElements predicate
   public func filter(components includeElement: (Component) -> Bool) -> [Component] {
-    var result = components.filter(includeElement)
+    let result = components.filter(includeElement)
     return result
   }
 

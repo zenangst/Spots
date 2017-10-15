@@ -1,7 +1,22 @@
 import XCTest
 @testable import Spots
 
-class TestComponentEngine: XCTestCase {
+class ComponentManagerTests: XCTestCase {
+  class MockView: View {
+    var firstName = ""
+    var lastName = ""
+  }
+  struct MockModel: ItemModel {
+    var firstName: String
+    var lastName: String
+    var height: CGFloat
+
+    static func ==(lhs: MockModel, rhs: MockModel) -> Bool {
+      return lhs.firstName == rhs.firstName
+        && lhs.lastName == rhs.lastName
+        && lhs.height == rhs.height
+    }
+  }
 
   var component: Component!
 
@@ -403,5 +418,58 @@ class TestComponentEngine: XCTestCase {
       }
     }
     waitForExpectations(timeout: 10.0, handler: nil)
+  }
+
+  func testComponentManagerWithPresenter() {
+    Configuration.register(view: MockView.self,
+                           identifier: "Mock",
+                           model: MockModel.self,
+                           presenter: Presenter({ (view, model, containerSize) -> CGSize in
+                            view.firstName = model.firstName
+                            view.lastName = model.lastName
+                            view.frame.size.height = model.height
+                            return .init(width: 200, height: model.height)
+                           }))
+
+    var mockModel = MockModel(firstName: "Foo", lastName: "Bar", height: 200)
+    let items = [Item(model: mockModel, kind: "Mock")]
+    let model = ComponentModel(items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 200, height: 200))
+
+    guard let resolvedView: MockView = component.userInterface?.view(at: 0) else {
+      XCTFail("Unable to resolve the view")
+      return
+    }
+
+    // Check that the presenter sets all the model values to the view.
+    XCTAssertEqual(resolvedView.firstName, mockModel.firstName)
+    XCTAssertEqual(resolvedView.lastName, mockModel.lastName)
+    XCTAssertEqual(resolvedView.frame.size.height, mockModel.height)
+
+    mockModel = MockModel(firstName: "Bar", lastName: "Foo", height: 200)
+    let expectation = self.expectation(description: "Expect the model to be updated with new data.")
+    component.update(Item(model: mockModel, kind: "Mock"), index: 0) {
+      guard let resolvedView: MockView = component.userInterface?.view(at: 0) else {
+        XCTFail("Unable to resolve the view")
+        return
+      }
+
+      // Check that all the new values are updated on the view.
+      XCTAssertEqual(resolvedView.firstName, mockModel.firstName)
+      XCTAssertEqual(resolvedView.lastName, mockModel.lastName)
+      XCTAssertEqual(resolvedView.frame.size.height, mockModel.height)
+
+      mockModel = MockModel(firstName: "Bar", lastName: "Foo", height: 100)
+      component.update(Item(model: mockModel, kind: "Mock"), index: 0) {
+        // Verify that the new values have been set correctly when the height has changed on the view.
+        XCTAssertEqual(resolvedView.firstName, mockModel.firstName)
+        XCTAssertEqual(resolvedView.lastName, mockModel.lastName)
+        XCTAssertEqual(resolvedView.frame.size.height, mockModel.height)
+        expectation.fulfill()
+      }
+    }
+    waitForExpectations(timeout: 1.0, handler: nil)
+
   }
 }

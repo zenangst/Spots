@@ -206,7 +206,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     scrollView.clipsToBounds = true
     scrollView.delegate = self
 
-
     #if os(tvOS)
       configure(focusGuide: focusGuide, for: scrollView, enabled: false)
     #endif

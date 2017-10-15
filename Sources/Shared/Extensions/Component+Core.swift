@@ -103,6 +103,10 @@ public extension Component {
     return userInterface?.view(at: index)
   }
 
+  public func itemModel<T>(at index: Int) -> T? {
+    return item(at: index)?.model as? T
+  }
+
   /// Resolve item at index.
   ///
   /// - parameter index: The index of the item that should be resolved.
@@ -213,11 +217,6 @@ public extension Component {
   ///
   /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the component.
   public func identifier(at index: Int) -> String {
-    guard let userInterface = userInterface else {
-      assertionFailure("Unable to resolve userinterface.")
-      return ""
-    }
-
     if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
       return item.kind
     } else {

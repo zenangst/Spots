@@ -21,6 +21,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     case subtitle
     case text
     case image
+    case model
     case kind
     case action
     case meta
@@ -57,6 +58,8 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
   public var meta = [String: Any]()
   /// A key-value dictionary for related view models
   public var relations = [String: [Item]]()
+
+  var model: ItemCodable?
 
   /// A dictionary representation of the view model
   public var dictionary: [String : Any] {
@@ -146,6 +149,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               subtitle: String = "",
               text: String = "",
               image: String = "",
+              model: ItemCodable? = nil,
               kind: StringConvertible = "",
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),
@@ -156,6 +160,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     self.subtitle = subtitle
     self.text = text
     self.image = image
+    self.model = model
     self.kind = kind.string
     self.action = action
     self.size = size
@@ -175,6 +180,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               subtitle: String = "",
               text: String = "",
               image: String = "",
+              model: ItemCodable? = nil,
               kind: StringConvertible = "",
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),
@@ -185,6 +191,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
               subtitle: subtitle,
               text: text,
               image: image,
+              model: model,
               kind: kind,
               action: action,
               size: size,
@@ -275,10 +282,13 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
 public func == (lhs: [Item], rhs: [Item]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
-  for (index, item) in lhs.enumerated() {
-    if item != rhs[index] { equal = false; break }
+  for (index, item) in lhs.enumerated() where item != rhs[index] {
+    equal = false
+    break
   }
 
   return equal
@@ -293,13 +303,13 @@ public func == (lhs: [Item], rhs: [Item]) -> Bool {
 public func === (lhs: [Item], rhs: [Item]) -> Bool {
   var equal = lhs.count == rhs.count
 
-  if !equal { return false }
+  if !equal {
+    return false
+  }
 
-  for (index, item) in lhs.enumerated() {
-    if !(item === rhs[index]) {
-      equal = false
-      break
-    }
+  for (index, item) in lhs.enumerated() where !(item === rhs[index]) {
+    equal = false
+    break
   }
 
   return equal
@@ -313,11 +323,21 @@ public func === (lhs: [Item], rhs: [Item]) -> Bool {
  - returns: A boolean value, true if both Item are equal
  */
 public func == (lhs: Item, rhs: Item) -> Bool {
+  var modelsAreEqual: Bool = true
+  if let lhsModel = lhs.model {
+    if let rhsModel = rhs.model {
+      modelsAreEqual = lhsModel == rhsModel
+    } else {
+      modelsAreEqual = false
+    }
+  }
+
   return lhs.identifier == rhs.identifier &&
     lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
     lhs.text == rhs.text &&
     lhs.image == rhs.image &&
+    modelsAreEqual &&
     lhs.kind == rhs.kind &&
     lhs.action == rhs.action &&
     (lhs.meta as NSDictionary).isEqual(to: rhs.meta) &&
@@ -344,11 +364,21 @@ public func != (lhs: [Item], rhs: [Item]) -> Bool {
  - returns: A boolean value, true if both Item are equal
  */
 public func === (lhs: Item, rhs: Item) -> Bool {
+  var modelsAreEqual: Bool = true
+  if let lhsModel = lhs.model {
+    if let rhsModel = rhs.model {
+      modelsAreEqual = lhsModel == rhsModel
+    } else {
+      modelsAreEqual = false
+    }
+  }
+
   let equal = lhs.identifier == rhs.identifier &&
     lhs.title == rhs.title &&
     lhs.subtitle == rhs.subtitle &&
     lhs.text == rhs.text &&
     lhs.image == rhs.image &&
+    modelsAreEqual &&
     lhs.kind == rhs.kind &&
     lhs.action == rhs.action &&
     lhs.size == rhs.size &&

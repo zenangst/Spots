@@ -133,10 +133,25 @@ public class ItemManager {
   }
 
   func prepare(component: Component, kind: String, view: Any, item: inout Item) {
-    if let view = view as? ItemConfigurable {
+    switch view {
+    case let view as ItemConfigurable:
       view.configure(with: item)
       item.size.height = view.computeSize(for: item, containerSize: component.view.frame.size).height
       setFallbackViewSize(component: component, item: &item, with: view)
+    default:
+      guard let view = view as? View else {
+        return
+      }
+
+      guard let model = item.model else {
+        return
+      }
+
+      guard let configurator = Configuration.presenters[item.kind] else {
+        return
+      }
+
+      item.size.height = configurator(view, model, component.view.frame.size).height
     }
   }
 
@@ -220,7 +235,6 @@ public class ItemManager {
         }
       }
     #endif
-
 
     #if os(tvOS)
       // This ensures that the height of the item never exceeds the size of the component view.

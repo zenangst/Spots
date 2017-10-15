@@ -27,6 +27,7 @@ extension NSCollectionView: UserInterface {
     return "collection-composite"
   }
 
+  // swiftlint:disable empty_enum_arguments
   public func register() {
     register(GridWrapper.self, forItemWithIdentifier: CollectionView.compositeIdentifier)
 
