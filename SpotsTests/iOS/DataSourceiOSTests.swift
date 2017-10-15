@@ -2,7 +2,7 @@
 import Foundation
 import XCTest
 
-class DataSourceTests: XCTestCase {
+class DataSourceiOSTests: XCTestCase {
 
   override func setUp() {
     Configuration.register(view: CustomGridCell.self, identifier: "custom")

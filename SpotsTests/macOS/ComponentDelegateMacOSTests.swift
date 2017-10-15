@@ -1,7 +1,7 @@
 @testable import Spots
 import XCTest
 
-class ComponentDelegateTests: XCTestCase {
+class ComponentDelegateMacOSTests: XCTestCase {
   class MockTableView: NSTableView {
     var rowClicked: Int = -1
 

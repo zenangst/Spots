@@ -1,7 +1,7 @@
 import XCTest
 import Spots
 
-class TestSpotsControllerManager: XCTestCase {
+class SpotsControllerManagerTests: XCTestCase {
 
   var controller: SpotsController!
   let component = Component(model: ComponentModel(kind: .list, items: [
@@ -390,6 +390,7 @@ class TestSpotsControllerManager: XCTestCase {
     SpotsController.componentsDidReloadComponentModels = { controller in
       XCTAssert(true)
       expectation.fulfill()
+      SpotsController.componentsDidReloadComponentModels = nil
     }
 
     let components = initialComponentModels.map { Component(model: $0) }

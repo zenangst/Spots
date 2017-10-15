@@ -1,7 +1,7 @@
 @testable import Spots
 import XCTest
 
-class TestItem: XCTestCase {
+class ItemTests: XCTestCase {
 
   var data: [String : Any] = [
     "title": "A",
