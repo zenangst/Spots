@@ -2,7 +2,6 @@ import XCTest
 @testable import Spots
 
 class ComponentManagerTests: XCTestCase {
-
   class MockView: View {
     var firstName = ""
     var lastName = ""

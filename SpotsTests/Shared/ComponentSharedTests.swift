@@ -3,6 +3,21 @@ import Foundation
 import XCTest
 
 class ComponentSharedTests: XCTestCase {
+  class MockView: View {
+    var firstName = ""
+    var lastName = ""
+  }
+  struct MockModel: ItemModel {
+    var firstName: String
+    var lastName: String
+    var height: CGFloat
+
+    static func ==(lhs: MockModel, rhs: MockModel) -> Bool {
+      return lhs.firstName == rhs.firstName
+        && lhs.lastName == rhs.lastName
+        && lhs.height == rhs.height
+    }
+  }
 
   override func setUp() {
     Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
@@ -174,5 +189,30 @@ class ComponentSharedTests: XCTestCase {
 
     XCTAssertEqual(component.itemOffset({ $0.title == "bar" }), 100)
     XCTAssertEqual(component.itemOffset({ $0.title == "bal" }), 0)
+  }
+
+  func testResolvingItemModel() {
+    Configuration.register(view: MockView.self,
+                           identifier: "Mock",
+                           model: MockModel.self,
+                           presenter: Presenter({ (view, model, containerSize) -> CGSize in
+                            view.firstName = model.firstName
+                            view.lastName = model.lastName
+                            view.frame.size.height = model.height
+                            return .init(width: 200, height: model.height)
+                           }))
+
+    let mockModel = MockModel(firstName: "Foo", lastName: "Bar", height: 200)
+    let items = [Item(model: mockModel, kind: "Mock")]
+    let model = ComponentModel(items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 200, height: 200))
+
+    guard let resolvedModel: MockModel = component.itemModel(at: 0) else {
+      XCTFail("Unable to resolve the model")
+      return
+    }
+
+    XCTAssertEqual(mockModel, resolvedModel)
   }
 }
