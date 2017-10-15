@@ -221,31 +221,49 @@ public class ComponentManager {
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
   public func update(item: Item, atIndex index: Int, component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
+      guard let `self` = self else {
+        return
+      }
+
       guard let oldItem = component.item(at: index) else {
         completion?()
         return
       }
 
-      var item = item
-      item.index = index
       var updateHeightAndIndexes: Bool = false
+      var item = item
+
+      item.index = index
       component.model.items[index] = item
 
-      self?.itemManager.configureItem(at: index, component: component, usesViewSize: true)
-      let newItem = component.model.items[index]
+      self.itemManager.configureItem(at: index, component: component, usesViewSize: true)
 
-      if newItem.kind != oldItem.kind {
+      let newItem = component.model.items[index]
+      let change = self.itemManager.computeChange(between: newItem, and: oldItem)
+
+      switch change {
+      case .hard:
         component.userInterface?.reload([index], withAnimation: animation, completion: nil)
-      } else if newItem.size.height != oldItem.size.height {
-        if let view: ItemConfigurable = component.userInterface?.view(at: index), animation != .none {
+      case .medium:
+        // Opt-out of doing medium updates if animations is set to `.none`.
+        // The user inteface will animate to its new size if we don't invoked reload.
+        guard animation != .none else {
+          component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+          return
+        }
+
+        guard let view: View = component.userInterface?.view(at: index) else {
+          return
+        }
+
+        switch view {
+        case let view as ItemConfigurable:
           component.userInterface?.performUpdates({
             view.configure(with: component.model.items[index])
             component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
           }, completion: nil)
-        } else {
-          if let view: View = component.userInterface?.view(at: index),
-            let model = newItem.model,
-            let configurator = Configuration.presenters[item.kind] {
+        default:
+          if let model = newItem.model, let configurator = Configuration.presenters[item.kind] {
             component.userInterface?.performUpdates({
               component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
             }, completion: nil)
@@ -253,24 +271,27 @@ public class ComponentManager {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
         }
+
         updateHeightAndIndexes = true
-      } else if let view: ItemConfigurable = component.userInterface?.view(at: index) {
-        component.userInterface?.performUpdates({
-          view.configure(with: component.model.items[index])
-          component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
-        }, completion: {
-          self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
-        })
-        return
-      } else {
-        if let view: View = component.userInterface?.view(at: index),
-          let model = newItem.model,
-          let configurator = Configuration.presenters[newItem.kind] {
-          component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
+      case .soft:
+        if let view: ItemConfigurable = component.userInterface?.view(at: index) {
+          component.userInterface?.performUpdates({
+            view.configure(with: component.model.items[index])
+            component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
+          }, completion: {
+            self.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
+          })
+          return
+        } else {
+          if let view: View = component.userInterface?.view(at: index),
+            let model = newItem.model,
+            let configurator = Configuration.presenters[newItem.kind] {
+            component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
+          }
         }
       }
 
-      self?.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
+      self.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
     }
   }
 
