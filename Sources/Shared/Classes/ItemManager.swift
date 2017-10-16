@@ -245,4 +245,16 @@ public class ItemManager {
 
     return size
   }
+
+  func computeChange(between lhs: Item, and rhs: Item) -> ItemChange {
+    if lhs.kind != rhs.kind {
+      return .hard
+    }
+
+    if lhs.size != rhs.size {
+      return .medium
+    }
+
+    return .soft
+  }
 }

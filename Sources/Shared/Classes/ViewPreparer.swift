@@ -75,7 +75,7 @@ class ViewPreparer {
     }
   }
 
-  func prepareItemWithModel(at index: Int, for view: View, in component: Component) {
+  private func prepareItemWithModel(at index: Int, for view: View, in component: Component) {
       guard let item = component.item(at: index),
         let model = item.model else {
         return
