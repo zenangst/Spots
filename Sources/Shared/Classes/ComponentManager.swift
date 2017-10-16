@@ -249,6 +249,7 @@ public class ComponentManager {
         // The user inteface will animate to its new size if we don't invoked reload.
         guard animation != .none else {
           component.userInterface?.reload([index], withAnimation: animation, completion: nil)
+          self.finishComponentOperation(component, updateHeightAndIndexes: updateHeightAndIndexes, completion: completion)
           return
         }
 
