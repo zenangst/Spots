@@ -1,7 +1,7 @@
 @testable import Spots
 import XCTest
 
-class TestUserInterface: XCTestCase {
+class UserInterfaceTests: XCTestCase {
 
   func testEmptyComponent() {
     let model = ComponentModel(kind: .list)

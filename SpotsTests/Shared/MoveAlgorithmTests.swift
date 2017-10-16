@@ -9,6 +9,8 @@ class MoveAlgorithmTests: XCTestCase {
   let algorithm = MoveAlgorithm()
 
   func testCalculateMoveForInsertedIndexes() {
+    // If there are no indexes, the method should return early and returns an empty dictionary.
+    XCTAssertEqual(algorithm.calculateMoveForInsertedIndexes([], numberOfItems: 1), [:])
     // Inserting a new item in the beginning of the collection means that all the existing items need
     // to move, all of them should have a larger index than before.
     XCTAssertEqual(algorithm.calculateMoveForInsertedIndexes([0], numberOfItems: 3), [0: 1, 1: 2, 2: 3])

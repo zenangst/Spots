@@ -4,7 +4,6 @@ import XCTest
 class ComponentTests: XCTestCase {
 
   override func setUp() {
-    Configuration.views.storage = [:]
     Configuration.views.defaultItem = nil
     Configuration.register(view: HeaderView.self, identifier: "Header")
     Configuration.register(view: TextView.self, identifier: "TextView")
