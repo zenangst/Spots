@@ -50,7 +50,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   }
 
   /// A custom scroll view that handles the scrolling for all internal scroll views
-  public var scrollView: SpotsScrollView = SpotsScrollView()
+  public var scrollView: SpotsScrollView
 
   /// A scroll delegate for handling didReachBeginning and didReachEnd
   weak open var scrollDelegate: ScrollDelegate?
@@ -60,13 +60,17 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
   fileprivate let backgroundType: ControllerBackground
 
+  public var configuration: Configuration
+
   /**
    - parameter components: An array of components.
    - parameter backgroundType: The type of background that the Controller should use, .Regular or .Dynamic
    */
-  public required init(components: [Component] = [], backgroundType: ControllerBackground = .regular) {
+  public required init(components: [Component] = [], configuration: Configuration = .shared, backgroundType: ControllerBackground = .regular) {
+    self.configuration = configuration
     self.components = components
     self.backgroundType = backgroundType
+    self.scrollView = SpotsScrollView(frame: .zero, configuration: configuration)
     super.init(nibName: nil, bundle: nil)!
 
     NotificationCenter.default.addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
@@ -79,24 +83,24 @@ open class SpotsController: NSViewController, SpotsProtocol {
   /**
    - parameter cacheKey: A key that will be used to identify the StateCache
    */
-  public convenience init(cacheKey: String) {
+  public convenience init(cacheKey: String, configuration: Configuration = .shared) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(components: Parser.parse(stateCache.load()))
+    self.init(components: Parser.parse(stateCache.load(), configuration: configuration))
     self.stateCache = stateCache
   }
 
   /**
    - parameter component: A Component object
    */
-  public convenience init(component: Component) {
-    self.init(components: [component])
+  public convenience init(component: Component, configuration: Configuration = .shared) {
+    self.init(components: [component], configuration: configuration)
   }
 
   /**
    - parameter json: A JSON dictionary that gets parsed into UI elements
    */
-  public convenience init(_ json: [String : Any]) {
-    self.init(components: Parser.parse(json))
+  public convenience init(_ json: [String : Any], configuration: Configuration = .shared) {
+    self.init(components: Parser.parse(json, configuration: configuration))
   }
 
   /**

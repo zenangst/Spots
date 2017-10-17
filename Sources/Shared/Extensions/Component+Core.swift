@@ -217,10 +217,10 @@ public extension Component {
   ///
   /// - returns: A string identifier for the view, defaults to the `defaultIdentifier` on the component.
   public func identifier(at index: Int) -> String {
-    if let item = item(at: index), Configuration.views.storage[item.kind] != nil {
+    if let item = item(at: index), configuration.views.storage[item.kind] != nil {
       return item.kind
     } else {
-      return Configuration.views.defaultIdentifier
+      return configuration.views.defaultIdentifier
     }
   }
 

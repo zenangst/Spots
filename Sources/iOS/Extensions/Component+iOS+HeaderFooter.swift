@@ -2,12 +2,12 @@ import UIKit
 
 extension Component {
 
-  func setupHeader() {
+  func setupHeader(with configuration: Configuration = .shared) {
     guard let header = model.header, headerView == nil else {
       return
     }
 
-    if let headerView = Configuration.views.make(header.kind)?.view {
+    if let headerView = configuration.views.make(header.kind)?.view {
       self.headerView = headerView
       reloadHeader()
       headerView.layer.zPosition = 100
@@ -25,12 +25,12 @@ extension Component {
     }
   }
 
-  func setupFooter() {
+  func setupFooter(with configuration: Configuration = .shared) {
     guard let footer = model.footer, footerView == nil else {
       return
     }
 
-    if let footerView = Configuration.views.make(footer.kind)?.view {
+    if let footerView = configuration.views.make(footer.kind)?.view {
       self.footerView = footerView
       reloadFooter()
       footerView.layer.zPosition = 99

@@ -21,8 +21,8 @@ extension NSTableView: UserInterface {
     return "list-composite"
   }
 
-  public func register() {
-    Configuration.register(view: ListWrapper.self, identifier: TableView.compositeIdentifier)
+  public func register(with configuration: Configuration) {
+    configuration.register(view: ListWrapper.self, identifier: TableView.compositeIdentifier)
   }
 
   public func view<T>(at index: Int) -> T? {

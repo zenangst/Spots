@@ -12,22 +12,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
     }
   }
 
-  /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
-  /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
-  ///
-  /// ```
-  ///  Enabled    Disabled
-  ///  --------   --------
-  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
-  /// ||      || ||      ||
-  /// ||______|| ||______||
-  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
-  /// ||      || ||      ||
-  /// ||      || ||______||
-  /// ||______|| |        |
-  ///  --------   --------
-  /// ```
-  public var stretchLastComponent = Configuration.stretchLastComponent
   /// A collection of UIView's that resemble the order of the views in the scroll view
   fileprivate var subviewsInLayoutOrder = [UIView]()
   private var observers = [Observer]()
@@ -47,6 +31,8 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   /// A container view that works as a proxy layer for scroll view
   open var componentsView: SpotsContentView = SpotsContentView()
 
+  var configuration: Configuration
+
   /// A deinitiazlier that removes all subviews from contentView
   deinit {
     subviewsInLayoutOrder.removeAll()
@@ -59,7 +45,8 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   ///  This method uses the frame rectangle to set the center and bounds properties accordingly.
   ///
   /// - returns: An initialized components scroll view
-  override init(frame: CGRect) {
+  public required init(frame: CGRect, configuration: Configuration) {
+    self.configuration = configuration
     super.init(frame: frame)
     componentsView.autoresizingMask = self.autoresizingMask
     addSubview(componentsView)
@@ -210,7 +197,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
         let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
 
-        if stretchLastComponent && scrollView.isEqual(lastView) {
+        if configuration.stretchLastComponent && scrollView.isEqual(lastView) {
           let newHeight = self.frame.size.height - scrollView.frame.origin.y + self.contentOffset.y
           frame.size.height = newHeight
         } else {

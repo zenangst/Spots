@@ -7,7 +7,7 @@ class ComponentDelegateMock: ComponentDelegate {}
 class SpotsControllerTests: XCTestCase {
 
   override func setUp() {
-    Configuration.views.purge()
+    Configuration.shared.views.purge()
   }
 
   func testSpotAtIndex() {
@@ -537,8 +537,8 @@ class SpotsControllerTests: XCTestCase {
   }
 
   func testReloadIfNeededWithComponentModels() {
-    Configuration.registerDefault(view: DefaultItemView.self)
-    Configuration.defaultViewSize = .init(width: 0, height: 44)
+    Configuration.shared.registerDefault(view: DefaultItemView.self)
+    Configuration.shared.defaultViewSize = .init(width: 0, height: 44)
     let initialComponentModels = [
       ComponentModel(
         kind: .list,

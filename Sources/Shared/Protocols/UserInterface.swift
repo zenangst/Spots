@@ -1,6 +1,5 @@
 ///// A protocol used for composition inside components.
 public protocol UserInterface: class {
-
   var visibleViews: [View] { get }
 
   #if !os(OSX)
@@ -87,7 +86,7 @@ public protocol UserInterface: class {
   func reloadDataSource()
 
   /// Register all views from Configuration on user interface object.
-  func register()
+  func register(with configuration: Configuration)
 
   /// Recalculate the receiver’s layout, if required.
   func layoutIfNeeded()

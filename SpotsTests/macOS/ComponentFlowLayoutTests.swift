@@ -14,8 +14,8 @@ class ItemsPerRowViewMock: View, ItemConfigurable {
 class ComponentFlowLayoutTests: XCTestCase {
 
   override func setUp() {
-    Configuration.registerDefault(view: ItemsPerRowViewMock.self)
-    Configuration.views.purge()
+    Configuration.shared.registerDefault(view: ItemsPerRowViewMock.self)
+    Configuration.shared.views.purge()
   }
 
   func testItemsPerRow() {

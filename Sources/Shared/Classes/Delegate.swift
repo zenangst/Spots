@@ -12,7 +12,8 @@ public class Delegate: NSObject, ComponentResolvable {
   /// An object that ensures that all views displayed for this data source are properly
   /// configured with the model data. See `ItemConfigurable` for more information
   /// about how to configure your views.
-  var viewPreparer = ViewPreparer()
+  var viewPreparer: ViewPreparer
+  var configuration: Configuration
 
   #if !os(macOS)
   /// The scroll view manager handles constraining horizontal components.
@@ -25,7 +26,9 @@ public class Delegate: NSObject, ComponentResolvable {
   /// Initialize a new instance of a delegate with a component.
   ///
   /// - Parameter component: The component that the delegate belongs to.
-  init(component: Component) {
+  init(component: Component, with configuration: Configuration) {
     self.component = component
+    self.configuration = configuration
+    self.viewPreparer = ViewPreparer(configuration: configuration)
   }
 }

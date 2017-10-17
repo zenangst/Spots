@@ -11,6 +11,12 @@
 /// on the view in question.
 class ViewPreparer {
 
+  var configuration: Configuration
+
+  init(configuration: Configuration) {
+    self.configuration = configuration
+  }
+
   /// Prepare the view located at a specific index inside of a component using the parent frame.
   ///
   /// - Parameters:
@@ -42,13 +48,13 @@ class ViewPreparer {
   func prepareWrappableView(_ view: Wrappable, atIndex index: Int, in component: Component, parentFrame: CGRect = CGRect.zero) {
     let identifier = component.identifier(at: index)
 
-    if let wrappedView = Configuration.views.make(identifier, parentFrame: parentFrame)?.view {
+    if let wrappedView = configuration.views.make(identifier, parentFrame: parentFrame)?.view {
       view.configure(with: wrappedView)
       if let configurableView = wrappedView as? ItemConfigurable {
         prepareItemConfigurableView(configurableView, atIndex: index, in: component)
       } else {
         if let model = component.model.items[index].model {
-          guard let configurator = Configuration.presenters[component.model.items[index].kind] else {
+          guard let configurator = configuration.presenters[component.model.items[index].kind] else {
             return
           }
 
@@ -81,7 +87,7 @@ class ViewPreparer {
         return
       }
 
-      guard let presenter = Configuration.presenters[item.kind] else {
+      guard let presenter = configuration.presenters[item.kind] else {
         return
       }
 

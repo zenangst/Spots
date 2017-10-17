@@ -5,6 +5,11 @@
 #endif
 
 public class ItemManager {
+  var configuration: Configuration
+
+  init(configuration: Configuration = .shared) {
+    self.configuration = configuration
+  }
 
   /// Calculate the span width for an item inside of a `Component`.
   /// Span width is the amount of spaces that an `Item` will get inside of a `Component`
@@ -27,7 +32,7 @@ public class ItemManager {
 
   func prepareItems(component: Component) {
     component.model.items = prepare(component: component, items: component.model.items)
-    Configuration.views.purge()
+    configuration.views.purge()
   }
 
   func prepare(component: Component, items: [Item]) -> [Item] {
@@ -105,7 +110,7 @@ public class ItemManager {
 
       let view: View?
 
-      if let resolvedView = Configuration.views.make(kind, parentFrame: component.view.bounds, useCache: true)?.view {
+      if let resolvedView = configuration.views.make(kind, parentFrame: component.view.bounds, useCache: true)?.view {
         view = resolvedView
       } else {
         return nil
@@ -122,7 +127,7 @@ public class ItemManager {
         fullWidth = component.view.superview?.frame.size.width ?? component.view.frame.size.width
       }
 
-      if let resolvedView = Configuration.views.make(kind, parentFrame: component.view.frame, useCache: true)?.view {
+      if let resolvedView = configuration.views.make(kind, parentFrame: component.view.frame, useCache: true)?.view {
         prepare(component: component, kind: kind, view: resolvedView as Any, item: &item)
       } else {
         return nil
@@ -147,7 +152,7 @@ public class ItemManager {
         return
       }
 
-      guard let configurator = Configuration.presenters[item.kind] else {
+      guard let configurator = configuration.presenters[item.kind] else {
         return
       }
 

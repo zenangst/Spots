@@ -4,15 +4,15 @@ import XCTest
 class ComponentTests: XCTestCase {
 
   override func setUp() {
-    Configuration.views.defaultItem = nil
-    Configuration.register(view: HeaderView.self, identifier: "Header")
-    Configuration.register(view: TextView.self, identifier: "TextView")
-    Configuration.register(view: FooterView.self, identifier: "Footer")
+    Configuration.shared.views.defaultItem = nil
+    Configuration.shared.register(view: HeaderView.self, identifier: "Header")
+    Configuration.shared.register(view: TextView.self, identifier: "TextView")
+    Configuration.shared.register(view: FooterView.self, identifier: "Footer")
     StateCache.removeAll()
   }
 
   func testDefaultValues() {
-    Configuration.defaultViewSize = .init(width: 0, height: 44)
+    Configuration.shared.defaultViewSize = .init(width: 0, height: 44)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(kind: .list, items: items)
     let component = Component(model: model)

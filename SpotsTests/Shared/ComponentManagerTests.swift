@@ -21,7 +21,7 @@ class ComponentManagerTests: XCTestCase {
   var component: Component!
 
   override func setUp() {
-    Configuration.registerDefault(view: TestView.self)
+    Configuration.shared.registerDefault(view: TestView.self)
 
     let items = [
       Item(title: "foo"),
@@ -34,7 +34,7 @@ class ComponentManagerTests: XCTestCase {
   }
 
   func testComponentManagerWithPresenter() {
-    Configuration.register(view: MockView.self,
+    Configuration.shared.register(view: MockView.self,
                            identifier: "MockPresenter",
                            model: MockModel.self,
                            presenter: Presenter({ (view, model, containerSize) -> CGSize in

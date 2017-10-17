@@ -14,8 +14,8 @@ class ComponentiOSTests: XCTestCase {
   var cachedSpot: Component!
 
   override func setUp() {
-    Configuration.views.purge()
-    Configuration.registerDefault(view: DefaultItemView.self)
+    Configuration.shared.views.purge()
+    Configuration.shared.registerDefault(view: DefaultItemView.self)
     component = Component(model: ComponentModel(layout: Layout(span: 1)))
     cachedSpot = Component(cacheKey: "cached-carousel-component")
     XCTAssertNotNil(cachedSpot.stateCache)
@@ -57,15 +57,15 @@ class ComponentiOSTests: XCTestCase {
     let carouselComponent = Component(model: model)
     let indexPath = IndexPath(row: 0, section: 0)
 
-    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.shared.views.defaultIdentifier)
 
-    Configuration.views.defaultItem = Registry.Item.classType(CustomListCell.self)
-    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
+    Configuration.shared.views.defaultItem = Registry.Item.classType(CustomListCell.self)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.shared.views.defaultIdentifier)
 
-    Configuration.views.defaultItem = Registry.Item.classType(CustomGridCell.self)
-    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.views.defaultIdentifier)
+    Configuration.shared.views.defaultItem = Registry.Item.classType(CustomGridCell.self)
+    XCTAssertEqual(carouselComponent.identifier(for: indexPath), Configuration.shared.views.defaultIdentifier)
 
-    Configuration.views["custom-item-kind"] = Registry.Item.classType(CustomGridCell.self)
+    Configuration.shared.views["custom-item-kind"] = Registry.Item.classType(CustomGridCell.self)
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), "custom-item-kind")
   }
 
@@ -123,7 +123,7 @@ class ComponentiOSTests: XCTestCase {
   }
 
   func testCarouselSetupWithPagination() {
-    Configuration.defaultViewSize = .init(width: 88, height: 88)
+    Configuration.shared.defaultViewSize = .init(width: 88, height: 88)
 
     let json: [String : Any] = [
       "kind" : "carousel",
@@ -182,7 +182,7 @@ class ComponentiOSTests: XCTestCase {
   }
 
   func testPageIndicatorOverlayPlacement() {
-    Configuration.defaultViewSize = .init(width: 88, height: 88)
+    Configuration.shared.defaultViewSize = .init(width: 88, height: 88)
     let json: [String : Any] = [
       "items": [
         ["title": "foo", "kind": "carousel"],
@@ -414,7 +414,7 @@ class ComponentiOSTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
 
-    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height * CGFloat(items.count))
+    XCTAssertEqual(component.computedHeight, Configuration.shared.defaultViewSize.height * CGFloat(items.count))
   }
 
   func testComputedHeightForGridComponent() {
@@ -429,7 +429,7 @@ class ComponentiOSTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
 
-    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height * CGFloat(items.count))
+    XCTAssertEqual(component.computedHeight, Configuration.shared.defaultViewSize.height * CGFloat(items.count))
   }
 
   func testComputedHeightForCarouselComponent() {
@@ -444,11 +444,11 @@ class ComponentiOSTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: .init(width: 100, height: 100))
 
-    XCTAssertEqual(component.computedHeight, Configuration.defaultViewSize.height)
+    XCTAssertEqual(component.computedHeight, Configuration.shared.defaultViewSize.height)
   }
 
   func testListScrollTo() {
-    Configuration.registerDefault(view: DefaultItemView.self)
+    Configuration.shared.registerDefault(view: DefaultItemView.self)
     let items = [
       Item(title: "item1", size: CGSize(width: 100, height: 44)),
       Item(title: "item2", size: CGSize(width: 100, height: 44)),
@@ -466,7 +466,7 @@ class ComponentiOSTests: XCTestCase {
   }
 
   func testGridScrollTo() {
-    Configuration.registerDefault(view: DefaultItemView.self)
+    Configuration.shared.registerDefault(view: DefaultItemView.self)
     let items = [
       Item(title: "item1"),
       Item(title: "item2"),
@@ -503,7 +503,7 @@ class ComponentiOSTests: XCTestCase {
 
   func testComponentComputedHeightConstraint() {
     let identifier = "testComponentComputedHeightConstraint"
-    Configuration.register(view: ComponentTestView.self, identifier: identifier)
+    Configuration.shared.register(view: ComponentTestView.self, identifier: identifier)
 
     let spotsContentView = SpotsContentView(frame: .init(origin: .zero, size: CGSize(width: 500, height: 500)))
     let items = [

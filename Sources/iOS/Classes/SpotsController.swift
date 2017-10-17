@@ -95,13 +95,15 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   weak public var scrollDelegate: ScrollDelegate?
 
   /// A custom scroll view that handles the scrolling for all internal scroll views.
-  open var scrollView: SpotsScrollView = SpotsScrollView()
+  open var scrollView: SpotsScrollView
 
   #if os(iOS)
   /// A UIRefresh control.
   /// Note: Only available on iOS.
   open lazy private(set) var refreshControl: UIRefreshControl = SpotsRefreshControl()
   #endif
+
+  public var configuration: Configuration
 
   // MARK: Initializer
 
@@ -110,8 +112,10 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - parameter components: A collection of components. that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
-  public required init(components: [Component] = []) {
+  public required init(components: [Component] = [], configuration: Configuration = .shared) {
     self.components = components
+    self.configuration = configuration
+    self.scrollView = SpotsScrollView(frame: .zero, configuration: configuration)
     super.init(nibName: nil, bundle: nil)
 
     let notificationName = NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue)
@@ -126,8 +130,8 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - parameter component: A Component object
   ///
   /// - returns: An initialized controller containing one object.
-  public convenience init(component: Component) {
-    self.init(components: [component])
+  public convenience init(component: Component, configuration: Configuration = .shared) {
+    self.init(components: [component], configuration: configuration)
   }
 
   /// Initialize a new controller using JSON.
@@ -135,8 +139,9 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - parameter json: A JSON dictionary that gets parsed into UI elements.
   ///
   /// - returns: An initialized controller with components. built from JSON.
-  public convenience init(_ json: [String : Any]) {
-    self.init(components: Parser.parse(json))
+  public convenience init(_ json: [String : Any], configuration: Configuration = .shared) {
+    self.init(components: Parser.parse(json, configuration: configuration),
+              configuration: configuration)
   }
 
   /// Initialize a new controller with a cache key.
@@ -144,9 +149,10 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - parameter cacheKey: A key that will be used to identify the StateCache.
   ///
   /// - returns: An initialized controller with a cache.
-  public convenience init(cacheKey: String) {
+  public convenience init(cacheKey: String, configuration: Configuration = .shared) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(components: Parser.parse(stateCache.load()))
+    self.init(components: Parser.parse(stateCache.load(), configuration: configuration),
+              configuration: configuration)
     self.stateCache = stateCache
   }
 

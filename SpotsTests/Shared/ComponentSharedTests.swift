@@ -20,9 +20,9 @@ class ComponentSharedTests: XCTestCase {
   }
 
   override func setUp() {
-    Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
-    Configuration.registerDefault(view: DefaultItemView.self)
-    Configuration.views.purge()
+    Configuration.shared.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
+    Configuration.shared.registerDefault(view: DefaultItemView.self)
+    Configuration.shared.views.purge()
   }
 
   func testAppendingMultipleItemsToComponent() {
@@ -76,7 +76,7 @@ class ComponentSharedTests: XCTestCase {
   func testResolvingUIFromGridableComponent() {
     let kind = "test-view"
 
-    Configuration.register(view: TestView.self, identifier: kind)
+    Configuration.shared.register(view: TestView.self, identifier: kind)
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
@@ -98,7 +98,7 @@ class ComponentSharedTests: XCTestCase {
   func testResolvingUIFromListableComponent() {
     let kind = "test-view"
 
-    Configuration.register(view: TestView.self, identifier: kind)
+    Configuration.shared.register(view: TestView.self, identifier: kind)
 
     let parentSize = CGSize(width: 100, height: 100)
     let model = ComponentModel(items: [Item(title: "foo", kind: kind)])
@@ -118,7 +118,7 @@ class ComponentSharedTests: XCTestCase {
   }
 
   func testCarouselComponentConfigurationClosure() {
-    Configuration.register(view: TestView.self, identifier: "test-view")
+    Configuration.shared.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
     let component = Component(model: ComponentModel(kind: .carousel, layout: Layout(span: 0.0), items: items))
@@ -134,7 +134,7 @@ class ComponentSharedTests: XCTestCase {
   }
 
   func testListComponentConfigurationClosure() {
-    Configuration.register(view: TestView.self, identifier: "test-view")
+    Configuration.shared.register(view: TestView.self, identifier: "test-view")
 
     let items = [Item(title: "Item A", kind: "test-view"), Item(title: "Item B")]
     let component = Component(model: ComponentModel(kind: .list, items: items))
@@ -192,7 +192,7 @@ class ComponentSharedTests: XCTestCase {
   }
 
   func testResolvingItemModel() {
-    Configuration.register(view: MockView.self,
+    Configuration.shared.register(view: MockView.self,
                            identifier: "Mock",
                            model: MockModel.self,
                            presenter: Presenter({ (view, model, containerSize) -> CGSize in

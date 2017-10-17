@@ -93,7 +93,7 @@ extension Delegate: NSTableViewDelegate {
 
     let reuseIdentifier = component.identifier(at: row)
 
-    guard let viewContainer = Configuration.views.make(reuseIdentifier) else {
+    guard let viewContainer = configuration.views.make(reuseIdentifier) else {
       return nil
     }
 

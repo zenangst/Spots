@@ -48,10 +48,10 @@ open class DefaultItemView: UITableViewCell, ItemConfigurable {
   }
 
   open func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
-    let itemHeight = item.size.height > 0.0 ? item.size.height : Configuration.defaultViewSize.height
+    let itemHeight = item.size.height > 0.0 ? item.size.height : Configuration.shared.defaultViewSize.height
 
     return .init(
-      width: Configuration.defaultViewSize.width,
+      width: Configuration.shared.defaultViewSize.width,
       height: itemHeight
     )
   }

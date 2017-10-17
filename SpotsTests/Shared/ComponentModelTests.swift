@@ -45,16 +45,16 @@ class ComponentModelTests: XCTestCase {
   }
 
   func testConfifugrationDefaultKind() {
-    Configuration.defaultComponentKind = .list
+    Configuration.shared.defaultComponentKind = .list
     let firstModel = ComponentModel()
     XCTAssertEqual(firstModel.kind, .list)
 
-    Configuration.defaultComponentKind = .grid
+    Configuration.shared.defaultComponentKind = .grid
     let secondModel = ComponentModel()
     XCTAssertEqual(secondModel.kind, .grid)
 
     // Reset configuration to the default
-    Configuration.defaultComponentKind = .grid
+    Configuration.shared.defaultComponentKind = .grid
   }
 
   func testEquatable() {
