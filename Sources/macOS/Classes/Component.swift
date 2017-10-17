@@ -129,7 +129,7 @@ import Tailor
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `NSTableView` or `NSCollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either NSCollectionView or NSTableView).
-  public required init(model: ComponentModel, configuration: Configuration = .shared, userInterface: UserInterface, parentComponent: Component? = nil) {
+  public required init(model: ComponentModel, configuration: Configuration = .shared, userInterface: UserInterface) {
     self.model = model
     self.userInterface = userInterface
     self.configuration = configuration
