@@ -10,10 +10,9 @@
 /// It also makes sure that the resolved views get configured by invoking `configure(_ item: inout Item)` from `ItemConfigurable`
 /// on the view in question.
 class ViewPreparer {
+  let configuration: Configuration
 
-  var configuration: Configuration
-
-  init(configuration: Configuration) {
+  init(configuration: Configuration = .shared) {
     self.configuration = configuration
   }
 

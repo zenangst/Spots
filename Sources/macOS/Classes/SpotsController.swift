@@ -60,7 +60,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
   fileprivate let backgroundType: ControllerBackground
 
-  public var configuration: Configuration
+  let configuration: Configuration
 
   /**
    - parameter components: An array of components.

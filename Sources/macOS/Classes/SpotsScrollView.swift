@@ -14,12 +14,12 @@ open class SpotsScrollView: NSScrollView {
   /// The document view of SpotsScrollView.
   lazy open var componentsView: SpotsContentView = SpotsContentView()
 
-  var configuration: Configuration
+  let configuration: Configuration
 
   /// Initializes and returns a newly allocated NSView object with a specified frame rectangle.
   ///
   /// - Parameter frameRect: The frame rectangle for the created view object.
-  init(frame frameRect: NSRect, configuration: Configuration) {
+  init(frame frameRect: NSRect, configuration: Configuration = .shared) {
     self.configuration = configuration
     super.init(frame: frameRect)
     self.documentView = componentsView

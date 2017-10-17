@@ -31,7 +31,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   /// A container view that works as a proxy layer for scroll view
   open var componentsView: SpotsContentView = SpotsContentView()
 
-  var configuration: Configuration
+  let configuration: Configuration
 
   /// A deinitiazlier that removes all subviews from contentView
   deinit {

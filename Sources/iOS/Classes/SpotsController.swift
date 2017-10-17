@@ -103,7 +103,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   open lazy private(set) var refreshControl: UIRefreshControl = SpotsRefreshControl()
   #endif
 
-  public var configuration: Configuration
+  let configuration: Configuration
 
   // MARK: Initializer
 

@@ -12,8 +12,8 @@ public class DataSource: NSObject, ComponentResolvable {
   /// An object that ensures that all views displayed for this data source are properly
   /// configured with the model data. See `ItemConfigurable` for more information
   /// about how to configure your views.
-  var viewPreparer: ViewPreparer
-  var configuration: Configuration
+  let viewPreparer: ViewPreparer
+  let configuration: Configuration
 
   /// A computed value that holds the amount of items that the component model holds.
   var numberOfItems: Int {

@@ -5,7 +5,7 @@
 #endif
 
 public class ItemManager {
-  var configuration: Configuration
+  let configuration: Configuration
 
   init(configuration: Configuration = .shared) {
     self.configuration = configuration

@@ -121,7 +121,7 @@ import Tailor
     return userInterface as? CollectionView
   }
 
-  public var configuration: Configuration!
+  public let configuration: Configuration
 
   /// Default initializer for creating a component.
   ///
