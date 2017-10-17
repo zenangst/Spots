@@ -44,7 +44,7 @@ open class DefaultItemView: NSTableRowView, ItemConfigurable {
     lineView.wantsLayer = true
     lineView.layer = CALayer()
     lineView.layer?.backgroundColor = NSColor.gray.withAlphaComponent(0.4).cgColor
-    lineView.autoresizingMask = .viewWidthSizable
+    lineView.autoresizingMask = NSView.AutoresizingMask.width
 
     return lineView
   }()

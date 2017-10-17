@@ -91,7 +91,7 @@ public extension Component {
   ///
   /// - returns: Self as a Component type
   public var type: Component.Type {
-    return type(of: self)
+    return Swift.type(of: self)
   }
 
   /// Resolve a UI component at index with inferred type

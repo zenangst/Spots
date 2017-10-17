@@ -10,7 +10,7 @@ class ComponentResolvableTests: XCTestCase {
       XCTAssertEqual(component, resolvedComponent)
     }
 
-    dataSource.resolveComponentItem(at: IndexPath(item: 0, section: 0)) { _ in
+    dataSource.resolveComponentItem(at: IndexPath(item: 0, section: 0)) { _, _  in
       XCTFail("The component item should not be resolved because the component does not have any items.")
     }
 

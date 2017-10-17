@@ -399,10 +399,8 @@
 		BDFBB76E1F75094600421BCF /* ComponentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFBB76C1F75094600421BCF /* ComponentTableView.swift */; };
 		BDFC474F1E747B2B008700BF /* GridWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474C1E747B2B008700BF /* GridWrapperTests.swift */; };
 		BDFC47521E747B2B008700BF /* ListWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474D1E747B2B008700BF /* ListWrapperTests.swift */; };
-		D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478E91C440726006EBA49 /* Tailor.framework */; };
 		D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B071E4231A4000125C8 /* RxCocoa.framework */; };
 		D55B7B0C1E4234C3000125C8 /* RxSpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */; };
-		D55B7B0D1E4234CE000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D55B7B431E423B86000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D55B7B4C1E423BC0000125C8 /* RxSpots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B021E423122000125C8 /* RxSpots.framework */; };
 		D55B7B4F1E423C65000125C8 /* RxSpotsDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */; };
@@ -415,6 +413,7 @@
 		D58A10F11F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */; };
 		D58A10F21F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */; };
 		D58A10F31F4C6E35005A466E /* Component+HeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58A10F01F4C6E35005A466E /* Component+HeaderFooter.swift */; };
+		D5BFD0611F96AE050089BA61 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D5D282671E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
 		D5D282681E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
 		D5D282691E54710D004BF251 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D282661E54710D004BF251 /* ViewState.swift */; };
@@ -693,9 +692,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D55B7B0D1E4234CE000125C8 /* Spots.framework in Frameworks */,
+				D5BFD0611F96AE050089BA61 /* Spots.framework in Frameworks */,
 				D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */,
-				D55B7AF91E423122000125C8 /* Tailor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1394,32 +1392,33 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
 					BD7396FD1D718CD2000AF2DE = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					BD7397311D718CDB000AF2DE = {
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					D55B7B241E423B86000125C8 = {
 						LastSwiftMigration = 0820;
 					};
 					D58478081C43FEB8006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					D58478121C43FEB9006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0900;
 					};
 					D58478C71C440567006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					D58478D01C440567006EBA49 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -2137,7 +2136,8 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -2165,7 +2165,8 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -2184,7 +2185,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2201,7 +2203,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2224,7 +2227,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = RxSpots;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2247,7 +2250,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = RxSpots;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2264,7 +2267,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2280,7 +2283,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2292,14 +2295,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2342,14 +2351,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2397,7 +2412,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = Spots;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2420,7 +2436,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Spots;
 				PRODUCT_NAME = Spots;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2435,7 +2452,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2450,7 +2468,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.SpotsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2476,7 +2495,8 @@
 				PRODUCT_NAME = Spots;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2502,7 +2522,8 @@
 				PRODUCT_NAME = Spots;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -2522,7 +2543,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-macOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -2542,7 +2564,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "no.hyper.Spots-macOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

@@ -31,7 +31,7 @@ extension Component {
       return
     }
 
-    let column = NSTableColumn(identifier: "tableview-column")
+    let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(rawValue: "tableview-column"))
     column.maxWidth = 250
     column.width = 250
     column.minWidth = 150

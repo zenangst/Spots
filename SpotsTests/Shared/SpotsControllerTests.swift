@@ -458,9 +458,18 @@ class SpotsControllerTests: XCTestCase {
     XCTAssertNotNil(controller.resolve(component: { $1.userInterface is TableView }))
     XCTAssertNotNil(controller.resolve(component: { $1.userInterface is CollectionView }))
     XCTAssertNotNil(controller.resolve(component: { $1.model.items.filter { $0.title == "Item" }.first != nil }))
-    XCTAssertEqual(controller.resolve(component: { $0.0 == 0 })?.model.identifier, "ListComponent")
-    XCTAssertEqual(controller.resolve(component: { $0.0 == 1 })?.model.identifier, "ListComponent2")
-    XCTAssertEqual(controller.resolve(component: { $0.0 == 2 })?.model.identifier, "GridComponent")
+    XCTAssertEqual(
+      controller.resolve(component: { index, _ in index == 0 })?.model.identifier,
+      "ListComponent"
+    )
+    XCTAssertEqual(
+      controller.resolve(component: { index, _ in index == 1 })?.model.identifier,
+      "ListComponent2"
+    )
+    XCTAssertEqual(
+      controller.resolve(component: { index, _ in index == 2 })?.model.identifier,
+      "GridComponent"
+    )
 
     XCTAssertEqual(controller.filter(components: { $0.userInterface is TableView }).count, 2)
     XCTAssertEqual(controller.filter(components: { $0.userInterface is CollectionView }).count, 1)

@@ -6,7 +6,7 @@ public extension NSView {
     needsLayout = true
   }
 
-  func layoutSubviews() {
+  @objc func layoutSubviews() {
     layout()
   }
 

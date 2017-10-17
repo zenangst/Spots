@@ -21,7 +21,7 @@ class RxComponentDelegateTests: XCTestCase {
     var isCalled = false
 
     delegateProxy.didSelectItem
-      .bindNext({ component, item in
+      .bind(onNext: { component, item in
         isCalled = (component.model.kind == .list) && item.title == "Test"
       }).addDisposableTo(disposeBag)
 
@@ -35,7 +35,7 @@ class RxComponentDelegateTests: XCTestCase {
     var isCalled = false
 
     delegateProxy.didChange
-      .bindNext({ components in
+      .bind(onNext: { components in
         isCalled = (components[0].model.kind == .list) && (components[1].collectionView != nil)
       })
       .addDisposableTo(disposeBag)
@@ -51,7 +51,7 @@ class RxComponentDelegateTests: XCTestCase {
     var isCalled = false
 
     delegateProxy.willDisplayView
-      .bindNext({ component, view, item in
+      .bind(onNext: { component, view, item in
         isCalled = (component.model.kind == .list) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
@@ -67,7 +67,7 @@ class RxComponentDelegateTests: XCTestCase {
     var isCalled = false
 
     delegateProxy.didEndDisplayingView
-      .bindNext({ component, view, item in
+      .bind(onNext: { component, view, item in
         isCalled = (component.model.kind == .list) && (view == componentView) && item.title == "Test"
       })
       .addDisposableTo(disposeBag)
