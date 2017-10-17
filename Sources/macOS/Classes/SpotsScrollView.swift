@@ -4,23 +4,6 @@ open class SpotsScrollView: NSScrollView {
   /// Use the flipped coordinates system so that origin.y = 0 is at the top left corner.
   override open var isFlipped: Bool { return true }
 
-  /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
-  /// This can be enabled globally by setting `Configuration.stretchLastComponent` to `true`.
-  ///
-  /// ```
-  ///  Enabled    Disabled
-  ///  --------   --------
-  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
-  /// ||      || ||      ||
-  /// ||______|| ||______||
-  /// ||¯¯¯¯¯¯|| ||¯¯¯¯¯¯||
-  /// ||      || ||      ||
-  /// ||      || ||______||
-  /// ||______|| |        |
-  ///  --------   --------
-  /// ```
-  public var stretchLastComponent = Configuration.stretchLastComponent
-
   /// A KVO context used to monitor changes in contentSize, frames and bounds
   let subviewContext: UnsafeMutableRawPointer? = UnsafeMutableRawPointer(mutating: nil)
 
@@ -31,10 +14,13 @@ open class SpotsScrollView: NSScrollView {
   /// The document view of SpotsScrollView.
   lazy open var componentsView: SpotsContentView = SpotsContentView()
 
+  let configuration: Configuration
+
   /// Initializes and returns a newly allocated NSView object with a specified frame rectangle.
   ///
   /// - Parameter frameRect: The frame rectangle for the created view object.
-  override init(frame frameRect: NSRect) {
+  init(frame frameRect: NSRect, configuration: Configuration = .shared) {
+    self.configuration = configuration
     super.init(frame: frameRect)
     self.documentView = componentsView
     drawsBackground = false
@@ -141,7 +127,7 @@ open class SpotsScrollView: NSScrollView {
       var newHeight: CGFloat = 0.0
       var shouldScroll: Bool = true
 
-      if stretchLastComponent && scrollView.isEqual(lastView) {
+      if configuration.stretchLastComponent && scrollView.isEqual(lastView) {
         let stretchedHeight = self.frame.size.height - scrollView.frame.origin.y + self.contentOffset.y
         if stretchedHeight <= self.frame.size.height {
           newHeight = stretchedHeight

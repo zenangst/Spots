@@ -12,7 +12,8 @@ public class DataSource: NSObject, ComponentResolvable {
   /// An object that ensures that all views displayed for this data source are properly
   /// configured with the model data. See `ItemConfigurable` for more information
   /// about how to configure your views.
-  var viewPreparer = ViewPreparer()
+  let viewPreparer: ViewPreparer
+  let configuration: Configuration
 
   /// A computed value that holds the amount of items that the component model holds.
   var numberOfItems: Int {
@@ -26,7 +27,9 @@ public class DataSource: NSObject, ComponentResolvable {
   /// Initialize a new instance of a data source with a component.
   ///
   /// - Parameter component: The component that the data source belongs to.
-  init(component: Component) {
+  init(component: Component, with configuration: Configuration = .shared) {
     self.component = component
+    self.configuration = configuration
+    self.viewPreparer = ViewPreparer(configuration: configuration)
   }
 }

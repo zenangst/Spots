@@ -5,11 +5,11 @@ import XCTest
 class DataSourceiOSTests: XCTestCase {
 
   override func setUp() {
-    Configuration.register(view: CustomGridCell.self, identifier: "custom")
+    Configuration.shared.register(view: CustomGridCell.self, identifier: "custom")
   }
 
   func testDataSourceForListableObject() {
-    Configuration.register(view: CustomListCell.self, identifier: "custom")
+    Configuration.shared.register(view: CustomListCell.self, identifier: "custom")
     let component = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1.0), items: [
       Item(title: "title 1", kind: "custom"),
       Item(title: "title 2", kind: "custom")
@@ -81,7 +81,7 @@ class DataSourceiOSTests: XCTestCase {
   }
 
   func testDataSourceForGridableCustomHeader() {
-    Configuration.register(view: CustomGridHeaderView.self, identifier: "custom-header")
+    Configuration.shared.register(view: CustomGridHeaderView.self, identifier: "custom-header")
     let component = Component(model: ComponentModel(
       header: Item(kind: "custom-header"),
       kind: .grid,

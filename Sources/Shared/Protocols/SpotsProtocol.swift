@@ -62,13 +62,13 @@ public protocol SpotsProtocol: class {
   func resolve(component closure: (_ index: Int, _ component: Component) -> Bool) -> Component?
 
   #if os(OSX)
-  init(components: [Component], backgroundType: ControllerBackground)
+  init(components: [Component], configuration: Configuration, backgroundType: ControllerBackground)
   #else
   /// A required initializer for initializing a controller with components.
   ///
   /// - parameter components: A collection of components. that should be setup and be added to the view hierarchy.
   ///
   /// - returns: An initalized controller.
-  init(components: [Component])
+  init(components: [Component], configuration: Configuration)
   #endif
 }

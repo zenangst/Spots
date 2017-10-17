@@ -72,7 +72,7 @@ class ComponentDelegateiOSTests: XCTestCase {
   }
 
   func testTableViewHeightForRowOnListable() {
-    Configuration.defaultViewSize = .init(width: 0, height: 44)
+    Configuration.shared.defaultViewSize = .init(width: 0, height: 44)
     let component = Component(model: ComponentModel(kind: .list, layout: Layout(span: 1), items: [Item(title: "title 1")]))
     component.setup(with: CGSize(width: 100, height: 100))
 
@@ -86,9 +86,9 @@ class ComponentDelegateiOSTests: XCTestCase {
   }
 
   func testTableViewHeaderHeight() {
-    Configuration.register(view: RegularView.self, identifier: "regular-header")
-    Configuration.register(view: ItemConfigurableView.self, identifier: "item-configurable-header")
-    Configuration.register(view: CustomListHeaderView.self, identifier: "custom-header")
+    Configuration.shared.register(view: RegularView.self, identifier: "regular-header")
+    Configuration.shared.register(view: ItemConfigurableView.self, identifier: "item-configurable-header")
+    Configuration.shared.register(view: CustomListHeaderView.self, identifier: "custom-header")
 
     let component = Component(model: ComponentModel(header: Item(kind: "custom-header"), kind: .list))
     component.setup(with: CGSize(width: 100, height: 100))
@@ -139,9 +139,9 @@ class ComponentDelegateiOSTests: XCTestCase {
   }
 
   func testTableViewFooterHeight() {
-    Configuration.register(view: RegularView.self, identifier: "regular-footer")
-    Configuration.register(view: ItemConfigurableView.self, identifier: "item-configurable-footer")
-    Configuration.register(view: CustomListHeaderView.self, identifier: "custom-footer")
+    Configuration.shared.register(view: RegularView.self, identifier: "regular-footer")
+    Configuration.shared.register(view: ItemConfigurableView.self, identifier: "item-configurable-footer")
+    Configuration.shared.register(view: CustomListHeaderView.self, identifier: "custom-footer")
 
     let component = Component(model: ComponentModel(footer: Item(kind: "custom-footer"), kind: .list))
     component.setup(with: CGSize(width: 100, height: 100))

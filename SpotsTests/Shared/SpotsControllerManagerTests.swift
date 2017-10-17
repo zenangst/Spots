@@ -11,7 +11,7 @@ class SpotsControllerManagerTests: XCTestCase {
     ]))
 
   override func setUp() {
-    Configuration.registerDefault(view: TestView.self)
+    Configuration.shared.registerDefault(view: TestView.self)
 
     controller = SpotsController(components: [component])
     controller.prepareController()

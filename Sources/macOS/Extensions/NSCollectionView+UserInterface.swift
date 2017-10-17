@@ -28,16 +28,16 @@ extension NSCollectionView: UserInterface {
   }
 
   // swiftlint:disable empty_enum_arguments
-  public func register() {
+  public func register(with configuration: Configuration) {
     register(GridWrapper.self, forItemWithIdentifier: CollectionView.compositeIdentifier)
 
-    for (identifier, item) in Configuration.views.storage {
+    for (identifier, item) in configuration.views.storage {
       switch item {
       case .classType(_):
         register(GridWrapper.self,
                  forItemWithIdentifier: identifier)
         register(GridWrapper.self,
-                 forItemWithIdentifier: Configuration.views.defaultIdentifier)
+                 forItemWithIdentifier: configuration.views.defaultIdentifier)
       case .nib(let nib):
         register(nib, forItemWithIdentifier: identifier)
       }

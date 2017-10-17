@@ -17,7 +17,7 @@ class ItemModelPresenterTests: XCTestCase {
   }
 
   func testConfiguringViewWithItemModel() {
-    Configuration.register(view: MockView.self,
+    Configuration.shared.register(view: MockView.self,
                            identifier: "Mock",
                            model: MockModel.self,
                            presenter: Presenter({ (view, model, containerSize) -> CGSize in

@@ -11,8 +11,8 @@ import XCTest
 class ComponentFlowLayoutSharedTests: XCTestCase {
 
   override func setUp() {
-    Configuration.register(view: TestView.self, identifier: ComponentFlowLayoutSharedTests.identifier)
-    Configuration.views.purge()
+    Configuration.shared.register(view: TestView.self, identifier: ComponentFlowLayoutSharedTests.identifier)
+    Configuration.shared.views.purge()
   }
 
   static let identifier: String = "MockIdentifier"

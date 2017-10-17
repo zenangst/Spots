@@ -15,7 +15,7 @@ class SpotsScrollViewTests: XCTestCase {
     /// The first and the last component should be equal in height
     XCTAssertEqual(controller.components.first?.view.frame.size, controller.components.last?.view.frame.size)
 
-    controller.scrollView.stretchLastComponent = true
+    controller.scrollView.configuration.stretchLastComponent = true
     controller.scrollView.layoutViews()
 
     /// The first and last component should not be equal as the last one should be stretched.

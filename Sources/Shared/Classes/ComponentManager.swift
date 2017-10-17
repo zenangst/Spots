@@ -14,9 +14,15 @@ import Foundation
 /// }
 /// ```
 public class ComponentManager {
+  let itemManager: ItemManager
+  let diffManager: DiffManager
+  let configuration: Configuration
 
-  let itemManager = ItemManager()
-  let diffManager = DiffManager()
+  init(itemManager: ItemManager = .init(), diffManager: DiffManager = .init(),  configuration: Configuration) {
+    self.configuration = configuration
+    self.itemManager = itemManager
+    self.diffManager = diffManager
+  }
 
   /// Append item to collection with animation
   ///
@@ -264,7 +270,7 @@ public class ComponentManager {
             component.model.items[index].size.height = view.computeSize(for: component.model.items[index], containerSize: component.view.frame.size).height
           }, completion: nil)
         default:
-          if let model = newItem.model, let configurator = Configuration.presenters[item.kind] {
+          if let model = newItem.model, let configurator = self.configuration.presenters[item.kind] {
             component.userInterface?.performUpdates({
               component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
             }, completion: nil)
@@ -286,7 +292,7 @@ public class ComponentManager {
         } else {
           if let view: View = component.userInterface?.view(at: index),
             let model = newItem.model,
-            let configurator = Configuration.presenters[newItem.kind] {
+            let configurator = self.configuration.presenters[newItem.kind] {
             component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
           }
         }
@@ -376,7 +382,7 @@ public class ComponentManager {
         return
       }
 
-      let duplicatedComponent = Component(model: component.model)
+      let duplicatedComponent = Component(model: component.model, configuration: self.configuration)
       duplicatedComponent.model.items = items
       duplicatedComponent.setup(with: component.view.frame.size)
 

@@ -56,11 +56,11 @@ class ItemConfigurableComputeSizeTests: XCTestCase {
   }
 
   override func setUp() {
-    Configuration.register(view: WrappedViewMock.self, identifier: Identifier.wrapped.identifier)
-    Configuration.register(view: ListViewMock.self, identifier: Identifier.list.identifier)
-    Configuration.register(view: ContainerSizeAwaredViewMock.self,
+    Configuration.shared.register(view: WrappedViewMock.self, identifier: Identifier.wrapped.identifier)
+    Configuration.shared.register(view: ListViewMock.self, identifier: Identifier.list.identifier)
+    Configuration.shared.register(view: ContainerSizeAwaredViewMock.self,
                            identifier: Identifier.containerSizeAwareWrapped.identifier)
-    Configuration.register(view: GridViewMock.self, identifier: Identifier.grid.identifier)
+    Configuration.shared.register(view: GridViewMock.self, identifier: Identifier.grid.identifier)
   }
 
   func testWrappedDynamicViewInGrid() {

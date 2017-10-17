@@ -16,8 +16,8 @@ class ComponentFlowLayoutTests: XCTestCase {
   let parentSize = CGSize(width: 100, height: 100)
 
   override func setUp() {
-    Configuration.registerDefault(view: DefaultItemView.self)
-    Configuration.views.purge()
+    Configuration.shared.registerDefault(view: DefaultItemView.self)
+    Configuration.shared.views.purge()
   }
 
   func testContentSizeForHorizontalLayoutsWithoutInsets() {

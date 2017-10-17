@@ -7,7 +7,7 @@ public struct Parser {
   /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
   ///
   /// - returns: A collection of components
-  public static func parse(_ json: [String : Any], key: String = "components") -> [Component] {
+  public static func parse(_ json: [String : Any], key: String = "components", configuration: Configuration = .shared) -> [Component] {
     var components: [ComponentModel] = parse(json, key: key)
 
     for element in components.indices {
@@ -15,7 +15,7 @@ public struct Parser {
     }
 
     return components.map { model in
-      Component(model: model)
+      Component(model: model, configuration: configuration)
     }
   }
 
@@ -25,7 +25,7 @@ public struct Parser {
   /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
   ///
   /// - returns: A collection of `ComponentModel`s
-  public static func parse(_ json: [String : Any], key: String = "components") -> [ComponentModel] {
+  public static func parse(_ json: [String : Any], key: String = "components", configuration: Configuration = .shared) -> [ComponentModel] {
     guard let payloads = json[key] as? [[String : Any]] else { return [] }
 
     var models = [ComponentModel]()
@@ -45,7 +45,7 @@ public struct Parser {
   /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
   ///
   /// - returns: A collection of `ComponentModel`s
-  public static func parse(_ json: [String : Any]?, key: String = "components") -> [ComponentModel] {
+  public static func parse(_ json: [String : Any]?, key: String = "components", configuration: Configuration = .shared) -> [ComponentModel] {
     guard let payload = json else { return [] }
 
     return Parser.parse(payload)
@@ -56,17 +56,17 @@ public struct Parser {
   /// - parameter json: A JSON dictionary of components and items.
   ///
   /// - returns: A collection of components
-  public static func parse(_ json: [[String : Any]]?) -> [Component] {
+  public static func parse(_ json: [[String : Any]]?, configuration: Configuration = .shared) -> [Component] {
     guard let json = json else { return [] }
 
     return json.map { model in
-      Component(model: ComponentModel(model))
+      Component(model: ComponentModel(model), configuration: configuration)
     }
   }
 
-  public static func parse(_ models: [ComponentModel]) -> [Component] {
+  public static func parse(_ models: [ComponentModel], configuration: Configuration = .shared) -> [Component] {
     return models.map { model in
-      Component(model: model)
+      Component(model: model, configuration: configuration)
     }
   }
 }

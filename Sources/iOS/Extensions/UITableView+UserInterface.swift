@@ -2,12 +2,12 @@ import UIKit
 
 extension UITableView: UserInterface {
 
-  public func register() {
-    if Configuration.views.defaultItem == nil {
-      register(ListWrapper.self, forCellReuseIdentifier: Configuration.views.defaultIdentifier)
+  public func register(with configuration: Configuration) {
+    if configuration.views.defaultItem == nil {
+      register(ListWrapper.self, forCellReuseIdentifier: configuration.views.defaultIdentifier)
     }
 
-    for (identifier, item) in Configuration.views.storage {
+    for (identifier, item) in configuration.views.storage {
       switch item {
       case .classType(let type):
         if type is UITableViewCell.Type {

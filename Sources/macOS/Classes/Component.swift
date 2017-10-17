@@ -20,7 +20,7 @@ import Tailor
   /// interaction, behaviour and look-and-feel. See `ComponentModel` for more information.
   public var model: ComponentModel
   /// An engine that handles mutation of the component model data source.
-  public var manager: ComponentManager = ComponentManager()
+  public var manager: ComponentManager
   /// A configuration closure that will be invoked when views are added to the component.
   public var configure: ((ItemConfigurable) -> Void)? {
     didSet {
@@ -121,28 +121,31 @@ import Tailor
     return userInterface as? CollectionView
   }
 
+  public let configuration: Configuration
+
   /// Default initializer for creating a component.
   ///
   /// - Parameters:
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `NSTableView` or `NSCollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either NSCollectionView or NSTableView).
-  public required init(model: ComponentModel, userInterface: UserInterface, parentComponent: Component? = nil) {
+  public required init(model: ComponentModel, configuration: Configuration = .shared, userInterface: UserInterface) {
     self.model = model
     self.userInterface = userInterface
-
+    self.configuration = configuration
+    self.manager = ComponentManager(configuration: configuration)
     super.init()
     registerDefaultIfNeeded(view: DefaultItemView.self)
-    userInterface.register()
+    userInterface.register(with: configuration)
 
-    self.componentDataSource = DataSource(component: self)
-    self.componentDelegate = Delegate(component: self)
+    self.componentDataSource = DataSource(component: self, with: configuration)
+    self.componentDelegate = Delegate(component: self, with: configuration)
   }
 
   /// A convenience init for creating a component with a `ComponentModel`.
   ///
   /// - Parameter model: A component model that is used for constructing and configurating the component.
-  public required convenience init(model: ComponentModel, userInterface: UserInterface? = nil) {
+  public required convenience init(model: ComponentModel, configuration: Configuration = .shared, userInterface: UserInterface? = nil) {
     var userInterface: UserInterface! = userInterface
 
     if userInterface == nil, model.kind == .list {
@@ -153,7 +156,7 @@ import Tailor
       userInterface = collectionView
     }
 
-    self.init(model: model, userInterface: userInterface!)
+    self.init(model: model, configuration: configuration, userInterface: userInterface!)
 
     scrollView.documentView = userInterface as? View
 
@@ -166,10 +169,10 @@ import Tailor
   /// A convenience init for creating a component with view state functionality.
   ///
   /// - Parameter cacheKey: The unique cache key that should be used for storing and restoring the component.
-  public convenience init(cacheKey: String) {
+  public convenience init(cacheKey: String, configuration: Configuration = .shared) {
     let stateCache = StateCache(key: cacheKey)
 
-    self.init(model: ComponentModel(stateCache.load()))
+    self.init(model: ComponentModel(stateCache.load()), configuration: configuration)
     self.stateCache = stateCache
   }
 
@@ -196,8 +199,8 @@ import Tailor
   public func setup(with size: CGSize) {
     scrollView.frame.size = size
 
-    setupHeader()
-    setupFooter()
+    setupHeader(with: configuration)
+    setupFooter(with: configuration)
 
     configureDataSourceAndDelegate()
 
@@ -305,11 +308,11 @@ import Tailor
   ///
   /// - Parameter view: The view that should be registred as the default view.
   func registerDefaultIfNeeded(view: View.Type) {
-    guard Configuration.views.storage[Configuration.views.defaultIdentifier] == nil else {
+    guard configuration.views.storage[configuration.views.defaultIdentifier] == nil else {
       return
     }
 
-    Configuration.views.defaultItem = Registry.Item.classType(view)
+    configuration.views.defaultItem = Registry.Item.classType(view)
   }
 
   /// This method is invoked when a double click is performed on a view.

@@ -4,10 +4,10 @@ import XCTest
 class ComponentMacOSTests: XCTestCase {
 
   override func setUp() {
-    Configuration.views.defaultItem = nil
-    Configuration.register(view: HeaderView.self, identifier: "Header")
-    Configuration.register(view: TextView.self, identifier: "TextView")
-    Configuration.register(view: FooterView.self, identifier: "Footer")
+    Configuration.shared.views.defaultItem = nil
+    Configuration.shared.register(view: HeaderView.self, identifier: "Header")
+    Configuration.shared.register(view: TextView.self, identifier: "TextView")
+    Configuration.shared.register(view: FooterView.self, identifier: "Footer")
   }
   
   class ComponentTestView: View, ItemConfigurable {
@@ -19,7 +19,7 @@ class ComponentMacOSTests: XCTestCase {
 
   func testComponentComputedHeightConstraint() {
     let identifier = "testComponentComputedHeightConstraint"
-    Configuration.register(view: ComponentTestView.self, identifier: identifier)
+    Configuration.shared.register(view: ComponentTestView.self, identifier: identifier)
     let items = [
       Item(kind: identifier),
       Item(kind: identifier),
@@ -43,9 +43,9 @@ class ComponentMacOSTests: XCTestCase {
   }
 
   func testDefaultValuesWithList() {
-    Configuration.views.purge()
-    Configuration.defaultComponentKind = .list
-    Configuration.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
+    Configuration.shared.views.purge()
+    Configuration.shared.defaultComponentKind = .list
+    Configuration.shared.defaultViewSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
     let items = [Item(title: "A"), Item(title: "B")]
     let model = ComponentModel(items: items)
     let component = Component(model: model)
