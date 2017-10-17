@@ -14,15 +14,14 @@ import Foundation
 /// }
 /// ```
 public class ComponentManager {
-
   let itemManager: ItemManager
   let diffManager: DiffManager
   let configuration: Configuration
 
-  init(configuration: Configuration) {
+  init(itemManager: ItemManager = .init(), diffManager: DiffManager = .init(),  configuration: Configuration) {
     self.configuration = configuration
-    self.itemManager = .init(configuration: configuration)
-    self.diffManager = .init()
+    self.itemManager = itemManager
+    self.diffManager = diffManager
   }
 
   /// Append item to collection with animation
