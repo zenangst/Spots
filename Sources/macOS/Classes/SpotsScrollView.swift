@@ -25,7 +25,7 @@ open class SpotsScrollView: NSScrollView {
     self.documentView = componentsView
     drawsBackground = false
     NotificationCenter.default.addObserver(self, selector: #selector(contentViewBoundsDidChange(_:)),
-                                           name: NSNotification.Name.NSViewBoundsDidChange,
+                                           name: NSView.boundsDidChangeNotification,
                                            object: contentView)
     contentView.postsBoundsChangedNotifications = true
   }
@@ -40,7 +40,7 @@ open class SpotsScrollView: NSScrollView {
   }
 
   /// The bounds of the scroll view clip view did change.
-  func contentViewBoundsDidChange(_ notification: NSNotification) {
+  @objc func contentViewBoundsDidChange(_ notification: NSNotification) {
     guard (notification.object as? NSClipView) === contentView else {
       return
     }

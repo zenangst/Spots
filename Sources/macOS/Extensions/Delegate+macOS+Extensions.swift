@@ -103,7 +103,7 @@ extension Delegate: NSTableViewDelegate {
       case .regular:
         resolvedView = viewContainer.view
       case .nib:
-        resolvedView = tableView.make(withIdentifier: reuseIdentifier, owner: nil)
+        resolvedView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: reuseIdentifier), owner: nil)
       }
     }
 
@@ -131,7 +131,7 @@ extension Delegate: NSTableViewDelegate {
       }
     }
 
-    (resolvedView as? NSTableRowView)?.identifier = reuseIdentifier
+    (resolvedView as? NSTableRowView)?.identifier = NSUserInterfaceItemIdentifier(rawValue: reuseIdentifier)
 
     return resolvedView as? NSTableRowView
   }

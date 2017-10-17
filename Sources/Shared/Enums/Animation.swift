@@ -21,7 +21,7 @@ public enum Animation: Int {
   ///
   /// Resolves a Animation into a NSTableViewAnimationOptions
   ///
-  public var tableViewAnimation: NSTableViewAnimationOptions {
+  public var tableViewAnimation: NSTableView.AnimationOptions {
     switch self {
     case .fade:
       return .effectFade
@@ -34,7 +34,7 @@ public enum Animation: Int {
     case .bottom:
       return .slideDown
     case .none:
-      return NSTableViewAnimationOptions()
+      return NSTableView.AnimationOptions()
     case .middle:
       return .effectGap
     case .automatic:

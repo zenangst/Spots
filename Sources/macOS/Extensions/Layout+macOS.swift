@@ -12,7 +12,7 @@ extension Layout {
   }
 
   public func configure(collectionViewLayout: FlowLayout) {
-    collectionViewLayout.sectionInset = EdgeInsets(
+    collectionViewLayout.sectionInset = NSEdgeInsets(
       top: CGFloat(inset.top),
       left: CGFloat(inset.left),
       bottom: CGFloat(inset.bottom),

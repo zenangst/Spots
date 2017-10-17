@@ -193,7 +193,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// Handle rotation for views that are not on screen.
   ///
   /// - parameter notification: A notification containing the new size.
-  func deviceDidRotate(_ notification: Notification) {
+  @objc func deviceDidRotate(_ notification: Notification) {
     if let userInfo = (notification as NSNotification).userInfo as? [String : Any],
       let rotationSize = userInfo["size"] as? RotationSize, view.window == nil {
       configure(withSize: rotationSize.size)
@@ -319,7 +319,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// Refresh action for UIRefreshControl
   ///
   /// - parameter refreshControl: The refresh control used to refresh the controller.
-  open func refreshComponent(_ refreshControl: UIRefreshControl) {
+  @objc open func refreshComponent(_ refreshControl: UIRefreshControl) {
     Dispatch.main { [weak self] in
       guard let strongSelf = self else {
         return

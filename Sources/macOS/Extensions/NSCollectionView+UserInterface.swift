@@ -29,17 +29,17 @@ extension NSCollectionView: UserInterface {
 
   // swiftlint:disable empty_enum_arguments
   public func register(with configuration: Configuration) {
-    register(GridWrapper.self, forItemWithIdentifier: CollectionView.compositeIdentifier)
+    register(GridWrapper.self, forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: CollectionView.compositeIdentifier))
 
     for (identifier, item) in configuration.views.storage {
       switch item {
       case .classType(_):
         register(GridWrapper.self,
-                 forItemWithIdentifier: identifier)
+                 forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier))
         register(GridWrapper.self,
-                 forItemWithIdentifier: configuration.views.defaultIdentifier)
+                 forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: configuration.views.defaultIdentifier))
       case .nib(let nib):
-        register(nib, forItemWithIdentifier: identifier)
+        register(nib, forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier))
       }
     }
   }
@@ -161,7 +161,7 @@ extension NSCollectionView: UserInterface {
       reloadSets.isEmpty &&
       deletionSets.isEmpty &&
       changes.moved.isEmpty {
-      completion?()
+      completion?(())
       return
     }
 
@@ -177,7 +177,7 @@ extension NSCollectionView: UserInterface {
                       to: IndexPath(item: move.value, section: 0))
       }
     }, completionHandler: nil)
-    completion?()
+    completion?(())
     removeAnimation()
   }
 

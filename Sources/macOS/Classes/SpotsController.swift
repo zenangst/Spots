@@ -71,13 +71,13 @@ open class SpotsController: NSViewController, SpotsProtocol {
     self.components = components
     self.backgroundType = backgroundType
     self.scrollView = SpotsScrollView(frame: .zero, configuration: configuration)
-    super.init(nibName: nil, bundle: nil)!
+    super.init(nibName: nil, bundle: nil)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSNotification.Name.NSScrollViewDidLiveScroll, object: scrollView)
+    NotificationCenter.default.addObserver(self, selector: #selector(SpotsController.scrollViewDidScroll(_:)), name: NSScrollView.didLiveScrollNotification, object: scrollView)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize(_:)), name: NSNotification.Name.NSWindowDidResize, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize(_:)), name: NSWindow.didResizeNotification, object: nil)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(windowDidEndLiveResize(_:)), name: NSNotification.Name.NSWindowDidEndLiveResize, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(windowDidEndLiveResize(_:)), name: NSWindow.didEndLiveResizeNotification, object: nil)
   }
 
   /**
@@ -152,7 +152,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
       view = visualEffectView
     }
 
-    view.autoresizingMask = .viewWidthSizable
+    view.autoresizingMask = NSView.AutoresizingMask.width
     view.autoresizesSubviews = true
     self.view = view
   }
@@ -163,7 +163,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
 
     view.addSubview(scrollView)
     scrollView.hasVerticalScroller = true
-    scrollView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+    scrollView.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
 
     SpotsController.configure?(scrollView)
   }
@@ -251,7 +251,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   /// Invoked when the window that the controller belongs to is resized.
   ///
   /// - Parameter notification: A container for information broadcast through a notification center to all registered observers.
-  open func windowDidResize(_ notification: Notification) {
+  @objc open func windowDidResize(_ notification: Notification) {
     for component in components {
       component.didResize(size: view.frame.size, type: .live)
     }
@@ -261,7 +261,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
   /// Invoked when window has received its new size.
   ///
   /// - Parameter notification: A container for information broadcast through a notification center to all registered observers.
-  public func windowDidEndLiveResize(_ notification: Notification) {
+  @objc public func windowDidEndLiveResize(_ notification: Notification) {
     components.forEach { component in
       component.didResize(size: view.frame.size, type: .end)
     }
@@ -272,10 +272,10 @@ open class SpotsController: NSViewController, SpotsProtocol {
   /// Handles calling `didReachEnd` and `didReachBeginning` on the `ScrollDelegate`.
   ///
   /// - Parameter notification: A container for information broadcast through a notification center to all registered observers.
-  open func scrollViewDidScroll(_ notification: NSNotification) {
+  @objc open func scrollViewDidScroll(_ notification: NSNotification) {
     guard let scrollView = notification.object as? SpotsScrollView,
       let delegate = scrollDelegate,
-      NSApplication.shared().mainWindow != nil
+      NSApplication.shared.mainWindow != nil
       else {
         return
     }
