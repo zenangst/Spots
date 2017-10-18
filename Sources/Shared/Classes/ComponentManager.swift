@@ -278,7 +278,6 @@ public class ComponentManager {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
         }
-
         updateHeightAndIndexes = true
       case .soft:
         if let view: ItemConfigurable = component.userInterface?.view(at: index) {
