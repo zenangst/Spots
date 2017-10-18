@@ -87,13 +87,6 @@ public extension Component {
     manager.itemManager.prepareItems(component: self)
   }
 
-  /// A helper method to return self as a Component type.
-  ///
-  /// - returns: Self as a Component type
-  public var type: Component.Type {
-    return type(of: self)
-  }
-
   /// Resolve a UI component at index with inferred type
   ///
   /// - parameter index: The index of the UI component
@@ -263,6 +256,4 @@ public extension Component {
   public func sizeForItem(at indexPath: IndexPath) -> CGSize {
     return manager.itemManager.sizeForItem(at: indexPath, in: self)
   }
-
-  func configure(with layout: Layout) {}
 }
