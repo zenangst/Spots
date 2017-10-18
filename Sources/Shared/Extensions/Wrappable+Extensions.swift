@@ -1,5 +1,4 @@
 public extension Wrappable {
-
   func configure(with view: View) {
     if let previousView = self.wrappedView {
       previousView.removeFromSuperview()

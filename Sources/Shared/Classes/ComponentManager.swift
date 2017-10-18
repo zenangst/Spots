@@ -18,7 +18,7 @@ public class ComponentManager {
   let diffManager: DiffManager
   let configuration: Configuration
 
-  init(itemManager: ItemManager = .init(), diffManager: DiffManager = .init(),  configuration: Configuration) {
+  init(itemManager: ItemManager = .init(), diffManager: DiffManager = .init(), configuration: Configuration) {
     self.configuration = configuration
     self.itemManager = itemManager
     self.diffManager = diffManager
@@ -278,7 +278,6 @@ public class ComponentManager {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
           }
         }
-
         updateHeightAndIndexes = true
       case .soft:
         if let view: ItemConfigurable = component.userInterface?.view(at: index) {

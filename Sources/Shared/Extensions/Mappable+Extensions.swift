@@ -1,7 +1,6 @@
 import Tailor
 
 extension Mappable {
-
   /**
    - returns: A key-value dictionary.
    */
