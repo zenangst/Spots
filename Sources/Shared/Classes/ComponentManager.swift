@@ -18,7 +18,7 @@ public class ComponentManager {
   let diffManager: DiffManager
   let configuration: Configuration
 
-  init(itemManager: ItemManager = .init(), diffManager: DiffManager = .init(),  configuration: Configuration) {
+  init(itemManager: ItemManager = .init(), diffManager: DiffManager = .init(), configuration: Configuration) {
     self.configuration = configuration
     self.itemManager = itemManager
     self.diffManager = diffManager

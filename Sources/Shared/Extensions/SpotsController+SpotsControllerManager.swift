@@ -5,7 +5,6 @@
 #endif
 
 extension SpotsController {
-
   public typealias CompareClosure = ((_ lhs: [ComponentModel], _ rhs: [ComponentModel]) -> Bool)
 
   /**
