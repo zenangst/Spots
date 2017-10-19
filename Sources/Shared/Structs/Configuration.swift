@@ -51,7 +51,7 @@ public class Configuration {
   ///
   /// - parameter view:       The view type that should be registered with an identifier.
   /// - parameter identifier: A StringConvertible identifier for the registered view type.
-  public func register<T, U: ItemModel>(view: T.Type, identifier: StringConvertible, model: U.Type?, presenter: Presenter<T, U>? = nil) {
+  public func register<T, U>(view: T.Type, identifier: StringConvertible, model: U.Type?, presenter: Presenter<T, U>? = nil) {
     self.views.storage[identifier.string] = Registry.Item.classType(view)
 
     if let model = model {

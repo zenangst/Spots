@@ -235,7 +235,7 @@ import Tailor
     if model.items.isEmpty, !model.layout.showEmptyComponent {
       if animated {
         view.animator().frame.size.height = 0
-        DispatchQueue.main.asyncAfter(deadline: .now() + NSAnimationContext.current().duration) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + NSAnimationContext.current.duration) { [weak self] in
           self?.view.superview?.animator().layoutSubviews()
         }
       } else {
@@ -318,7 +318,7 @@ import Tailor
   /// This method is invoked when a double click is performed on a view.
   ///
   /// - Parameter sender: The view that was tapped.
-  open func doubleMouseClick(_ sender: Any?) {
+  @objc open func doubleMouseClick(_ sender: Any?) {
     guard let tableView = tableView,
       let item = item(at: tableView.clickedRow) else {
       return
@@ -334,7 +334,7 @@ import Tailor
   /// This method is invoked when a single click is performed on a view.
   ///
   /// - Parameter sender: The view that was tapped.
-  open func singleMouseClick(_ sender: Any?) {
+  @objc open func singleMouseClick(_ sender: Any?) {
     guard let tableView = tableView,
       let item = item(at: tableView.clickedRow) else {
         return

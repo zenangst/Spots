@@ -204,7 +204,7 @@ extension UICollectionView: UserInterface {
   public func processChanges(_ changes: Changes,
                              withAnimation animation: Animation = .automatic,
                              updateDataSource: () -> Void,
-                             completion: ((()) -> Void)? = nil) {
+                             completion: (() -> Void)? = nil) {
     let insertions = changes.insertions.map { IndexPath(row: $0, section: 0) }
     let reloads = changes.reloads.map { IndexPath(row: $0, section: 0) }
     let deletions = changes.deletions.map { IndexPath(row: $0, section: 0) }

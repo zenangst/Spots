@@ -2,7 +2,7 @@ import Cocoa
 
 extension DataSource: NSCollectionViewDataSource {
 
-  public func collectionView(_ collectionView: NSCollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> NSView {
+  public func collectionView(_ collectionView: NSCollectionView, viewForSupplementaryElementOfKind kind: NSCollectionView.SupplementaryElementKind, at indexPath: IndexPath) -> NSView {
     return NSView()
   }
 
@@ -26,7 +26,7 @@ extension DataSource: NSCollectionViewDataSource {
     }
 
     let reuseIdentifier = component.identifier(at: indexPath.item)
-    let item = collectionView.makeItem(withIdentifier: reuseIdentifier, for: indexPath)
+    let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: reuseIdentifier), for: indexPath)
 
     switch item {
     case let item as Wrappable:
@@ -58,7 +58,7 @@ extension DataSource: NSTableViewDataSource {
   /// - parameter operation: The type of dragging operation.
   ///
   /// - returns: true if the drop operation was successful, otherwise false.
-  public func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+  public func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
     return false
   }
 }

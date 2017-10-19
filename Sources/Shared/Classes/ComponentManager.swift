@@ -18,7 +18,9 @@ public class ComponentManager {
   let diffManager: DiffManager
   let configuration: Configuration
 
-  init(itemManager: ItemManager = .init(), diffManager: DiffManager = .init(), configuration: Configuration) {
+  init(itemManager: ItemManager = .init(),
+       diffManager: DiffManager = .init(),
+       configuration: Configuration) {
     self.configuration = configuration
     self.itemManager = itemManager
     self.diffManager = diffManager
@@ -225,7 +227,8 @@ public class ComponentManager {
   /// - parameter component: The component that should be mutated.
   /// - parameter animation:  A Animation that is used when performing the mutation (currently not in use).
   /// - parameter completion: A completion closure that is executed in the main queue when the view model has been removed.
-  public func update(item: Item, atIndex index: Int, component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  public func update(item: Item, atIndex index: Int, component: Component,
+                     withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let `self` = self else {
         return

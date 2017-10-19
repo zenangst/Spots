@@ -45,7 +45,7 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
   }
 
   public func component(_ component: Component, itemSelected item: Item) {
-    componentDidSelectItem.onNext(component, item)
+    componentDidSelectItem.onNext((component, item))
   }
 
   public func componentsDidChange(_ components: [Component]) {
@@ -53,11 +53,11 @@ public final class RxComponentDelegate: DelegateProxy, DelegateProxyType, Compon
   }
 
   public func component(_ component: Component, willDisplay view: ComponentView, item: Item) {
-    componentWillDisplayView.onNext(component, view, item)
+    componentWillDisplayView.onNext((component, view, item))
   }
 
   public func component(_ component: Component, didEndDisplaying view: ComponentView, item: Item) {
-    componentDidEndDisplayingView.onNext(component, view, item)
+    componentDidEndDisplayingView.onNext((component, view, item))
   }
 }
 
