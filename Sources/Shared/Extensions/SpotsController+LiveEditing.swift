@@ -8,7 +8,6 @@ import Cache
 
 #if DEVMODE
   public extension SpotsController {
-
     /// Monitor changes made to a file at file path.
     ///
     /// - parameter filePath: A file path string, pointing to the file that should be monitored.

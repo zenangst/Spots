@@ -1,5 +1,4 @@
 public extension CarouselScrollDelegate {
-
   /// Invoked when ever a user scrolls a CarouselComponent.
   ///
   /// - parameter component: The component that was scrolled.

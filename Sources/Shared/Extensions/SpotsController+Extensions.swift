@@ -8,7 +8,6 @@ import Cache
 
 // MARK: - SpotsProtocol extension
 public extension SpotsController {
-
   /// A convenience property for getting a dictionary representation of the controller wihtout item reduction.
   public var dictionary: [String : Any] {
     return dictionary()
