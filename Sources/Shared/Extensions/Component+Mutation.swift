@@ -6,7 +6,6 @@
 
 // MARK: - Component extension
 public extension Component {
-
   /// Append item to collection with animation
   ///
   /// - parameter item: The view model that you want to append.

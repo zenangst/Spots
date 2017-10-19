@@ -1,6 +1,5 @@
 // MARK: - ComponentDelegate extension
 public extension ComponentDelegate {
-
   /// Triggered when ever a user taps on an item
   ///
   /// - parameter component: The component that the item belongs to.

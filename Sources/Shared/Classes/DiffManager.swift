@@ -1,7 +1,6 @@
 import Foundation
 
 class DiffManager {
-
   /// Compare two collection of items and generate a `Changes` object that can be used
   /// to update the data source. It supports insertions, deletions, updates, reloads,
   /// child updates and moving items around.
