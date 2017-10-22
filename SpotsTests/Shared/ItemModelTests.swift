@@ -4,15 +4,21 @@ import XCTest
 
 class ItemModelTests: XCTestCase {
 
-  struct EquatableSubjectA: ItemModel {
+  struct EquatableSubjectA: ItemModel, Equatable, DictionaryConvertible {
     let value: String
+
     static func ==(lhs: EquatableSubjectA, rhs: EquatableSubjectA) -> Bool {
       return lhs.value == rhs.value
     }
   }
 
-  struct EquatableSubjectB: ItemModel, Equatable {
+  struct EquatableSubjectB: ItemModel, Equatable, DictionaryConvertible {
     let value: String
+
+    init(_ map: [String : Any]) {
+      self.value = map["value"] as? String ?? ""
+    }
+
     static func ==(lhs: EquatableSubjectB, rhs: EquatableSubjectB) -> Bool {
       return lhs.value == rhs.value
     }
@@ -70,5 +76,13 @@ class ItemModelTests: XCTestCase {
       let b = EquatableSubjectA(value: "foo")
       XCTAssertTrue(a == b)
     }
+  }
+
+  func testItemModelWithCustomModel() {
+    let model = Item(title: "foo", model: EquatableSubjectA(value: "foo"))
+
+    let encoder = JSONEncoder()
+    let foo = try encoder.encode(model)
+
   }
 }
