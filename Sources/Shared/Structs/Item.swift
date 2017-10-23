@@ -9,12 +9,12 @@ import Tailor
 /**
  A value type struct, it conforms to the Mappable protocol so that it can be instantiated with JSON
  */
-public struct Item: Mappable, Indexable, DictionaryConvertible {
+public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
 
   /**
    An enum with all the string keys used in the view model
    */
-  public enum Key: String {
+  public enum Key: String, CodingKey {
     case index
     case identifier
     case title
@@ -22,6 +22,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     case text
     case image
     case model
+    case modelData
     case kind
     case action
     case meta
@@ -60,6 +61,7 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
   public var relations = [String: [Item]]()
 
   var model: ItemCodable?
+  var modelData: NSData?
 
   /// A dictionary representation of the view model
   public var dictionary: [String : Any] {
@@ -86,6 +88,10 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
       dictionary[Key.action.string] = action
     }
 
+    if let model = model as? DictionaryConvertible {
+      dictionary[Key.model.string] = model.dictionary
+    }
+
     var relationItems = [String: [[String: Any]]]()
 
     relations.forEach { key, array in
@@ -98,6 +104,64 @@ public struct Item: Mappable, Indexable, DictionaryConvertible {
     }
 
     return dictionary
+  }
+
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: Item.Key.self)
+    try container.encodeIfPresent(self.index, forKey: Item.Key.index)
+    try container.encodeIfPresent(self.identifier, forKey: Item.Key.identifier)
+    try container.encodeIfPresent(self.title, forKey: Item.Key.title)
+    try container.encodeIfPresent(self.subtitle, forKey: Item.Key.subtitle)
+    try container.encodeIfPresent(self.text, forKey: Item.Key.text)
+    try container.encodeIfPresent(self.image, forKey: Item.Key.image)
+    try container.encodeIfPresent(self.kind, forKey: Item.Key.kind)
+    //try container.encodeIfPresent(self.size, forKey: Item.Key.size)
+
+    if let dictionary = try? JSONSerialization.data(withJSONObject: dictionary,
+                                               options: .prettyPrinted) {
+      try container.encodeIfPresent(dictionary, forKey: Item.Key.meta)
+    }
+
+    try container.encodeIfPresent(self.relations, forKey: Item.Key.relations)
+
+    var model = self.model
+
+    let modelData = withUnsafePointer(to: &model) { pointer in
+      NSData(bytes: pointer, length: MemoryLayout.size(ofValue: model))
+    }
+
+//    try container.encode(modelData, forKey: Item.Key.modelData)
+
+    //try container.encodeIfPresent(self.model, forKey: Item.Key.model)
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: Item.Key.self)
+    self.index = try container.decodeIfPresent(Int.self, forKey: Item.Key.index) ?? 0
+    self.identifier = try container.decodeIfPresent(Int.self, forKey: Item.Key.identifier)
+    self.title = try container.decodeIfPresent(String.self, forKey: Item.Key.title) ?? ""
+    self.subtitle = try container.decodeIfPresent(String.self, forKey: Item.Key.subtitle) ?? ""
+    self.text = try container.decodeIfPresent(String.self, forKey: Item.Key.text) ?? ""
+    self.image = try container.decodeIfPresent(String.self, forKey: Item.Key.image) ?? ""
+    self.kind = try container.decodeIfPresent(String.self, forKey: Item.Key.kind) ?? ""
+    self.action = try container.decodeIfPresent(String.self, forKey: Item.Key.action)
+//    self.size = try container.decodeIfPresent(CGSize.self, forKey: Item.Key.size) ?? .zero
+    self.meta = try container.decodeIfPresent([String: Any].self, forKey: Item.Key.meta) ?? [:]
+    self.relations = try container.decodeIfPresent([String: [Item]].self, forKey: Item.Key.relations) ?? [:]
+    self.modelData = try container.decodeIfPresent(Data.self, forKey: Item.Key.modelData) as! NSData
+
+
+//    let data = try container.decode(Data.self, forKey: Item.Key.modelData)
+
+
+
+//    let modelData = withUnsafePointer(to: &self.model) { pointer in
+//      NSData(bytes: pointer, length: MemoryLayout.size(ofValue: self.model))
+//    }
+
+
+
+    //self.model = try container.decodeIfPresent(DictionaryConvertible.self, forKey: Item.Key.model)
   }
 
   // MARK: - Initialization
