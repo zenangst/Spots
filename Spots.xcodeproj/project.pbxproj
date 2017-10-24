@@ -29,9 +29,6 @@
 		BD1F9A8E1F9088C6003E6D8D /* ItemModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9A8C1F9088C6003E6D8D /* ItemModelTests.swift */; };
 		BD1F9A8F1F9088C6003E6D8D /* ItemModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9A8C1F9088C6003E6D8D /* ItemModelTests.swift */; };
 		BD1F9E0F1EA39DFD009C018B /* SpotsController+iOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E0E1EA39DFD009C018B /* SpotsController+iOS+Extensions.swift */; };
-		BD1F9E111EA39ED9009C018B /* Mappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E101EA39ED9009C018B /* Mappable+Extensions.swift */; };
-		BD1F9E121EA39ED9009C018B /* Mappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E101EA39ED9009C018B /* Mappable+Extensions.swift */; };
-		BD1F9E131EA39ED9009C018B /* Mappable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E101EA39ED9009C018B /* Mappable+Extensions.swift */; };
 		BD1F9E151EA39F02009C018B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E141EA39F02009C018B /* Array+Extensions.swift */; };
 		BD1F9E161EA39F02009C018B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E141EA39F02009C018B /* Array+Extensions.swift */; };
 		BD1F9E171EA39F02009C018B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E141EA39F02009C018B /* Array+Extensions.swift */; };
@@ -399,6 +396,9 @@
 		BDFBB76E1F75094600421BCF /* ComponentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFBB76C1F75094600421BCF /* ComponentTableView.swift */; };
 		BDFC474F1E747B2B008700BF /* GridWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474C1E747B2B008700BF /* GridWrapperTests.swift */; };
 		BDFC47521E747B2B008700BF /* ListWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC474D1E747B2B008700BF /* ListWrapperTests.swift */; };
+		D514B9501F9FCD9600D6B85F /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = D514B94F1F9FCD9600D6B85F /* Root.swift */; };
+		D514B9511F9FCD9600D6B85F /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = D514B94F1F9FCD9600D6B85F /* Root.swift */; };
+		D514B9521F9FCD9600D6B85F /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = D514B94F1F9FCD9600D6B85F /* Root.swift */; };
 		D55B7B081E4231A4000125C8 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B071E4231A4000125C8 /* RxCocoa.framework */; };
 		D55B7B0C1E4234C3000125C8 /* RxSpotsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */; };
 		D55B7B431E423B86000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
@@ -481,7 +481,6 @@
 		BD1F9A881F908866003E6D8D /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 		BD1F9A8C1F9088C6003E6D8D /* ItemModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModelTests.swift; sourceTree = "<group>"; };
 		BD1F9E0E1EA39DFD009C018B /* SpotsController+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+iOS+Extensions.swift"; sourceTree = "<group>"; };
-		BD1F9E101EA39ED9009C018B /* Mappable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Mappable+Extensions.swift"; sourceTree = "<group>"; };
 		BD1F9E141EA39F02009C018B /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		BD20E65F1F384672008C2B8B /* DiffManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffManager.swift; sourceTree = "<group>"; };
@@ -647,6 +646,7 @@
 		BDFBB76C1F75094600421BCF /* ComponentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTableView.swift; sourceTree = "<group>"; };
 		BDFC474C1E747B2B008700BF /* GridWrapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridWrapperTests.swift; sourceTree = "<group>"; };
 		BDFC474D1E747B2B008700BF /* ListWrapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListWrapperTests.swift; sourceTree = "<group>"; };
+		D514B94F1F9FCD9600D6B85F /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		D55B7B021E423122000125C8 /* RxSpots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSpots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Rx-Info-iOS.plist"; sourceTree = "<group>"; };
 		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
@@ -946,7 +946,6 @@
 				BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */,
 				BDAD85381E3E7032008289AE /* Item+Extensions.swift */,
 				BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */,
-				BD1F9E101EA39ED9009C018B /* Mappable+Extensions.swift */,
 				BDAD853A1E3E7032008289AE /* ScrollDelegate+Extensions.swift */,
 				BDAD853F1E3E7032008289AE /* SpotsController+Extensions.swift */,
 				BDAD85401E3E7032008289AE /* SpotsController+LiveEditing.swift */,
@@ -995,6 +994,7 @@
 				BDAD855D1E3E7032008289AE /* Registry.swift */,
 				BDAD855E1E3E7032008289AE /* StateCache.swift */,
 				BD5D69D31F398C370078AC19 /* Changes.swift */,
+				D514B94F1F9FCD9600D6B85F /* Root.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1653,6 +1653,7 @@
 				BDCBE3861EEEFF1E00BB2514 /* ScrollViewManager.swift in Sources */,
 				BDAD84A91E3E701C008289AE /* CarouselSpotHeader.swift in Sources */,
 				BDAD85741E3E7032008289AE /* Paginate.swift in Sources */,
+				D514B9521F9FCD9600D6B85F /* Root.swift in Sources */,
 				BDAD859B1E3E7032008289AE /* SpotsController+LiveEditing.swift in Sources */,
 				BD20E6621F384672008C2B8B /* DiffManager.swift in Sources */,
 				BDAD84D31E3E701C008289AE /* Delegate+iOS+Extensions.swift in Sources */,
@@ -1717,7 +1718,6 @@
 				BDAD85D11E3E7032008289AE /* Wrappable.swift in Sources */,
 				BD5D69DE1F39B71A0078AC19 /* ItemDiff.swift in Sources */,
 				BD9ECEBF1E6EC8A5003E4388 /* Component+iOS+Carousel.swift in Sources */,
-				BD1F9E131EA39ED9009C018B /* Mappable+Extensions.swift in Sources */,
 				BDAD85A41E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,
 				BDAD84DF1E3E701C008289AE /* UICollectionView+UserInterface.swift in Sources */,
 				BD1F9E171EA39F02009C018B /* Array+Extensions.swift in Sources */,
@@ -1813,7 +1813,6 @@
 				BDAD85751E3E7032008289AE /* RegistryType.swift in Sources */,
 				BD77D1F41E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
 				BDAD84BE1E3E701C008289AE /* DefaultItemView.swift in Sources */,
-				BD1F9E111EA39ED9009C018B /* Mappable+Extensions.swift in Sources */,
 				BDAD85ED1E3E7032008289AE /* StateCache.swift in Sources */,
 				BD5D69D41F398C370078AC19 /* Changes.swift in Sources */,
 				BDB8D59A1E51C4FE00220BC3 /* Delegate+iOS+UIScrollView.swift in Sources */,
@@ -1848,6 +1847,7 @@
 				BDAD856F1E3E7032008289AE /* Animation.swift in Sources */,
 				BD77D1F81E8538080075A3FC /* ComponentKind.swift in Sources */,
 				BDAD85C31E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
+				D514B9501F9FCD9600D6B85F /* Root.swift in Sources */,
 				BDAD85811E3E7032008289AE /* Item+Extensions.swift in Sources */,
 				BD1F9E0F1EA39DFD009C018B /* SpotsController+iOS+Extensions.swift in Sources */,
 				BDAD84E21E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
@@ -1969,6 +1969,7 @@
 				BD3EC3BB1F541E91009CCDF3 /* CollectionView+Extensions.swift in Sources */,
 				BDAD858E1E3E7032008289AE /* Component+Mutation.swift in Sources */,
 				BDAD85241E3E7025008289AE /* NSScrollView+Extensions.swift in Sources */,
+				D514B9511F9FCD9600D6B85F /* Root.swift in Sources */,
 				BDAD85E51E3E7032008289AE /* Layout.swift in Sources */,
 				BD20E6611F384672008C2B8B /* DiffManager.swift in Sources */,
 				52CD427B1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
@@ -2044,7 +2045,6 @@
 				BD34B4031F93D5C800840F2F /* ItemChange.swift in Sources */,
 				BDAD85A61E3E7032008289AE /* CarouselScrollDelegate.swift in Sources */,
 				BD5FC7DF1E857AD900D03038 /* FlippedView.swift in Sources */,
-				BD1F9E121EA39ED9009C018B /* Mappable+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

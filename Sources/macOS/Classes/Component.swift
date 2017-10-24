@@ -1,7 +1,6 @@
 // swiftlint:disable weak_delegate
 
 import Cocoa
-import Tailor
 
 @objc(SpotsComponent) public class Component: NSObject {
   /// A configuration closure that can be used to pinpoint configuration of
