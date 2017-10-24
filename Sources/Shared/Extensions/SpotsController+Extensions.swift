@@ -8,27 +8,6 @@ import Cache
 
 // MARK: - SpotsProtocol extension
 public extension SpotsController {
-  /// A convenience property for getting a dictionary representation of the controller wihtout item reduction.
-  public var dictionary: [String : Any] {
-    return dictionary()
-  }
-
-  /// Produce a dictionary representation of the controller.
-  ///
-  /// - parameter amountOfItems: An optional Int used for getting a subset of items to cache, it set, it will save the amount of items for each Component object based on this value.
-  ///
-  /// - returns: A dictionary representation of the controller.
-  public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
-    var result = [[String: Any]]()
-
-    for component in components {
-      let componentJSON = component.model.dictionary(amountOfItems)
-      result.append(componentJSON)
-    }
-
-    return ["components": result as AnyObject ]
-  }
-
   /// Resolve UI component based on a predicate.
   ///
   /// - parameter includeElement: A filter predicate used to match the UI that should be resolved.
@@ -88,13 +67,21 @@ public extension SpotsController {
 
   /// Caches the current state of the controller
   ///
-  /// - parameter items: An optional integer that is used to reduce the amount of items that should be cached per Component object when saving the view state to disk
-  public func cache(_ items: Int? = nil) {
+  /// - parameter amountOfItems: An optional integer that is used to reduce the amount of items that should be cached per Component object when saving the view state to disk
+  public func cache(_ amountOfItems: Int? = nil) {
     #if DEVMODE
       liveEditing(stateCache: stateCache)
     #endif
 
-    stateCache?.save(dictionary(items))
+    let componentModels = components.map({ component -> ComponentModel in
+      var model = component.model
+      if let amountOfItems = amountOfItems {
+        model.amountOfItemsToCache = amountOfItems
+      }
+      return model
+    })
+
+    stateCache?.save(componentModels)
   }
 
   /// Resolve component at index path.

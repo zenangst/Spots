@@ -2,14 +2,10 @@ import Foundation
 import Cache
 import SwiftHash
 
-/// A StateCache struct used for Controller and Component object caching
-public struct StateCache {
-
-  /// A unique identifer string for the StateCache
-  public let key: String
-
+/// A wrapper for Cache storage
+private struct StateStorage {
   /// The cache name used by Cache
-  static let cacheName = String(describing: StateCache.self)
+  static let cacheName = String(describing: StateStorage.self)
 
   /// Computed bundle identifier
   static let bundleIdentifer: String = {
@@ -19,28 +15,38 @@ public struct StateCache {
     return "Spots.bundle.identifier"
   }()
 
-  /// A JSON Cache object
-  let cache: Storage?
+  static let stared = StateStorage()
 
-  /// The path of the cache
-  var path: String {
-    return cache.path + "/" + fileName()
+  let storage: Storage?
+
+  public func removeAll() {
+    try? storage?.removeAll()
   }
+
+  private init() {
+    storage = try? Storage(
+      diskConfig: DiskConfig(name: "\(StateStorage.cacheName)/\(StateStorage.bundleIdentifer)"),
+      memoryConfig: MemoryConfig(expiry: .never, countLimit: 10, totalCostLimit: 10)
+    )
+  }
+}
+
+/// A StateCache struct used for Controller and Component object caching
+public struct StateCache {
+
+  /// A unique identifer string for the StateCache
+  public let key: String
+
+  /// A JSON Cache object
+  let storage: Storage?
 
   /// Checks if file exists for cache
-  public var cacheExists: Bool {
-    return FileManager.default.fileExists(atPath: path)
-  }
+//  public var cacheExists: Bool {
+//    return FileManager.default.fileExists(atPath: path)
+//  }
 
   /// Remove state cache for all controllers and components.
-  public static func removeAll() {
-    let path = SpecializedCache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)").path
-    do {
-      try FileManager.default.removeItem(atPath: path)
-    } catch {
-      NSLog("🎍 SPOTS: Unable to remove cache.")
-    }
-  }
+
 
   // MARK: - Initialization
 
@@ -50,10 +56,7 @@ public struct StateCache {
   ///
   /// - returns: A StateCache object
   public init(key: String) {
-    self.cache = try! Storage(
-      diskConfig: DiskConfig(name: "\(StateCache.cacheName)/\(StateCache.bundleIdentifer)"),
-      memoryConfig: MemoryConfig(expiry: .never, countLimit: 10, totalCostLimit: 10)
-    )
+    self.storage = StateStorage.stared.storage
     self.key = key
   }
 
@@ -62,25 +65,24 @@ public struct StateCache {
   /// Save JSON to the StateCache
   ///
   /// - parameter json: A JSON object
-  public func save(_ json: [String : Any]) {
+  public func save<T: Codable>(_ object: T) {
     let expiry = Expiry.date(Date().addingTimeInterval(60 * 60 * 24 * 3))
-    try? cache.addObject(JSON.dictionary(json), forKey: key, expiry: expiry)
+    try? storage?.setObject(object, forKey: key, expiry: expiry)
   }
 
   /// Load JSON from cache
   ///
   /// - returns: A Swift dictionary
-  public func load() -> [String : Any] {
-    guard let cachedDictionary = cache.object(forKey: key)?.object as? [String: Any] else {
-      return [:]
+  public func load<T: Codable>() -> T? {
+    guard let object = try? storage?.object(ofType: T.self, forKey: key) else {
+      return nil
     }
-
-    return cachedDictionary
+    return object
   }
 
   /// Clear the current StateCache
   public func clear(completion: (() -> Void)? = nil) {
-    try? cache.clear(keepingRootDirectory: true)
+    try? storage?.removeAll()
     completion?()
   }
 

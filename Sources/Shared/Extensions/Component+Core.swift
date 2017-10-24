@@ -182,7 +182,7 @@ public extension Component {
 
   /// Caches the current state of the component
   public func cache() {
-    stateCache?.save(dictionary)
+    stateCache?.save(model)
   }
 
   /// Get identifier for item at index path
