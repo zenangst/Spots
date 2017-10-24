@@ -20,7 +20,7 @@ public struct StateCache {
   }()
 
   /// A JSON Cache object
-  let cache = SpecializedCache<JSON>(name: "\(StateCache.cacheName)/\(bundleIdentifer)")
+  let cache: Storage?
 
   /// The path of the cache
   var path: String {
@@ -50,6 +50,10 @@ public struct StateCache {
   ///
   /// - returns: A StateCache object
   public init(key: String) {
+    self.cache = try! Storage(
+      diskConfig: DiskConfig(name: "\(StateCache.cacheName)/\(StateCache.bundleIdentifer)"),
+      memoryConfig: MemoryConfig(expiry: .never, countLimit: 10, totalCostLimit: 10)
+    )
     self.key = key
   }
 
