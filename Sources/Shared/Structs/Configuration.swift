@@ -49,11 +49,11 @@ public class Configuration {
   /// Register a presenter with an identifier
   ///
   /// - parameter presenter: Model -> View presenter
-  public func register<T, U>(presenter: Presenter<T, U>) {
+  public func register<V, M>(presenter: Presenter<V, M>) {
     let identifier = presenter.identifier
-    self.views.storage[identifier.string] = Registry.Item.classType(T.self)
+    self.views.storage[identifier.string] = Registry.Item.classType(V.self)
     self.presenters[identifier.string] = presenter
-    self.coders[identifier.string] = ItemModelCoder<T, U>()
+    self.coders[identifier.string] = ItemModelCoder<M>()
   }
 
   /// Register a view with an identifier
