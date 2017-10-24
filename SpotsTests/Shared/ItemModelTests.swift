@@ -4,7 +4,7 @@ import XCTest
 
 class ItemModelTests: XCTestCase {
 
-  struct EquatableSubjectA: ItemModel, Equatable, DictionaryConvertible {
+  struct EquatableSubjectA: ItemModel, Equatable {
     let value: String
 
     static func ==(lhs: EquatableSubjectA, rhs: EquatableSubjectA) -> Bool {
@@ -12,12 +12,8 @@ class ItemModelTests: XCTestCase {
     }
   }
 
-  struct EquatableSubjectB: ItemModel, Equatable, DictionaryConvertible {
+  struct EquatableSubjectB: ItemModel, Equatable {
     let value: String
-
-    init(_ map: [String : Any]) {
-      self.value = map["value"] as? String ?? ""
-    }
 
     static func ==(lhs: EquatableSubjectB, rhs: EquatableSubjectB) -> Bool {
       return lhs.value == rhs.value
@@ -76,13 +72,5 @@ class ItemModelTests: XCTestCase {
       let b = EquatableSubjectA(value: "foo")
       XCTAssertTrue(a == b)
     }
-  }
-
-  func testItemModelWithCustomModel() {
-    let model = Item(title: "foo", model: EquatableSubjectA(value: "foo"))
-
-    let encoder = JSONEncoder()
-    let foo = try encoder.encode(model)
-
   }
 }

@@ -275,7 +275,10 @@ public class ComponentManager {
         default:
           if let model = newItem.model, let configurator = self.configuration.presenters[item.kind] {
             component.userInterface?.performUpdates({
-              component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
+              component.model.items[index].size.height = configurator.configure(
+                view: view,
+                model: model,
+                containerSize: component.view.frame.size).height
             }, completion: nil)
           } else {
             component.userInterface?.reload([index], withAnimation: animation, completion: nil)
@@ -295,7 +298,10 @@ public class ComponentManager {
           if let view: View = component.userInterface?.view(at: index),
             let model = newItem.model,
             let configurator = self.configuration.presenters[newItem.kind] {
-            component.model.items[index].size.height = configurator(view, model, component.view.frame.size).height
+            component.model.items[index].size.height = configurator.configure(
+              view: view,
+              model: model,
+              containerSize: component.view.frame.size).height
           }
         }
       }

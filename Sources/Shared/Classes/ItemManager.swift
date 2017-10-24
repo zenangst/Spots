@@ -152,11 +152,14 @@ public class ItemManager {
         return
       }
 
-      guard let configurator = configuration.presenters[item.kind] else {
+      guard let presenter = configuration.presenters[item.kind] else {
         return
       }
 
-      item.size.height = configurator(view, model, component.view.frame.size).height
+      item.size.height = presenter.configure(
+        view: view,
+        model: model,
+        containerSize: component.view.frame.size).height
     }
   }
 

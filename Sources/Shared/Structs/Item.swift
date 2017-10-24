@@ -21,13 +21,11 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
     case subtitle
     case text
     case image
-    case model
-    case modelData
     case kind
     case action
     case meta
-    case children
     case relations
+    case model
     case size
     case width
     case height
@@ -59,9 +57,8 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
   public var meta = [String: Any]()
   /// A key-value dictionary for related view models
   public var relations = [String: [Item]]()
-
+  /// An optional Codable model
   var model: ItemCodable?
-  var modelData: NSData?
 
   /// A dictionary representation of the view model
   public var dictionary: [String : Any] {
@@ -108,60 +105,35 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
 
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: Item.Key.self)
-    try container.encodeIfPresent(self.index, forKey: Item.Key.index)
-    try container.encodeIfPresent(self.identifier, forKey: Item.Key.identifier)
-    try container.encodeIfPresent(self.title, forKey: Item.Key.title)
-    try container.encodeIfPresent(self.subtitle, forKey: Item.Key.subtitle)
-    try container.encodeIfPresent(self.text, forKey: Item.Key.text)
-    try container.encodeIfPresent(self.image, forKey: Item.Key.image)
-    try container.encodeIfPresent(self.kind, forKey: Item.Key.kind)
-    //try container.encodeIfPresent(self.size, forKey: Item.Key.size)
+    try container.encodeIfPresent(index, forKey: .index)
+    try container.encodeIfPresent(identifier, forKey: .identifier)
+    try container.encodeIfPresent(title, forKey: .title)
+    try container.encodeIfPresent(subtitle, forKey: .subtitle)
+    try container.encodeIfPresent(text, forKey: .text)
+    try container.encodeIfPresent(image, forKey: .image)
+    try container.encodeIfPresent(kind, forKey: .kind)
+    try container.encodeIfPresent(action, forKey: .action)
+    try container.encodeIfPresent(size, forKey: .size)
+    try container.encodeIfPresent(relations, forKey: .relations)
 
-    if let dictionary = try? JSONSerialization.data(withJSONObject: dictionary,
-                                               options: .prettyPrinted) {
-      try container.encodeIfPresent(dictionary, forKey: Item.Key.meta)
-    }
-
-    try container.encodeIfPresent(self.relations, forKey: Item.Key.relations)
-
-    var model = self.model
-
-    let modelData = withUnsafePointer(to: &model) { pointer in
-      NSData(bytes: pointer, length: MemoryLayout.size(ofValue: model))
-    }
-
-//    try container.encode(modelData, forKey: Item.Key.modelData)
-
-    //try container.encodeIfPresent(self.model, forKey: Item.Key.model)
+    container.encode(jsonDictionary: meta, forKey: .meta)
+    try container.encodeIfPresent(model: model, forKey: .model, kind: kind)
   }
 
   public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: Item.Key.self)
-    self.index = try container.decodeIfPresent(Int.self, forKey: Item.Key.index) ?? 0
-    self.identifier = try container.decodeIfPresent(Int.self, forKey: Item.Key.identifier)
-    self.title = try container.decodeIfPresent(String.self, forKey: Item.Key.title) ?? ""
-    self.subtitle = try container.decodeIfPresent(String.self, forKey: Item.Key.subtitle) ?? ""
-    self.text = try container.decodeIfPresent(String.self, forKey: Item.Key.text) ?? ""
-    self.image = try container.decodeIfPresent(String.self, forKey: Item.Key.image) ?? ""
-    self.kind = try container.decodeIfPresent(String.self, forKey: Item.Key.kind) ?? ""
-    self.action = try container.decodeIfPresent(String.self, forKey: Item.Key.action)
-//    self.size = try container.decodeIfPresent(CGSize.self, forKey: Item.Key.size) ?? .zero
-    self.meta = try container.decodeIfPresent([String: Any].self, forKey: Item.Key.meta) ?? [:]
-    self.relations = try container.decodeIfPresent([String: [Item]].self, forKey: Item.Key.relations) ?? [:]
-    self.modelData = try container.decodeIfPresent(Data.self, forKey: Item.Key.modelData) as! NSData
-
-
-//    let data = try container.decode(Data.self, forKey: Item.Key.modelData)
-
-
-
-//    let modelData = withUnsafePointer(to: &self.model) { pointer in
-//      NSData(bytes: pointer, length: MemoryLayout.size(ofValue: self.model))
-//    }
-
-
-
-    //self.model = try container.decodeIfPresent(DictionaryConvertible.self, forKey: Item.Key.model)
+    self.index = try container.decodeIfPresent(Int.self, forKey: .index) ?? 0
+    self.identifier = try container.decodeIfPresent(Int.self, forKey: .identifier)
+    self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+    self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle) ?? ""
+    self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? ""
+    self.image = try container.decodeIfPresent(String.self, forKey: .image) ?? ""
+    self.kind = try container.decodeIfPresent(String.self, forKey: .kind) ?? ""
+    self.action = try container.decodeIfPresent(String.self, forKey: .action)
+    self.size = try container.decodeIfPresent(CGSize.self, forKey: .size) ?? .zero
+    self.meta = container.decodeJsonDictionaryIfPresent(forKey: .meta) ?? [:]
+    self.relations = try container.decodeIfPresent([String: [Item]].self, forKey: .relations) ?? [:]
+    self.model = try container.decodeIfPresent(forKey: .model, kind: kind)
   }
 
   // MARK: - Initialization
@@ -202,8 +174,7 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
   }
 
   /**
-   Initialization a new instance of a Item and map it to a JSON dictionary
-
+   Initialization a new instance of a Item
    - parameter title: The title string for the view model, defaults to empty string
    - parameter subtitle: The subtitle string for the view model, default to empty string
    - parameter image: Image name or URL as a string, default to empty string
@@ -213,7 +184,6 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
               subtitle: String = "",
               text: String = "",
               image: String = "",
-              model: ItemCodable? = nil,
               kind: StringConvertible = "",
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),
@@ -224,7 +194,6 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
     self.subtitle = subtitle
     self.text = text
     self.image = image
-    self.model = model
     self.kind = kind.string
     self.action = action
     self.size = size
@@ -233,34 +202,34 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
   }
 
   /**
-   Initialization a new instance of a Item and map it to a JSON dictionary
+   Initialization a new instance of a Item
 
    - parameter title: The title string for the view model, defaults to empty string
    - parameter subtitle: The subtitle string for the view model, default to empty string
    - parameter image: Image name or URL as a string, default to empty string
    */
-  public init(identifier: Int? = nil,
-              title: String = "",
-              subtitle: String = "",
-              text: String = "",
-              image: String = "",
-              model: ItemCodable? = nil,
-              kind: StringConvertible = "",
-              action: String? = nil,
-              size: CGSize = CGSize(width: 0, height: 0),
-              meta: Mappable,
-              relations: [String : [Item]] = [:]) {
+  public init<T: ItemModel>(identifier: Int? = nil,
+                            title: String = "",
+                            subtitle: String = "",
+                            text: String = "",
+                            image: String = "",
+                            model: T? = nil,
+                            kind: StringConvertible = "",
+                            action: String? = nil,
+                            size: CGSize = CGSize(width: 0, height: 0),
+                            meta: [String : Any] = [:],
+                            relations: [String : [Item]] = [:]) {
     self.init(identifier: identifier,
               title: title,
               subtitle: subtitle,
               text: text,
               image: image,
-              model: model,
               kind: kind,
               action: action,
               size: size,
-              meta: meta.metaProperties,
+              meta: meta,
               relations: relations)
+    self.model = model
   }
 
   // MARK: - Helpers
@@ -296,6 +265,22 @@ public struct Item: Codable, Mappable, Indexable, DictionaryConvertible {
    */
   public func metaInstance<T: Mappable>() -> T {
     return T(meta)
+  }
+
+  /**
+   A generic convenience method for resolving a model
+
+   - returns: A generic model based on `type`
+   */
+  public func resolveModel<T: ItemModel>() -> T? {
+    return model as? T
+  }
+
+  /**
+   A generic convenience method for updating a model
+   */
+  public mutating func update<T: ItemModel>(model: T) {
+    self.model = model
   }
 
   /**

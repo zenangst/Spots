@@ -11,10 +11,6 @@ class ItemTests: XCTestCase {
     "kind": "E",
     "size": ["width": 320.0, "height": 240.0],
     "action": "F",
-    "children": [
-      "child 1": "G",
-      "child 2": "H"
-    ],
     "meta": [
       "domain": "I"
     ]
@@ -62,24 +58,6 @@ class ItemTests: XCTestCase {
 
   func testItemResolveMeta() {
     XCTAssertEqual(item.meta("domain", ""), (data["meta"] as! [String : AnyObject])["domain"] as? String)
-  }
-
-  func testMetaDataCreatedFromObject() {
-    var data: [String : Any] = ["id": 11, "name": "Name"]
-
-    item = Item(meta: Meta(data))
-
-    XCTAssertEqual(item.meta("id", 0), data["id"] as? Int)
-    XCTAssertEqual(item.meta("name", ""), data["name"] as? String)
-  }
-
-  func testMetaInstance() {
-    var data: [String : Any] = ["id": 11, "name": "Name"]
-    item = Item(meta: Meta(data))
-    let result: Meta = item.metaInstance()
-
-    XCTAssertEqual(result.id, data["id"] as? Int)
-    XCTAssertEqual(result.name, data["name"] as? String)
   }
 
   func testItemEquality() {
@@ -151,5 +129,69 @@ class ItemTests: XCTestCase {
   func testItemUpdate() {
     item.update(kind: "test")
     XCTAssertEqual(item.kind, "test")
+  }
+
+  func testCodableWithJSONModel() throws {
+    let kind = "kind"
+
+    Configuration.shared.register(
+      presenter: Presenter<DefaultItemView, Model>(identifier: kind) { _,_,_ in return .zero }
+    )
+
+    let json: [String : Any] = [
+      "title": "A",
+      "kind": kind,
+      "model": ["value": "Test"]
+    ]
+    let item = Item(json)
+    let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+    let decoder = JSONDecoder()
+    let decodedItem = try decoder.decode(Item.self, from: data)
+
+    XCTAssertNotNil(decodedItem.model)
+    XCTAssertTrue(item == decodedItem)
+
+    Configuration.shared.presenters.removeValue(forKey: kind)
+  }
+
+  func testCodable() throws {
+    let kind = "kind"
+
+    Configuration.shared.register(
+      presenter: Presenter<DefaultItemView, Model>(identifier: kind) { _,_,_ in return .zero }
+    )
+
+    let model = Model(value: "Test")
+
+    let item = Item(
+      identifier: 0,
+      title: "Title",
+      subtitle: "Subtitle",
+      text: "Text",
+      image: "Image",
+      model: model,
+      kind: kind,
+      action: "action",
+      size: CGSize(width: 10, height: 10),
+      meta: ["key": "value"],
+      relations: ["relation": [Item(self.data)]]
+    )
+    let encoder = JSONEncoder()
+    let data = try encoder.encode(item)
+    let decoder = JSONDecoder()
+    let decodedItem = try decoder.decode(Item.self, from: data)
+
+    XCTAssertNotNil(decodedItem.model)
+    XCTAssertTrue(item == decodedItem)
+
+    Configuration.shared.presenters.removeValue(forKey: kind)
+  }
+}
+
+private struct Model: ItemModel, Equatable {
+  let value: String
+
+  static func ==(lhs: Model, rhs: Model) -> Bool {
+    return lhs.value == rhs.value
   }
 }

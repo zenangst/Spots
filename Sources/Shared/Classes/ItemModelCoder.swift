@@ -1,8 +1,8 @@
 import Foundation
-import CoreGraphics
 
-protocol AnyPresenter {
-  func configure(view: View, model: ItemCodable, containerSize: CGSize) -> CGSize
+// MARK: - Protocol
+
+protocol AnyItemModelCoder {
   func encode<T: KeyedEncodingContainerProtocol>(model: ItemCodable,
                                                  forKey key: T.Key,
                                                  container: inout T) throws
@@ -10,28 +10,9 @@ protocol AnyPresenter {
                                                  forKey key: T.Key) throws -> ItemCodable?
 }
 
-public class Presenter<T: View, U: ItemModel>: AnyPresenter {
-  public typealias ConfigurationClosure = ((_ view: T, _ model: U, _ containerSize: CGSize) -> CGSize)
-  let identifier: StringConvertible
-  private let closure: ConfigurationClosure
+// MARK: - Class
 
-  public init(identifier: StringConvertible, _ closure: @escaping ConfigurationClosure) {
-    self.identifier = identifier
-    self.closure = closure
-  }
-
-  func configure(view: View, model: ItemCodable, containerSize: CGSize) -> CGSize {
-    guard let view = view as? T else {
-      return .zero
-    }
-
-    guard let model = model as? U else {
-      return .zero
-    }
-
-    return closure(view, model, containerSize)
-  }
-
+public class ItemModelCoder<T: View, U: ItemModel>: AnyItemModelCoder {
   func encode<T: KeyedEncodingContainerProtocol>(model: ItemCodable,
                                                  forKey key: T.Key,
                                                  container: inout T) throws {
