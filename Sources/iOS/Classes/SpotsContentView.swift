@@ -50,5 +50,6 @@ open class SpotsContentView: UIView {
     }
 
     containerScrollView.setNeedsLayout()
+    containerScrollView.layoutViews()
   }
 }
