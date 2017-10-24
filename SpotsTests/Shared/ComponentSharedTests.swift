@@ -192,15 +192,14 @@ class ComponentSharedTests: XCTestCase {
   }
 
   func testResolvingItemModel() {
-    Configuration.shared.register(view: MockView.self,
-                           identifier: "Mock",
-                           model: MockModel.self,
-                           presenter: Presenter({ (view, model, containerSize) -> CGSize in
-                            view.firstName = model.firstName
-                            view.lastName = model.lastName
-                            view.frame.size.height = model.height
-                            return .init(width: 200, height: model.height)
-                           }))
+    Configuration.shared.register(
+      presenter: Presenter<MockView, MockModel>(identifier: "Mock") { (view, model, _) -> CGSize in
+        view.firstName = model.firstName
+        view.lastName = model.lastName
+        view.frame.size.height = model.height
+        return .init(width: 200, height: model.height)
+      }
+    )
 
     let mockModel = MockModel(firstName: "Foo", lastName: "Bar", height: 200)
     let items = [Item(model: mockModel, kind: "Mock")]

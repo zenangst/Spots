@@ -1,20 +1,26 @@
+import Foundation
 import CoreGraphics
 
-public class Presenter<T: View, U: ItemModel> {
-  public typealias ConfigurationClosure = ((_ view: T, _ model: U, _ containerSize: CGSize) -> CGSize)
+protocol AnyPresenter {
+  func configure(view: View, model: ItemCodable, containerSize: CGSize) -> CGSize
+}
 
+public class Presenter<V: View, M: ItemModel>: AnyPresenter {
+  public typealias ConfigurationClosure = ((_ view: V, _ model: M, _ containerSize: CGSize) -> CGSize)
+  let identifier: StringConvertible
   private let closure: ConfigurationClosure
 
-  public init(_ closure: @escaping ConfigurationClosure) {
+  public init(identifier: StringConvertible, _ closure: @escaping ConfigurationClosure) {
+    self.identifier = identifier
     self.closure = closure
   }
 
-  func configure(_ view: View, _ model: ItemCodable, _ containerSize: CGSize) -> CGSize {
-    guard let view = view as? T else {
+  func configure(view: View, model: ItemCodable, containerSize: CGSize) -> CGSize {
+    guard let view = view as? V else {
       return .zero
     }
 
-    guard let model = model as? U else {
+    guard let model = model as? M else {
       return .zero
     }
 

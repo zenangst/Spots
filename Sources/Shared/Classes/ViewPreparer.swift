@@ -53,11 +53,15 @@ class ViewPreparer {
         prepareItemConfigurableView(configurableView, atIndex: index, in: component)
       } else {
         if let model = component.model.items[index].model {
-          guard let configurator = configuration.presenters[component.model.items[index].kind] else {
+          guard let presenter = configuration.presenters[component.model.items[index].kind] else {
             return
           }
 
-          component.model.items[index].size = configurator(wrappedView, model, component.view.frame.size)
+          component.model.items[index].size = presenter.configure(
+            view: wrappedView,
+            model: model,
+            containerSize: component.view.frame.size
+          )
         } else {
           component.model.items[index].size.height = wrappedView.frame.size.height
         }
@@ -90,6 +94,10 @@ class ViewPreparer {
         return
       }
 
-      component.model.items[index].size.height = presenter(view, model, component.view.frame.size).height
+    component.model.items[index].size.height = presenter.configure(
+      view: view,
+      model: model,
+      containerSize:
+      component.view.frame.size).height
   }
 }
