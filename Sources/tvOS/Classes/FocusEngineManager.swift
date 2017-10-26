@@ -18,10 +18,6 @@ class FocusEngineManager {
   }
 
   func handleScrolling(in scrollView: ScrollView, for component: Component, itemIndex: Int, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    defer {
-      lastFocusedComponent = component
-    }
-
     switch component.model.kind {
     case .carousel:
       handleHorizontalComponent(in: scrollView, for: component, itemIndex: itemIndex, targetContentOffset: targetContentOffset)
@@ -30,6 +26,8 @@ class FocusEngineManager {
     default:
       break
     }
+
+    lastFocusedComponent = component
   }
 
   private func handleHorizontalComponent(in scrollView: ScrollView, for component: Component, itemIndex: Int, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
