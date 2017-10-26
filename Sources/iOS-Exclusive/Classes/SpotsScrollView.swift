@@ -204,12 +204,6 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           frame.size.height = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
         }
 
-        #if os(tvOS)
-          if (scrollView as? CollectionView)?.flowLayout?.scrollDirection == .horizontal, frame.size.height < scrollView.contentSize.height {
-            frame.size.height = scrollView.contentSize.height
-          }
-        #endif
-
         // Using `.integral` can sometimes set the height back to 1.
         // To avoid this we check if the height is zero before we run `.integral`.
         // If it was, then we set it to zero again to not have frame heights jump between
