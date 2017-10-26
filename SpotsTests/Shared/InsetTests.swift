@@ -2,6 +2,8 @@
 import XCTest
 
 class InsetTests: XCTestCase {
+  private let jsonEncoder = JSONEncoder()
+  private let jsonDecoder = JSONDecoder()
 
   let json: [String : Any] = [
     "top": 1.0,
@@ -28,21 +30,25 @@ class InsetTests: XCTestCase {
     XCTAssertEqual(contentInset.right, 10.0)
   }
 
-  func testJSONMapping() {
-    var contentInset = Inset()
-    contentInset.configure(withJSON: json)
+  func testDecoding() throws {
+    let data = try jsonEncoder.encode(json: json)
+    let contentInset = try jsonDecoder.decode(Inset.self, from: data)
 
     XCTAssertEqual(contentInset, Inset(top: 1, left: 2, bottom: 3, right: 4))
   }
 
-  func testDictionaryConvertible() {
-    let contentInset = Inset(json)
-    let contentInsetJSON = contentInset.dictionary
+  func testEncoding() throws {
+    let contentInset = Inset {
+      $0.top = 1
+      $0.left = 2
+      $0.bottom = 3
+      $0.right = 4
+    }
 
-    XCTAssertEqual(contentInsetJSON["top"], contentInset.top)
-    XCTAssertEqual(contentInsetJSON["left"], contentInset.left)
-    XCTAssertEqual(contentInsetJSON["bottom"], contentInset.bottom)
-    XCTAssertEqual(contentInsetJSON["right"], contentInset.right)
+    let data = try jsonEncoder.encode(contentInset)
+    let decodedContentInset = try jsonDecoder.decode(Inset.self, from: data)
+
+    XCTAssertTrue(contentInset == decodedContentInset)
   }
 
   func testBlockConfiguration() {

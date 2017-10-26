@@ -85,7 +85,11 @@ open class SpotsController: NSViewController, SpotsProtocol {
    */
   public convenience init(cacheKey: String, configuration: Configuration = .shared) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(components: Parser.parse(stateCache.load(), configuration: configuration))
+    let modelsDictionary: [String: [ComponentModel]] = stateCache.load() ?? [:]
+    self.init(
+      components: Parser.parseComponents(modelsDictionary: modelsDictionary, configuration: configuration),
+      configuration: configuration
+    )
     self.stateCache = stateCache
   }
 
@@ -99,8 +103,16 @@ open class SpotsController: NSViewController, SpotsProtocol {
   /**
    - parameter json: A JSON dictionary that gets parsed into UI elements
    */
+  @available(*, deprecated: 7.0, message: "Deprecated in favor for init with data")
   public convenience init(_ json: [String : Any], configuration: Configuration = .shared) {
-    self.init(components: Parser.parse(json, configuration: configuration))
+    self.init(components: Parser.parseComponents(json: json, configuration: configuration))
+  }
+
+  /**
+   - parameter json: A Data that gets parsed into UI elements
+   */
+  public convenience init(_ data: Data, configuration: Configuration = .shared) {
+    self.init(components: Parser.parseComponents(data: data, configuration: configuration))
   }
 
   /**

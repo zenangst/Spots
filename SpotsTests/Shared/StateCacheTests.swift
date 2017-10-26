@@ -3,7 +3,6 @@ import Foundation
 import XCTest
 
 class StateCacheTests: XCTestCase {
-
   let cacheKey: String = "state-cache-test"
   var controller: SpotsController!
 
@@ -24,7 +23,7 @@ class StateCacheTests: XCTestCase {
     /// Check that cache exists
     XCTAssertNotNil(controller.stateCache)
     /// Check that cache is empty
-    XCTAssertEqual(controller.stateCache!.load().count, 0)
+    XCTAssertEqual(loadComponentModelsDictionary().count, 0)
 
     controller.components = [Component(model: ComponentModel(layout: Layout(span: 1.0)))]
 
@@ -32,7 +31,7 @@ class StateCacheTests: XCTestCase {
     controller.append(Item(title: "foo"), componentIndex: 0, withAnimation: .automatic) {
       self.controller.cache()
       /// Check that the cache was saved to disk
-      XCTAssertEqual(self.controller.stateCache!.load().count, 1)
+      XCTAssertEqual(self.loadComponentModelsDictionary().count, 1)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -41,8 +40,7 @@ class StateCacheTests: XCTestCase {
   func testRemovingStateCacheFromController() {
     let expectation = self.expectation(description: "Clear state cache")
     controller.stateCache?.clear() {
-      XCTAssertEqual(self.controller.stateCache!.load().count, 0)
-      XCTAssertEqual(self.controller.stateCache!.cacheExists, false)
+      XCTAssertEqual(self.loadComponentModelsDictionary().count, 0)
       expectation.fulfill()
     }
     waitForExpectations(timeout: 10.0, handler: nil)
@@ -54,29 +52,12 @@ class StateCacheTests: XCTestCase {
     XCTAssertNotEqual(stateCache.fileName(), "")
   }
 
-  func testRemoveAll() {
-    let cacheOne = StateCache(key: "one")
-    let cacheTwo = StateCache(key: "two")
-    let path = cacheOne.path
-
-    [cacheOne, cacheTwo].forEach { $0.save(["foo": "bar"]) }
-
-    let expectation = self.expectation(description: "Wait for cache")
-    Dispatch.after(seconds: 0.5) {
-      do {
-        let files = try FileManager.default.contentsOfDirectory(atPath: path)
-        XCTAssertEqual(files.count, 2)
-      } catch {}
-
-      StateCache.removeAll()
-
-      do {
-        let files = try FileManager.default.contentsOfDirectory(atPath: path)
-        XCTAssertEqual(files.count, 0)
-      } catch {}
-
-      expectation.fulfill()
+  private func loadComponentModelsDictionary() -> [String: [ComponentModel]] {
+    guard let stateCache = controller.stateCache else {
+      return [:]
     }
-    waitForExpectations(timeout: 10.0, handler: nil)
+
+    let dictionary: [String: [ComponentModel]] = stateCache.load() ?? [:]
+    return dictionary
   }
 }

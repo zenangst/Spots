@@ -6,12 +6,6 @@
 
 // MARK: - Component extension
 public extension Component {
-
-  /// Return a dictionary representation of Component object
-  public var dictionary: [String : Any] {
-    return model.dictionary
-  }
-
   /// A computed CGFloat of the total height of all items inside of a component
   public var computedHeight: CGFloat {
     guard model.layout.dynamicHeight == true else {
@@ -51,9 +45,9 @@ public extension Component {
         }
       #endif
     case .grid:
-      height = model.size?.height ?? 0
+      height = model.size.height
     case .carousel:
-        height = model.size?.height ?? 0
+        height = model.size.height
         if let firstItem = item(at: 0), firstItem.size.height > height {
           height = firstItem.size.height
           height += CGFloat(model.layout.inset.top)
@@ -188,7 +182,7 @@ public extension Component {
 
   /// Caches the current state of the component
   public func cache() {
-    stateCache?.save(dictionary)
+    stateCache?.save(model)
   }
 
   /// Get identifier for item at index path

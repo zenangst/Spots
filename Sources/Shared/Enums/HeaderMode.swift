@@ -1,3 +1,3 @@
-public enum HeaderMode: String {
+public enum HeaderMode: String, Codable {
   case `default`, sticky
 }

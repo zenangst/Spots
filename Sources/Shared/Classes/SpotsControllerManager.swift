@@ -370,7 +370,8 @@ public class SpotsControllerManager {
         return
       }
 
-      let newComponents: [Component] = Parser.parse(json, configuration: controller.configuration)
+      let newComponents: [Component] = Parser.parseComponents(json: json,
+                                                              configuration: controller.configuration)
       let newComponentModels = newComponents.map { $0.model }
       let oldComponentModels = controller.components.map { $0.model }
 
@@ -423,7 +424,8 @@ public class SpotsControllerManager {
       let performCleanup = !controller.components.isEmpty
       let previousContentOffset = controller.scrollView.contentOffset
 
-      controller.components = Parser.parse(models, configuration: controller.configuration)
+      controller.components = Parser.parseComponents(models: models,
+                                                     configuration: controller.configuration)
 
       if performCleanup {
         if controller.scrollView.superview == nil {
@@ -460,7 +462,7 @@ public class SpotsControllerManager {
         return
       }
 
-      controller.components = Parser.parse(json, configuration: controller.configuration)
+      controller.components = Parser.parseComponents(json: json, configuration: controller.configuration)
 
       if controller.scrollView.superview == nil {
         controller.view.addSubview(controller.scrollView)

@@ -1,5 +1,4 @@
 import Foundation
-import Tailor
 
 #if os(OSX)
   import Cocoa
@@ -8,7 +7,7 @@ import Tailor
 #endif
 
 /// A layout struct used for mapping layout to a component.
-public struct Layout: Mappable, DictionaryConvertible, Equatable {
+public struct Layout: Codable, Equatable {
 
   /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
   ///
@@ -18,20 +17,19 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// - dynamicSpan: Used to map dynamic span.
   /// - dynamicHeight: Used to map if component should use dynamic height.
   /// - pageIndicator: Used to map if component should display a page indicator.
-  enum Key: String {
+  private enum Key: String, CodingKey {
+    case inset
     case itemSpacing = "item-spacing"
-    case itemsPerRow = "items-per-row"
     case lineSpacing = "line-spacing"
+    case itemsPerRow = "items-per-row"
     case span
     case dynamicSpan = "dynamic-span"
     case dynamicHeight = "dynamic-height"
-    case pageIndicator = "page-indicator"
+    case pageIndicatorPlacement = "page-indicator"
     case headerMode = "header-mode"
-    case showEmptyComponent = "show-empty-component"
     case infiniteScrolling = "infinite-scrolling"
+    case showEmptyComponent = "show-empty-component"
   }
-
-  static let rootKey: String = String(describing: Layout.self).lowercased()
 
   public var inset: Inset = Inset()
   /// For a vertically scrolling grid, this value represents the minimum spacing between items in the same row.
@@ -71,28 +69,6 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   /// If the `ComponentModel` is empty, it should still be shown.
   public var showEmptyComponent: Bool = false
 
-  /// A dictionary representation of the struct.
-  public var dictionary: [String : Any] {
-    var dictionary: [String : Any] = [
-      Inset.rootKey: inset.dictionary,
-      Key.itemsPerRow.rawValue: itemsPerRow,
-      Key.itemSpacing.rawValue: itemSpacing,
-      Key.lineSpacing.rawValue: lineSpacing,
-      Key.span.rawValue: span,
-      Key.dynamicSpan.rawValue: dynamicSpan,
-      Key.dynamicHeight.rawValue: dynamicHeight,
-      Key.headerMode.rawValue: headerMode.rawValue,
-      Key.showEmptyComponent.rawValue: showEmptyComponent,
-      Key.infiniteScrolling.rawValue: infiniteScrolling
-    ]
-
-    if let pageIndicatorPlacement = pageIndicatorPlacement {
-      dictionary[Key.pageIndicator.rawValue] = pageIndicatorPlacement.rawValue
-    }
-
-    return dictionary
-  }
-
   /// A convenience initializer with default values.
   public init() {}
 
@@ -106,7 +82,17 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
   ///   - itemSpacing: Sets minimum item spacing for the model.
   ///   - lineSpacing: Sets minimum lines spacing for items in model.
   ///   - inset: An inset struct used to insert margins for the model.
-  public init(span: Double = 0.0, dynamicSpan: Bool = false, dynamicHeight: Bool = true, pageIndicatorPlacement: PageIndicatorPlacement? = nil, itemsPerRow: Int = 1, itemSpacing: Double = 0.0, lineSpacing: Double = 0.0, inset: Inset = .init(), headerMode: HeaderMode = .default, showEmptyComponent: Bool = false, infiniteScrolling: Bool = false) {
+  public init(span: Double = 0.0,
+              dynamicSpan: Bool = false,
+              dynamicHeight: Bool = true,
+              pageIndicatorPlacement: PageIndicatorPlacement? = nil,
+              itemsPerRow: Int = 1,
+              itemSpacing: Double = 0.0,
+              lineSpacing: Double = 0.0,
+              inset: Inset = .init(),
+              headerMode: HeaderMode = .default,
+              showEmptyComponent: Bool = false,
+              infiniteScrolling: Bool = false) {
     self.span = span
     self.dynamicSpan = dynamicSpan
     self.dynamicHeight = dynamicHeight
@@ -120,33 +106,46 @@ public struct Layout: Mappable, DictionaryConvertible, Equatable {
     self.infiniteScrolling = infiniteScrolling
   }
 
-  /// Initialize with a JSON payload.
-  ///
-  /// - Parameter map: A JSON dictionary.
-  public init(_ map: [String : Any] = [:]) {
-    configure(withJSON: map)
-  }
-
   public init(_ block: (inout Layout) -> Void) {
     self.init()
     block(&self)
   }
 
-  /// Configure struct with a JSON dictionary.
+  /// Initialize with a decoder.
   ///
-  /// - Parameter map: A JSON dictionary.
-  public mutating func configure(withJSON map: [String : Any]) {
-    self.inset = Inset(map.property(Inset.rootKey) ?? [:])
-    self.itemsPerRow <- map.int(Key.itemsPerRow.rawValue)
-    self.itemSpacing <- map.double(Key.itemSpacing.rawValue)
-    self.lineSpacing <- map.double(Key.lineSpacing.rawValue)
-    self.dynamicSpan <- map.boolean(Key.dynamicSpan.rawValue)
-    self.dynamicHeight <- map.property(Key.dynamicHeight.rawValue)
-    self.span <- map.double(Key.span.rawValue)
-    self.pageIndicatorPlacement = map.enum(Key.pageIndicator.rawValue)
-    self.headerMode <- map.enum(Key.headerMode.rawValue)
-    self.showEmptyComponent <- map.boolean(Key.showEmptyComponent.rawValue)
-    self.infiniteScrolling <- map.boolean(Key.infiniteScrolling.rawValue)
+  /// - Parameter decoder: A decoder that can decode values into in-memory representations.
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: Key.self)
+    self.inset = try container.decodeIfPresent(Inset.self, forKey: .inset) ?? Inset()
+    self.itemSpacing = try container.decodeIfPresent(Double.self, forKey: .itemSpacing) ?? 0.0
+    self.lineSpacing = try container.decodeIfPresent(Double.self, forKey: .lineSpacing) ?? 0.0
+    self.itemsPerRow = try container.decodeIfPresent(Int.self, forKey: .itemsPerRow) ?? 1
+    self.span = try container.decodeIfPresent(Double.self, forKey: .span) ?? 0.0
+    self.dynamicSpan = try container.decodeIfPresent(Bool.self, forKey: .dynamicSpan) ?? false
+    self.dynamicHeight = try container.decodeIfPresent(Bool.self, forKey: .dynamicHeight) ?? true
+    self.pageIndicatorPlacement = try container.decodeIfPresent(PageIndicatorPlacement.self,
+                                                                forKey: .pageIndicatorPlacement)
+    self.headerMode = try container.decodeIfPresent(HeaderMode.self, forKey: .headerMode) ?? .default
+    self.infiniteScrolling = try container.decodeIfPresent(Bool.self, forKey: .infiniteScrolling) ?? false
+    self.showEmptyComponent = try container.decodeIfPresent(Bool.self, forKey: .showEmptyComponent) ?? false
+  }
+
+  /// Encode the struct into data.
+  ///
+  /// - Parameter encoder: An encoder that can encode the struct into data.
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: Key.self)
+    try container.encodeIfPresent(inset, forKey: .inset)
+    try container.encodeIfPresent(itemSpacing, forKey: .itemSpacing)
+    try container.encodeIfPresent(lineSpacing, forKey: .lineSpacing)
+    try container.encodeIfPresent(itemsPerRow, forKey: .itemsPerRow)
+    try container.encodeIfPresent(span, forKey: .span)
+    try container.encodeIfPresent(dynamicSpan, forKey: .dynamicSpan)
+    try container.encodeIfPresent(dynamicHeight, forKey: .dynamicHeight)
+    try container.encodeIfPresent(pageIndicatorPlacement, forKey: .pageIndicatorPlacement)
+    try container.encodeIfPresent(headerMode, forKey: .headerMode)
+    try container.encodeIfPresent(infiniteScrolling, forKey: .infiniteScrolling)
+    try container.encodeIfPresent(showEmptyComponent, forKey: .showEmptyComponent)
   }
 
   /// Perform mutation with closure.

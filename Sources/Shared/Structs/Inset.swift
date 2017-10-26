@@ -1,14 +1,13 @@
-import Tailor
+import Foundation
 
 /// A content inset struct used for configuring layout on components.
-public struct Inset: Mappable, Equatable {
-
-  /// The root key for the JSON dictionary.
-  static let rootKey: String = String(describing: Inset.self).lowercased()
-
+public struct Inset: Codable, Equatable {
   /// A string enum use for constructing a JSON dictionary representation.
-  enum Key: String {
-    case top, left, bottom, right
+  enum Key: String, CodingKey {
+    case top
+    case left
+    case bottom
+    case right
   }
 
   /// Top content inset.
@@ -19,16 +18,6 @@ public struct Inset: Mappable, Equatable {
   var bottom: Double = 0.0
   /// Right content inset.
   var right: Double = 0.0
-
-  /// A dictionary representation of the struct.
-  public var dictionary: [String : Double] {
-    return [
-      Key.top.rawValue: self.top,
-      Key.left.rawValue: self.left,
-      Key.bottom.rawValue: self.bottom,
-      Key.right.rawValue: self.right
-    ]
-  }
 
   /// A convenience init for initializing a content inset.
   ///
@@ -65,24 +54,15 @@ public struct Inset: Mappable, Equatable {
     block(&self)
   }
 
-  /// A convenience init for initializing a content inset using a JSON dictionary.
+  /// Initialize with a decoder.
   ///
-  /// - Parameter map: A JSON dictionary that will be mapped into the content insets.
-  public init(_ map: [String : Any]) {
-    self.top    <- map.double(Key.top.rawValue)
-    self.left   <- map.double(Key.left.rawValue)
-    self.bottom <- map.double(Key.bottom.rawValue)
-    self.right  <- map.double(Key.right.rawValue)
-  }
-
-  /// Configure struct with a JSON dictionary.
-  ///
-  /// - Parameter JSON: A JSON dictionary that will be used to configure the content insets.
-  public mutating func configure(withJSON JSON: [String : Any]) {
-    self.top    <- JSON.double(Key.top.rawValue)
-    self.left   <- JSON.double(Key.left.rawValue)
-    self.bottom <- JSON.double(Key.bottom.rawValue)
-    self.right  <- JSON.double(Key.right.rawValue)
+  /// - Parameter decoder: A decoder that can decode values into in-memory representations.
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: Key.self)
+    self.top = try container.decodeIfPresent(Double.self, forKey: .top) ?? 0.0
+    self.left = try container.decodeIfPresent(Double.self, forKey: .left) ?? 0.0
+    self.bottom = try container.decodeIfPresent(Double.self, forKey: .bottom) ?? 0.0
+    self.right = try container.decodeIfPresent(Double.self, forKey: .right) ?? 0.0
   }
 
   /// Check if to content insets are equal.
@@ -91,10 +71,10 @@ public struct Inset: Mappable, Equatable {
   /// - parameter rhs: Right hand content inset.
   ///
   /// - returns: A boolean value, true if both content insets are equal.
-  public static func==(lhs: Inset, rhs: Inset) -> Bool {
-    return lhs.top == rhs.top &&
-    lhs.left == rhs.left &&
-    lhs.bottom == rhs.bottom &&
-    lhs.right == rhs.right
+  public static func == (lhs: Inset, rhs: Inset) -> Bool {
+    return lhs.top == rhs.top
+      && lhs.left == rhs.left
+      && lhs.bottom == rhs.bottom
+      && lhs.right == rhs.right
   }
 }

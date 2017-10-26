@@ -1,11 +1,10 @@
 import Foundation
-import Tailor
 
 /// Indicates if the UI has vertical or horizontal scrolling.
 ///
 /// - horizontal: UI uses horizontal scrolling.
 /// - vertical: UI uses vertical scrolling.
-enum ScrollDirection: String {
+enum ScrollDirection: String, Codable {
   case horizontal, vertical
 }
 
@@ -13,19 +12,21 @@ enum ScrollDirection: String {
 ///
 /// - single: Single mouse click.
 /// - double: Double mouse click (only supported on components that use table views).
-public enum MouseClick: String {
+public enum MouseClick: String, Codable {
   case single, double
 }
 
 /// A user interaction struct used for mapping behavior to a component.
 /// Note: `paginate` is currently only available on iOS.
-public struct Interaction: Mappable {
+public struct Interaction: Codable {
 
   /// A string based enum for keys used when encoding and decoding the struct from and to JSON.
   ///
   /// - paginate: Used for mapping pagination behavior.
-  enum Key: String {
-    case paginate, mouseClick
+  enum Key: String, CodingKey {
+    case paginate
+    case scrollDirection = "scroll-direction"
+    case mouseClick
   }
 
   /// Delcares what kind of interaction should be used for pagination. See `Paginate` struct for more information.
@@ -34,17 +35,6 @@ public struct Interaction: Mappable {
   var scrollDirection: ScrollDirection = .vertical
   /// Indicates what kind click interaction the element should use.
   var mouseClick: MouseClick = .single
-
-  /// The root key used when parsing JSON into a Interaction struct.
-  static let rootKey: String = String(describing: Interaction.self).lowercased()
-
-  /// A dictionary representation of the struct.
-  public var dictionary: [String : Any] {
-    return [
-      Key.mouseClick.rawValue: mouseClick.rawValue,
-      Key.paginate.rawValue: paginate.rawValue
-    ]
-  }
 
   /// A convenience initializer with default values.
   public init() {
@@ -59,24 +49,17 @@ public struct Interaction: Mappable {
     self.mouseClick = mouseClick
   }
 
-  /// Initialize with a JSON payload.
-  ///
-  /// - Parameter map: A JSON dictionary.
-  public init(_ map: [String : Any] = [:]) {
-    configure(withJSON: map)
-  }
+  // MARK: - Codable
 
-  /// Configure struct with a JSON dictionary.
+  /// Initialize with a decoder.
   ///
-  /// - Parameter map: A JSON dictionary.
-  public mutating func configure(withJSON map: [String : Any]) {
-    if let paginate: String = map.property(Key.paginate.rawValue) {
-      self.paginate <- Paginate(rawValue: paginate)
-    }
-
-    if let mouseClick: String = map.property(Key.mouseClick.rawValue) {
-      self.mouseClick <- MouseClick(rawValue: mouseClick)
-    }
+  /// - Parameter decoder: A decoder that can decode values into in-memory representations.
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: Key.self)
+    self.paginate = try container.decodeIfPresent(Paginate.self, forKey: .paginate) ?? .disabled
+    self.scrollDirection = try container.decodeIfPresent(ScrollDirection.self,
+                                                         forKey: .scrollDirection) ?? .vertical
+    self.mouseClick = try container.decodeIfPresent(MouseClick.self, forKey: .mouseClick) ?? .single
   }
 
   /// Compare Interaction structs.

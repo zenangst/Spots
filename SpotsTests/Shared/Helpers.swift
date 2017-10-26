@@ -5,21 +5,6 @@
   import UIKit
 #endif
 
-import Tailor
-
-struct Meta {
-  var id = 0
-  var name: String?
-}
-
-extension Meta: Mappable {
-
-  init(_ map: [String : Any]) {
-    id = map.property("id") ?? 0
-    name = map.property("name") ?? ""
-  }
-}
-
 extension SpotsController {
 
   func prepareController() {

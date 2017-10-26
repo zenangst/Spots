@@ -143,8 +143,6 @@ Looking for a change log? You can find it [here](https://github.com/hyperoslo/Sp
 
 - **[Cache](https://github.com/hyperoslo/Cache)**
 Used for `ComponentModel` and `Item` caching when initializing a `SpotsController` or `CoreComponent` object with a cache key.
-- **[Tailor](https://github.com/zenangst/Tailor)**
-To seamlessly map JSON to both `ComponentModel` and `Item`.
 
 ## Author
 

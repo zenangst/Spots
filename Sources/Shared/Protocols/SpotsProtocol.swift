@@ -7,7 +7,6 @@
 import Cache
 
 public protocol SpotsProtocol: class {
-
   /// A closure that is called when the controller is reloaded with components
   static var componentsDidReloadComponentModels: ((_ controller: SpotsController) -> Void)? { get set }
   /// A StateCache object
@@ -28,9 +27,6 @@ public protocol SpotsProtocol: class {
   #else
   var view: View! { get }
   #endif
-
-  /// A dictionary representation of the controller
-  var dictionary: [String : Any] { get }
 
   #if os(iOS)
   var refreshDelegate: RefreshDelegate? { get set }
