@@ -31,6 +31,7 @@ class FocusEngineManager {
   }
 
   private func handleHorizontalComponent(in scrollView: ScrollView, for component: Component, itemIndex: Int, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let contentInsetTop: CGFloat = contentInset(for: scrollView).top
     // Reached the top
     guard component.model.index > 0 else {
       targetContentOffset.pointee.y = -contentInsetTop
@@ -56,8 +57,6 @@ class FocusEngineManager {
       targetContentOffset.pointee.y = maximumContentOffset
       return
     }
-
-    let contentInsetTop: CGFloat = contentInset(for: scrollView).top
 
     var layoutOffset = CGFloat(component.model.layout.inset.top + component.model.layout.inset.bottom)
     layoutOffset += component.headerHeight
@@ -86,6 +85,7 @@ class FocusEngineManager {
   }
 
   private func handleVerticalComponent(in scrollView: ScrollView, for component: Component, itemIndex: Int, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    let contentInsetTop: CGFloat = contentInset(for: scrollView).top
     // Reached the top
     if component.model.index == 0 && itemIndex < Int(component.model.layout.span) {
       targetContentOffset.pointee.y = -contentInsetTop
@@ -94,7 +94,6 @@ class FocusEngineManager {
 
     let direction = Direction.determine(lhs: scrollView.contentOffset,
                                         rhs: targetContentOffset.pointee)
-    let contentInsetTop: CGFloat = contentInset(for: scrollView).top
 
     if direction == .up {
       var result: CGFloat = 0
