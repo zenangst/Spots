@@ -139,6 +139,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - parameter json: A JSON dictionary that gets parsed into UI elements.
   ///
   /// - returns: An initialized controller with components. built from JSON.
+  @available(*, deprecated: 7.0, message: "Deprecated in favor for init with data")
   public convenience init(_ json: [String : Any], configuration: Configuration = .shared) {
     self.init(components: Parser.parseComponents(json: json, configuration: configuration),
               configuration: configuration)
