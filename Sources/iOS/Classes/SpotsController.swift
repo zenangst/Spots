@@ -380,27 +380,4 @@ extension SpotsController {
   fileprivate func component(at indexPath: IndexPath) -> Component {
     return components[indexPath.item]
   }
-
-  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    defer {
-      self.scrollView.layoutViews()
-    }
-
-    // Determine if the default behavior has been overriden by a delegate.
-    if let scrollDelegate = scrollDelegate {
-      guard scrollDelegate.didEndDragging(in: scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset) == false else {
-        return
-      }
-    }
-
-    guard let focusedComponent = focusedComponent,
-      let focusedItemIndex = focusedItemIndex else {
-        return
-    }
-
-    focusManager.handleScrolling(in: scrollView,
-                                 for: focusedComponent,
-                                 itemIndex: focusedItemIndex,
-                                 targetContentOffset: targetContentOffset)
-  }
 }

@@ -36,4 +36,27 @@ extension SpotsController {
     focusGuide.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     focusGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
   }
+
+  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    defer {
+      self.scrollView.layoutViews()
+    }
+
+    // Determine if the default behavior has been overriden by a delegate.
+    if let scrollDelegate = scrollDelegate {
+      guard scrollDelegate.didEndDragging(in: scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset) == false else {
+        return
+      }
+    }
+
+    guard let focusedComponent = focusedComponent,
+      let focusedItemIndex = focusedItemIndex else {
+        return
+    }
+
+    focusManager.handleScrolling(in: scrollView,
+                                 for: focusedComponent,
+                                 itemIndex: focusedItemIndex,
+                                 targetContentOffset: targetContentOffset)
+  }
 }
