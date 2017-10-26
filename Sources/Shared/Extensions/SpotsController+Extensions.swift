@@ -81,7 +81,7 @@ public extension SpotsController {
       return model
     })
 
-    stateCache?.save(componentModels)
+    stateCache?.save(["components": componentModels])
   }
 
   /// Resolve component at index path.

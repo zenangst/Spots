@@ -1,5 +1,13 @@
 import Foundation
 
+// MARK: - Extensions
+
+extension JSONEncoder {
+  func encode(json: Any) throws -> Data {
+    return try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+  }
+}
+
 // MARK: - JSONCodingKeys
 
 struct JSONCodingKeys: CodingKey {

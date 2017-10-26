@@ -3,7 +3,6 @@ import Foundation
 import XCTest
 
 class StateCacheTests: XCTestCase {
-
   let cacheKey: String = "state-cache-test"
   var controller: SpotsController!
 

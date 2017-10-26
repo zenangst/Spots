@@ -2,6 +2,8 @@
 import XCTest
 
 class LayoutTests: XCTestCase {
+  private let jsonEncoder = JSONEncoder()
+  private let jsonDecoder = JSONDecoder()
 
   let json: [String : Any] = [
     "span": 4.0,
@@ -57,8 +59,9 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.showEmptyComponent, true)
   }
 
-  func testJSONMapping() {
-    let layout = Layout(json)
+  func testDecoding() throws {
+    let data = try jsonEncoder.encode(json: json)
+    let layout = try jsonDecoder.decode(Layout.self, from: data)
 
     XCTAssertEqual(layout.span, 4.0)
     XCTAssertEqual(layout.itemSpacing, 8.0)
@@ -71,50 +74,20 @@ class LayoutTests: XCTestCase {
     XCTAssertEqual(layout.showEmptyComponent, true)
   }
 
-  func testDictionary() {
-    let layout = Layout(json)
-    let layoutJSON = layout.dictionary
+  func testEncoding() throws {
+    let layout = Layout {
+      $0.span = 4.0
+      $0.itemSpacing = 8.0
+      $0.lineSpacing = 6.0
+      $0.dynamicSpan = true
+      $0.dynamicHeight = true
+      $0.inset = Inset(top: 1, left: 2, bottom: 3, right: 4)
+    }
 
-    XCTAssertEqual(layoutJSON["span"] as? Double, layout.span)
-    XCTAssertEqual(layoutJSON["item-spacing"] as? Double, layout.itemSpacing)
-    XCTAssertEqual(layoutJSON["line-spacing"] as? Double, layout.lineSpacing)
-    XCTAssertEqual(layoutJSON["dynamic-span"] as? Bool, layout.dynamicSpan)
-    XCTAssertEqual(layoutJSON["dynamic-height"] as? Bool, layout.dynamicHeight)
-    XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["top"], layout.inset.top)
-    XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["left"], layout.inset.left)
-    XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["bottom"], layout.inset.bottom)
-    XCTAssertEqual((layoutJSON["inset"] as? [String : Double])?["right"], layout.inset.right)
-    XCTAssertEqual(layoutJSON["header-mode"] as? String, layout.headerMode.rawValue)
-    XCTAssertEqual(layoutJSON["infinite-scrolling"] as? Bool, layout.infiniteScrolling)
-    XCTAssertEqual(layoutJSON["show-empty-component"] as? Bool, layout.showEmptyComponent)
-  }
+    let data = try jsonEncoder.encode(layout)
+    let decodedLayout = try jsonDecoder.decode(Layout.self, from: data)
 
-  func testConfigureWithJSON() {
-    var layout = Layout()
-
-    XCTAssertNotEqual(layout.span, 4.0)
-    XCTAssertNotEqual(layout.itemSpacing, 8.0)
-    XCTAssertNotEqual(layout.lineSpacing, 6.0)
-    XCTAssertNotEqual(layout.dynamicSpan, true)
-    XCTAssertNotEqual(layout.dynamicHeight, false)
-    XCTAssertNotEqual(layout.inset, Inset(top: 1, left: 2, bottom: 3, right: 4))
-
-    layout.configure(withJSON: json)
-
-    XCTAssertEqual(layout.span, 4.0)
-    XCTAssertEqual(layout.itemSpacing, 8.0)
-    XCTAssertEqual(layout.lineSpacing, 6.0)
-    XCTAssertEqual(layout.dynamicSpan, true)
-    XCTAssertEqual(layout.dynamicHeight, true)
-    XCTAssertEqual(layout.inset, Inset(top: 1, left: 2, bottom: 3, right: 4))
-
-    layout.configure(withJSON: [:])
-    XCTAssertEqual(layout.span, 4.0)
-    XCTAssertEqual(layout.itemSpacing, 8.0)
-    XCTAssertEqual(layout.lineSpacing, 6.0)
-    XCTAssertEqual(layout.dynamicSpan, true)
-    XCTAssertEqual(layout.dynamicHeight, true)
-    XCTAssertEqual(layout.inset, Inset(top: 0, left: 0, bottom: 0, right: 0))
+    XCTAssertTrue(layout == decodedLayout)
   }
 
   func testBlockConfiguration() {

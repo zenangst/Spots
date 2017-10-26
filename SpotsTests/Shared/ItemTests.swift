@@ -2,8 +2,10 @@
 import XCTest
 
 class ItemTests: XCTestCase {
+  private let jsonEncoder = JSONEncoder()
+  private let jsonDecoder = JSONDecoder()
 
-  var data: [String : Any] = [
+  var json: [String : Any] = [
     "title": "A",
     "subtitle": "B",
     "text": "C",
@@ -18,7 +20,8 @@ class ItemTests: XCTestCase {
   var item: Item!
 
   override func setUp() {
-    item = Item(data)
+    let data = try! jsonEncoder.encode(json: json)
+    item = try! jsonDecoder.decode(Item.self, from: data)
   }
 
   func testItemMapping() {
@@ -32,22 +35,23 @@ class ItemTests: XCTestCase {
     XCTAssertEqual(item.meta["domain"] as? String, "I")
   }
 
-  func testRelations() {
-    data["relations"] = ["Items": [data, data, data]]
-    item = Item(data)
+  func testRelations() throws {
+    json["relations"] = ["Items": [json, json, json]]
+    let data = try jsonEncoder.encode(json: json)
+    item = try jsonDecoder.decode(Item.self, from: data)
 
     XCTAssertEqual(item.relations["Items"]!.count, 3)
-    XCTAssertEqual(item.relations["Items"]!.first!.title, data["title"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.first!.subtitle, data["subtitle"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.first!.image, data["image"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.first!.kind, data["kind"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.first!.action, data["action"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.first!.title, json["title"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.first!.subtitle, json["subtitle"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.first!.image, json["image"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.first!.kind, json["kind"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.first!.action, json["action"] as? String)
 
-    XCTAssertEqual(item.relations["Items"]!.last!.title, data["title"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.last!.subtitle, data["subtitle"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.last!.image, data["image"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.last!.kind, data["kind"] as? String)
-    XCTAssertEqual(item.relations["Items"]!.last!.action, data["action"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.last!.title, json["title"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.last!.subtitle, json["subtitle"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.last!.image, json["image"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.last!.kind, json["kind"] as? String)
+    XCTAssertEqual(item.relations["Items"]!.last!.action, json["action"] as? String)
 
     let item2: Item! = item
     XCTAssertTrue(item2 == item)
@@ -57,7 +61,7 @@ class ItemTests: XCTestCase {
   }
 
   func testItemResolveMeta() {
-    XCTAssertEqual(item.meta("domain", ""), (data["meta"] as! [String : AnyObject])["domain"] as? String)
+    XCTAssertEqual(item.meta("domain", ""), (json["meta"] as! [String : AnyObject])["domain"] as? String)
   }
 
   func testItemEquality() {
@@ -106,55 +110,12 @@ class ItemTests: XCTestCase {
     XCTAssertFalse(left === right)
   }
 
-  func testItemDictionary() {
-    data["relations"] = ["Items": [data, data]]
-    item = Item(data)
-
-    let newItem: Item! = Item(item.dictionary)
-
-    XCTAssertTrue(newItem == item)
-
-    guard let firstRelation = item.relations["Items"]?.first,
-      let lastRelation = item.relations["Items"]?.last
-      else {
-        XCTFail()
-        return
-    }
-
-    XCTAssertEqual(newItem.relations["Items"]!.count, item.relations["Items"]!.count)
-    XCTAssertTrue(newItem.relations["Items"]!.first! === firstRelation)
-    XCTAssertTrue(newItem.relations["Items"]!.last! === lastRelation)
-  }
-
   func testItemUpdate() {
     item.update(kind: "test")
     XCTAssertEqual(item.kind, "test")
   }
 
-  func testCodableWithJSONModel() throws {
-    let kind = "kind"
-
-    Configuration.shared.register(
-      presenter: Presenter<DefaultItemView, Model>(identifier: kind) { _,_,_ in return .zero }
-    )
-
-    let json: [String : Any] = [
-      "title": "A",
-      "kind": kind,
-      "model": ["value": "Test"]
-    ]
-    let item = Item(json)
-    let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-    let decoder = JSONDecoder()
-    let decodedItem = try decoder.decode(Item.self, from: data)
-
-    XCTAssertNotNil(decodedItem.model)
-    XCTAssertTrue(item == decodedItem)
-
-    Configuration.shared.presenters.removeValue(forKey: kind)
-  }
-
-  func testCodable() throws {
+  func testEncodingModel() throws {
     let kind = "kind"
 
     Configuration.shared.register(
@@ -174,7 +135,7 @@ class ItemTests: XCTestCase {
       action: "action",
       size: CGSize(width: 10, height: 10),
       meta: ["key": "value"],
-      relations: ["relation": [Item(self.data)]]
+      relations: ["relation": [self.item]]
     )
     let encoder = JSONEncoder()
     let data = try encoder.encode(item)
@@ -185,6 +146,13 @@ class ItemTests: XCTestCase {
     XCTAssertTrue(item == decodedItem)
 
     Configuration.shared.presenters.removeValue(forKey: kind)
+  }
+
+  func testEncoding() throws {
+    let data = try jsonEncoder.encode(item)
+    let decodedItem = try jsonDecoder.decode(Item.self, from: data)
+
+    XCTAssertTrue(item == decodedItem)
   }
 }
 

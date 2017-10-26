@@ -3,6 +3,9 @@ import Foundation
 import XCTest
 
 class ComponentiOSTests: XCTestCase {
+  private let jsonEncoder = JSONEncoder()
+  private let jsonDecoder = JSONDecoder()
+
   class ComponentTestView: View, ItemConfigurable {
     func configure(with item: Item) {}
     func computeSize(for item: Item, containerSize: CGSize) -> CGSize {
@@ -40,18 +43,6 @@ class ComponentiOSTests: XCTestCase {
     XCTAssertEqual(collectionViewLayout.minimumInteritemSpacing, 5)
   }
 
-  func testDictionaryRepresentation() {
-    let model = ComponentModel(kind: .carousel, layout: Layout(span: 3), meta: ["headerHeight": 44.0])
-    let component = Component(model: model)
-    XCTAssertEqual(model.dictionary["index"] as? Int, component.dictionary["index"] as? Int)
-    XCTAssertEqual(model.dictionary["kind"] as? String, component.dictionary["kind"] as? String)
-    XCTAssertEqual(model.dictionary["span"] as? Int, component.dictionary["span"] as? Int)
-    XCTAssertEqual(
-      (model.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat,
-      (component.dictionary["meta"] as! [String : Any])["headerHeight"] as? CGFloat
-    )
-  }
-
   func testSafelyResolveKind() {
     let model = ComponentModel(kind: .carousel, layout: Layout(span: 1.0), items: [Item(title: "foo", kind: "custom-item-kind")])
     let carouselComponent = Component(model: model)
@@ -69,7 +60,7 @@ class ComponentiOSTests: XCTestCase {
     XCTAssertEqual(carouselComponent.identifier(for: indexPath), "custom-item-kind")
   }
 
-  func testCarouselSetupWithSimpleStructure() {
+  func testCarouselSetupWithSimpleStructure() throws {
     let json: [String : Any] = [
       "kind" : "carousel",
       "items": [
@@ -95,7 +86,8 @@ class ComponentiOSTests: XCTestCase {
       ]
     ]
 
-    let model = ComponentModel(json)
+    let data = try jsonEncoder.encode(json: json)
+    let model = try jsonDecoder.decode(ComponentModel.self, from: data)
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
 
@@ -122,7 +114,7 @@ class ComponentiOSTests: XCTestCase {
     XCTAssertEqual(component.view.frame.size.height, 200)
   }
 
-  func testCarouselSetupWithPagination() {
+  func testCarouselSetupWithPagination() throws {
     Configuration.shared.defaultViewSize = .init(width: 88, height: 88)
 
     let json: [String : Any] = [
@@ -133,14 +125,18 @@ class ComponentiOSTests: XCTestCase {
         ["title": "baz", "kind": "carousel"],
         ["title": "bazar", "kind": "carousel"]
       ],
-      "interaction": Interaction(paginate: .page).dictionary,
-      "layout": Layout(span: 4.0,
-        dynamicSpan: false,
-        pageIndicatorPlacement: .below
-      ).dictionary
+      "interaction": [
+        "paginate": "page"
+      ],
+      "layout": [
+        "span": 4.0,
+        "dynamic-span": false,
+        "page-indicator": "below"
+      ]
     ]
 
-    let model = ComponentModel(json)
+    let data = try jsonEncoder.encode(json: json)
+    let model = try jsonDecoder.decode(ComponentModel.self, from: data)
     let component = Component(model: model)
     let parentSize = CGSize(width: 667, height: 225)
 
@@ -181,7 +177,7 @@ class ComponentiOSTests: XCTestCase {
     XCTAssertEqual(component.view.contentSize.height, 130)
   }
 
-  func testPageIndicatorOverlayPlacement() {
+  func testPageIndicatorOverlayPlacement() throws {
     Configuration.shared.defaultViewSize = .init(width: 88, height: 88)
     let json: [String : Any] = [
       "items": [
@@ -191,14 +187,18 @@ class ComponentiOSTests: XCTestCase {
         ["title": "bazar", "kind": "carousel"]
       ],
       "kind" : "carousel",
-      "interaction": Interaction(paginate: .page).dictionary,
-      "layout": Layout(span: 4.0,
-        dynamicSpan: false,
-        pageIndicatorPlacement: .overlay
-      ).dictionary
+      "interaction": [
+        "paginate": "page"
+      ],
+      "layout": [
+        "span": 4.0,
+        "dynamic-span": false,
+        "page-indicator": "overlay"
+      ]
     ]
 
-    let model = ComponentModel(json)
+    let data = try jsonEncoder.encode(json: json)
+    let model = try jsonDecoder.decode(ComponentModel.self, from: data)
     let component = Component(model: model)
     let parentSize = CGSize(width: 667, height: 225)
 
@@ -220,7 +220,7 @@ class ComponentiOSTests: XCTestCase {
     XCTAssertEqual(component.view.frame.height, 88)
   }
 
-  func testPaginatedCarouselSnapping() {
+  func testPaginatedCarouselSnapping() throws {
     class CollectionViewMock: UICollectionView {
       var itemSize = CGSize.zero
 
@@ -265,20 +265,24 @@ class ComponentiOSTests: XCTestCase {
         ]
       ],
       "kind" : "carousel",
-      "interaction": Interaction(paginate: .item).dictionary,
-      "layout": Layout(
-        span: 0,
-        dynamicSpan: false,
-        pageIndicatorPlacement: .below,
-        itemSpacing: 0
-      ).dictionary
+      "interaction": [
+        "paginate": "item",
+        "mouseClick": "single"
+      ],
+      "layout": [
+        "span": 0,
+        "dynamic-span": false,
+        "page-indicator": "below",
+        "item-spacing": 0
+      ]
     ]
 
     let layout = CollectionLayout()
     let collectionView = CollectionViewMock(frame: .zero, collectionViewLayout: layout)
     collectionView.itemSize = CGSize(width: 200, height: 100)
 
-    var model = ComponentModel(json)
+    let data = try jsonEncoder.encode(json: json)
+    var model = try jsonDecoder.decode(ComponentModel.self, from: data)
     var component = Component(model: model, view: collectionView)
     let parentSize = CGSize(width: 300, height: 100)
 

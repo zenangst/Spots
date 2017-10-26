@@ -2,51 +2,29 @@ import Foundation
 import Cache
 import SwiftHash
 
-/// A wrapper for Cache storage
-private struct StateStorage {
-  /// The cache name used by Cache
-  static let cacheName = String(describing: StateStorage.self)
-
-  /// Computed bundle identifier
-  static let bundleIdentifer: String = {
-    if let bundleIdentifier = Bundle.main.bundleIdentifier {
-      return bundleIdentifier
-    }
-    return "Spots.bundle.identifier"
-  }()
-
-  static let stared = StateStorage()
-
-  let storage: Storage?
-
-  public func removeAll() {
-    try? storage?.removeAll()
-  }
-
-  private init() {
-    storage = try? Storage(
-      diskConfig: DiskConfig(name: "\(StateStorage.cacheName)/\(StateStorage.bundleIdentifer)"),
+/// A StateCache class used for Controller and Component object caching
+public final class StateCache {
+  static func makeStorage() -> Storage? {
+    let cacheName = String(describing: StateCache.self)
+    let bundleIdentifier = Bundle.main.bundleIdentifier ?? "Spots.bundle.identifier"
+    return try? Storage(
+      diskConfig: DiskConfig(name: "\(cacheName)/\(bundleIdentifier)"),
       memoryConfig: MemoryConfig(expiry: .never, countLimit: 10, totalCostLimit: 10)
     )
   }
-}
 
-/// A StateCache struct used for Controller and Component object caching
-public struct StateCache {
+  static let storage = StateCache.makeStorage()
+
+  /// Remove state cache for all controllers and components.
+  public static func removeAll() {
+    try? storage?.removeAll()
+  }
 
   /// A unique identifer string for the StateCache
   public let key: String
 
   /// A JSON Cache object
   let storage: Storage?
-
-  /// Checks if file exists for cache
-//  public var cacheExists: Bool {
-//    return FileManager.default.fileExists(atPath: path)
-//  }
-
-  /// Remove state cache for all controllers and components.
-
 
   // MARK: - Initialization
 
@@ -56,7 +34,7 @@ public struct StateCache {
   ///
   /// - returns: A StateCache object
   public init(key: String) {
-    self.storage = StateStorage.stared.storage
+    self.storage = StateCache.storage
     self.key = key
   }
 
