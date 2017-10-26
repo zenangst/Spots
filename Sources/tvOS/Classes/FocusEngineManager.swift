@@ -1,7 +1,7 @@
 import UIKit
 
 class FocusEngineManager {
-  var lastFocusedComponent: Component?
+  weak var lastFocusedComponent: Component?
   var lastOffset: CGFloat = 0.0
 
   enum Direction {
