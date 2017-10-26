@@ -69,6 +69,8 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   public var stateCache: StateCache?
 
   #if os(tvOS)
+  let focusManager: FocusEngineManager = .init()
+
   /// A default focus guide that is constrained to the controllers
   public lazy var focusGuide: UIFocusGuide = {
     let focusGuide = UIFocusGuide()

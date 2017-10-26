@@ -38,57 +38,25 @@ extension SpotsController {
   }
 
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    guard scrollDelegate?.didEndDragging(in: scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset) == false else {
-      return
+    defer {
+      self.scrollView.layoutViews()
     }
 
-    guard let focusedComponent = focusedComponent else {
-      return
-    }
-
-    if focusedComponent == components.first {
-      if #available(tvOS 11.0, *) {
-        targetContentOffset.pointee.y = -scrollView.adjustedContentInset.top
-      } else {
-        targetContentOffset.pointee.y = -scrollView.contentInset.top
-      }
-      return
-    }
-
-    guard focusedComponent != components.last else {
-      targetContentOffset.pointee.y = scrollView.contentSize.height - scrollView.frame.size.height
-      return
-    }
-
-    let directionUp = velocity.y < 0
-    let directionDown = velocity.y > 0
-    let itemSize = focusedComponent.item(at: 0)?.size ?? focusedComponent.view.contentSize
-    var layoutOffset = CGFloat(focusedComponent.model.layout.inset.top + focusedComponent.model.layout.inset.bottom)
-    layoutOffset += focusedComponent.headerHeight
-    layoutOffset += focusedComponent.footerHeight
-
-    var offset: CGFloat = 0.0
-    if scrollView.contentInset.top > 0, components.count > 3, focusedComponent === components[1] {
-      offset = scrollView.contentInset.top - layoutOffset
-      if #available(tvOS 11.0, *) {
-        offset = scrollView.frame.size.height - scrollView.adjustedContentInset.top - layoutOffset
-      } else {
-        offset = scrollView.frame.size.height - scrollView.contentInset.top - layoutOffset
+    // Determine if the default behavior has been overriden by a delegate.
+    if let scrollDelegate = scrollDelegate {
+      guard scrollDelegate.didEndDragging(in: scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset) == false else {
+        return
       }
     }
 
-    guard scrollView.contentOffset != targetContentOffset.pointee else {
-      return
+    guard let focusedComponent = focusedComponent,
+      let focusedItemIndex = focusedItemIndex else {
+        return
     }
 
-    if directionUp {
-      targetContentOffset.pointee.y = scrollView.contentOffset.y - itemSize.height - layoutOffset
-    } else if directionDown {
-      targetContentOffset.pointee.y = scrollView.contentOffset.y + itemSize.height + offset + layoutOffset
-    } else {
-      targetContentOffset.pointee.y = scrollView.contentOffset.y
-    }
-
-    scrollView.setNeedsLayout()
+    focusManager.handleScrolling(in: scrollView,
+                                 for: focusedComponent,
+                                 itemIndex: focusedItemIndex,
+                                 targetContentOffset: targetContentOffset)
   }
 }

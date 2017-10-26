@@ -9,8 +9,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
   /// The content size for the Gridable object
   public var contentSize = CGSize.zero
-  /// The y offset for the Gridable object
-  open var yOffset: CGFloat?
 
   var animation: Animation?
   private var indexPathsToAnimate = [IndexPath]()
@@ -109,9 +107,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       #endif
     case .vertical:
       contentSize.width = component.view.frame.width - component.view.contentInset.left - component.view.contentInset.right
-      contentSize.height = super.collectionViewContentSize.height
-      contentSize.height += component.headerHeight
-      contentSize.height += component.footerHeight
+      contentSize.height = collectionViewContentSize.height
     }
 
     component.model.size = contentSize
@@ -151,7 +147,8 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
         }
 
-        if scrollDirection == .horizontal {
+        switch scrollDirection {
+        case .horizontal:
           if component.model.layout.itemsPerRow > 1 {
             if itemAttribute.indexPath.item % component.model.layout.itemsPerRow == 0 {
               itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
@@ -170,9 +167,8 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           } else {
             nextY = itemAttribute.frame.maxY + minimumLineSpacing
           }
-
           attributes.append(itemAttribute)
-        } else {
+        case .vertical:
           itemAttribute.frame.origin.y += component.headerHeight
           // Only add item attributes if the item frame insects the rect passed into the method.
           // This removes unwanted computation when a collection view scrolls.
@@ -188,10 +184,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           cachedFrames[index] = itemAttribute.frame
         }
       }
-    }
-
-    if let y = yOffset, component.headerHeight > 0.0 {
-      collectionView.frame.origin.y = y
     }
 
     return attributes
@@ -387,7 +379,16 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       return false
     }
 
-    return newBounds.size.height >= contentSize.height
+    switch scrollDirection {
+    case .horizontal:
+      return newBounds.size.height >= contentSize.height
+    case .vertical:
+      #if os(tvOS)
+        return true
+      #else
+        return newBounds.size.height >= contentSize.height
+      #endif
+    }
   }
 
   /// Check if the current index is eligible for performing itemsPerRow calculations.
