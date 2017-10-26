@@ -16,8 +16,7 @@
 		BD0AF3521E83CC53008795C3 /* UserInterface+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0AF3511E83CC53008795C3 /* UserInterface+Extensions.swift */; };
 		BD0AF3531E83CC53008795C3 /* UserInterface+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0AF3511E83CC53008795C3 /* UserInterface+Extensions.swift */; };
 		BD0AF3541E83CC53008795C3 /* UserInterface+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0AF3511E83CC53008795C3 /* UserInterface+Extensions.swift */; };
-		BD13C1ED1FA10D3E00386D57 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD13C1EC1FA10D3E00386D57 /* SpotsScrollView.swift */; };
-		BD13C1EF1FA10D6700386D57 /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD13C1EE1FA10D6700386D57 /* SpotsScrollView.swift */; };
+		BD13C1ED1FA10D3E00386D57 /* SpotsScrollView+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD13C1EC1FA10D3E00386D57 /* SpotsScrollView+iOS.swift */; };
 		BD165A391E6EAD750023AF82 /* HelperViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD165A381E6EAD750023AF82 /* HelperViews.swift */; };
 		BD165A3B1E6EAF310023AF82 /* ComponentFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD165A3A1E6EAF310023AF82 /* ComponentFlowLayout.swift */; };
 		BD1D17251EA89A36000DBCF8 /* SpotsRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1D17241EA89A36000DBCF8 /* SpotsRefreshControl.swift */; };
@@ -46,6 +45,9 @@
 		BD24030C1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD24030D1E4B981A005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD24030B1E4B981A005BAA19 /* Component.swift */; };
 		BD2403111E4B9A02005BAA19 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2403101E4B9A02005BAA19 /* Component.swift */; };
+		BD2872AC1FA20ED200799CEB /* SpotsScrollView+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */; };
+		BD2872AE1FA20F9300799CEB /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */; };
+		BD2872AF1FA20F9300799CEB /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */; };
 		BD30491D1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
 		BD30491E1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
 		BD30491F1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
@@ -469,8 +471,7 @@
 		BD01BD0D1DAEA464009C10FF /* ParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		BD0AF3511E83CC53008795C3 /* UserInterface+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserInterface+Extensions.swift"; sourceTree = "<group>"; };
 		BD129E3A1D7B2DE2009AC164 /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
-		BD13C1EC1FA10D3E00386D57 /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
-		BD13C1EE1FA10D6700386D57 /* SpotsScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
+		BD13C1EC1FA10D3E00386D57 /* SpotsScrollView+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsScrollView+iOS.swift"; sourceTree = "<group>"; };
 		BD165A381E6EAD750023AF82 /* HelperViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperViews.swift; sourceTree = "<group>"; };
 		BD165A3A1E6EAF310023AF82 /* ComponentFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayout.swift; sourceTree = "<group>"; };
 		BD1D17241EA89A36000DBCF8 /* SpotsRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotsRefreshControl.swift; sourceTree = "<group>"; };
@@ -484,6 +485,8 @@
 		BD21C2511E4358B900FE2B26 /* ComponentFlowLayoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayoutTests.swift; sourceTree = "<group>"; };
 		BD24030B1E4B981A005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
+		BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpotsScrollView+tvOS.swift"; sourceTree = "<group>"; };
+		BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
 		BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveAlgorithmTests.swift; sourceTree = "<group>"; };
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD34B4011F93D5C800840F2F /* ItemChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemChange.swift; sourceTree = "<group>"; };
@@ -753,7 +756,7 @@
 		BD13C1EB1FA10D3E00386D57 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BD13C1EC1FA10D3E00386D57 /* SpotsScrollView.swift */,
+				BD13C1EC1FA10D3E00386D57 /* SpotsScrollView+iOS.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -773,7 +776,6 @@
 		BD45685D1FA068A20094847B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BD13C1EE1FA10D6700386D57 /* SpotsScrollView.swift */,
 				BD45685E1FA068B40094847B /* FocusEngineManager.swift */,
 			);
 			path = Classes;
@@ -822,6 +824,7 @@
 				BDAD84921E3E701C008289AE /* SpotsContentView.swift */,
 				BDAD84841E3E701B008289AE /* SpotsController.swift */,
 				BD1D17241EA89A36000DBCF8 /* SpotsRefreshControl.swift */,
+				BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1031,6 +1034,7 @@
 			children = (
 				BDAD85F51E3E703A008289AE /* Component+tvOS.swift */,
 				BD6857A31F7CCCFC008EA9B5 /* SpotsController+tvOS.swift */,
+				BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1658,6 +1662,7 @@
 				BDDCF6D81E4DF911004B38C4 /* Item.swift in Sources */,
 				BDDCF6E21E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
 				BDB1F8B41E5D921F0064F64B /* CoreComponent+Extensions+iOS.swift in Sources */,
+				BD2872AC1FA20ED200799CEB /* SpotsScrollView+tvOS.swift in Sources */,
 				BDAD84AB1E3E701C008289AE /* SpotsController.swift in Sources */,
 				BD9ECEC81E6EC8C4003E4388 /* Component+iOS+HeaderFooter.swift in Sources */,
 				BDAD85E61E3E7032008289AE /* Layout.swift in Sources */,
@@ -1685,7 +1690,6 @@
 				BDAD85E91E3E7032008289AE /* Parser.swift in Sources */,
 				BDFBB76E1F75094600421BCF /* ComponentTableView.swift in Sources */,
 				BDAD859E1E3E7032008289AE /* SpotsController+SpotsControllerManager.swift in Sources */,
-				BD13C1EF1FA10D6700386D57 /* SpotsScrollView.swift in Sources */,
 				BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */,
 				BD34B4041F93D5C800840F2F /* ItemChange.swift in Sources */,
 				BD1F9E1B1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
@@ -1708,6 +1712,7 @@
 				BDAD85F61E3E703A008289AE /* Component+tvOS.swift in Sources */,
 				BDAD85E31E3E7032008289AE /* Interaction.swift in Sources */,
 				BD24030D1E4B981A005BAA19 /* Component.swift in Sources */,
+				BD2872AF1FA20F9300799CEB /* SpotsScrollView.swift in Sources */,
 				BDAD84AD1E3E701C008289AE /* ComponentFlowLayout.swift in Sources */,
 				BDAD858F1E3E7032008289AE /* Component+Mutation.swift in Sources */,
 				BDAD85831E3E7032008289AE /* Item+Extensions.swift in Sources */,
@@ -1851,7 +1856,7 @@
 				BDAD85EA1E3E7032008289AE /* Registry.swift in Sources */,
 				BDAD85C61E3E7032008289AE /* SpotsProtocol.swift in Sources */,
 				BDAD85E41E3E7032008289AE /* Layout.swift in Sources */,
-				BD13C1ED1FA10D3E00386D57 /* SpotsScrollView.swift in Sources */,
+				BD13C1ED1FA10D3E00386D57 /* SpotsScrollView+iOS.swift in Sources */,
 				D5D2826F1E5474E0004BF251 /* Cell.swift in Sources */,
 				BDAD85D51E3E7032008289AE /* Configuration.swift in Sources */,
 				BDAD858A1E3E7032008289AE /* Component+Core.swift in Sources */,
@@ -1890,6 +1895,7 @@
 				BDDCF6DB1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD85871E3E7032008289AE /* ScrollDelegate+Extensions.swift in Sources */,
 				BD77D1FC1E85382D0075A3FC /* ComponentModel+Equatable.swift in Sources */,
+				BD2872AE1FA20F9300799CEB /* SpotsScrollView.swift in Sources */,
 				BD798EF41EA28F200069EFB7 /* SpotsControllerManager.swift in Sources */,
 				BDFBB76D1F75094600421BCF /* ComponentTableView.swift in Sources */,
 				BD9ECEC11E6EC8AF003E4388 /* Component+iOS+Grid.swift in Sources */,
