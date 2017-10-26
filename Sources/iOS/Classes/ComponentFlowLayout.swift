@@ -168,8 +168,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
             nextY = itemAttribute.frame.maxY + minimumLineSpacing
           }
         case .vertical:
-          Swift.print(itemAttribute)
-//          itemAttribute.frame.origin.y = nextY
+          itemAttribute.frame.origin.y += component.headerHeight
         }
 
         attributes.append(itemAttribute)
