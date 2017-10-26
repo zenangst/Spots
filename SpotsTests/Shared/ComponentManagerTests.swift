@@ -34,15 +34,13 @@ class ComponentManagerTests: XCTestCase {
   }
 
   func testComponentManagerWithPresenter() {
-    Configuration.shared.register(view: MockView.self,
-                           identifier: "MockPresenter",
-                           model: MockModel.self,
-                           presenter: Presenter({ (view, model, containerSize) -> CGSize in
-                            view.firstName = model.firstName
-                            view.lastName = model.lastName
-                            view.frame.size.height = model.height
-                            return .init(width: 200, height: model.height)
-                           }))
+    Configuration.shared.register(presenter: Presenter<MockView, MockModel>(
+      identifier: "MockPresenter", { (view, model, containerSize) -> CGSize in
+        view.firstName = model.firstName
+        view.lastName = model.lastName
+        view.frame.size.height = model.height
+        return .init(width: 200, height: model.height)
+    }))
 
     var mockModel = MockModel(firstName: "Foo", lastName: "Bar", height: 200)
     let items = [Item(model: mockModel, kind: "MockPresenter")]

@@ -17,14 +17,13 @@ class ItemModelPresenterTests: XCTestCase {
   }
 
   func testConfiguringViewWithItemModel() {
-    Configuration.shared.register(view: MockView.self,
-                           identifier: "Mock",
-                           model: MockModel.self,
-                           presenter: Presenter({ (view, model, containerSize) -> CGSize in
-                            view.firstName = model.firstName
-                            view.lastName = model.lastName
-                            return .init(width: 200, height: 200)
-                           }))
+    Configuration.shared.register(presenter: Presenter<MockView, MockModel>(identifier: "Mock") {
+      view, model, containerSize -> CGSize in
+
+      view.firstName = model.firstName
+      view.lastName = model.lastName
+      return .init(width: 200, height: 200)
+    })
 
     let mockModel = MockModel(firstName: "Foo", lastName: "Bar")
     let items = [

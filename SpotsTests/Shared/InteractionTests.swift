@@ -1,7 +1,10 @@
 @testable import Spots
 import XCTest
+import Foundation
 
 class InteractionTests: XCTestCase {
+  private let jsonEncoder = JSONEncoder()
+  private let jsonDecoder = JSONDecoder()
 
   func testDefaultValues() {
     let interaction = Interaction()
@@ -27,12 +30,13 @@ class InteractionTests: XCTestCase {
     XCTAssertEqual(interaction.paginate, .item)
   }
 
-  func testJSONMapping() {
+  func testDecoding() throws {
     var json: [String : Any] = [
       "paginate": "page"
     ]
 
-    var interaction = Interaction(json)
+    var data = try jsonEncoder.encode(json: json)
+    var interaction = try jsonDecoder.decode(Interaction.self, from: data)
     XCTAssertEqual(interaction.paginate, .page)
 
     json = [
@@ -40,7 +44,8 @@ class InteractionTests: XCTestCase {
       "mouseClick" : "single"
     ]
 
-    interaction = Interaction(json)
+    data = try jsonEncoder.encode(json: json)
+    interaction = try jsonDecoder.decode(Interaction.self, from: data)
     XCTAssertEqual(interaction.paginate, .item)
     XCTAssertEqual(interaction.mouseClick, .single)
 
@@ -49,7 +54,8 @@ class InteractionTests: XCTestCase {
       "mouseClick": "double"
     ]
 
-    interaction = Interaction(json)
+    data = try jsonEncoder.encode(json: json)
+    interaction = try jsonDecoder.decode(Interaction.self, from: data)
     XCTAssertEqual(interaction.paginate, .disabled)
     XCTAssertEqual(interaction.mouseClick, .double)
 
@@ -58,24 +64,17 @@ class InteractionTests: XCTestCase {
     XCTAssertEqual(interaction.mouseClick, .single)
   }
 
-  func testDictionary() {
-    let json: [String : Any] = [
-      "paginate": "page",
-      "mouseClick" : "single"
-    ]
+  func testEncoding() throws {
+    let interaction = Interaction(paginate: .item, mouseClick: .double)
+    let data = try jsonEncoder.encode(interaction)
+    let decodedInteraction = try jsonDecoder.decode(Interaction.self, from: data)
 
-    let interaction = Interaction(json)
-
-    XCTAssertTrue((interaction.dictionary as NSDictionary).isEqual(to: json))
+    XCTAssertTrue(interaction == decodedInteraction)
   }
 
   func testEquality() {
-    let json: [String : Any] = [
-      "paginate": "page"
-    ]
-
     var lhs = Interaction(paginate: .page)
-    let rhs = Interaction(json)
+    let rhs = Interaction(paginate: .page)
 
     XCTAssertTrue(lhs == rhs)
 

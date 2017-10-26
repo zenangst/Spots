@@ -141,8 +141,19 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - parameter json: A JSON dictionary that gets parsed into UI elements.
   ///
   /// - returns: An initialized controller with components. built from JSON.
+  @available(*, deprecated: 7.0, message: "Deprecated in favor for init with data")
   public convenience init(_ json: [String : Any], configuration: Configuration = .shared) {
-    self.init(components: Parser.parse(json, configuration: configuration),
+    self.init(components: Parser.parseComponents(json: json, configuration: configuration),
+              configuration: configuration)
+  }
+
+  /// Initialize a new controller using JSON data.
+  ///
+  /// - parameter json: A JSON data that gets parsed into UI elements.
+  ///
+  /// - returns: An initialized controller with components. built from JSON.
+  public convenience init(_ data: Data, configuration: Configuration = .shared) {
+    self.init(components: Parser.parseComponents(data: data, configuration: configuration),
               configuration: configuration)
   }
 
@@ -153,8 +164,12 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - returns: An initialized controller with a cache.
   public convenience init(cacheKey: String, configuration: Configuration = .shared) {
     let stateCache = StateCache(key: cacheKey)
-    self.init(components: Parser.parse(stateCache.load(), configuration: configuration),
-              configuration: configuration)
+    let modelsDictionary: [String: [ComponentModel]] = stateCache.load() ?? [:]
+
+    self.init(
+      components: Parser.parseComponents(modelsDictionary: modelsDictionary, configuration: configuration),
+      configuration: configuration
+    )
     self.stateCache = stateCache
   }
 

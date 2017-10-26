@@ -131,8 +131,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// - Parameter cacheKey: The unique cache key that should be used for storing and restoring the component.
   public convenience init(cacheKey: String, configuration: Configuration = .shared) {
     let stateCache = StateCache(key: cacheKey)
-
-    self.init(model: ComponentModel(stateCache.load()), configuration: configuration)
+    self.init(model: stateCache.load() ?? .init(), configuration: configuration)
     self.stateCache = stateCache
   }
 

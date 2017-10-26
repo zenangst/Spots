@@ -2,7 +2,9 @@
 import XCTest
 
 class LayoutExtensionsTests: XCTestCase {
-
+  private let jsonEncoder = JSONEncoder()
+  private let jsonDecoder = JSONDecoder()
+  
   let json: [String : Any] = [
     "item-spacing": 8.0,
     "line-spacing": 6.0,
@@ -14,10 +16,11 @@ class LayoutExtensionsTests: XCTestCase {
     ]
   ]
 
-  func testConfigureGridableComponent() {
+  func testConfigureGridableComponent() throws {
     let gridComponent = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1)))
     let componentFlowLayout = gridComponent.collectionView?.flowLayout
-    let layout = Layout(json)
+    let data = try jsonEncoder.encode(json: json)
+    let layout = try jsonDecoder.decode(Layout.self, from: data)
 
     layout.configure(component: gridComponent)
 
@@ -30,9 +33,10 @@ class LayoutExtensionsTests: XCTestCase {
     XCTAssertEqual(gridComponent.view.contentInsets.right, CGFloat(layout.inset.right))
   }
 
-  func testConfigureListableComponent() {
+  func testConfigureListableComponent() throws {
     let listComponent = Component(model: ComponentModel(layout: Layout(span: 1)))
-    let layout = Layout(json)
+    let data = try jsonEncoder.encode(json: json)
+    let layout = try jsonDecoder.decode(Layout.self, from: data)
 
     layout.configure(component: listComponent)
 

@@ -1,3 +1,2 @@
-github "hyperoslo/Cache" ~> 3.0
-github "zenangst/Tailor" ~> 2.0.0
+github "hyperoslo/Cache" ~> 4.0
 github "ReactiveX/RxSwift" ~> 3.2.0

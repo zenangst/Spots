@@ -4,30 +4,21 @@
   import UIKit
 #endif
 
-import Tailor
-
 /// The ComponentModel struct is used to configure a Component object
-public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
-
+public struct ComponentModel: Codable, Equatable {
   /// An enum with all the string keys used in the view model
-  public enum Key: String, StringConvertible {
-    case index
+  public enum Key: String, CodingKey {
     case identifier
-    case header
+    case index
     case kind
-    case meta
-    case span
-    case layout
+    case header
     case interaction
+    case footer
+    case layout
     case items
     case size
-    case width
-    case height
-    case footer
-
-    public var string: String {
-      return rawValue.lowercased()
-    }
+    case meta
+    case amountOfItemsToCache
   }
 
   /// Identifier
@@ -48,90 +39,11 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
-  public var size: CGSize? = .zero
+  public var size: CGSize = .zero
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
-
-  /// A dictionary representation of the component
-  public var dictionary: [String : Any] {
-    return dictionary()
-  }
-
-  /// A method that creates a dictionary representation of the ComponentModel
-  ///
-  /// - parameter amountOfItems: An optional Int that is used to limit the amount of items that should be transformed into JSON
-  ///
-  /// - returns: A dictionary representation of the ComponentModel
-  public func dictionary(_ amountOfItems: Int? = nil) -> [String : Any] {
-    var width: CGFloat = 0
-    var height: CGFloat = 0
-
-    if let size = size {
-      width = size.width
-      height = size.height
-    }
-
-    let JSONItems: [[String : Any]]
-
-    if let amountOfItems = amountOfItems {
-      JSONItems = Array(items[0..<min(amountOfItems, items.count)]).map { $0.dictionary }
-    } else {
-      JSONItems = items.map { $0.dictionary }
-    }
-
-    var JSONComponentModels: [String : Any] = [
-      Key.index.string: index,
-      Key.kind.string: kind.string,
-      Key.size.string: [
-        Key.width.string: width,
-        Key.height.string: height
-      ],
-      Key.items.string: JSONItems
-      ]
-
-    JSONComponentModels[Key.layout] = layout.dictionary
-    JSONComponentModels[Key.interaction] = interaction.dictionary
-    JSONComponentModels[Key.identifier.string] = identifier
-
-    JSONComponentModels[Key.header.string] = header?.dictionary
-    JSONComponentModels[Key.footer.string] = footer?.dictionary
-
-    if !meta.isEmpty {
-      JSONComponentModels[Key.meta.string] = meta
-    }
-
-    return JSONComponentModels
-  }
-
-  /// Initializes a component with a JSON dictionary and maps the keys of the dictionary to its corresponding values.
-  ///
-  /// - parameter map: A JSON key-value dictionary.
-  ///
-  /// - returns: An initialized component using JSON.
-  public init(_ map: [String : Any]) {
-    self.identifier = map.string(Key.identifier.rawValue)
-    self.kind <- map.enum(Key.kind.rawValue)
-    self.header = map.relation(Key.header.rawValue)
-    self.footer = map.relation(Key.footer.rawValue)
-    self.items <- map.relations(Key.items.rawValue)?.refreshIndexes()
-    self.meta <- map.property(Key.meta.rawValue)
-
-    if let layoutDictionary: [String : Any] = map.property(Layout.rootKey) {
-      self.layout = Layout(layoutDictionary)
-    } else {
-      self.layout = Layout()
-    }
-
-    if let interactionDictionary: [String : Any] = map.property(Interaction.rootKey) {
-      self.interaction = Interaction(interactionDictionary)
-    } else {
-      self.interaction = Interaction()
-    }
-
-    let width: Double = map.resolve(keyPath: "size.width") ?? 0.0
-    let height: Double = map.resolve(keyPath: "size.height") ?? 0.0
-    size = CGSize(width: width, height: height)
-  }
+  /// An optional Int that is used to limit the amount of items that should be transformed into JSON
+  public var amountOfItemsToCache: Int?
 
   /// Initializes a component and configures it with the provided parameters
   ///
@@ -160,6 +72,55 @@ public struct ComponentModel: Mappable, Equatable, DictionaryConvertible {
     self.footer = footer
     self.items = items.refreshIndexes()
     self.meta = meta
+  }
+
+  // MARK: - Codable
+
+  /// Initialize with a decoder.
+  ///
+  /// - Parameter decoder: A decoder that can decode values into in-memory representations.
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: Key.self)
+    self.identifier = try container.decodeIfPresent(String.self, forKey: .identifier)
+    self.index = try container.decodeIfPresent(Int.self, forKey: .index) ?? 0
+    self.kind = try container.decodeIfPresent(ComponentKind.self, forKey: .kind) ?? .list
+    self.header = try container.decodeIfPresent(Item.self, forKey: .header)
+    self.interaction = try container.decodeIfPresent(Interaction.self,
+                                                     forKey: .interaction) ?? Interaction()
+    self.footer = try container.decodeIfPresent(Item.self, forKey: .footer)
+    self.layout = try container.decodeIfPresent(Layout.self, forKey: .layout) ?? Layout()
+    self.items = try container.decodeIfPresent([Item].self, forKey: .items)?.refreshIndexes() ?? []
+    self.size = try container.decodeIfPresent(Size.self, forKey: .size)?.cgSize ?? .zero
+    self.meta = container.decodeJsonDictionaryIfPresent(forKey: .meta) ?? [:]
+    self.amountOfItemsToCache = try container.decodeIfPresent(Int.self, forKey: .amountOfItemsToCache)
+  }
+
+  /// Encode the struct into data.
+  ///
+  /// - Parameter encoder: An encoder that can encode the struct into data.
+
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: Key.self)
+    try container.encodeIfPresent(identifier, forKey: .identifier)
+    try container.encode(index, forKey: .index)
+    try container.encode(kind, forKey: .kind)
+    try container.encodeIfPresent(header, forKey: .header)
+    try container.encode(interaction, forKey: .interaction)
+    try container.encodeIfPresent(footer, forKey: .footer)
+    try container.encode(layout, forKey: .layout)
+
+    let itemsToCache: [Item]
+
+    if let amountOfItems = amountOfItemsToCache {
+      itemsToCache = Array(items[0..<min(amountOfItems, items.count)])
+    } else {
+      itemsToCache = items
+    }
+
+    try container.encodeIfPresent(itemsToCache, forKey: .items)
+    try container.encodeIfPresent(Size(cgSize: size), forKey: .size)
+    container.encode(jsonDictionary: meta, forKey: .meta)
+    try container.encodeIfPresent(amountOfItemsToCache, forKey: .amountOfItemsToCache)
   }
 
   // MARK: - Helpers

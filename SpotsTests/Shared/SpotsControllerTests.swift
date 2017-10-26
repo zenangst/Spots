@@ -529,22 +529,6 @@ class SpotsControllerTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
-  func testDictionaryOnController() {
-    let initialJSON = [
-      "components": [
-        ["kind": "list",
-         "items": [
-          ["title": "First list item"]
-          ]
-        ]
-      ]
-    ]
-    let firstController = SpotsController(initialJSON)
-    let secondController = SpotsController(firstController.dictionary)
-
-    XCTAssertTrue(firstController.components.first!.model == secondController.components.first!.model)
-  }
-
   func testReloadIfNeededWithComponentModels() {
     Configuration.shared.registerDefault(view: DefaultItemView.self)
     Configuration.shared.defaultViewSize = .init(width: 0, height: 44)

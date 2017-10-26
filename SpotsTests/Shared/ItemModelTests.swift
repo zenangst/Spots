@@ -4,8 +4,9 @@ import XCTest
 
 class ItemModelTests: XCTestCase {
 
-  struct EquatableSubjectA: ItemModel {
+  struct EquatableSubjectA: ItemModel, Equatable {
     let value: String
+
     static func ==(lhs: EquatableSubjectA, rhs: EquatableSubjectA) -> Bool {
       return lhs.value == rhs.value
     }
@@ -13,6 +14,7 @@ class ItemModelTests: XCTestCase {
 
   struct EquatableSubjectB: ItemModel, Equatable {
     let value: String
+
     static func ==(lhs: EquatableSubjectB, rhs: EquatableSubjectB) -> Bool {
       return lhs.value == rhs.value
     }
