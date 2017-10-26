@@ -31,6 +31,12 @@ class FocusEngineManager {
   }
 
   private func handleHorizontalComponent(in scrollView: ScrollView, for component: Component, itemIndex: Int, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    // Reached the top
+    guard component.model.index > 0 else {
+      targetContentOffset.pointee.y = -contentInsetTop
+      return
+    }
+
     let frameCache = (component.collectionView?.collectionViewLayout as? ComponentFlowLayout)?.cachedFrames
     let itemSize = component.item(at: itemIndex)!.size
     var itemOffset = itemSize.height
@@ -52,17 +58,6 @@ class FocusEngineManager {
     }
 
     let contentInsetTop: CGFloat = contentInset(for: scrollView).top
-
-    // Reached the top
-    if component.model.index == 0 {
-      if component.model.kind == .carousel {
-        targetContentOffset.pointee.y = -contentInsetTop
-        return
-      } else if component.model.kind == .grid && itemIndex < Int(component.model.layout.span) {
-        targetContentOffset.pointee.y = -contentInsetTop
-        return
-      }
-    }
 
     var layoutOffset = CGFloat(component.model.layout.inset.top + component.model.layout.inset.bottom)
     layoutOffset += component.headerHeight
