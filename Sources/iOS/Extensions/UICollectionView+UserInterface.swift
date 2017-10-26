@@ -94,13 +94,17 @@ extension UICollectionView: UserInterface {
     deselectItem(at: IndexPath(row: index, section: 0), animated: animated)
   }
 
+  public func cell<T>(at index: Int) -> T? {
+    let view = cellForItem(at: IndexPath(item: index, section: 0))
+    return view as? T
+  }
+
   /// Resolve a view at index
   ///
   /// - Parameter index: The item index that should be used to resolve the view.
   /// - Returns: The view that is resolved at the index casted into the inferred type.
   public func view<T>(at index: Int) -> T? {
-    let view = cellForItem(at: IndexPath(item: index, section: 0))
-
+    let view: UICollectionViewCell? = cell(at: index)
     switch view {
     case let view as GridWrapper:
       return view.wrappedView as? T

@@ -29,6 +29,8 @@ public protocol UserInterface: class {
   func deselect(itemAt index: Int, animated: Bool)
   #endif
 
+  func cell<T>(at index: Int) -> T?
+
   /// Find a generic UI component at index
   ///
   /// - parameter index: The index of the UI that you are looking for.

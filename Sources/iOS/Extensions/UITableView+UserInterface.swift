@@ -84,8 +84,13 @@ extension UITableView: UserInterface {
     deselectRow(at: IndexPath(row: index, section: 0), animated: animated)
   }
 
-  public func view<T>(at index: Int) -> T? {
+  public func cell<T>(at index: Int) -> T? {
     let view = cellForRow(at: IndexPath(row: index, section: 0))
+    return view as? T
+  }
+
+  public func view<T>(at index: Int) -> T? {
+    let view: UITableViewCell? = cell(at: index)
 
     switch view {
     case let view as ListWrapper:
