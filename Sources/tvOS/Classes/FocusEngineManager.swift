@@ -22,7 +22,10 @@ class FocusEngineManager {
     }
 
     let contentInsetTop: CGFloat = contentInset(for: scrollView).top
-    let hasReachedTop = component.model.index == 0 && (component.model.kind == .carousel || itemIndex < Int(component.model.layout.span))
+    let isFirstComponent = component.model.index == 0
+    let firstRowItemIsFocused = component.model.kind == .carousel || itemIndex < Int(component.model.layout.span)
+    let hasReachedTop = isFirstComponent && firstRowItemIsFocused
+
     if hasReachedTop {
       targetContentOffset.pointee.y = -contentInsetTop
       return
