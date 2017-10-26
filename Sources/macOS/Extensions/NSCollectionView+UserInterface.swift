@@ -44,6 +44,10 @@ extension NSCollectionView: UserInterface {
     }
   }
 
+  public func cell<T>(at index: Int) -> T? {
+    return item(at: index) as? T
+  }
+
   public func view<T>(at index: Int) -> T? {
     let view = item(at: index)
 

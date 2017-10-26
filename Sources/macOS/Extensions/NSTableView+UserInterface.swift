@@ -25,6 +25,11 @@ extension NSTableView: UserInterface {
     configuration.register(view: ListWrapper.self, identifier: TableView.compositeIdentifier)
   }
 
+  public func cell<T>(at index: Int) -> T? {
+    let view = rowView(atRow: index, makeIfNecessary: true)
+    return view as? T
+  }
+
   public func view<T>(at index: Int) -> T? {
     let view = rowView(atRow: index, makeIfNecessary: true)
 
