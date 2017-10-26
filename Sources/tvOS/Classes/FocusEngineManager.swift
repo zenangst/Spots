@@ -86,6 +86,12 @@ class FocusEngineManager {
   }
 
   private func handleVerticalComponent(in scrollView: ScrollView, for component: Component, itemIndex: Int, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    // Reached the top
+    if component.model.index == 0 && itemIndex < Int(component.model.layout.span) {
+      targetContentOffset.pointee.y = -contentInsetTop
+      return
+    }
+
     let direction = Direction.determine(lhs: scrollView.contentOffset,
                                         rhs: targetContentOffset.pointee)
     let contentInsetTop: CGFloat = contentInset(for: scrollView).top
@@ -96,14 +102,6 @@ class FocusEngineManager {
         if let spotsScrollView = scrollView as? SpotsScrollView,
           let yPosition = spotsScrollView.sizeCache[component.model.index] {
           result = yPosition + cell.frame.origin.y - contentInsetTop
-        }
-      }
-
-      // Reached the top
-      if component.model.index == 0 {
-        if component.model.kind == .grid && itemIndex < Int(component.model.layout.span) {
-          targetContentOffset.pointee.y = -contentInsetTop
-          return
         }
       }
 
