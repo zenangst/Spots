@@ -9,8 +9,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
   public weak var focusedComponent: Component?
   public var focusedItemIndex: Int?
-  var lastFocusedComponent: Component?
-  var lastOffset: CGFloat = 0.0
 
   /// A closure that is called when the controller is reloaded with components
   public static var componentsDidReloadComponentModels: ((SpotsController) -> Void)?
@@ -71,6 +69,8 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   public var stateCache: StateCache?
 
   #if os(tvOS)
+  let focusManager: FocusEngineManager = .init()
+
   /// A default focus guide that is constrained to the controllers
   public lazy var focusGuide: UIFocusGuide = {
     let focusGuide = UIFocusGuide()
@@ -382,19 +382,6 @@ extension SpotsController {
   }
 
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    enum Direction {
-      case up, down, noscroll
-      static func determine(lhs: CGPoint, rhs: CGPoint) -> Direction {
-        if lhs.y < rhs.y {
-          return .down
-        } else if lhs.y > rhs.y {
-          return .up
-        } else {
-          return .noscroll
-        }
-      }
-    }
-
     defer {
       self.scrollView.layoutViews()
     }
@@ -413,83 +400,10 @@ extension SpotsController {
         return
     }
 
-    defer {
-      lastFocusedComponent = focusedComponent
-    }
-
-    let frameCache = (focusedComponent.collectionView?.collectionViewLayout as? ComponentFlowLayout)?.cachedFrames
-    let itemSize = focusedComponent.item(at: focusedItemIndex)!.size
-    var itemOffset = itemSize.height
-
-    if let frameCache = frameCache, focusedItemIndex < frameCache.count {
-      itemOffset = frameCache[focusedItemIndex].maxY
-    }
-
-    // Don't invoke this behavior if the pointee is the same as the scroll views content offset.
-    guard scrollView.contentOffset != targetContentOffset.pointee else {
-      Swift.print("opt-out")
-      return
-    }
-
-    // Reached the end of the screen.
-    let maximumContentOffset = scrollView.contentSize.height - scrollView.frame.size.height
-    if targetContentOffset.pointee.y >= maximumContentOffset {
-      targetContentOffset.pointee.y = maximumContentOffset
-      Swift.print("end of screen")
-      return
-    }
-
-    let initialContentOffset: CGFloat
-    if #available(tvOS 11.0, *) {
-      initialContentOffset = scrollView.adjustedContentInset.top
-    } else {
-      initialContentOffset = scrollView.contentInset.top
-    }
-
-    // Reached the top
-    if focusedComponent == components.first {
-      if focusedComponent.model.kind == .carousel {
-        targetContentOffset.pointee.y = -initialContentOffset
-        Swift.print("reached top: \(#function)")
-        return
-      } else if focusedComponent.model.kind == .grid && focusedItemIndex < Int(focusedComponent.model.layout.span) {
-        targetContentOffset.pointee.y = -initialContentOffset
-        Swift.print("reached top: \(#function)")
-        return
-      }
-    }
-
-    var layoutOffset = CGFloat(focusedComponent.model.layout.inset.top + focusedComponent.model.layout.inset.bottom)
-    layoutOffset += focusedComponent.headerHeight
-    layoutOffset += focusedComponent.footerHeight
-
-    let direction = Direction.determine(lhs: scrollView.contentOffset,
-                                        rhs: targetContentOffset.pointee)
-
-    if lastFocusedComponent == focusedComponent &&
-      direction != .noscroll &&
-      lastOffset == itemOffset {
-      Swift.print("opt-out \(#function)")
-      targetContentOffset.pointee.y = scrollView.contentOffset.y
-      return
-    }
-
-    Swift.print(lastFocusedComponent == focusedComponent)
-    Swift.print(direction != .noscroll)
-    Swift.print(lastOffset == itemOffset)
-
-    switch direction {
-    case .up:
-      targetContentOffset.pointee.y = scrollView.contentOffset.y - itemOffset - layoutOffset
-      Swift.print("up")
-    case .down:
-      targetContentOffset.pointee.y = scrollView.contentOffset.y + itemOffset + layoutOffset
-      Swift.print("down")
-    case .noscroll:
-      targetContentOffset.pointee.y = scrollView.contentOffset.y
-      Swift.print("noscroll")
-    }
-
-    lastOffset = itemOffset
+    focusManager.handleScrolling(in: scrollView,
+                                 for: focusedComponent,
+                                 itemIndex: focusedItemIndex,
+                                 withVelocity: velocity,
+                                 targetContentOffset: targetContentOffset)
   }
 }
