@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
     ss.ios.source_files = 'Sources/{iOS,Shared}/**/*'
     ss.osx.source_files = 'Sources/{macOS,Shared}/**/*'
     ss.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
-    ss.dependency 'Cache', '~> 3.0'
+    ss.dependency 'Cache', '~> 4.0'
     ss.framework  = "Foundation"
   end
 
@@ -29,5 +29,5 @@ Pod::Spec.new do |s|
     ss.dependency "RxCocoa", "~> 3.0"
   end
 
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 end
