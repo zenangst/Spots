@@ -167,7 +167,9 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           } else {
             nextY = itemAttribute.frame.maxY + minimumLineSpacing
           }
+          attributes.append(itemAttribute)
         case .vertical:
+          itemAttribute.frame.origin.y += component.headerHeight
           // Only add item attributes if the item frame insects the rect passed into the method.
           // This removes unwanted computation when a collection view scrolls.
           // Note that this only applies to vertical components.
@@ -175,8 +177,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
             attributes.append(itemAttribute)
           }
         }
-
-        attributes.append(itemAttribute)
 
         if index >= cachedFrames.count {
           cachedFrames.append(itemAttribute.frame)
@@ -383,7 +383,11 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     case .horizontal:
       return newBounds.size.height >= contentSize.height
     case .vertical:
-      return true
+      #if os(tvOS)
+        return true
+      #else
+        return newBounds.size.height >= contentSize.height
+      #endif
     }
   }
 
