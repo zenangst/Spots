@@ -225,8 +225,8 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
       scrollView.frame = frame
       scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
 
-      yOffsetOfCurrentSubview += scrollView.contentSize.height
       sizeCache[offset] = yOffsetOfCurrentSubview
+      yOffsetOfCurrentSubview += scrollView.contentSize.height
     }
 
     contentSize = CGSize(width: bounds.size.width, height: yOffsetOfCurrentSubview)

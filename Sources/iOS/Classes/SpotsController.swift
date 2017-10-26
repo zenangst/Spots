@@ -389,21 +389,18 @@ extension SpotsController {
     // Determine if the default behavior has been overriden by a delegate.
     if let scrollDelegate = scrollDelegate {
       guard scrollDelegate.didEndDragging(in: scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset) == false else {
-        Swift.print("delegate override")
         return
       }
     }
 
     guard let focusedComponent = focusedComponent,
       let focusedItemIndex = focusedItemIndex else {
-        Swift.print("could not resolve component of focused index")
         return
     }
 
     focusManager.handleScrolling(in: scrollView,
                                  for: focusedComponent,
                                  itemIndex: focusedItemIndex,
-                                 withVelocity: velocity,
                                  targetContentOffset: targetContentOffset)
   }
 }
