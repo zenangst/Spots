@@ -39,7 +39,7 @@ public struct ComponentModel: Codable, Equatable {
   /// A collection of view models
   public var items: [Item] = [Item]()
   /// The width and height of the component, usually calculated and updated by the UI component
-  public var size: CGSize? = .zero
+  public var size: CGSize = .zero
   /// A key-value dictionary for any additional information
   public var meta = [String: Any]()
   /// An optional Int that is used to limit the amount of items that should be transformed into JSON
@@ -90,7 +90,7 @@ public struct ComponentModel: Codable, Equatable {
     self.footer = try container.decodeIfPresent(Item.self, forKey: .footer)
     self.layout = try container.decodeIfPresent(Layout.self, forKey: .layout) ?? Layout()
     self.items = try container.decodeIfPresent([Item].self, forKey: .items)?.refreshIndexes() ?? []
-    self.size = try container.decodeIfPresent(CGSize.self, forKey: .size) ?? .zero
+    self.size = try container.decodeIfPresent(Size.self, forKey: .size)?.cgSize ?? .zero
     self.meta = container.decodeJsonDictionaryIfPresent(forKey: .meta) ?? [:]
     self.amountOfItemsToCache = try container.decodeIfPresent(Int.self, forKey: .amountOfItemsToCache)
   }
@@ -118,7 +118,7 @@ public struct ComponentModel: Codable, Equatable {
     }
 
     try container.encodeIfPresent(itemsToCache, forKey: .items)
-    try container.encodeIfPresent(size, forKey: .size)
+    try container.encodeIfPresent(Size(cgSize: size), forKey: .size)
     container.encode(jsonDictionary: meta, forKey: .meta)
     try container.encodeIfPresent(amountOfItemsToCache, forKey: .amountOfItemsToCache)
   }

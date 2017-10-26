@@ -11,7 +11,7 @@ public struct Item: Codable, Indexable {
   /**
    An enum with all the string keys used in the view model
    */
-  public enum Key: String, CodingKey {
+  private enum Key: String, CodingKey {
     case index
     case identifier
     case title
@@ -124,7 +124,7 @@ public struct Item: Codable, Indexable {
   ///
   /// - Parameter decoder: A decoder that can decode values into in-memory representations.
   public init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: Item.Key.self)
+    let container = try decoder.container(keyedBy: Key.self)
     self.index = try container.decodeIfPresent(Int.self, forKey: .index) ?? 0
     self.identifier = try container.decodeIfPresent(Int.self, forKey: .identifier)
     self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
@@ -133,7 +133,7 @@ public struct Item: Codable, Indexable {
     self.image = try container.decodeIfPresent(String.self, forKey: .image) ?? ""
     self.kind = try container.decodeIfPresent(String.self, forKey: .kind) ?? ""
     self.action = try container.decodeIfPresent(String.self, forKey: .action)
-    self.size = try container.decodeIfPresent(CGSize.self, forKey: .size) ?? .zero
+    self.size = try container.decodeIfPresent(Size.self, forKey: .size)?.cgSize ?? .zero
     self.meta = container.decodeJsonDictionaryIfPresent(forKey: .meta) ?? [:]
     self.relations = try container.decodeIfPresent([String: [Item]].self, forKey: .relations) ?? [:]
     self.model = try container.decodeIfPresent(forKey: .model, kind: kind)
@@ -143,7 +143,7 @@ public struct Item: Codable, Indexable {
   ///
   /// - Parameter encoder: An encoder that can encode the struct into data.
   public func encode(to encoder: Encoder) throws {
-    var container = encoder.container(keyedBy: Item.Key.self)
+    var container = encoder.container(keyedBy: Key.self)
     try container.encodeIfPresent(index, forKey: .index)
     try container.encodeIfPresent(identifier, forKey: .identifier)
     try container.encodeIfPresent(title, forKey: .title)
@@ -152,7 +152,7 @@ public struct Item: Codable, Indexable {
     try container.encodeIfPresent(image, forKey: .image)
     try container.encodeIfPresent(kind, forKey: .kind)
     try container.encodeIfPresent(action, forKey: .action)
-    try container.encodeIfPresent(size, forKey: .size)
+    try container.encodeIfPresent(Size(cgSize: size), forKey: .size)
     try container.encodeIfPresent(relations, forKey: .relations)
 
     container.encode(jsonDictionary: meta, forKey: .meta)

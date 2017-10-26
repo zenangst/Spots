@@ -32,9 +32,6 @@
 		BD1F9E151EA39F02009C018B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E141EA39F02009C018B /* Array+Extensions.swift */; };
 		BD1F9E161EA39F02009C018B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E141EA39F02009C018B /* Array+Extensions.swift */; };
 		BD1F9E171EA39F02009C018B /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E141EA39F02009C018B /* Array+Extensions.swift */; };
-		BD1F9E191EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */; };
-		BD1F9E1A1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */; };
-		BD1F9E1B1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */; };
 		BD20E6601F384672008C2B8B /* DiffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20E65F1F384672008C2B8B /* DiffManager.swift */; };
 		BD20E6611F384672008C2B8B /* DiffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20E65F1F384672008C2B8B /* DiffManager.swift */; };
 		BD20E6621F384672008C2B8B /* DiffManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20E65F1F384672008C2B8B /* DiffManager.swift */; };
@@ -174,9 +171,6 @@
 		BDA967D11F9369690016A34F /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA967D01F9369690016A34F /* DataSourceTests.swift */; };
 		BDA967D21F9369690016A34F /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA967D01F9369690016A34F /* DataSourceTests.swift */; };
 		BDA967D31F9369690016A34F /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA967D01F9369690016A34F /* DataSourceTests.swift */; };
-		BDA967D51F936A4A0016A34F /* DictionaryExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA967D41F936A4A0016A34F /* DictionaryExtensionsTests.swift */; };
-		BDA967D61F936A4A0016A34F /* DictionaryExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA967D41F936A4A0016A34F /* DictionaryExtensionsTests.swift */; };
-		BDA967D71F936A4A0016A34F /* DictionaryExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA967D41F936A4A0016A34F /* DictionaryExtensionsTests.swift */; };
 		BDAD84A81E3E701C008289AE /* CarouselSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */; };
 		BDAD84A91E3E701C008289AE /* CarouselSpotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */; };
 		BDAD84AA1E3E701C008289AE /* SpotsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAD84841E3E701B008289AE /* SpotsController.swift */; };
@@ -401,6 +395,9 @@
 		D55B7B431E423B86000125C8 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D55B7B4C1E423BC0000125C8 /* RxSpots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D55B7B021E423122000125C8 /* RxSpots.framework */; };
 		D55B7B4F1E423C65000125C8 /* RxSpotsDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */; };
+		D55CFF651FA257F100F69973 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CFF641FA257F100F69973 /* Size.swift */; };
+		D55CFF661FA257F100F69973 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CFF641FA257F100F69973 /* Size.swift */; };
+		D55CFF671FA257F100F69973 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CFF641FA257F100F69973 /* Size.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478571C43FFFD006EBA49 /* ComponentModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* ComponentModelTests.swift */; };
 		D58478D21C440568006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478C81C440567006EBA49 /* Spots.framework */; };
@@ -479,7 +476,6 @@
 		BD1F9A8C1F9088C6003E6D8D /* ItemModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModelTests.swift; sourceTree = "<group>"; };
 		BD1F9E0E1EA39DFD009C018B /* SpotsController+iOS+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SpotsController+iOS+Extensions.swift"; sourceTree = "<group>"; };
 		BD1F9E141EA39F02009C018B /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		BD20E65F1F384672008C2B8B /* DiffManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffManager.swift; sourceTree = "<group>"; };
 		BD21C2511E4358B900FE2B26 /* ComponentFlowLayoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayoutTests.swift; sourceTree = "<group>"; };
 		BD24030B1E4B981A005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
@@ -543,7 +539,6 @@
 		BDA3D96B1EC6F1A400141227 /* ItemManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
 		BDA5EEBE1EDD77DD00B18214 /* ComponentFlowLayoutSharedTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayoutSharedTests.swift; sourceTree = "<group>"; };
 		BDA967D01F9369690016A34F /* DataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceTests.swift; sourceTree = "<group>"; };
-		BDA967D41F936A4A0016A34F /* DictionaryExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensionsTests.swift; sourceTree = "<group>"; };
 		BDAD84831E3E701B008289AE /* CarouselSpotHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselSpotHeader.swift; sourceTree = "<group>"; };
 		BDAD84841E3E701B008289AE /* SpotsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SpotsController.swift; sourceTree = "<group>"; };
 		BDAD84851E3E701B008289AE /* ComponentFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentFlowLayout.swift; sourceTree = "<group>"; };
@@ -649,6 +644,7 @@
 		D55B7B0A1E423417000125C8 /* RxSpotsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegate.swift; sourceTree = "<group>"; };
 		D55B7B481E423B86000125C8 /* RxSpots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RxSpots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55B7B4E1E423C65000125C8 /* RxSpotsDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSpotsDelegateTests.swift; sourceTree = "<group>"; };
+		D55CFF641FA257F100F69973 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -939,7 +935,6 @@
 				BDAD853E1E3E7032008289AE /* ComponentDelegate+Extensions.swift */,
 				BD77D1FB1E85382D0075A3FC /* ComponentModel+Equatable.swift */,
 				BD91A9511F2FAB87005B6A38 /* ComponentResolvable+Extensions.swift */,
-				BD1F9E181EA39F2E009C018B /* Dictionary+Extensions.swift */,
 				BDAD85381E3E7032008289AE /* Item+Extensions.swift */,
 				BDAD853D1E3E7032008289AE /* ItemConfigurable+Extensions.swift */,
 				BDAD853A1E3E7032008289AE /* ScrollDelegate+Extensions.swift */,
@@ -990,6 +985,7 @@
 				BDAD855D1E3E7032008289AE /* Registry.swift */,
 				BDAD855E1E3E7032008289AE /* StateCache.swift */,
 				BD5D69D31F398C370078AC19 /* Changes.swift */,
+				D55CFF641FA257F100F69973 /* Size.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -1159,7 +1155,6 @@
 				BD677E841DC616B2006D1654 /* ComponentSharedTests.swift */,
 				BDA967D01F9369690016A34F /* DataSourceTests.swift */,
 				BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */,
-				BDA967D41F936A4A0016A34F /* DictionaryExtensionsTests.swift */,
 				BD5D69D71F398E740078AC19 /* DiffManagerTests.swift */,
 				BD677E8E1DC65D63006D1654 /* Helpers.swift */,
 				BD45D9941E30A8A000C2D6B2 /* InsetTests.swift */,
@@ -1647,6 +1642,7 @@
 				BDAD858C1E3E7032008289AE /* Component+Core.swift in Sources */,
 				BDCBE3861EEEFF1E00BB2514 /* ScrollViewManager.swift in Sources */,
 				BDAD84A91E3E701C008289AE /* CarouselSpotHeader.swift in Sources */,
+				D55CFF671FA257F100F69973 /* Size.swift in Sources */,
 				BDAD85741E3E7032008289AE /* Paginate.swift in Sources */,
 				BDAD859B1E3E7032008289AE /* SpotsController+LiveEditing.swift in Sources */,
 				BD20E6621F384672008C2B8B /* DiffManager.swift in Sources */,
@@ -1664,7 +1660,6 @@
 				BDAD859E1E3E7032008289AE /* SpotsController+SpotsControllerManager.swift in Sources */,
 				BDAD84D71E3E701C008289AE /* Inset+iOS.swift in Sources */,
 				BD34B4041F93D5C800840F2F /* ItemChange.swift in Sources */,
-				BD1F9E1B1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
 				BDC5F37B1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
 				BD1F9A8B1F908866003E6D8D /* ItemModel.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
@@ -1754,7 +1749,6 @@
 				D5D282741E547742004BF251 /* ListWrapperTests.swift in Sources */,
 				BD21C2551E4358CE00FE2B26 /* ComponentFlowLayoutTests.swift in Sources */,
 				BD677E871DC616B2006D1654 /* ComponentSharedTests.swift in Sources */,
-				BDA967D71F936A4A0016A34F /* DictionaryExtensionsTests.swift in Sources */,
 				BDDF2CCD1DC7C23500B766BA /* AnimationTests.swift in Sources */,
 				BD1F9A8F1F9088C6003E6D8D /* ItemModelTests.swift in Sources */,
 				BD01BD131DAEA523009C10FF /* ParserTests.swift in Sources */,
@@ -1813,6 +1807,7 @@
 				BD1D17251EA89A36000DBCF8 /* SpotsRefreshControl.swift in Sources */,
 				BDAD85B71E3E7032008289AE /* ScrollDelegate.swift in Sources */,
 				BD24030C1E4B981A005BAA19 /* Component.swift in Sources */,
+				D55CFF651FA257F100F69973 /* Size.swift in Sources */,
 				BDAD85A21E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,
 				BDAD85661E3E7032008289AE /* Delegate.swift in Sources */,
 				BDAD85721E3E7032008289AE /* Paginate.swift in Sources */,
@@ -1846,7 +1841,6 @@
 				BDAD84E21E3E701C008289AE /* UIViewController+Extensions.swift in Sources */,
 				BDAD85631E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD84B61E3E701C008289AE /* GridWrapper.swift in Sources */,
-				BD1F9E191EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
 				BDA3D96C1EC6F1A400141227 /* ItemManager.swift in Sources */,
 				BD91A9521F2FAB87005B6A38 /* ComponentResolvable+Extensions.swift in Sources */,
 				BDC5F3791F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
@@ -1918,7 +1912,6 @@
 				BDA5EEC01EDD78BD00B18214 /* ComponentFlowLayoutSharedTests.swift in Sources */,
 				BD45D9871E30906300C2D6B2 /* LayoutTests.swift in Sources */,
 				BDB8D5931E4DFADC00220BC3 /* ItemTests.swift in Sources */,
-				BDA967D51F936A4A0016A34F /* DictionaryExtensionsTests.swift in Sources */,
 				BD677E891DC61EFC006D1654 /* StateCacheTests.swift in Sources */,
 				BD677E8F1DC65D63006D1654 /* Helpers.swift in Sources */,
 				BD01BD111DAEA522009C10FF /* ParserTests.swift in Sources */,
@@ -1967,6 +1960,7 @@
 				52CD427B1E4477C800187E09 /* PageIndicatorPlacement.swift in Sources */,
 				BD9ECEBC1E6EC82D003E4388 /* Component+macOS+HeaderFooter.swift in Sources */,
 				BDAD85DF1E3E7032008289AE /* Inset.swift in Sources */,
+				D55CFF661FA257F100F69973 /* Size.swift in Sources */,
 				BDAD85A31E3E7032008289AE /* Wrappable+Extensions.swift in Sources */,
 				BDDCF6DC1E4DF91F004B38C4 /* Indexable.swift in Sources */,
 				BDAD85701E3E7032008289AE /* Animation.swift in Sources */,
@@ -1995,7 +1989,6 @@
 				BDAD85821E3E7032008289AE /* Item+Extensions.swift in Sources */,
 				D5D2826C1E547219004BF251 /* ViewStateDelegate.swift in Sources */,
 				D5D282681E54710D004BF251 /* ViewState.swift in Sources */,
-				BD1F9E1A1EA39F2E009C018B /* Dictionary+Extensions.swift in Sources */,
 				BDA25E901EB5070F002B21C0 /* Wrappable+macOS.swift in Sources */,
 				BDDCF6F01E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
 				BD77D1F51E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
@@ -2077,7 +2070,6 @@
 				BD798EF91EA2A1320069EFB7 /* SpotsControllerManagerTests.swift in Sources */,
 				BDB8D5941E4DFADC00220BC3 /* ItemTests.swift in Sources */,
 				BDEA327C1E86FC850044B056 /* ComponentDelegateMacOSTests.swift in Sources */,
-				BDA967D61F936A4A0016A34F /* DictionaryExtensionsTests.swift in Sources */,
 				BDDF2CD01DC7C50700B766BA /* TestAnimations.swift in Sources */,
 				BD677E8A1DC61EFC006D1654 /* StateCacheTests.swift in Sources */,
 			);

@@ -17,7 +17,7 @@ public struct Layout: Codable, Equatable {
   /// - dynamicSpan: Used to map dynamic span.
   /// - dynamicHeight: Used to map if component should use dynamic height.
   /// - pageIndicator: Used to map if component should display a page indicator.
-  enum Key: String, CodingKey {
+  private enum Key: String, CodingKey {
     case inset
     case itemSpacing = "item-spacing"
     case lineSpacing = "line-spacing"
@@ -128,6 +128,24 @@ public struct Layout: Codable, Equatable {
     self.headerMode = try container.decodeIfPresent(HeaderMode.self, forKey: .headerMode) ?? .default
     self.infiniteScrolling = try container.decodeIfPresent(Bool.self, forKey: .infiniteScrolling) ?? false
     self.showEmptyComponent = try container.decodeIfPresent(Bool.self, forKey: .showEmptyComponent) ?? false
+  }
+
+  /// Encode the struct into data.
+  ///
+  /// - Parameter encoder: An encoder that can encode the struct into data.
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: Key.self)
+    try container.encodeIfPresent(inset, forKey: .inset)
+    try container.encodeIfPresent(itemSpacing, forKey: .itemSpacing)
+    try container.encodeIfPresent(lineSpacing, forKey: .lineSpacing)
+    try container.encodeIfPresent(itemsPerRow, forKey: .itemsPerRow)
+    try container.encodeIfPresent(span, forKey: .span)
+    try container.encodeIfPresent(dynamicSpan, forKey: .dynamicSpan)
+    try container.encodeIfPresent(dynamicHeight, forKey: .dynamicHeight)
+    try container.encodeIfPresent(pageIndicatorPlacement, forKey: .pageIndicatorPlacement)
+    try container.encodeIfPresent(headerMode, forKey: .headerMode)
+    try container.encodeIfPresent(infiniteScrolling, forKey: .infiniteScrolling)
+    try container.encodeIfPresent(showEmptyComponent, forKey: .showEmptyComponent)
   }
 
   /// Perform mutation with closure.

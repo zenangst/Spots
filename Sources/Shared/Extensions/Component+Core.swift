@@ -45,9 +45,9 @@ public extension Component {
         }
       #endif
     case .grid:
-      height = model.size?.height ?? 0
+      height = model.size.height
     case .carousel:
-        height = model.size?.height ?? 0
+        height = model.size.height
         if let firstItem = item(at: 0), firstItem.size.height > height {
           height = firstItem.size.height
           height += CGFloat(model.layout.inset.top)
