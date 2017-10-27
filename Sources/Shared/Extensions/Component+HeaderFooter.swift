@@ -14,6 +14,11 @@ extension Component {
       headerView.frame.size = size
       itemConfigurable.configure(with: header)
       model.header = header
+    } else {
+      if let model = header.model,
+        let configurator = self.configuration.presenters[header.kind] {
+        self.model.header?.size.height = configurator.configure(view: headerView, model: model, containerSize: view.frame.size).height
+      }
     }
   }
 
@@ -30,6 +35,11 @@ extension Component {
       footerView.frame.size = size
       itemConfigurable.configure(with: footer)
       model.footer = footer
+    } else {
+      if let model = footer.model,
+        let configurator = self.configuration.presenters[footer.kind] {
+        self.model.footer?.size.height = configurator.configure(view: footerView, model: model, containerSize: view.frame.size).height
+      }
     }
   }
 }
