@@ -1,3 +1,1 @@
-github "ReactiveX/RxSwift" "3.6.1"
-github "hyperoslo/Cache" "4.0.4"
-github "onmyway133/SwiftHash" "2.0.1"
+github "hyperoslo/Cache" "4.1.1"

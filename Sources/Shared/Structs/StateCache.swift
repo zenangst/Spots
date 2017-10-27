@@ -1,6 +1,5 @@
 import Foundation
 import Cache
-import SwiftHash
 
 /// A StateCache class used for Controller and Component object caching
 public final class StateCache {
