@@ -3,7 +3,7 @@ import CoreGraphics
 
 // A struct for custom implementation of Codable protocols for CGSize
 struct Size: Codable {
-  private enum Key: String, CodingKey {
+  fileprivate enum Key: String, CodingKey {
     case width
     case height
   }
