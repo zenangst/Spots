@@ -4,7 +4,9 @@ machine:
 
 dependencies:
   override:
-    - carthage update
+    - rm -rf Cartfile.resolved
+    - rm -rf Carthage
+    - carthage bootstrap
     - brew install swiftlint
   cache_directories:
     - "Carthage"
