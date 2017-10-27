@@ -20,6 +20,4 @@ test:
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2' clean
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2' -enableCodeCoverage YES test
     - bash <(curl -s https://codecov.io/bash) -cF tvos -J 'Spots'
-    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "RxSpots-iOS" -sdk iphonesimulator clean
-    - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "RxSpots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.3.1' -enableCodeCoverage YES test
 
