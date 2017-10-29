@@ -159,6 +159,18 @@ class DiffManager {
       return .size
     }
 
+    if let newModel = newModel.model {
+      if let oldModel = oldModel.model {
+        if !(newModel == oldModel) {
+          return .model
+        }
+      } else {
+        return .model
+      }
+    } else if oldModel.model != nil {
+      return .model
+    }
+
     if newModel.image != oldModel.image {
       return .image
     }
