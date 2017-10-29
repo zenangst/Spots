@@ -8,7 +8,12 @@ public func == (lhs: ItemCodable, rhs: ItemCodable) -> Bool {
     return false
   }
 
-  return String(describing: lhs).hashValue == String(describing: rhs).hashValue
+  var lhsOutput = ""
+  var rhsOutput = ""
+  dump(lhs, to: &lhsOutput)
+  dump(rhs, to: &rhsOutput)
+
+  return lhsOutput == rhsOutput
 }
 
 extension ItemCodable {
