@@ -103,8 +103,8 @@ So how does scrolling work? Whenever a user scrolls, the **SpotsScrollView** com
 - Features both infinity scrolling and pull to refresh (on iOS), all you have to do is to
 setup delegates that conform to the public protocols on `SpotsController`.
 - No need to implement your own data source, every `Component` has its
-own set of `Item`’s.
-which is maintained internally and is there at your disposable if you decide to
+own set of `Item`s,
+which is maintained internally and is there at your disposal if you decide to
 make changes to them.
 - Easy configuration for registering views.
 This improves code reuse and helps to theme your app and ultimately keep your application consistent.
