@@ -360,18 +360,13 @@ public class ComponentManager {
   /// - parameter completion:       A completion closure that runs when your updates are done.
   public func reloadIfNeeded(with changes: Changes, component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     component.userInterface?.processChanges(changes, withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
-      guard let strongSelf = self else {
-        completion?()
-        return
-      }
-
       if changes.updates.isEmpty {
-        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        self?.process(Array(changes.updates), component: component, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
-        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        self?.process(Array(changes.updates), component: component, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -396,7 +391,9 @@ public class ComponentManager {
 
       Dispatch.interactive {
         guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: duplicatedComponent.model.items) else {
-          completion?()
+          Dispatch.main {
+            completion?()
+          }
           return
         }
 
@@ -482,18 +479,20 @@ public class ComponentManager {
   ///   - updateHeightAndIndexes: Determines if the height and indexes should be refreshed.
   ///   - completion: A completion closure that is run when the operation is done.
   private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
-    if updateHeightAndIndexes {
-      component.updateHeightAndIndexes {
+    Dispatch.main {
+      if updateHeightAndIndexes {
+        component.updateHeightAndIndexes {
+          component.afterUpdate()
+          component.view.superview?.setNeedsLayout()
+          component.view.superview?.layoutIfNeeded()
+          completion?()
+        }
+      } else {
         component.afterUpdate()
         component.view.superview?.setNeedsLayout()
         component.view.superview?.layoutIfNeeded()
         completion?()
       }
-    } else {
-      component.afterUpdate()
-      component.view.superview?.setNeedsLayout()
-      component.view.superview?.layoutIfNeeded()
-      completion?()
     }
   }
 }

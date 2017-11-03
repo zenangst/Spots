@@ -714,37 +714,36 @@ public class SpotsControllerManager {
 
     Dispatch.interactive { [weak self] in
       guard let changes = component.manager.diffManager.compare(oldItems: component.model.items, newItems: tempComponent.model.items) else {
-        completion?()
+        Dispatch.main {
+          completion?()
+        }
         return
       }
 
-      guard let `self` = self else {
-        return
-      }
-
-      let newItems = tempComponent.model.items
-
-      if newItems.count == component.model.items.count {
-        self.reload(with: changes,
-               controller: controller,
-               in: component,
-               newItems: newItems,
-               animation: animation,
-               completion: completion)
-      } else if newItems.count < component.model.items.count {
-        self.reload(with: changes,
-               controller: controller,
-               in: component,
-               lessItems: newItems,
-               animation: animation,
-               completion: completion)
-      } else if newItems.count > component.model.items.count {
-        self.reload(with: changes,
-               controller: controller,
-               in: component,
-               moreItems: newItems,
-               animation: animation,
-               completion: completion)
+      Dispatch.main { [weak self] in
+        let newItems = tempComponent.model.items
+        if newItems.count == component.model.items.count {
+          self?.reload(with: changes,
+                       controller: controller,
+                       in: component,
+                       newItems: newItems,
+                       animation: animation,
+                       completion: completion)
+        } else if newItems.count < component.model.items.count {
+          self?.reload(with: changes,
+                       controller: controller,
+                       in: component,
+                       lessItems: newItems,
+                       animation: animation,
+                       completion: completion)
+        } else if newItems.count > component.model.items.count {
+          self?.reload(with: changes,
+                       controller: controller,
+                       in: component,
+                       moreItems: newItems,
+                       animation: animation,
+                       completion: completion)
+        }
       }
     }
   }
