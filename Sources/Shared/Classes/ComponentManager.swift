@@ -379,33 +379,28 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main { [weak self] in
-      guard let `self` = self else {
-        completion?()
-        return
-      }
-
-      let duplicatedComponent = Component(model: component.model, configuration: self.configuration)
+    Dispatch.main {
+      let duplicatedComponent = Component(model: component.model, configuration: component.configuration)
       duplicatedComponent.model.items = items
       duplicatedComponent.setup(with: component.view.frame.size)
+      let newItems = duplicatedComponent.model.items
 
-      Dispatch.interactive {
-        guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: duplicatedComponent.model.items) else {
+      Dispatch.interactive { [weak self, diffManager = self.diffManager] in
+        guard let changes = diffManager.compare(oldItems: component.model.items, newItems: newItems) else {
           Dispatch.main {
             completion?()
           }
           return
         }
 
-        Dispatch.main {
+        Dispatch.main { [weak self, changes = changes] in
           let updateDatasource = {
-            component.model.items = duplicatedComponent.model.items
-          }
-          let completion = {
-            self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+            component.model.items = newItems
           }
 
-          component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: completion)
+          component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: {
+            self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+          })
         }
       }
     }
