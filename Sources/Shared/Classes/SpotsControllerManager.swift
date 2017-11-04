@@ -200,16 +200,16 @@ public class SpotsControllerManager {
   /// - parameter closure:       A completion closure that is invoked when the setup of the new items is complete
   ///
   /// - returns: A boolean value that determines if the closure should run in `process(changes:)`
-  fileprivate func setupItemsForComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) -> Bool {
+  fileprivate func setupItemsForComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     guard let component = controller.component(at: index) else {
-      return false
+      return
     }
 
-    return updateComponentModel(newComponentModels[index],
-                                on: component,
-                                in: controller,
-                                withAnimation: animation,
-                                completion: completion)
+    updateComponentModel(newComponentModels[index],
+                         on: component,
+                         in: controller,
+                         withAnimation: animation,
+                         completion: completion)
   }
 
   /// Reload Component object with changes and new items.
@@ -328,13 +328,14 @@ public class SpotsControllerManager {
         case .items:
           if index == lastItemChange {
             completion = finalCompletion
+            runCompletion = false
           }
 
-          runCompletion = !strongSelf.setupItemsForComponent(atIndex: index,
-                                                            controller: controller,
-                                                            newComponentModels: newComponentModels,
-                                                            withAnimation: animation,
-                                                            completion: completion)
+          strongSelf.setupItemsForComponent(atIndex: index,
+                                            controller: controller,
+                                            newComponentModels: newComponentModels,
+                                            withAnimation: animation,
+                                            completion: completion)
         case .none: continue
         }
       }
@@ -538,14 +539,8 @@ public class SpotsControllerManager {
     var newModel = component.model
     newModel.items = items
 
-    let didUpdate = updateComponentModel(newModel, on: component, in: controller, withAnimation: animation) {
+    updateComponentModel(newModel, on: component, in: controller, withAnimation: animation) {
       controller.scrollView.setNeedsLayout()
-      completion?()
-    }
-
-    /// `updateComponentWithModel` will not invoke the completion closure if there are no updates.
-    /// Therefor we need to invoke it manually here.
-    if !didUpdate {
       completion?()
     }
   }
@@ -710,42 +705,46 @@ public class SpotsControllerManager {
   ///   - animation: The animation that should be used when performing the update.
   ///   - completion: A completion closure that will run if updates where performed.
   /// - Returns: Will return `true` if updates where performed, otherwise `false`.
-  @discardableResult private func updateComponentModel(_ model: ComponentModel, on component: Component, in controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion) -> Bool {
+  private func updateComponentModel(_ model: ComponentModel, on component: Component, in controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion) {
     let tempComponent = Component(model: model, configuration: controller.configuration)
     tempComponent.setup(with: component.view.frame.size)
     tempComponent.model.size = CGSize(
       width: controller.view.frame.width,
       height: ceil(tempComponent.view.frame.height))
 
-    guard let changes = component.manager.diffManager.compare(oldItems: component.model.items, newItems: tempComponent.model.items) else {
-      return false
+    Dispatch.interactive { [weak self] in
+      guard let changes = component.manager.diffManager.compare(oldItems: component.model.items, newItems: tempComponent.model.items) else {
+        Dispatch.main {
+          completion?()
+        }
+        return
+      }
+
+      Dispatch.main { [weak self] in
+        let newItems = tempComponent.model.items
+        if newItems.count == component.model.items.count {
+          self?.reload(with: changes,
+                       controller: controller,
+                       in: component,
+                       newItems: newItems,
+                       animation: animation,
+                       completion: completion)
+        } else if newItems.count < component.model.items.count {
+          self?.reload(with: changes,
+                       controller: controller,
+                       in: component,
+                       lessItems: newItems,
+                       animation: animation,
+                       completion: completion)
+        } else if newItems.count > component.model.items.count {
+          self?.reload(with: changes,
+                       controller: controller,
+                       in: component,
+                       moreItems: newItems,
+                       animation: animation,
+                       completion: completion)
+        }
+      }
     }
-
-    let newItems = tempComponent.model.items
-
-    if newItems.count == component.model.items.count {
-      reload(with: changes,
-             controller: controller,
-             in: component,
-             newItems: newItems,
-             animation: animation,
-             completion: completion)
-    } else if newItems.count < component.model.items.count {
-      reload(with: changes,
-             controller: controller,
-             in: component,
-             lessItems: newItems,
-             animation: animation,
-             completion: completion)
-    } else if newItems.count > component.model.items.count {
-      reload(with: changes,
-             controller: controller,
-             in: component,
-             moreItems: newItems,
-             animation: animation,
-             completion: completion)
-    }
-
-    return true
   }
 }

@@ -360,18 +360,13 @@ public class ComponentManager {
   /// - parameter completion:       A completion closure that runs when your updates are done.
   public func reloadIfNeeded(with changes: Changes, component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     component.userInterface?.processChanges(changes, withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
-      guard let strongSelf = self else {
-        completion?()
-        return
-      }
-
       if changes.updates.isEmpty {
-        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        self?.process(Array(changes.updates), component: component, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       } else {
-        strongSelf.process(Array(changes.updates), component: component, withAnimation: animation) {
-          strongSelf.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+        self?.process(Array(changes.updates), component: component, withAnimation: animation) {
+          self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
         }
       }
     }
@@ -384,29 +379,30 @@ public class ComponentManager {
   /// - parameter animation:  The animation that should be used (only works for Listable objects)
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   public func reloadIfNeeded(items: [Item], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
-    Dispatch.main { [weak self] in
-      guard let `self` = self else {
-        completion?()
-        return
-      }
-
-      let duplicatedComponent = Component(model: component.model, configuration: self.configuration)
+    Dispatch.main {
+      let duplicatedComponent = Component(model: component.model, configuration: component.configuration)
       duplicatedComponent.model.items = items
       duplicatedComponent.setup(with: component.view.frame.size)
+      let newItems = duplicatedComponent.model.items
 
-      guard let changes = self.diffManager.compare(oldItems: component.model.items, newItems: duplicatedComponent.model.items) else {
-        completion?()
-        return
-      }
+      Dispatch.interactive { [weak self, diffManager = self.diffManager] in
+        guard let changes = diffManager.compare(oldItems: component.model.items, newItems: newItems) else {
+          Dispatch.main {
+            completion?()
+          }
+          return
+        }
 
-      let updateDatasource = {
-        component.model.items = duplicatedComponent.model.items
-      }
-      let completion = {
-        self.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
-      }
+        Dispatch.main { [weak self, changes = changes] in
+          let updateDatasource = {
+            component.model.items = newItems
+          }
 
-      component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: completion)
+          component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: {
+            self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
+          })
+        }
+      }
     }
   }
 
@@ -478,18 +474,20 @@ public class ComponentManager {
   ///   - updateHeightAndIndexes: Determines if the height and indexes should be refreshed.
   ///   - completion: A completion closure that is run when the operation is done.
   private func finishComponentOperation(_ component: Component, updateHeightAndIndexes: Bool, completion: Completion) {
-    if updateHeightAndIndexes {
-      component.updateHeightAndIndexes {
+    Dispatch.main {
+      if updateHeightAndIndexes {
+        component.updateHeightAndIndexes {
+          component.afterUpdate()
+          component.view.superview?.setNeedsLayout()
+          component.view.superview?.layoutIfNeeded()
+          completion?()
+        }
+      } else {
         component.afterUpdate()
         component.view.superview?.setNeedsLayout()
         component.view.superview?.layoutIfNeeded()
         completion?()
       }
-    } else {
-      component.afterUpdate()
-      component.view.superview?.setNeedsLayout()
-      component.view.superview?.layoutIfNeeded()
-      completion?()
     }
   }
 }
