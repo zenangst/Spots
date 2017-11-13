@@ -5,7 +5,7 @@ public protocol ItemCodable: Codable {
 }
 public protocol ItemModel: ItemCodable, Equatable {}
 
-public extension ItemCodable where Self : Equatable {
+public extension ItemCodable where Self: Equatable {
     func equal(to rhs: ItemCodable) -> Bool {
         guard let rhs = rhs as? Self else {
             return false
