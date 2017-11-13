@@ -6,11 +6,11 @@ final class ItemModelTests: XCTestCase {
   func testEqualToWithEquatables() {
     // When equal
     do {
-        let a = "foo"
-        let b = "foo"
-        XCTAssertTrue(a.equal(to: b))
+      let a = "foo"
+      let b = "foo"
+      XCTAssertTrue(a.equal(to: b))
     }
-    
+
     // When not equal
     do {
       let a = "foo"
