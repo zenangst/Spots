@@ -304,10 +304,12 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   ///
   /// - parameter animated: An optional animation closure that is invoked when setting up the component.
   open func setupComponents(animated: ((_ view: UIView) -> Void)? = nil) {
-    components.enumerated().forEach { index, component in
+    for (index, component) in components.enumerated() {
       setupComponent(at: index, component: component)
       animated?(component.view)
     }
+
+    manager.purgeCachedViews(in: components)
   }
 
   /// Set up Spot at index

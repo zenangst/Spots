@@ -176,7 +176,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     layoutHeaderFooterViews(size)
-
     view.setNeedsLayout()
     view.layoutIfNeeded()
   }
@@ -319,7 +318,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public func afterUpdate() {
     reloadHeader()
     reloadFooter()
-
     pageControl.numberOfPages = model.items.count
     view.superview?.layoutIfNeeded()
   }

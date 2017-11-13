@@ -327,7 +327,10 @@ public class SpotsControllerManager {
           fallthrough
         case .items:
           if index == lastItemChange {
-            completion = finalCompletion
+            completion = { [weak self] in
+              self?.purgeCachedViews(in: controller.components)
+              finalCompletion?()
+            }
             runCompletion = false
           }
 
@@ -745,6 +748,12 @@ public class SpotsControllerManager {
                        completion: completion)
         }
       }
+    }
+  }
+
+  func purgeCachedViews(in components: [Component]) {
+    for component in components {
+      component.configuration.views.purge()
     }
   }
 }
