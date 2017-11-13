@@ -33,16 +33,20 @@ extension Component {
       return
     }
 
+    let componentComputedHeight = computedHeight
+
     // This fixes a constraints warning when trying to prepare a collection view
     // before it has gotten its initial frame.
     if collectionViewLayout.contentSize.height < collectionView.frame.size.height {
-      collectionView.frame.size.height = computedHeight
+      collectionView.frame.size.height = componentComputedHeight
     }
 
-    collectionViewLayout.prepare()
-    collectionViewLayout.invalidateLayout()
     collectionView.frame.size.width = size.width
-    collectionView.frame.size.height = computedHeight
+    collectionView.frame.size.height = componentComputedHeight
+
+    if collectionView.contentSize == .zero {
+      collectionView.contentSize = collectionViewLayout.contentSize
+    }
 
     configurePageControl(collectionView: collectionView, collectionViewLayout: collectionViewLayout)
   }
