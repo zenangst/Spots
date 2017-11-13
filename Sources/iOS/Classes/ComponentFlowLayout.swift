@@ -58,7 +58,10 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
 
     self.layoutAttributes = layoutAttributes
+    computeContentSize(with: component)
+  }
 
+  func computeContentSize(with component: Component) {
     switch scrollDirection {
     case .horizontal:
       contentSize = .zero
