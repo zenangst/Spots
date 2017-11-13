@@ -77,8 +77,8 @@ public extension Component {
     }
   }
 
-  public func prepareItems(purgeViews: Bool = false) {
-    manager.itemManager.prepareItems(component: self, purgeViews: purgeViews)
+  public func prepareItems(purgeCachedViews: Bool = false) {
+    manager.itemManager.prepareItems(component: self, purgeCachedViews: purgeCachedViews)
   }
 
   /// Resolve a UI component at index with inferred type

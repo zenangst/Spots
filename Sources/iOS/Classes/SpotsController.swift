@@ -309,7 +309,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       animated?(component.view)
     }
 
-    manager.purgeViews(in: components)
+    manager.purgeCachedViews(in: components)
   }
 
   /// Set up Spot at index

@@ -328,7 +328,7 @@ public class SpotsControllerManager {
         case .items:
           if index == lastItemChange {
             completion = {
-              strongSelf.purgeViews(in: controller.components)
+              strongSelf.purgeCachedViews(in: controller.components)
               finalCompletion?()
             }
             runCompletion = false
@@ -751,7 +751,7 @@ public class SpotsControllerManager {
     }
   }
 
-  func purgeViews(in components: [Component]) {
+  func purgeCachedViews(in components: [Component]) {
     for component in components {
       component.configuration.views.purge()
     }
