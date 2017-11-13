@@ -161,7 +161,7 @@ class DiffManager {
 
     if let newModel = newModel.model {
       if let oldModel = oldModel.model {
-        if !(newModel == oldModel) {
+        if !(newModel.equal(to: oldModel)) {
           return .model
         }
       } else {

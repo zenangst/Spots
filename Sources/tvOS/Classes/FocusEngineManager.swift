@@ -59,4 +59,3 @@ class FocusEngineManager {
     return contentInset
   }
 }
-
