@@ -308,7 +308,6 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       setupComponent(at: index, component: component)
       animated?(component.view)
     }
-
     manager.purgeCachedViews(in: components)
   }
 
