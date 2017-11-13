@@ -177,7 +177,16 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     layoutHeaderFooterViews(size)
     view.setNeedsLayout()
-    view.layoutIfNeeded()
+    // Only call `layoutIfNeeded` if the `Component` is not a part of a `SpotsController`.
+    if let spotsScrollView = (focusDelegate as? SpotsController)?.scrollView {
+      let isVisibleOnScreen = view.frame.intersects(.init(origin: spotsScrollView.contentOffset,
+                                                          size: spotsScrollView.frame.size))
+      if isVisibleOnScreen {
+        view.layoutIfNeeded()
+      }
+    } else {
+      view.layoutIfNeeded()
+    }
   }
 
   /// This method is invoked by `ComponentCollectionView.layoutSubviews()`.
