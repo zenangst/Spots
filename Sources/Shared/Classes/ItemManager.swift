@@ -30,9 +30,12 @@ public class ItemManager {
     return max((componentWidth / CGFloat(component.model.layout.span)) - CGFloat(component.model.layout.itemSpacing), 0)
   }
 
-  func prepareItems(component: Component) {
+  func prepareItems(component: Component, purgeViews: Bool) {
     component.model.items = prepare(component: component, items: component.model.items)
-    configuration.views.purge()
+
+    if purgeViews {
+      configuration.views.purge()
+    }
   }
 
   func prepare(component: Component, items: [Item]) -> [Item] {
