@@ -178,7 +178,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     layoutHeaderFooterViews(size)
 
     view.setNeedsLayout()
-    view.layoutIfNeeded()
+
+    // Only call `layoutIfNeeded` if the `Component` is not a part of a `SpotsController`.
+    if !(view.superview is SpotsContentView) {
+      view.layoutIfNeeded()
+    }
   }
 
   /// This method is invoked by `ComponentCollectionView.layoutSubviews()`.
