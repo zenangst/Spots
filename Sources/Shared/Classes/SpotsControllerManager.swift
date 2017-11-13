@@ -327,8 +327,8 @@ public class SpotsControllerManager {
           fallthrough
         case .items:
           if index == lastItemChange {
-            completion = {
-              strongSelf.purgeCachedViews(in: controller.components)
+            completion = { [weak self] in
+              self?.purgeCachedViews(in: controller.components)
               finalCompletion?()
             }
             runCompletion = false
