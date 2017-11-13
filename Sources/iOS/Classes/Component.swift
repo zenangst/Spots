@@ -176,13 +176,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     layoutHeaderFooterViews(size)
-
     view.setNeedsLayout()
-
-    // Only call `layoutIfNeeded` if the `Component` is not a part of a `SpotsController`.
-    if !(view.superview is SpotsContentView) {
-      view.layoutIfNeeded()
-    }
+    view.layoutIfNeeded()
   }
 
   /// This method is invoked by `ComponentCollectionView.layoutSubviews()`.
@@ -323,7 +318,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   public func afterUpdate() {
     reloadHeader()
     reloadFooter()
-
     pageControl.numberOfPages = model.items.count
     view.superview?.layoutIfNeeded()
   }
