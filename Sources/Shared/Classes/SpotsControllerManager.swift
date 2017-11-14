@@ -15,11 +15,11 @@
 /// It can also pinpoint updates on a specific component by supplying the component index of the `Component`
 /// that you which to mutate. `SpotsController` has a protocol extension which makes these method directly accessable
 /// on the controller (see `SpotsController+SpotsControllerManager`).  `SpotsControllerManager` lives on `SpotsController`.
-/// It is created during init and is publicly accessable via `.manager`. 
+/// It is created during init and is publicly accessable via `.manager`.
 ///
 /// Usage:
 ///
-/// 
+///
 /// ```
 /// // Reload with a collection of `ComponentModel`s
 /// controller.reloadIfNeeded(components: [componentModel, ...]) {}
@@ -149,8 +149,7 @@ public class SpotsControllerManager {
   ///   - index: The index of the component
   ///   - controller: A SpotsController
   ///   - newComponentModels: The new component model that should replace the existing component.
-  ///   - yOffset: The y offset of the component.
-  fileprivate func replaceComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+  fileprivate func replaceComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel]) {
     let component = Component(model: newComponentModels[index], configuration: controller.configuration)
     let oldComponent = controller.components[index]
 
@@ -160,8 +159,6 @@ public class SpotsControllerManager {
     controller.components[index] = component
     controller.scrollView.componentsView.insertSubview(component.view, at: index)
     controller.setupComponent(at: index, component: component)
-
-    yOffset += component.view.frame.size.height
   }
 
   /// Insert new component at index.
@@ -170,13 +167,10 @@ public class SpotsControllerManager {
   ///   - index: The index of the component
   ///   - controller: A SpotsController instance.
   ///   - newComponentModels: The new component model that should replace the existing component.
-  ///   - yOffset: The y offset of the component.
-  fileprivate func newComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel], yOffset: inout CGFloat) {
+  fileprivate func newComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel]) {
     let component = Component(model: newComponentModels[index], configuration: controller.configuration)
     controller.components.append(component)
     controller.setupComponent(at: index, component: component)
-
-    yOffset += component.view.frame.size.height
   }
 
   /// Remove component at index
@@ -299,22 +293,17 @@ public class SpotsControllerManager {
       }
 
       let finalCompletion = completion
+      let lastItemChange: Int = changes.count - 1
 
-      var yOffset: CGFloat = 0.0
       var runCompletion = true
       var completion: Completion = nil
-      var lastItemChange: Int?
-
-      for (index, change) in changes.enumerated() where change == .items {
-        lastItemChange = index
-      }
 
       for (index, change) in changes.enumerated() {
         switch change {
         case .identifier, .kind, .layout, .meta:
-          strongSelf.replaceComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels, yOffset: &yOffset)
+          strongSelf.replaceComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels)
         case .new:
-          strongSelf.newComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels, yOffset: &yOffset)
+          strongSelf.newComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels)
         case .removed:
           strongSelf.removeComponent(atIndex: index, controller: controller)
         case .header:
@@ -339,7 +328,8 @@ public class SpotsControllerManager {
                                             newComponentModels: newComponentModels,
                                             withAnimation: animation,
                                             completion: completion)
-        case .none: continue
+        case .none:
+          continue
         }
       }
 
@@ -757,3 +747,4 @@ public class SpotsControllerManager {
     }
   }
 }
+
