@@ -1,19 +1,17 @@
 import Foundation
 
-public protocol ItemCodable: Codable {}
+public protocol ItemCodable: Codable {
+  func equal(to rhs: ItemCodable) -> Bool
+}
 public protocol ItemModel: ItemCodable, Equatable {}
 
-public func == (lhs: ItemCodable, rhs: ItemCodable) -> Bool {
-  guard type(of: lhs) == type(of: rhs) else {
-    return false
+public extension ItemCodable where Self: Equatable {
+  func equal(to rhs: ItemCodable) -> Bool {
+    guard let rhs = rhs as? Self else {
+      return false
+    }
+    return self == rhs
   }
-
-  var lhsOutput = ""
-  var rhsOutput = ""
-  dump(lhs, to: &lhsOutput)
-  dump(rhs, to: &rhsOutput)
-
-  return lhsOutput == rhsOutput
 }
 
 extension ItemCodable {
