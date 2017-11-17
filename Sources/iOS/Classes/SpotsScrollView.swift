@@ -85,8 +85,11 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
     #if os(iOS)
       scrollView.scrollsToTop = false
+      scrollView.isScrollEnabled = false
+    #else
+      scrollView.isScrollEnabled = true
     #endif
-    scrollView.isScrollEnabled = false
+
 
     if let collectionView = scrollView as? UICollectionView,
       let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout, layout.scrollDirection == .horizontal {
