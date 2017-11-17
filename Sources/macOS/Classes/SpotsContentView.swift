@@ -20,7 +20,10 @@ open class SpotsContentView: NSView {
   ///   - view: The view that should be inserted.
   ///   - index: The index that the view should be inserted at.
   func insertSubview(_ view: View, at index: Int) {
-    subviews.insert(view, at: index)
+    if !subviews.contains(view) {
+      subviews.insert(view, at: index)
+    }
+
     rebuildSubviewsInLayoutOrder()
     resolveSpotsScrollView { scrollView in
       scrollView.layoutViews(animated: true)
