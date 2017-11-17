@@ -149,12 +149,16 @@ public class SpotsControllerManager {
   ///   - index: The index of the component
   ///   - controller: A SpotsController
   ///   - newComponentModels: The new component model that should replace the existing component.
-  fileprivate func replaceComponent(atIndex index: Int, with preparedComponent: Component? = nil, controller: SpotsController, newComponentModels: [ComponentModel]) {
+  fileprivate func replaceComponent(atIndex index: Int, with preparedComponent: Component? = nil, controller: SpotsController, newComponentModels: [ComponentModel], completion: Completion = nil) {
     let component: Component
     let oldComponent = controller.components[index]
 
     if let preparedComponent = preparedComponent {
       component = preparedComponent
+
+      defer {
+        completion?()
+      }
     } else {
       component = Component(model: newComponentModels[index], configuration: controller.configuration)
       component.view.frame = oldComponent.view.frame
@@ -732,7 +736,7 @@ public class SpotsControllerManager {
         // If the component is empty, then replace the old one with the temporary component
         // used for diffing.
         if component.model.items.isEmpty {
-          self?.replaceComponent(atIndex: component.model.index, with: tempComponent, controller: controller, newComponentModels: [])
+          self?.replaceComponent(atIndex: component.model.index, with: tempComponent, controller: controller, newComponentModels: [], completion: completion)
           return
         }
 
