@@ -149,16 +149,24 @@ public class SpotsControllerManager {
   ///   - index: The index of the component
   ///   - controller: A SpotsController
   ///   - newComponentModels: The new component model that should replace the existing component.
-  fileprivate func replaceComponent(atIndex index: Int, controller: SpotsController, newComponentModels: [ComponentModel]) {
-    let component = Component(model: newComponentModels[index], configuration: controller.configuration)
+  fileprivate func replaceComponent(atIndex index: Int, with preparedComponent: Component? = nil, controller: SpotsController, newComponentModels: [ComponentModel]) {
+    let component: Component
     let oldComponent = controller.components[index]
 
-    component.view.frame = oldComponent.view.frame
+    if let preparedComponent = preparedComponent {
+      component = preparedComponent
+    } else {
+      component = Component(model: newComponentModels[index], configuration: controller.configuration)
+      component.view.frame = oldComponent.view.frame
+
+      defer {
+        controller.setupComponent(at: index, component: component)
+      }
+    }
 
     oldComponent.view.removeFromSuperview()
     controller.components[index] = component
     controller.scrollView.componentsView.insertSubview(component.view, at: index)
-    controller.setupComponent(at: index, component: component)
   }
 
   /// Insert new component at index.
@@ -699,8 +707,15 @@ public class SpotsControllerManager {
   ///   - completion: A completion closure that will run if updates where performed.
   /// - Returns: Will return `true` if updates where performed, otherwise `false`.
   private func updateComponentModel(_ model: ComponentModel, on component: Component, in controller: SpotsController, withAnimation animation: Animation = .automatic, completion: Completion) {
+    let setupSize: CGSize
+    if component.view.frame.size == .zero {
+      setupSize = controller.view.frame.size
+    } else {
+      setupSize = component.view.frame.size
+    }
+
     let tempComponent = Component(model: model, configuration: controller.configuration)
-    tempComponent.setup(with: component.view.frame.size)
+    tempComponent.setup(with: setupSize)
     tempComponent.model.size = CGSize(
       width: controller.view.frame.width,
       height: ceil(tempComponent.view.frame.height))
@@ -714,6 +729,13 @@ public class SpotsControllerManager {
       }
 
       Dispatch.main { [weak self] in
+        // If the component is empty, then replace the old one with the temporary component
+        // used for diffing.
+        if component.model.items.isEmpty {
+          self?.replaceComponent(atIndex: component.model.index, with: tempComponent, controller: controller, newComponentModels: [])
+          return
+        }
+
         let newItems = tempComponent.model.items
         if newItems.count == component.model.items.count {
           self?.reload(with: changes,
@@ -747,4 +769,3 @@ public class SpotsControllerManager {
     }
   }
 }
-
