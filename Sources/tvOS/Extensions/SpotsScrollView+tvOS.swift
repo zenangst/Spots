@@ -47,6 +47,8 @@ extension SpotsScrollView {
       if let collectionView = scrollView as? UICollectionView,
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout, layout.scrollDirection == .horizontal {
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+      } else if subviewsInLayoutOrder.count > 1 {
+        scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
       }
 
       frame.size.height = newHeight
