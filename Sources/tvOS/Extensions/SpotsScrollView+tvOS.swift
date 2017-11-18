@@ -3,7 +3,9 @@ import UIKit
 
 extension SpotsScrollView {
   /// Layout views in linear order based of view index in `subviewsInLayoutOrder`
-  func layoutViews() {
+  func layoutViews(file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+//    Swift.print("file: \(file):\(function):\(line)")
+
     guard let superview = superview else {
       return
     }
@@ -30,25 +32,51 @@ extension SpotsScrollView {
         frame.origin.y = self.contentOffset.y
       }
 
+      sizeCache[offset] = yOffsetOfCurrentSubview
+      yOffsetOfCurrentSubview += scrollView.contentSize.height
+
       let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
       let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
+      let calculatedHeight = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
 
       var newHeight: CGFloat
       if configuration.stretchLastComponent && scrollView.isEqual(lastView) {
         newHeight = self.frame.size.height - scrollView.frame.origin.y + self.contentOffset.y
       } else {
-        newHeight = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+        newHeight = calculatedHeight
       }
 
-      if newHeight < componentsView.frame.height {
-        newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
-      }
+      let isVisibleOnScreen = scrollView.frame.intersects(.init(origin: self.contentOffset,
+                                                                size: self.frame.size))
 
-      if let collectionView = scrollView as? UICollectionView,
-        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout, layout.scrollDirection == .horizontal {
-        scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
-      } else if subviewsInLayoutOrder.count > 1 {
-        scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+      Swift.print("isVisibleOnScreen(\(offset)): \(isVisibleOnScreen)")
+
+      if let component = (scrollView.delegate as? Delegate)?.component {
+        switch component.model.kind {
+        case .carousel:
+          newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
+          if contentOffset.y < scrollView.frame.size.height {
+            scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+          } else {
+            scrollView.frame.size.height = newHeight
+            continue
+          }
+        case .grid:
+          if subviewsInLayoutOrder.count > 1 {
+            newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
+
+//            let isVisibleOnScreen = scrollView.frame.intersects(.init(origin: self.contentOffset,
+//                                                                      size: self.frame.size))
+//
+//            if isVisibleOnScreen {
+//              scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+//            } else {
+//              continue
+//            }
+          }
+        default:
+          break
+        }
       }
 
       frame.size.height = newHeight
@@ -65,9 +93,6 @@ extension SpotsScrollView {
       }
 
       scrollView.frame = frame
-
-      sizeCache[offset] = yOffsetOfCurrentSubview
-      yOffsetOfCurrentSubview += scrollView.contentSize.height
     }
 
     contentSize = CGSize(width: bounds.size.width, height: yOffsetOfCurrentSubview)
