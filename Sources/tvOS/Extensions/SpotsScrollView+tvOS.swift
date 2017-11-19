@@ -44,11 +44,12 @@ extension SpotsScrollView {
         newHeight = calculatedHeight
       }
 
+      let shouldModifyContentOffset = contentOffset.y < scrollView.frame.size.height || contentOffset.y > scrollView.contentOffset.y
 
       if let component = (scrollView.delegate as? Delegate)?.component {
         if component.model.kind == .carousel {
           newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
-          if contentOffset.y < scrollView.frame.size.height {
+          if shouldModifyContentOffset {
             scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
           } else {
             scrollView.frame.size.height = newHeight
@@ -56,7 +57,7 @@ extension SpotsScrollView {
           }
         } else if component.model.kind == .grid {
           if subviewsInLayoutOrder.count > 1 {
-            if contentOffset.y > scrollView.contentOffset.y {
+            if shouldModifyContentOffset {
               scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
             }
             newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
