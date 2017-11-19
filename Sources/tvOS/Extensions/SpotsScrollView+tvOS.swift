@@ -60,10 +60,8 @@ extension SpotsScrollView {
             if shouldModifyContentOffset {
               scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
             }
-            newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
-          } else {
-            newHeight = componentsView.frame.height
           }
+          newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
         }
       }
 
