@@ -30,23 +30,39 @@ extension SpotsScrollView {
         frame.origin.y = self.contentOffset.y
       }
 
+      sizeCache[offset] = yOffsetOfCurrentSubview
+      yOffsetOfCurrentSubview += scrollView.contentSize.height
+
       let remainingBoundsHeight = fmax(bounds.maxY - frame.minY, 0.0)
       let remainingContentHeight = fmax(scrollView.contentSize.height - contentOffset.y, 0.0)
+      let calculatedHeight = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
 
       var newHeight: CGFloat
       if configuration.stretchLastComponent && scrollView.isEqual(lastView) {
         newHeight = self.frame.size.height - scrollView.frame.origin.y + self.contentOffset.y
       } else {
-        newHeight = ceil(fmin(remainingBoundsHeight, remainingContentHeight))
+        newHeight = calculatedHeight
       }
 
-      if newHeight < componentsView.frame.height {
-        newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
-      }
+      let shouldModifyContentOffset = contentOffset.y < scrollView.frame.size.height || contentOffset.y > scrollView.contentOffset.y
 
-      if let collectionView = scrollView as? UICollectionView,
-        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout, layout.scrollDirection == .horizontal {
-        scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+      if let component = (scrollView.delegate as? Delegate)?.component {
+        if component.model.kind == .carousel {
+          newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
+          if shouldModifyContentOffset {
+            scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+          } else {
+            scrollView.frame.size.height = newHeight
+            continue
+          }
+        } else if component.model.kind == .grid {
+          if subviewsInLayoutOrder.count > 1 {
+            if shouldModifyContentOffset {
+              scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+            }
+            newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
+          }
+        }
       }
 
       frame.size.height = newHeight
@@ -63,9 +79,6 @@ extension SpotsScrollView {
       }
 
       scrollView.frame = frame
-
-      sizeCache[offset] = yOffsetOfCurrentSubview
-      yOffsetOfCurrentSubview += scrollView.contentSize.height
     }
 
     contentSize = CGSize(width: bounds.size.width, height: yOffsetOfCurrentSubview)

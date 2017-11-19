@@ -224,7 +224,6 @@ public class ItemManager {
   public func sizeForItem(at indexPath: IndexPath, in component: Component) -> CGSize {
     var size = component.item(at: indexPath)?.size ?? .zero
     size.width = max(size.width, 0)
-    size.height = max(size.height, 0)
 
     #if os(macOS)
       // Make sure that the item width never exceeds the frame view width.
@@ -253,6 +252,8 @@ public class ItemManager {
         size.height = component.view.frame.size.height - CGFloat(component.model.layout.inset.bottom)
       }
     #endif
+
+    size.height = fmax(size.height, 0)
 
     return size
   }
