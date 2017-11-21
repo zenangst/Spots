@@ -146,7 +146,12 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           return
         }
 
-        if newValue != value.oldValue {
+        guard let oldValue = value.oldValue else {
+          strongSelf.layoutViews()
+          return
+        }
+
+        if newValue.y != oldValue.y {
           strongSelf.layoutViews()
         }
       })
@@ -160,7 +165,12 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           return
         }
 
-        if newValue != value.oldValue {
+        guard let oldValue = value.oldValue else {
+          strongSelf.layoutViews()
+          return
+        }
+
+        if newValue.origin.y != oldValue.origin.y {
           strongSelf.layoutViews()
         }
       })
