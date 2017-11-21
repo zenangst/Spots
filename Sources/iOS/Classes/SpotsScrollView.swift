@@ -92,7 +92,11 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         scrollView.isScrollEnabled = false
       }
     #else
-      scrollView.isScrollEnabled = true
+      if subviewsInLayoutOrder.count > 1 {
+        scrollView.isScrollEnabled = false
+      } else {
+        scrollView.isScrollEnabled = true
+      }
     #endif
 
     setNeedsLayout()
