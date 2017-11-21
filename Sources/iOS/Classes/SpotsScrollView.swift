@@ -136,12 +136,12 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
           return
         }
 
-        if newValue != value.oldValue {
+        if scrollView.contentSize != newValue {
           strongSelf.layoutViews()
         }
       })
 
-      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.new, .old], changeHandler: { [weak self] (scrollView, value) in
+      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.new, .old], changeHandler: { [weak self] (_, value) in
         guard let strongSelf = self, let newValue = value.newValue else {
           return
         }
@@ -160,7 +160,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
       observers.append(Observer(view: view, keyValueObservation: contentOffsetObserver))
       fallthrough
     default:
-      let boundsObserver = view.observe(\.bounds, options: [.new, .old], changeHandler: { [weak self] (view, value) in
+      let boundsObserver = view.observe(\.bounds, options: [.new, .old], changeHandler: { [weak self] (_, value) in
         guard let strongSelf = self, let newValue = value.newValue else {
           return
         }
