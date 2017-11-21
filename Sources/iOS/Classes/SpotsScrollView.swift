@@ -94,7 +94,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
     #else
       if subviewsInLayoutOrder.count > 1 {
         for case let scrollView as ScrollView in subviewsInLayoutOrder {
-          scrollView.isScrollEnabled = false
+          scrollView.isScrollEnabled = (scrollView as? UICollectionView)?.flowLayout?.scrollDirection == .horizontal
         }
       } else {
         scrollView.isScrollEnabled = true
