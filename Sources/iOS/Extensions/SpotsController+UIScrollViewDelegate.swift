@@ -11,16 +11,19 @@ extension SpotsController {
 
   open func scrollViewDidScroll(_ scrollView: UIScrollView) {
     #if os(tvOS)
+      self.scrollView.layoutViews()
       guard scrollDelegate?.didScroll(in: scrollView) != true else {
         return
       }
+      let multiplier: CGFloat = 1
+    #else
+      let multiplier: CGFloat = !refreshPositions.isEmpty
+        ? CGFloat(1 + refreshPositions.count)
+        : 1
     #endif
 
     let offset = scrollView.contentOffset
     let size = scrollView.contentSize
-    let multiplier: CGFloat = !refreshPositions.isEmpty
-      ? CGFloat(1 + refreshPositions.count)
-      : 1
     let windowHeight = scrollView.window?.frame.size.height ?? 0
     let windowViewOffset = windowHeight - scrollView.frame.size.height
     let itemOffset = (size.height - scrollView.bounds.size.height * 2) > 0
@@ -62,8 +65,10 @@ extension SpotsController {
   }
 
   public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    for case let componentView as ScrollView in self.scrollView.componentsView.subviews where !componentView.panGestureRecognizer.isEnabled {
-      componentView.panGestureRecognizer.isEnabled = true
-    }
+    #if os(iOS)
+      for case let componentView as ScrollView in self.scrollView.componentsView.subviews where !componentView.panGestureRecognizer.isEnabled {
+        componentView.panGestureRecognizer.isEnabled = true
+      }
+    #endif
   }
 }

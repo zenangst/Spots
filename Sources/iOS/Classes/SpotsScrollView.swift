@@ -92,7 +92,13 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
         scrollView.isScrollEnabled = false
       }
     #else
-      scrollView.isScrollEnabled = true
+      if subviewsInLayoutOrder.count > 1 {
+        for case let scrollView as ScrollView in subviewsInLayoutOrder {
+          scrollView.isScrollEnabled = (scrollView as? UICollectionView)?.flowLayout?.scrollDirection == .horizontal
+        }
+      } else {
+        scrollView.isScrollEnabled = true
+      }
     #endif
 
     setNeedsLayout()
@@ -127,46 +133,47 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
     switch view {
     case let scrollView as UIScrollView:
-      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.new], changeHandler: { [weak self] (scrollView, value) in
-        guard let `self` = self else {
+      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.new, .old], changeHandler: { [weak self] (scrollView, value) in
+        guard let strongSelf = self, let newValue = value.newValue else {
           return
         }
 
-        guard !(self.compare(size: scrollView.contentSize, to: value.newValue)) else {
-          return
+        if scrollView.contentSize != newValue {
+          strongSelf.layoutViews()
         }
-
-        self.layoutViews()
       })
 
-      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.new], changeHandler: { [weak self] (scrollView, value) in
-        guard let `self` = self else {
+      let contentOffsetObserver = scrollView.observe(\.contentOffset, options: [.new, .old], changeHandler: { [weak self] (_, value) in
+        guard let strongSelf = self, let newValue = value.newValue else {
           return
         }
 
-        guard !(self.compare(point: scrollView.contentOffset, to: value.newValue)) else {
+        guard let oldValue = value.oldValue else {
+          strongSelf.layoutViews()
           return
         }
 
-        self.layoutViews()
+        if newValue.y != oldValue.y {
+          strongSelf.layoutViews()
+        }
       })
 
       observers.append(Observer(view: view, keyValueObservation: contentSizeObserver))
       observers.append(Observer(view: view, keyValueObservation: contentOffsetObserver))
       fallthrough
     default:
-      let boundsObserver = view.observe(\.bounds, options: [.new], changeHandler: { [weak self] (view, value) in
-        guard let `self` = self else {
+      let boundsObserver = view.observe(\.bounds, options: [.new, .old], changeHandler: { [weak self] (_, value) in
+        guard let strongSelf = self, let newValue = value.newValue else {
           return
         }
 
-        if !self.compare(rect: view.bounds, to: value.oldValue) {
-          self.layoutViews()
+        guard let oldValue = value.oldValue else {
+          strongSelf.layoutViews()
           return
         }
 
-        if !self.compare(rect: view.bounds, to: value.newValue) {
-          self.layoutViews()
+        if newValue.origin.y != oldValue.origin.y {
+          strongSelf.layoutViews()
         }
       })
 

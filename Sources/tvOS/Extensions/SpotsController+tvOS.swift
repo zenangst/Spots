@@ -38,9 +38,11 @@ extension SpotsController {
   }
 
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    defer {
-      self.scrollView.layoutViews()
-    }
+    #if os(tvOS)
+      if scrollView.contentOffset != targetContentOffset.pointee {
+        self.scrollView.layoutViews()
+      }
+    #endif
 
     // Determine if the default behavior has been overriden by a delegate.
     if let scrollDelegate = scrollDelegate {

@@ -2,7 +2,7 @@ import UIKit
 
 /// A scroll view extension on CarouselComponent to handle scrolling specifically for this object.
 extension Delegate: UIScrollViewDelegate {
-
+  #if os(iOS)
   public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
       let spotsScrollGesture = spotsScrollView.panGestureRecognizer
@@ -22,11 +22,14 @@ extension Delegate: UIScrollViewDelegate {
       }
     }
   }
+  #endif
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    #if os(iOS)
     if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
       spotsScrollView.panGestureRecognizer.isEnabled = true
     }
+    #endif
 
     if let component = component {
       if let footerView = component.footerView {
