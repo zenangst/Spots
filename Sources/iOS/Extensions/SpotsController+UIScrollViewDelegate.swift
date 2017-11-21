@@ -11,6 +11,7 @@ extension SpotsController {
 
   open func scrollViewDidScroll(_ scrollView: UIScrollView) {
     #if os(tvOS)
+      self.scrollView.layoutViews()
       guard scrollDelegate?.didScroll(in: scrollView) != true else {
         return
       }
