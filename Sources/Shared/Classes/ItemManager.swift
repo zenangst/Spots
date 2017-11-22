@@ -159,10 +159,16 @@ public class ItemManager {
         return
       }
 
-      item.size.height = presenter.configure(
+      let size = presenter.configure(
         view: view,
         model: model,
-        containerSize: component.view.frame.size).height
+        containerSize: component.view.frame.size)
+
+      if component.model.layout.span == 0 {
+        item.size.width = size.width
+      }
+
+      item.size.height = size.height
     }
   }
 
