@@ -103,7 +103,7 @@ extension UICollectionView: UserInterface {
   ///
   /// - Parameter index: The item index that should be used to resolve the view.
   /// - Returns: The view that is resolved at the index casted into the inferred type.
-  public func view<T>(at index: Int) -> T? {
+  public func view<T: View>(at index: Int) -> T? {
     let view: UICollectionViewCell? = cell(at: index)
     switch view {
     case let view as GridWrapper:
