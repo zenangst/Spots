@@ -86,7 +86,7 @@ public extension Component {
   /// - parameter index: The index of the UI component
   ///
   /// - returns: An optional view of inferred type
-  public func ui<T>(at index: Int) -> T? {
+  public func ui<T: View>(at index: Int) -> T? {
     return userInterface?.view(at: index)
   }
 

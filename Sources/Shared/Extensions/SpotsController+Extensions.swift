@@ -13,7 +13,7 @@ public extension SpotsController {
   /// - parameter includeElement: A filter predicate used to match the UI that should be resolved.
   ///
   /// - returns: An optional object with inferred type.
-  public func ui<T>(_ includeElement: (Item) -> Bool) -> T? {
+  public func ui<T: View>(_ includeElement: (Item) -> Bool) -> T? {
     for component in components {
       if let first = component.model.items.filter(includeElement).first {
         return component.ui(at: first.index)

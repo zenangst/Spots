@@ -36,7 +36,7 @@ public protocol UserInterface: class {
   /// - parameter index: The index of the UI that you are looking for.
   ///
   /// - returns: Find UI element with generic type inferred.
-  func view<T>(at index: Int) -> T?
+  func view<T: View>(at index: Int) -> T?
 
   ///  A convenience method for performing inserts on a UserInterface
   ///
