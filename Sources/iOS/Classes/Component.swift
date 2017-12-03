@@ -8,6 +8,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   open static var configure: ((Component) -> Void)?
   /// A focus delegate that returns which component is focused.
   weak public var focusDelegate: ComponentFocusDelegate?
+  /// A focus guide for the component
+  public var focusGuide: UIFocusGuide
   /// A component delegate, used for interaction and to pick up on mutation made to
   /// `self.components`. See `ComponentDelegate` for more information.
   weak public var delegate: ComponentDelegate?
@@ -95,10 +97,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   ///   - model: A `ComponentModel` that is used to configure the interaction, behavior and look-and-feel of the component.
   ///   - view: A scroll view, should either be a `UITableView` or `UICollectionView`.
   ///   - kind: The `kind` defines which user interface the component should render (either UICollectionView or UITableView).
-  public required init(model: ComponentModel, view: ScrollView, configuration: Configuration = .shared) {
+  public required init(model: ComponentModel, view: ScrollView, configuration: Configuration = .shared, focusGuide: UIFocusGuide = .init()) {
     self.model = model
     self.view = view
     self.configuration = configuration
+    self.focusGuide = focusGuide
     self.manager = ComponentManager(configuration: configuration)
     super.init()
     registerDefaultIfNeeded(view: DefaultItemView.self)
@@ -110,6 +113,13 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     self.componentDataSource = DataSource(component: self, with: configuration)
     self.componentDelegate = Delegate(component: self, with: configuration)
+
+    view.addLayoutGuide(focusGuide)
+    focusGuide.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+    focusGuide.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    focusGuide.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    focusGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    focusGuide.isEnabled = false
   }
 
   /// A convenience init for creating a component with a `ComponentModel`.
