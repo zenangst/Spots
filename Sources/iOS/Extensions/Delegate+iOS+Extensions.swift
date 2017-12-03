@@ -85,6 +85,9 @@ extension Delegate: UICollectionViewDelegate {
     if let component = component, indexPath.item < component.model.items.count {
       component.focusDelegate?.focusedComponent = component
       component.focusDelegate?.focusedItemIndex = indexPath.item
+      #if os(tvOS)
+      component.focusGuide.preferredFocusedView = collectionView.view(at: indexPath.item)
+      #endif
     }
 
     return context.nextFocusedView?.canBecomeFocused ?? false
@@ -168,6 +171,9 @@ extension Delegate: UITableViewDelegate {
     if let component = component, indexPath.item < component.model.items.count {
       component.focusDelegate?.focusedComponent = component
       component.focusDelegate?.focusedItemIndex = indexPath.item
+      #if os(tvOS)
+      component.focusGuide.preferredFocusedView = tableView.view(at: indexPath.item)
+      #endif
     }
 
     return true

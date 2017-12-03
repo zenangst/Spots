@@ -8,6 +8,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   open static var configure: ((Component) -> Void)?
   /// A focus delegate that returns which component is focused.
   weak public var focusDelegate: ComponentFocusDelegate?
+  #if os(tvOS)
+  /// A focus guide for the component
+  public lazy var focusGuide: UIFocusGuide = .init()
+  #endif
   /// A component delegate, used for interaction and to pick up on mutation made to
   /// `self.components`. See `ComponentDelegate` for more information.
   weak public var delegate: ComponentDelegate?
@@ -110,6 +114,15 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     self.componentDataSource = DataSource(component: self, with: configuration)
     self.componentDelegate = Delegate(component: self, with: configuration)
+
+    #if os(tvOS)
+    view.addLayoutGuide(focusGuide)
+    focusGuide.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+    focusGuide.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    focusGuide.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    focusGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    focusGuide.isEnabled = false
+    #endif
   }
 
   /// A convenience init for creating a component with a `ComponentModel`.
