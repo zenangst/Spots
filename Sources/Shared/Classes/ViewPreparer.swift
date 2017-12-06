@@ -57,11 +57,16 @@ class ViewPreparer {
             return
           }
 
-          component.model.items[index].size = presenter.configure(
+          let size = presenter.configure(
             view: wrappedView,
             model: model,
             containerSize: component.view.frame.size
           )
+
+          component.model.items[index].size.height = size.height
+          if component.model.layout.span == 0 {
+            component.model.items[index].size.width = size.width
+          }
         } else {
           component.model.items[index].size.height = wrappedView.frame.size.height
         }
