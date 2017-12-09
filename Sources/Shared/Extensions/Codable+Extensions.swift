@@ -127,6 +127,13 @@ extension KeyedDecodingContainer {
     }
     return try coder.decode(from: self, forKey: key)
   }
+
+  func decodeIfPresentWithModelCoder(forKey key: K) throws -> ItemCodable? {
+    guard let coder = Configuration.shared.modelCoder else {
+      return nil
+    }
+    return try coder.decode(from: self, forKey: key)
+  }
 }
 
 // MARK: - KeyedEncodingContainer
@@ -138,10 +145,18 @@ extension KeyedEncodingContainer {
     }
   }
 
-  mutating func encodeIfPresent(model: ItemCodable?,
+  mutating func encodeIfPresent(model: ComponentModelCodable?,
                                 forKey key: KeyedEncodingContainer.Key,
                                 kind: String) throws {
     guard let model = model, let coder = Configuration.shared.coders[kind] else {
+      return
+    }
+    try coder.encode(model: model, forKey: key, container: &self)
+  }
+
+  mutating func encodeIfPresentWithModel(_ model: ComponentModelCodable?,
+                                         forKey key: KeyedEncodingContainer.Key) throws {
+    guard let model = model, let coder = Configuration.shared.modelCoder else {
       return
     }
     try coder.encode(model: model, forKey: key, container: &self)

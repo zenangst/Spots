@@ -3,6 +3,14 @@ import Foundation
 import XCTest
 
 class ComponentModelTests: XCTestCase {
+  struct Model: ComponentSubModel, Equatable {
+    let version: String
+
+    static func ==(lhs: Model, rhs: Model) -> Bool {
+      return lhs.version == rhs.version
+    }
+  }
+
   private let jsonEncoder = JSONEncoder()
   private let jsonDecoder = JSONDecoder()
 
@@ -11,9 +19,16 @@ class ComponentModelTests: XCTestCase {
     "layout": [
       "span": 1.0
     ],
+    "model" : [
+      "version" : "2.0.1"
+    ],
     "meta": ["foo": "bar"],
     "items": [["title": "item1"]]
   ]
+
+  override func setUp() {
+    Configuration.shared.registerComponentModel(Model.self)
+  }
 
   func testInit() throws {
     // Test component created with JSON
@@ -31,17 +46,19 @@ class ComponentModelTests: XCTestCase {
     let item = Item(title: "item1")
 
     // Test component created programmatically
-    let codeComponentModel = ComponentModel(
+    var codeComponentModel = ComponentModel(
       kind: ComponentKind(rawValue: json["kind"] as! String)!,
       layout: layout,
       items: [item],
       meta: json["meta"] as! [String : String])
+    codeComponentModel.update(model: Model(version: "2.0.1"))
 
     XCTAssertEqual(codeComponentModel.kind.rawValue, json["kind"] as? String)
     XCTAssertEqual(codeComponentModel.layout.span, (json["layout"] as? [String : Any])?["span"] as? Double)
 
     XCTAssert((codeComponentModel.meta as NSDictionary).isEqual(json["meta"] as! NSDictionary))
     XCTAssert(codeComponentModel.items.count == 1)
+    XCTAssert(codeComponentModel.resolveModel() == Model(version: "2.0.1"))
 
     // Compare JSON and programmatically created component
     XCTAssert(jsonComponentModel == codeComponentModel)

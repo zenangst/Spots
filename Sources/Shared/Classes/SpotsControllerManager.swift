@@ -312,7 +312,7 @@ public class SpotsControllerManager {
 
       for (index, change) in changes.enumerated() {
         switch change {
-        case .identifier, .kind, .layout, .meta:
+        case .identifier, .kind, .layout, .meta, .model:
           strongSelf.replaceComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels)
         case .new:
           strongSelf.newComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels)
