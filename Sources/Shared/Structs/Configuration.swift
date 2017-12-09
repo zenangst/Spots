@@ -37,6 +37,7 @@ public class Configuration {
   public var views: Registry = .init()
   var presenters: [String: AnyPresenter] = .init()
   var coders: [String: AnyItemModelCoder] = .init()
+  var modelCoder: AnyItemModelCoder?
 
   /// Register a nib file with identifier on the component.
   ///
@@ -69,5 +70,9 @@ public class Configuration {
   /// - parameter view: The view type that should be used as the default view
   public func registerDefault(view: View.Type) {
     views.defaultItem = Registry.Item.classType(view)
+  }
+
+  public func registerComponentModel<T: ComponentSubModel>(_ model: T.Type) {
+    modelCoder = ItemModelCoder<T>()
   }
 }

@@ -1,5 +1,8 @@
 import Foundation
 
+public typealias ComponentModelCodable = ItemCodable
+public typealias ComponentSubModel = ItemModel
+
 public protocol ItemCodable: Codable {
   func equal(to rhs: ItemCodable) -> Bool
 }

@@ -14,6 +14,7 @@ public struct ComponentModel: Codable, Equatable {
     case header
     case interaction
     case footer
+    case model
     case layout
     case items
     case size
@@ -44,6 +45,9 @@ public struct ComponentModel: Codable, Equatable {
   public var meta = [String: Any]()
   /// An optional Int that is used to limit the amount of items that should be transformed into JSON
   public var amountOfItemsToCache: Int?
+
+  /// An optional Codable model
+  var model: ComponentModelCodable?
 
   /// Initializes a component and configures it with the provided parameters
   ///
@@ -89,6 +93,7 @@ public struct ComponentModel: Codable, Equatable {
                                                      forKey: .interaction) ?? Interaction()
     self.footer = try container.decodeIfPresent(Item.self, forKey: .footer)
     self.layout = try container.decodeIfPresent(Layout.self, forKey: .layout) ?? Layout()
+    self.model = try container.decodeIfPresentWithModelCoder(forKey: .model)
     self.items = try container.decodeIfPresent([Item].self, forKey: .items)?.refreshIndexes() ?? []
     self.size = try container.decodeIfPresent(Size.self, forKey: .size)?.cgSize ?? .zero
     self.meta = container.decodeJsonDictionaryIfPresent(forKey: .meta) ?? [:]
@@ -121,6 +126,7 @@ public struct ComponentModel: Codable, Equatable {
     try container.encodeIfPresent(Size(cgSize: size), forKey: .size)
     container.encode(jsonDictionary: meta, forKey: .meta)
     try container.encodeIfPresent(amountOfItemsToCache, forKey: .amountOfItemsToCache)
+    try container.encodeIfPresentWithModel(model, forKey: .model)
   }
 
   // MARK: - Helpers
@@ -193,12 +199,39 @@ public struct ComponentModel: Codable, Equatable {
       return .meta
     }
 
+    var modelsAreEqual: Bool = true
+    if let lhsModel = self.model {
+      if let rhsModel = model.model {
+        modelsAreEqual = lhsModel.equal(to: rhsModel)
+      } else {
+        modelsAreEqual = false
+      }
+    }
+
+    if !modelsAreEqual {
+      return .model
+    }
+
     // Check if the items have changed
     if !(items === model.items) {
       return .items
     }
 
     return .none
+  }
+
+  /// A generic convenience method for resolving a model
+  ///
+  /// - Returns: A generic model based on `type`
+  public func resolveModel<T: ComponentSubModel>() -> T? {
+    return model as? T
+  }
+
+  /// A generic convenience method for updating a model
+  ///
+  /// - Parameter model: The model that should be updated.
+  public mutating func update<T: ComponentSubModel>(model: T) {
+    self.model = model
   }
 
   /// Add layout to component.

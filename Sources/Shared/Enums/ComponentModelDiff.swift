@@ -11,5 +11,5 @@
 /// - removed:    Indicates that the component was removed
 /// - none:       Indicates that nothing did change
 public enum ComponentModelDiff {
-  case identifier, kind, layout, header, footer, meta, items, new, removed, none
+  case identifier, kind, layout, header, footer, meta, model, items, new, removed, none
 }
