@@ -78,6 +78,38 @@ public struct ComponentModel: Codable, Equatable {
     self.meta = meta
   }
 
+  /// Initializes a component and configures it with the provided parameters
+  ///
+  /// - parameter identifier: A optional string.
+  /// - parameter header: Determines which header item that should be used for the model.
+  /// - parameter kind: The type of ComponentModel that should be used.
+  /// - parameter layout: Configures the layout properties for the model.
+  /// - parameter interaction: Configures the interaction properties for the model.
+  /// - parameter span: Configures the layout span for the model.
+  /// - parameter model: A generic component model that conforms to `ComponentSubModel`.
+  /// - parameter items: A collection of view models
+  ///
+  /// - returns: An initialized component
+  public init<T: ComponentSubModel>(identifier: String? = nil,
+                                    header: Item? = nil,
+                                    footer: Item? = nil,
+                                    kind: ComponentKind = Configuration.shared.defaultComponentKind,
+                                    layout: Layout = Layout(),
+                                    interaction: Interaction = .init(),
+                                    model: T? = nil,
+                                    items: [Item] = [],
+                                    meta: [String : Any] = [:]) {
+    self.init(identifier: identifier,
+              header: header,
+              footer: footer,
+              kind: kind,
+              layout: layout,
+              interaction: interaction,
+              items: items,
+              meta: meta)
+    self.model = model
+  }
+
   // MARK: - Codable
 
   /// Initialize with a decoder.

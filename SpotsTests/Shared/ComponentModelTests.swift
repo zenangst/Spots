@@ -49,9 +49,9 @@ class ComponentModelTests: XCTestCase {
     var codeComponentModel = ComponentModel(
       kind: ComponentKind(rawValue: json["kind"] as! String)!,
       layout: layout,
+      model: Model(version: "2.0.1"),
       items: [item],
       meta: json["meta"] as! [String : String])
-    codeComponentModel.update(model: Model(version: "2.0.1"))
 
     XCTAssertEqual(codeComponentModel.kind.rawValue, json["kind"] as? String)
     XCTAssertEqual(codeComponentModel.layout.span, (json["layout"] as? [String : Any])?["span"] as? Double)
@@ -62,6 +62,10 @@ class ComponentModelTests: XCTestCase {
 
     // Compare JSON and programmatically created component
     XCTAssert(jsonComponentModel == codeComponentModel)
+
+    // Verify that the model updates
+    codeComponentModel.update(model: Model(version: "2.0.2"))
+    XCTAssert(codeComponentModel.resolveModel() == Model(version: "2.0.2"))
   }
 
   func testConfifugrationDefaultKind() {
