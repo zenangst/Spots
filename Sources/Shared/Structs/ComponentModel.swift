@@ -96,8 +96,8 @@ public struct ComponentModel: Codable, Equatable {
                                     kind: ComponentKind = Configuration.shared.defaultComponentKind,
                                     layout: Layout = Layout(),
                                     interaction: Interaction = .init(),
-                                    items: [Item] = [],
                                     model: T? = nil,
+                                    items: [Item] = [],
                                     meta: [String : Any] = [:]) {
     self.init(identifier: identifier,
               header: header,
