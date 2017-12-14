@@ -1,6 +1,11 @@
 import UIKit
 
 extension UICollectionView: UserInterface {
+  public func reloadVisibleViews(with animation: Animation = .none, completion: Completion) {
+    let indexes = indexPathsForVisibleItems.map { $0.item }
+    reload(indexes, withAnimation: animation, completion: completion)
+  }
+
   public func register(with configuration: Configuration) {
     if configuration.views.defaultItem == nil {
       register(GridWrapper.self, forCellWithReuseIdentifier: configuration.views.defaultIdentifier)

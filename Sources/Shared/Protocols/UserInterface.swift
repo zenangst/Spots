@@ -2,6 +2,14 @@
 public protocol UserInterface: class {
   var visibleViews: [View] { get }
 
+  /// Reload visible views with animation and completion.
+  ///
+  /// - Parameters:
+  ///   - animation: The animation that should be used for reloading.
+  ///   - completion: A completion closure that is invoked when the update
+  ///                 is completed.
+  func reloadVisibleViews(with animation: Animation, completion: Completion)
+
   #if !os(OSX)
   /// The index of the current selected item
   @available(iOS 9.0, *)
