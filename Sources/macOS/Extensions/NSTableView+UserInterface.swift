@@ -1,6 +1,14 @@
 import Cocoa
 
 extension NSTableView: UserInterface {
+  public func reloadVisibleViews(with animation: Animation, completion: Completion) {
+    let rows = self.rows(in: visibleRect)
+    var indexes = [Int]()
+    for row in rows.location..<rows.length-rows.location {
+      indexes.append(row)
+    }
+    reload(indexes, withAnimation: animation, completion: completion)
+  }
 
   public var visibleViews: [View] {
     let rows = self.rows(in: visibleRect)

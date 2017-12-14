@@ -139,6 +139,13 @@ import Cocoa
 
     self.componentDataSource = DataSource(component: self, with: configuration)
     self.componentDelegate = Delegate(component: self, with: configuration)
+
+    #if DEBUG
+      NotificationCenter.default.addObserver(self,
+                                             selector: #selector(didInject),
+                                             name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
+                                             object: nil)
+    #endif
   }
 
   /// A convenience init for creating a component with a `ComponentModel`.
@@ -178,6 +185,12 @@ import Cocoa
     componentDataSource = nil
     componentDelegate = nil
     userInterface = nil
+    NotificationCenter.default.removeObserver(self)
+  }
+
+  @objc private func didInject() {
+    userInterface?.register(with: configuration)
+    userInterface?.reloadVisibleViews(with: .none, completion: nil)
   }
 
   /// Configure user interface data source and delegate.

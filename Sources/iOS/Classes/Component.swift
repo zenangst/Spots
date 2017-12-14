@@ -116,12 +116,19 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     self.componentDelegate = Delegate(component: self, with: configuration)
 
     #if os(tvOS)
-    view.addLayoutGuide(focusGuide)
-    focusGuide.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-    focusGuide.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-    focusGuide.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-    focusGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    focusGuide.isEnabled = false
+      view.addLayoutGuide(focusGuide)
+      focusGuide.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+      focusGuide.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+      focusGuide.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+      focusGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+      focusGuide.isEnabled = false
+    #endif
+
+    #if DEBUG
+      NotificationCenter.default.addObserver(self,
+                                             selector: #selector(didInject),
+                                             name: NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION"),
+                                             object: nil)
     #endif
   }
 
@@ -151,6 +158,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   deinit {
     componentDataSource = nil
     componentDelegate = nil
+    NotificationCenter.default.removeObserver(self)
+  }
+
+  @objc private func didInject() {
+    userInterface?.register(with: configuration)
+    userInterface?.reloadVisibleViews(with: .none, completion: nil)
   }
 
   /// Setup up the component with a given size, this is usually the parent size when used in a controller context.
@@ -344,3 +357,4 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     view.superview?.layoutIfNeeded()
   }
 }
+
