@@ -719,7 +719,7 @@ public class SpotsControllerManager {
     }
 
     let tempComponent = Component(model: model, configuration: controller.configuration)
-    tempComponent.setup(with: setupSize)
+    tempComponent.setup(with: setupSize, needsLayout: false)
     tempComponent.model.size = CGSize(
       width: controller.view.frame.width,
       height: ceil(tempComponent.view.frame.height))
