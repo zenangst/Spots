@@ -207,7 +207,7 @@ import Cocoa
   /// Setup up the component with a given size, this is usually the parent size when used in a controller context.
   ///
   /// - Parameter size: A `CGSize` that is used to set the frame of the user interface.
-  public func setup(with size: CGSize) {
+  public func setup(with size: CGSize, needsLayout: Bool = false) {
     scrollView.frame.size = size
 
     setupHeader(with: configuration)
@@ -221,7 +221,7 @@ import Cocoa
       setupCollectionView(collectionView, with: size)
     }
 
-    layout(with: size, animated: false)
+    layout(with: size, needsLayout: needsLayout, animated: false)
     Component.configure?(self)
   }
 
@@ -230,7 +230,7 @@ import Cocoa
   /// - Parameter size: A `CGSize` used to set a new size to the user interface.
   /// - Parameter animated: Determines if the `Component` should perform animation when
   ///                       applying its new size.
-  public func layout(with size: CGSize, animated: Bool = true) {
+  public func layout(with size: CGSize, needsLayout: Bool = false, animated: Bool = true) {
     userInterface?.layoutIfNeeded()
 
     if let tableView = self.tableView {
@@ -254,6 +254,13 @@ import Cocoa
         view.superview?.layoutSubviews()
       }
     }
+
+    guard needsLayout else {
+      return
+    }
+
+    view.needsLayout = true
+    view.layoutIfNeeded()
   }
 
   /// Setup a collection view with a specific size.

@@ -169,7 +169,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// Setup up the component with a given size, this is usually the parent size when used in a controller context.
   ///
   /// - Parameter size: A `CGSize` that is used to set the frame of the user interface.
-  public func setup(with size: CGSize) {
+  public func setup(with size: CGSize, needsLayout: Bool = true) {
     view.frame.size = size
 
     setupFooter(with: configuration)
@@ -181,7 +181,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       setupCollectionView(collectionView, with: size)
     }
 
-    layout(with: size)
+    layout(with: size, needsLayout: needsLayout)
     configurePageControl()
     Component.configure?(self)
 
@@ -194,7 +194,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// Configure the view frame with a given size.
   ///
   /// - Parameter size: A `CGSize` used to set a new size to the user interface.
-  public func layout(with size: CGSize) {
+  public func layout(with size: CGSize, needsLayout: Bool = true) {
     if let tableView = self.tableView {
       layoutTableView(tableView, with: size)
     } else if let collectionView = self.collectionView {
@@ -202,7 +202,13 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     layoutHeaderFooterViews(size)
+
+    guard needsLayout else {
+      return
+    }
+
     view.setNeedsLayout()
+
     // Only call `layoutIfNeeded` if the `Component` is not a part of a `SpotsController`.
     if let spotsScrollView = (focusDelegate as? SpotsController)?.scrollView {
       let isVisibleOnScreen = view.frame.intersects(.init(origin: spotsScrollView.contentOffset,
@@ -357,4 +363,3 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     view.superview?.layoutIfNeeded()
   }
 }
-
