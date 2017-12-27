@@ -79,6 +79,23 @@ extension DataSource: UICollectionViewDataSource {
 
     return cell
   }
+
+  public func indexTitles(for collectionView: UICollectionView) -> [String]? {
+    guard let component = component else {
+      return nil
+    }
+    return component.delegate?.componentIndexTitles(component)
+  }
+
+  public func collectionView(_ collectionView: UICollectionView, indexPathForIndexTitle title: String, at index: Int) -> IndexPath {
+    guard let component = component,
+      let item = component.item(at: index),
+      let indexPath = component.delegate?.componentIndexPath(component, item: item, at: index, for: title) else {
+        return IndexPath(item: index, section: 0)
+    }
+
+    return indexPath
+  }
 }
 
 extension DataSource: UITableViewDataSource {

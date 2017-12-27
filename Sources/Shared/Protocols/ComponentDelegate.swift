@@ -12,6 +12,12 @@ public protocol ComponentDelegate: class {
   /// - parameter components: New collection of components.
   func componentsDidChange(_ components: [Component])
 
+  #if !os(macOS)
+  func componentIndexTitles(_ component: Component) -> [String]?
+
+  func componentIndexPath(_ component: Component, item: Item, at index: Int, for title: String) -> IndexPath
+  #endif
+
   /// A delegate method that is triggered when ever a view is going to be displayed.
   ///
   /// - parameter component: The component that will display the item.

@@ -11,6 +11,16 @@ public extension ComponentDelegate {
   /// - parameter components: The collection of new components.
   func componentsDidChange(_ components: [Component]) {}
 
+  #if !os(macOS)
+  func componentIndexTitles(_ component: Component) -> [String]? {
+    return nil
+  }
+
+  func componentIndexPath(_ component: Component, item: Item, at index: Int, for title: String) -> IndexPath {
+    return IndexPath(item: index, section: 0)
+  }
+  #endif
+
   /// A delegate method that is triggered when ever a view is going to be displayed.
   ///
   /// - parameter component: The component that will display the view.
