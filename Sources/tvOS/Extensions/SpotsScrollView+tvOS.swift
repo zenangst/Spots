@@ -60,7 +60,14 @@ extension SpotsScrollView {
       scrollView.frame = frame
     }
 
-    contentSize = CGSize(width: bounds.size.width, height: yOffsetOfCurrentSubview)
+    // To avoid conflicting accelerated scrolling behavior, if there is only one component in the
+    // view hierarchy, then the content size will be the same as the frames height. A single component
+    // is scrollable and will be used for accelerated scrolling.
+    let height = multipleComponents
+      ? yOffsetOfCurrentSubview
+      : frame.size.height
+    contentSize = CGSize(width: bounds.size.width,
+                         height: height)
 
     if self.frame.size.height != superview.frame.size.height {
       self.frame.size.height = superview.frame.size.height
