@@ -1,3 +1,5 @@
+import Foundation
+
 // MARK: - ComponentDelegate extension
 public extension ComponentDelegate {
   /// Triggered when ever a user taps on an item
@@ -11,7 +13,7 @@ public extension ComponentDelegate {
   /// - parameter components: The collection of new components.
   func componentsDidChange(_ components: [Component]) {}
 
-  #if !os(macOS)
+  #if os(tvOS)
   func componentIndexTitles(_ component: Component) -> [String]? {
     return nil
   }

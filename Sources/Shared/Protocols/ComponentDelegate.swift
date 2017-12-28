@@ -1,3 +1,5 @@
+import Foundation
+
 /// A generic delegate for Spots
 public protocol ComponentDelegate: class {
 
@@ -12,7 +14,7 @@ public protocol ComponentDelegate: class {
   /// - parameter components: New collection of components.
   func componentsDidChange(_ components: [Component])
 
-  #if !os(macOS)
+  #if os(tvOS)
   func componentIndexTitles(_ component: Component) -> [String]?
 
   func componentIndexPath(_ component: Component, item: Item, at index: Int, for title: String) -> IndexPath

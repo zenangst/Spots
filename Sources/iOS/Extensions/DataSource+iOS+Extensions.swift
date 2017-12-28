@@ -80,6 +80,7 @@ extension DataSource: UICollectionViewDataSource {
     return cell
   }
 
+  #if os(tvOS)
   public func indexTitles(for collectionView: UICollectionView) -> [String]? {
     guard let component = component else {
       return nil
@@ -96,6 +97,7 @@ extension DataSource: UICollectionViewDataSource {
 
     return indexPath
   }
+  #endif
 }
 
 extension DataSource: UITableViewDataSource {
