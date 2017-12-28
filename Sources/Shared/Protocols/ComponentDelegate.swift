@@ -1,3 +1,5 @@
+import Foundation
+
 /// A generic delegate for Spots
 public protocol ComponentDelegate: class {
 
@@ -11,6 +13,12 @@ public protocol ComponentDelegate: class {
   ///
   /// - parameter components: New collection of components.
   func componentsDidChange(_ components: [Component])
+
+  #if os(tvOS)
+  func componentIndexTitles(_ component: Component) -> [String]?
+
+  func componentIndexPath(_ component: Component, item: Item, at index: Int, for title: String) -> IndexPath
+  #endif
 
   /// A delegate method that is triggered when ever a view is going to be displayed.
   ///
