@@ -1,9 +1,12 @@
 import UIKit
 
 extension UITableView: UserInterface {
+  public var visibleIndexes: [Int] {
+    return indexPathsForVisibleRows?.map { $0.item } ?? []
+  }
+
   public func reloadVisibleViews(with animation: Animation = .none, completion: Completion) {
-    let indexes = indexPathsForVisibleRows?.map { $0.item } ?? []
-    reload(indexes, withAnimation: animation, completion: completion)
+    reload(visibleIndexes, withAnimation: animation, completion: completion)
   }
 
   public func register(with configuration: Configuration) {
