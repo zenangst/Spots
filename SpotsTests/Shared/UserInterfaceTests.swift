@@ -62,4 +62,44 @@ class UserInterfaceTests: XCTestCase {
     // Expect two views to be visible on screen because the x offset is half of a view.
     XCTAssertEqual(component.userInterface?.visibleViews.count, 2)
   }
+
+  func testVisibleIndexesForGridComponent() {
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz")
+    ]
+    let layout = Layout(span: 1)
+    let model = ComponentModel(kind: .carousel, layout: layout, items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(component.userInterface?.visibleIndexes.count, 1)
+
+    component.view.contentOffset.x = 50
+    // If we don't call layoutIfNeeded, then `visibleCells` won't update correctly.
+    component.collectionView?.layoutIfNeeded()
+
+    XCTAssertEqual(component.userInterface?.visibleIndexes.count, 2)
+  }
+
+  func testVisibleIndexesForListComponent() {
+    let items = [
+      Item(title: "foo"),
+      Item(title: "bar"),
+      Item(title: "baz")
+    ]
+    let layout = Layout(span: 1)
+    let model = ComponentModel(kind: .list, layout: layout, items: items)
+    let component = Component(model: model)
+    component.setup(with: CGSize(width: 100, height: 100))
+
+    XCTAssertEqual(component.userInterface?.visibleIndexes.count, 3)
+
+    component.view.contentOffset.y = 50
+    // If we don't call layoutIfNeeded, then `visibleCells` won't update correctly.
+    component.tableView?.layoutIfNeeded()
+
+    XCTAssertEqual(component.userInterface?.visibleIndexes.count, 2)
+  }
 }

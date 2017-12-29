@@ -1,6 +1,7 @@
 ///// A protocol used for composition inside components.
 public protocol UserInterface: class {
   var visibleViews: [View] { get }
+  var visibleIndexes: [Int] { get }
 
   /// Reload visible views with animation and completion.
   ///

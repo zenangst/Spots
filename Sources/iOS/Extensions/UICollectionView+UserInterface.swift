@@ -1,9 +1,12 @@
 import UIKit
 
 extension UICollectionView: UserInterface {
+  public var visibleIndexes: [Int] {
+    return indexPathsForVisibleItems.map { $0.item }
+  }
+
   public func reloadVisibleViews(with animation: Animation = .none, completion: Completion) {
-    let indexes = indexPathsForVisibleItems.map { $0.item }
-    reload(indexes, withAnimation: animation, completion: completion)
+    reload(visibleIndexes, withAnimation: animation, completion: completion)
   }
 
   public func register(with configuration: Configuration) {
@@ -156,6 +159,7 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
+    Swift.print("\(#function)")
     applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 

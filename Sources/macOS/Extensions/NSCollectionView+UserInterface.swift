@@ -1,9 +1,12 @@
 import Cocoa
 
 extension NSCollectionView: UserInterface {
+  public var visibleIndexes: [Int] {
+    return indexPathsForVisibleItems().map { $0.item }
+  }
+
   public func reloadVisibleViews(with animation: Animation, completion: Completion) {
-    let indexes = indexPathsForVisibleItems().map { $0.item }
-    reload(indexes, withAnimation: animation, completion: completion)
+    reload(visibleIndexes, withAnimation: animation, completion: completion)
   }
 
   public var visibleViews: [View] {
