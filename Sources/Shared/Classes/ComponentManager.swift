@@ -454,6 +454,20 @@ public class ComponentManager {
       return
     }
 
+    var notVisibleUpdates = updates
+    var updates = updates
+
+    if let visibleIndexes = component.userInterface?.visibleIndexes {
+      notVisibleUpdates = updates.filter { !visibleIndexes.contains($0) }
+      updates = updates.filter { visibleIndexes.contains($0) }
+      reload(indexes: notVisibleUpdates,
+             component: component,
+             withAnimation: animation,
+             completion: updates.isEmpty
+              ? completion
+              : nil)
+    }
+
     let lastUpdate = updates.last
     for index in updates {
       guard let item = component.item(at: index) else {
