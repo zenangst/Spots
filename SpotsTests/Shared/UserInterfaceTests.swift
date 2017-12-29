@@ -80,7 +80,11 @@ class UserInterfaceTests: XCTestCase {
     // If we don't call layoutIfNeeded, then `visibleCells` won't update correctly.
     component.collectionView?.layoutIfNeeded()
 
-    XCTAssertEqual(component.userInterface?.visibleIndexes.count, 2)
+    #if os(macOS)
+      XCTAssertEqual(component.userInterface?.visibleIndexes.count, 3)
+    #else
+      XCTAssertEqual(component.userInterface?.visibleIndexes.count, 2)
+    #endif
   }
 
   func testVisibleIndexesForListComponent() {
@@ -94,12 +98,26 @@ class UserInterfaceTests: XCTestCase {
     let component = Component(model: model)
     component.setup(with: CGSize(width: 100, height: 100))
 
-    XCTAssertEqual(component.userInterface?.visibleIndexes.count, 3)
+    #if os(tvOS)
+      XCTAssertEqual(component.userInterface?.visibleIndexes.count, 2)
+    #else
+      XCTAssertEqual(component.userInterface?.visibleIndexes.count, 3)
+    #endif
 
     component.view.contentOffset.y = 50
     // If we don't call layoutIfNeeded, then `visibleCells` won't update correctly.
     component.tableView?.layoutIfNeeded()
 
-    XCTAssertEqual(component.userInterface?.visibleIndexes.count, 2)
+    #if os(macOS)
+      XCTAssertEqual(component.userInterface?.visibleIndexes.count, 3)
+    #endif
+
+    #if os(tvOS)
+      XCTAssertEqual(component.userInterface?.visibleIndexes.count, 3)
+    #endif
+
+    #if os(iOS)
+      XCTAssertEqual(component.userInterface?.visibleIndexes.count, 2)
+    #endif
   }
 }
