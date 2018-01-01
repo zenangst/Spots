@@ -159,7 +159,6 @@ extension UICollectionView: UserInterface {
   ///  - parameter section: The section you want to update
   ///  - parameter completion: A completion block for when the updates are done
   public func reload(_ indexes: [Int], withAnimation animation: Animation = .automatic, completion: (() -> Void)? = nil) {
-    Swift.print("\(#function)")
     applyAnimation(animation: animation)
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
