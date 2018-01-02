@@ -374,8 +374,9 @@ extension SpotsController {
       $0.focusDelegate = self
     }
 
-    if focusedComponent == nil {
+    if focusedComponent == nil && focusedItemIndex == nil {
       focusedComponent = components.first
+      focusedItemIndex = 0
     }
   }
 
