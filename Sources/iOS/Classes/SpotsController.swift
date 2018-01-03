@@ -7,8 +7,13 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     return view
   }
 
-  public weak var focusedComponent: Component?
   public var focusedItemIndex: Int?
+  /// The instance of the current focused component.
+  /// This property is observable using Key-value observing.
+  @objc dynamic public weak var focusedComponent: Component?
+  /// The view instance of the current focused view.
+  /// This property is observable using Key-value observing.
+  @objc dynamic public weak var focusedView: View?
 
   /// A closure that is called when the controller is reloaded with components
   public static var componentsDidReloadComponentModels: ((SpotsController) -> Void)?
@@ -368,7 +373,7 @@ extension SpotsController {
   }
 
   /// It updates the delegates for all underlaying components inside the controller.
-  fileprivate  func updateDelegates() {
+  fileprivate func updateDelegates() {
     components.forEach {
       $0.delegate = delegate
       $0.focusDelegate = self
