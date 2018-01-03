@@ -2,15 +2,15 @@ coverage:
   comment: "header diff changes sunburst"
   behavior: new
   ignore:
-  - Applications/Xcode.app/.*
-  - build/.*
-  - bin/.*
-  - Carthage/.*
-  - Examples/.*
-  - Images/.*
-  - Playgrounds/.*
-  - Spots/.*
-  - SpotsTests/.*
+  - "Applications/Xcode.app/.*"
+  - "build"
+  - "bin"
+  - "Carthage"
+  - "Examples"
+  - "Images"
+  - "Playgrounds"
+  - "Spots"
+  - "SpotsTests"
   status:
     patch:
       default:
