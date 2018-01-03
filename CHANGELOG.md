@@ -2,7 +2,14 @@
 
 ## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
 
-[Full Changelog](https://github.com/hyperoslo/Spots/compare/7.4.2...HEAD)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/7.4.3...HEAD)
+
+**Merged pull requests:**
+
+- Feature focused view and refactor focus delegate implementation [\#793](https://github.com/hyperoslo/Spots/pull/793) ([zenangst](https://github.com/zenangst))
+
+## [7.4.3](https://github.com/hyperoslo/Spots/tree/7.4.3) (2018-01-03)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/7.4.2...7.4.3)
 
 **Merged pull requests:**
 
