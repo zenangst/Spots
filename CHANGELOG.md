@@ -6,6 +6,7 @@
 
 **Merged pull requests:**
 
+- Populate sizeCache on iOS [\#792](https://github.com/hyperoslo/Spots/pull/792) ([zenangst](https://github.com/zenangst))
 - Floor width to only rely on whole numbers [\#791](https://github.com/hyperoslo/Spots/pull/791) ([zenangst](https://github.com/zenangst))
 - Optimize/spots scrollview on ios and tvos [\#790](https://github.com/hyperoslo/Spots/pull/790) ([zenangst](https://github.com/zenangst))
 
