@@ -1,5 +1,44 @@
 import UIKit
 
+private extension Delegate {
+  /// Sets the initial values to the focus delegate.
+  /// See `updateFocusDelegate(_ index: Int, _ userInterface: UserInterface)` for more details.
+  ///
+  /// - Parameter scrollView: The scrollview that is currently in focus, can either be a `UICollectionView`
+  ///                         or a `UITableView`.
+  func setInitialValuesToFocusDelegate(_ scrollView: ScrollView) {
+    if let component = component,
+      component.view == scrollView,
+      component.focusDelegate?.focusedComponent == nil {
+      let focusedIndex = component.focusDelegate?.focusedItemIndex ?? 0
+      component.focusDelegate?.focusedComponent = component
+      component.focusDelegate?.focusedView = component.userInterface?.view(at: focusedIndex)
+    }
+  }
+
+  /// Sets new properties to the focus delegate.
+  /// The properties that gets updated are `.focusedComponent`, `focusedItemIndex` and `focusedView`.
+  /// `.focusedComponent` only gets set if the current focused component is different than the current one.
+  /// This is done to only trigger the observation once.
+  ///
+  /// - Parameters:
+  ///   - index: The index of the current view that is selected.
+  ///   - userInterface: The user interface that is currently in focus, can either be a `UICollectionView`
+  ///                    or a `UITableView`.
+  func updateFocusDelegate(_ index: Int, _ userInterface: UserInterface) {
+    if let component = component, index < component.model.items.count {
+      if component.focusDelegate?.focusedComponent != component {
+        component.focusDelegate?.focusedComponent = component
+      }
+      component.focusDelegate?.focusedItemIndex = index
+      component.focusDelegate?.focusedView = userInterface.view(at: index)
+      #if os(tvOS)
+        component.focusGuide.preferredFocusedView = userInterface.view(at: index)
+      #endif
+    }
+  }
+}
+
 extension Delegate: UICollectionViewDelegate {
 
   /// Asks the delegate for the size of the specified item’s cell.
@@ -82,15 +121,14 @@ extension Delegate: UICollectionViewDelegate {
       return true
     }
 
-    if let component = component, indexPath.item < component.model.items.count {
-      component.focusDelegate?.focusedComponent = component
-      component.focusDelegate?.focusedItemIndex = indexPath.item
-      #if os(tvOS)
-      component.focusGuide.preferredFocusedView = collectionView.view(at: indexPath.item)
-      #endif
-    }
+    updateFocusDelegate(indexPath.item, collectionView)
 
     return context.nextFocusedView?.canBecomeFocused ?? false
+  }
+
+  @available(iOS 9.0, *)
+  public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+    setInitialValuesToFocusDelegate(collectionView)
   }
 }
 
@@ -168,15 +206,14 @@ extension Delegate: UITableViewDelegate {
       return true
     }
 
-    if let component = component, indexPath.item < component.model.items.count {
-      component.focusDelegate?.focusedComponent = component
-      component.focusDelegate?.focusedItemIndex = indexPath.item
-      #if os(tvOS)
-      component.focusGuide.preferredFocusedView = tableView.view(at: indexPath.item)
-      #endif
-    }
+    updateFocusDelegate(indexPath.item, tableView)
 
     return true
+  }
+
+  @available(iOS 9.0, *)
+  public func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+    setInitialValuesToFocusDelegate(tableView)
   }
 
   /// Asks the delegate for the height to use for a row in a specified location.
