@@ -159,18 +159,18 @@ class SpotsScrollViewTests: XCTestCase {
 
     controller.scrollTo(CGPoint(x: 0, y: controller.scrollView.contentSize.height))
 
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[0].frame.height, 0)
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[1].frame.height, 0)
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[2].frame.height, 0)
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[3].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.subviewsInLayoutOrder[0] is UITableView)
+    XCTAssertEqual((controller.scrollView.subviewsInLayoutOrder[0] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.subviewsInLayoutOrder[0].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.subviewsInLayoutOrder[1] is UITableView)
+    XCTAssertEqual((controller.scrollView.subviewsInLayoutOrder[1] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.subviewsInLayoutOrder[1].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.subviewsInLayoutOrder[2] is UITableView)
+    XCTAssertEqual((controller.scrollView.subviewsInLayoutOrder[2] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.subviewsInLayoutOrder[2].frame.height, 0)
+    XCTAssertTrue(controller.scrollView.subviewsInLayoutOrder[3] is UITableView)
+    XCTAssertEqual((controller.scrollView.subviewsInLayoutOrder[3] as? UIScrollView)!.contentSize.height, 320)
+    XCTAssertEqual(controller.scrollView.subviewsInLayoutOrder[3].frame.height, 0)
   }
 
   func testStetchLastComponent() {

@@ -61,6 +61,18 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
     fatalError("init(coder:) has not been implemented")
   }
 
+  open override func didMoveToSuperview() {
+    super.didMoveToSuperview()
+
+    guard let superview = superview else {
+      return
+    }
+
+    if frame.size.height != superview.frame.size.height {
+      frame.size.height = superview.frame.size.height
+    }
+  }
+
   /// A method to setup KVO observers on views added to contentView
   ///
   /// - parameter subview: - parameter subview: The view to add to the view as a subview..
@@ -101,6 +113,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
       }
     #endif
 
+    computeContentSize()
     setNeedsLayout()
     layoutSubviews()
   }
@@ -119,6 +132,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
       }
     }
 
+    computeContentSize()
     setNeedsLayout()
     layoutSubviews()
   }
@@ -133,12 +147,13 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
     switch view {
     case let scrollView as UIScrollView:
-      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.new, .old], changeHandler: { [weak self] (scrollView, value) in
+      let contentSizeObserver = scrollView.observe(\.contentSize, options: [.initial, .new, .old], changeHandler: { [weak self] (scrollView, value) in
         guard let strongSelf = self, let newValue = value.newValue else {
           return
         }
 
         if scrollView.contentSize != newValue {
+          strongSelf.computeContentSize()
           strongSelf.layoutViews()
         }
       })
@@ -179,6 +194,25 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
       observers.append(Observer(view: view, keyValueObservation: boundsObserver))
     }
+  }
+
+  private func computeContentSize() {
+    let computedHeight = subviewsInLayoutOrder.reduce(0, { $0 + (($1 as? ScrollView)?.contentSize.height ?? 0) })
+
+    #if os(tvOS)
+      let multipleComponents = subviewsInLayoutOrder.count > 1
+      // To avoid conflicting accelerated scrolling behavior, if there is only one component in the
+      // view hierarchy, then the content size will be the same as the frames height. A single component
+      // is scrollable and will be used for accelerated scrolling.
+      let height = multipleComponents
+        ? computedHeight
+        : frame.size.height
+    #else
+      let minimumContentHeight = bounds.height - (contentInset.top + contentInset.bottom)
+      let height = fmax(computedHeight, minimumContentHeight)
+    #endif
+
+    contentSize = CGSize(width: bounds.size.width, height: height)
   }
 
   /// A custom implementation of layoutSubviews that handles the scrolling of all the underlaying views within the container.

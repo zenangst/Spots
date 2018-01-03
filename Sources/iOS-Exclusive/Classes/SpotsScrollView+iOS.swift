@@ -4,17 +4,13 @@ import UIKit
 extension SpotsScrollView {
   /// Layout views in linear order based of view index in `subviewsInLayoutOrder`
   public func layoutViews() {
-    guard let superview = superview else {
-      return
-    }
-
     componentsView.frame = bounds
     componentsView.bounds = CGRect(origin: contentOffset, size: bounds.size)
 
     var yOffsetOfCurrentSubview: CGFloat = 0.0
     let lastView = subviewsInLayoutOrder.last
 
-    for subview in subviewsInLayoutOrder {
+    for (index, subview) in subviewsInLayoutOrder.enumerated() {
       if let scrollView = subview as? UIScrollView {
         var frame = scrollView.frame
         var contentOffset = scrollView.contentOffset
@@ -60,13 +56,6 @@ extension SpotsScrollView {
 
         yOffsetOfCurrentSubview += frame.size.height
       }
-    }
-
-    let minimumContentHeight = bounds.height - (contentInset.top + contentInset.bottom)
-    contentSize = CGSize(width: bounds.size.width, height: fmax(yOffsetOfCurrentSubview, minimumContentHeight))
-
-    if self.frame.size.height != superview.frame.size.height {
-      self.frame.size.height = superview.frame.size.height
     }
   }
 }
