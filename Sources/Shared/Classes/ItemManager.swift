@@ -260,6 +260,7 @@ public class ItemManager {
     #endif
 
     size.height = fmax(size.height, 0)
+    size.width = floor(size.width)
 
     return size
   }
