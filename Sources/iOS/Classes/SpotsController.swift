@@ -7,8 +7,10 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     return view
   }
 
-  public weak var focusedComponent: Component?
   public var focusedItemIndex: Int?
+  /// The instance of the current focused component.
+  /// This property is observable using Key-value observing.
+  @objc dynamic public weak var focusedComponent: Component?
   /// The view instance of the current focused view.
   /// This property is observable using Key-value observing.
   @objc dynamic public weak var focusedView: View?
