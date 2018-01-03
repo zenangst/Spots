@@ -1,5 +1,28 @@
 # Change Log
 
+## [Unreleased](https://github.com/hyperoslo/Spots/tree/HEAD)
+
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/7.4.2...HEAD)
+
+**Merged pull requests:**
+
+- Floor width to only rely on whole numbers [\#791](https://github.com/hyperoslo/Spots/pull/791) ([zenangst](https://github.com/zenangst))
+- Optimize/spots scrollview on ios and tvos [\#790](https://github.com/hyperoslo/Spots/pull/790) ([zenangst](https://github.com/zenangst))
+
+## [7.4.2](https://github.com/hyperoslo/Spots/tree/7.4.2) (2018-01-02)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/7.4.1...7.4.2)
+
+**Merged pull requests:**
+
+- Set focused item index to zero if index is nil when updating the delegates [\#789](https://github.com/hyperoslo/Spots/pull/789) ([zenangst](https://github.com/zenangst))
+
+## [7.4.1](https://github.com/hyperoslo/Spots/tree/7.4.1) (2018-01-01)
+[Full Changelog](https://github.com/hyperoslo/Spots/compare/7.4.0...7.4.1)
+
+**Merged pull requests:**
+
+- Remove unwanted print statement [\#788](https://github.com/hyperoslo/Spots/pull/788) ([zenangst](https://github.com/zenangst))
+
 ## [7.4.0](https://github.com/hyperoslo/Spots/tree/7.4.0) (2017-12-29)
 [Full Changelog](https://github.com/hyperoslo/Spots/compare/7.3.0...7.4.0)
 
