@@ -373,7 +373,7 @@ extension SpotsController {
   }
 
   /// It updates the delegates for all underlaying components inside the controller.
-  fileprivate  func updateDelegates() {
+  fileprivate func updateDelegates() {
     components.forEach {
       $0.delegate = delegate
       $0.focusDelegate = self
