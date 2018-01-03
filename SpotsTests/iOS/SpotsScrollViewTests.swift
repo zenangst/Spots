@@ -170,21 +170,6 @@ class SpotsScrollViewTests: XCTestCase {
     XCTAssertEqual(controller.scrollView.componentsView.subviews[2].frame.height, 0)
     XCTAssertTrue(controller.scrollView.componentsView.subviews[3] is UITableView)
     XCTAssertEqual((controller.scrollView.componentsView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[3].frame.height, 320)
-
-    controller.scrollTo(CGPoint(x: 0, y: 320 * 4))
-
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[0] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[0] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[0].frame.height, 0)
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[1] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[1] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[1].frame.height, 0)
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[2] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[2] as? UIScrollView)!.contentSize.height, 320)
-    XCTAssertEqual(controller.scrollView.componentsView.subviews[2].frame.height, 0)
-    XCTAssertTrue(controller.scrollView.componentsView.subviews[3] is UITableView)
-    XCTAssertEqual((controller.scrollView.componentsView.subviews[3] as? UIScrollView)!.contentSize.height, 320)
     XCTAssertEqual(controller.scrollView.componentsView.subviews[3].frame.height, 0)
   }
 
