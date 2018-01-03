@@ -9,6 +9,9 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
   public weak var focusedComponent: Component?
   public var focusedItemIndex: Int?
+  /// The view instance of the current focused view.
+  /// This property is observable using Key-value observing.
+  @objc dynamic public weak var focusedView: View?
 
   /// A closure that is called when the controller is reloaded with components
   public static var componentsDidReloadComponentModels: ((SpotsController) -> Void)?
