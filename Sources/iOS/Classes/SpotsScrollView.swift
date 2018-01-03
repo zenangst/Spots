@@ -220,6 +220,7 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   open override func layoutSubviews() {
     super.layoutSubviews()
     layoutViews()
+    computeContentSize()
   }
 
   /// Compare points
