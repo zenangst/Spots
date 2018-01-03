@@ -10,7 +10,7 @@ extension SpotsScrollView {
     var yOffsetOfCurrentSubview: CGFloat = 0.0
     let lastView = subviewsInLayoutOrder.last
 
-    for (index, subview) in subviewsInLayoutOrder.enumerated() {
+    for subview in subviewsInLayoutOrder {
       if let scrollView = subview as? UIScrollView {
         var frame = scrollView.frame
         var contentOffset = scrollView.contentOffset
