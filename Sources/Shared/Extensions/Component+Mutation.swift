@@ -4,6 +4,8 @@
   import UIKit
 #endif
 
+import DeepDiff
+
 // MARK: - Component extension
 public extension Component {
   /// Append item to collection with animation
@@ -96,6 +98,16 @@ public extension Component {
   /// - parameter completion: A completion closure that is performed when all mutations are performed
   func reload(_ indexes: [Int]? = nil, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     manager.reload(indexes: indexes, component: self, withAnimation: animation, completion: completion)
+  }
+
+  /// Reload component with ItemChanges.
+  ///
+  /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
+  /// - parameter updateDataSource: A closure to update your data source.
+  /// - parameter completion:       A completion closure that runs when your updates are done.
+  public func reloadIfNeeded(withDeepDiff changes: [Change<Item>], withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+    manager.reloadIfNeeded(with: changes, component: self, withAnimation: animation, updateDataSource: updateDataSource, completion: completion)
   }
 
   /// Reload component with ItemChanges.

@@ -5,6 +5,8 @@
   import UIKit
 #endif
 
+import DeepDiff
+
 /// SpotsControllerManager handles mutation on a controller level.
 /// It relays mutating operations to `ComponentManger` when the affected `Component` has been resolved.
 /// It supports both reloading with JSON payloads and with collections of `ComponentModel`'s.
@@ -724,46 +726,26 @@ public class SpotsControllerManager {
       width: controller.view.frame.width,
       height: ceil(tempComponent.view.frame.height))
 
-    Dispatch.interactive { [weak self] in
-      guard let changes = component.manager.diffManager.compare(oldItems: component.model.items, newItems: tempComponent.model.items) else {
-        Dispatch.main {
-          completion?()
-        }
-        return
-      }
+    let oldItems = component.model.items
+    let newItems = tempComponent.model.items
+    let changes: [Change<Item>] = component.manager.diffManager.compare(oldItems: oldItems, newItems: newItems)
 
-      Dispatch.main { [weak self] in
-        // If the component is empty, then replace the old one with the temporary component
-        // used for diffing.
-        if component.model.items.isEmpty {
-          self?.replaceComponent(atIndex: component.model.index, with: tempComponent, controller: controller, newComponentModels: [], completion: completion)
-          return
-        }
+    guard changes.isEmpty else {
+      completion?()
+      return
+    }
 
-        let newItems = tempComponent.model.items
-        if newItems.count == component.model.items.count {
-          self?.reload(with: changes,
-                       controller: controller,
-                       in: component,
-                       newItems: newItems,
-                       animation: animation,
-                       completion: completion)
-        } else if newItems.count < component.model.items.count {
-          self?.reload(with: changes,
-                       controller: controller,
-                       in: component,
-                       lessItems: newItems,
-                       animation: animation,
-                       completion: completion)
-        } else if newItems.count > component.model.items.count {
-          self?.reload(with: changes,
-                       controller: controller,
-                       in: component,
-                       moreItems: newItems,
-                       animation: animation,
-                       completion: completion)
-        }
-      }
+    Swift.print(changes)
+
+    // If the component is empty, then replace the old one with the temporary component
+    // used for diffing.
+    if component.model.items.isEmpty {
+      replaceComponent(atIndex: component.model.index, with: tempComponent, controller: controller, newComponentModels: [], completion: completion)
+      return
+    }
+
+    component.reloadIfNeeded(newItems) {
+      completion?()
     }
   }
 

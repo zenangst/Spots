@@ -1,4 +1,5 @@
 import Foundation
+import DeepDiff
 
 class DiffManager {
   /// Compare two collection of items and generate a `Changes` object that can be used
@@ -9,14 +10,9 @@ class DiffManager {
   ///   - oldModels: The old collection of items.
   ///   - newModels: The new collection of items.
   /// - Returns: If both a the same, then it returns `nil`, otherwise it returns a `Changes` struct.
-  public func compare(oldItems: [Item], newItems: [Item]) -> Changes? {
-    guard let itemDiffs = generateItemDiffs(oldItems: oldItems, newItems: newItems) else {
-      return nil
-    }
-
-    let changes = Changes(itemDiffs: itemDiffs)
-
-    return changes
+  public func compare(oldItems: [Item], newItems: [Item]) -> [Change<Item>] {
+    let deepDiffs: [Change<Item>] = DeepDiff.diff(old: oldItems, new: newItems)
+    return deepDiffs
   }
 
   /// Compute changes for when there are less new items then there are old ones.

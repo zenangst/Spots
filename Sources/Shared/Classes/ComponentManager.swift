@@ -1,4 +1,5 @@
 import Foundation
+import DeepDiff
 
 /// ComponentManager handles mutating operations on a `Component`.
 /// You can invoke these methods directly on `Component` as they are proxied
@@ -359,6 +360,20 @@ public class ComponentManager {
   /// - parameter animation:        A Animation that is used when performing the mutation.
   /// - parameter updateDataSource: A closure to update your data source.
   /// - parameter completion:       A completion closure that runs when your updates are done.
+  public func reloadIfNeeded(with changes: [Change<Item>], component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
+    updateDataSource()
+    component.collectionView?.reload(changes: changes, completion: { _ in
+      completion?()
+    })
+  }
+
+  /// Reload component with ItemChanges.
+  ///
+  /// - parameter changes:          A collection of changes: inserations, updates, reloads, deletions and updated children.
+  /// - parameter component: The component that should be mutated.
+  /// - parameter animation:        A Animation that is used when performing the mutation.
+  /// - parameter updateDataSource: A closure to update your data source.
+  /// - parameter completion:       A completion closure that runs when your updates are done.
   public func reloadIfNeeded(with changes: Changes, component: Component, withAnimation animation: Animation = .automatic, updateDataSource: () -> Void, completion: Completion) {
     component.userInterface?.processChanges(changes, withAnimation: animation, updateDataSource: updateDataSource) { [weak self] in
       if changes.updates.isEmpty {
@@ -387,19 +402,14 @@ public class ComponentManager {
       let newItems = duplicatedComponent.model.items
 
       Dispatch.interactive { [weak self, diffManager = self.diffManager] in
-        guard let changes = diffManager.compare(oldItems: component.model.items, newItems: newItems) else {
-          Dispatch.main {
-            completion?()
-          }
-          return
-        }
+        let changes = diffManager.compare(oldItems: component.model.items, newItems: newItems)
 
         Dispatch.main { [weak self, changes = changes] in
           let updateDatasource = {
             component.model.items = newItems
           }
 
-          component.reloadIfNeeded(changes, withAnimation: animation, updateDataSource: updateDatasource, completion: {
+          component.reloadIfNeeded(withDeepDiff: changes, withAnimation: animation, updateDataSource: updateDatasource, completion: {
             self?.finishComponentOperation(component, updateHeightAndIndexes: true, completion: completion)
           })
         }
