@@ -7,7 +7,7 @@
 /**
  A value type struct, it conforms to the Mappable protocol so that it can be instantiated with JSON
  */
-public struct Item: Codable, Indexable {
+public struct Item: Equatable, Hashable, Codable, Indexable {
   /**
    An enum with all the string keys used in the view model
    */
@@ -237,6 +237,29 @@ public struct Item: Codable, Indexable {
     let indexEqual = lhs.index == rhs.index
     let trulyEqual = lhs === rhs
     return indexEqual && trulyEqual
+  }
+
+  public var hashValue: Int {
+    let rel = relations.flatMap({ $0.value })
+    var relationHash: Int = 0
+    for item in rel {
+      relationHash ^= item.hashValue
+    }
+
+    let modelHash = model?.serialize()?.hashValue ?? 0.hashValue
+    var hash: Int = 0
+    hash ^= identifier?.hashValue ?? 0
+    hash ^= title.hashValue
+    hash ^= subtitle.hashValue
+    hash ^= text.hashValue
+    hash ^= image.hashValue
+    hash ^= kind.hashValue
+    hash ^= action?.hashValue ?? 0
+    hash ^= modelHash
+    hash ^= relationHash
+
+    return hash
+
   }
 }
 
