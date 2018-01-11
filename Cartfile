@@ -1,1 +1,2 @@
 github "hyperoslo/Cache" ~> 4.0
+github "onmyway133/DeepDiff" ~> 1.1.0

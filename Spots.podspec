@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
   s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
   
   s.dependency 'Cache', '~> 4.0'
+  s.dependency 'DeepDiff', '~> 1.1.0'
   s.framework  = "Foundation"
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 end
