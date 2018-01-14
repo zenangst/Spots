@@ -186,8 +186,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     Component.configure?(self)
 
     if model.layout.infiniteScrolling {
-      let size = sizeForItem(at: IndexPath(item: 0, section: 0))
-      collectionView?.contentOffset.x = size.width + CGFloat(model.layout.itemSpacing)
+      let indexPath = IndexPath(item: 2, section: 0)
+      let attributes = collectionView!.layoutAttributesForItem(at: indexPath)!
+      collectionView?.contentOffset.x = attributes.frame.minX
+      componentDelegate?.manualFocusCell = indexPath
+      componentDelegate?.currentlyFocusedItem = indexPath.item
+      view.setNeedsFocusUpdate()
     }
   }
 
@@ -225,11 +229,13 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// It is used to invoke `handleInfiniteScrolling` when the users scrolls a horizontal
   /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
+    #if os(iOS)
     guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
       return
     }
 
     handleInfiniteScrolling()
+    #endif
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
@@ -258,7 +264,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.layer.masksToBounds = false
 
     if #available(iOS 9.0, *) {
-      collectionView.remembersLastFocusedIndexPath = true
+      collectionView.remembersLastFocusedIndexPath = !model.layout.infiniteScrolling
     }
 
     guard model.kind == .carousel else {

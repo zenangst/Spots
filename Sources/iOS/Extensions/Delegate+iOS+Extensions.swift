@@ -1,19 +1,6 @@
 import UIKit
 
 private extension Delegate {
-
-  private func computeIndexPath(_ indexPath: IndexPath) -> IndexPath {
-    var indexPath = indexPath
-
-    if let component = component, component.model.layout.infiniteScrolling {
-      if indexPath.item >= component.model.items.count {
-        indexPath.item = indexPath.item - component.model.items.count
-      }
-    }
-
-    return indexPath
-  }
-
   /// Sets the initial values to the focus delegate.
   /// See `updateFocusDelegate(_ index: Int, _ userInterface: UserInterface)` for more details.
   ///
@@ -55,14 +42,9 @@ private extension Delegate {
 extension Delegate: UICollectionViewDelegate {
 
   public func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
-    guard let component = component, component.model.layout.infiniteScrolling else {
-      return nil
-    }
-
-    let offset = collectionView.numberOfItems(inSection: 0) - component.model.items.count
-    let indexPath = IndexPath(item: offset, section: 0)
-
-    return indexPath
+    return component?.model.layout.infiniteScrolling == true
+      ? manualFocusCell
+      : nil
   }
 
   /// Asks the delegate for the size of the specified item’s cell.
@@ -73,7 +55,7 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: The width and height of the specified item. Both values must be greater than 0.
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let indexPath = computeIndexPath(indexPath)
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     let sizeForItem = resolveComponent({ component in
       component.sizeForItem(at: indexPath)
     }, fallback: .zero)
@@ -86,7 +68,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter collectionView: The collection view object that is notifying you of the selection change.
   /// - parameter indexPath: The index path of the cell that was selected.
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let indexPath = computeIndexPath(indexPath)
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     resolveComponentItem(at: indexPath) { component, item in
       component.delegate?.component(component, itemSelected: item)
     }
@@ -98,7 +80,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object being added.
   /// - parameter indexPath: The index path of the data item that the cell represents.
   public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    let indexPath = computeIndexPath(indexPath)
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     resolveComponentItem(at: indexPath) { component, item in
       let view = (cell as? Wrappable)?.wrappedView ?? cell
 
@@ -116,7 +98,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object that was removed.
   /// - parameter indexPath: The index path of the data item that the cell represented.
   public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    let indexPath = computeIndexPath(indexPath)
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     resolveComponentItem(at: indexPath) { (component, item) in
       let view = (cell as? Wrappable)?.wrappedView ?? cell
       component.delegate?.component(component, didEndDisplaying: view, item: item)
@@ -130,7 +112,7 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    let indexPath = computeIndexPath(indexPath)
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     let canFocusItem = resolveComponent({ component in
       return component.item(at: indexPath) != nil
     }, fallback: false)
@@ -150,9 +132,25 @@ extension Delegate: UICollectionViewDelegate {
       return true
     }
 
-    let computedIndexPath = computeIndexPath(indexPath)
+    if let component = component, component.model.layout.infiniteScrolling == true {
+      let count = component.model.items.count
+      let buffer = (collectionView.dataSource as? DataSource)?.buffer ?? 0
+      updateFocusDelegate(manualFocusCell.item, collectionView)
 
-    updateFocusDelegate(computedIndexPath.item, collectionView)
+      if context.focusHeading == .left && indexPath.item < buffer {
+        navigating = true
+        jump(with: context, collectionView: collectionView, indexPath: indexPath)
+        return true
+      }
+
+      if context.focusHeading == .right && indexPath.item >= buffer + count {
+        navigating = true
+        jump(with: context, collectionView: collectionView, indexPath: indexPath)
+        return true
+      }
+    } else {
+      updateFocusDelegate(indexPath.item, collectionView)
+    }
 
     return context.nextFocusedView?.canBecomeFocused ?? false
   }
@@ -160,6 +158,75 @@ extension Delegate: UICollectionViewDelegate {
   @available(iOS 9.0, *)
   public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     setInitialValuesToFocusDelegate(collectionView)
+    guard let nextFocusedIndexPath = context.nextFocusedIndexPath, navigating else {
+      return
+    }
+
+    navigating = false
+
+    if context.focusHeading == .left {
+      jump(.forward, indexPath: nextFocusedIndexPath, collectionView: collectionView)
+    } else {
+      jump(.backward, indexPath: nextFocusedIndexPath, collectionView: collectionView)
+    }
+
+    currentlyFocusedItem = manualFocusCell.item
+    collectionView.setNeedsFocusUpdate()
+  }
+
+  enum JumpDirection {
+    case forward
+    case backward
+  }
+
+  func jump(_ direction: JumpDirection, indexPath: IndexPath, collectionView: UICollectionView) {
+    guard let component = component else {
+      return
+    }
+
+    var newIndexPath = indexPath
+    switch direction {
+    case .forward:
+      newIndexPath.item += component.model.items.count
+    case .backward:
+      newIndexPath.item -= component.model.items.count
+    }
+
+    let currentOffset = collectionView.contentOffset.x
+    let itemSizeIndexPath = indexPathManager.computeIndexPath(newIndexPath)
+    let totalWidth = component.sizeForItem(at: itemSizeIndexPath).width + CGFloat(component.model.layout.itemSpacing)
+    var jumpOffset = CGFloat(component.model.items.count) * totalWidth
+    if case .backward = direction {
+      jumpOffset *= -1
+    }
+
+    manualFocusCell = newIndexPath
+
+    collectionView.setContentOffset(CGPoint(x: currentOffset + jumpOffset,
+                                            y: collectionView.contentOffset.y),
+                                    animated: false)
+  }
+
+  func jump(with context: UICollectionViewFocusUpdateContext, collectionView: UICollectionView, indexPath: IndexPath) {
+    guard context.focusHeading == .left || context.focusHeading == .right else {
+      return
+    }
+
+    let focusHeading = context.focusHeading
+    let count = component!.model.items.count
+    let buffer = component!.componentDataSource?.buffer ?? 0
+
+    currentlyFocusedItem = indexPath.item
+
+    if focusHeading == .left && indexPath.item < buffer {
+      currentlyFocusedItem += count
+    }
+
+    if focusHeading == .right && indexPath.item >= buffer + count {
+      currentlyFocusedItem -= count
+    }
+
+    manualFocusCell = IndexPath(item: currentlyFocusedItem, section: 0)
   }
 }
 

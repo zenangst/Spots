@@ -38,7 +38,7 @@ class FocusEngineManager {
           if component.model.kind == .grid {
             result -= CGFloat(component.model.layout.inset.top + component.model.layout.lineSpacing)
           } else if component.model.kind == .carousel {
-            result += cell.frame.height / 2
+            result -= component.headerHeight
           }
         }
       }

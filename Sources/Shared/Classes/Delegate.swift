@@ -14,6 +14,10 @@ public class Delegate: NSObject, ComponentResolvable {
   /// about how to configure your views.
   let viewPreparer: ViewPreparer
   let configuration: Configuration
+  let indexPathManager: IndexPathManager!
+  var navigating: Bool = false
+  var currentlyFocusedItem: Int = 0
+  var manualFocusCell: IndexPath = IndexPath(item: 0, section: 0)
 
   #if !os(macOS)
   /// The scroll view manager handles constraining horizontal components.
@@ -29,6 +33,7 @@ public class Delegate: NSObject, ComponentResolvable {
   init(component: Component, with configuration: Configuration = .shared) {
     self.component = component
     self.configuration = configuration
+    self.indexPathManager = IndexPathManager(component: component)
     self.viewPreparer = ViewPreparer(configuration: configuration)
   }
 }

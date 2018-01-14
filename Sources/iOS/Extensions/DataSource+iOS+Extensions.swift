@@ -1,7 +1,6 @@
 import UIKit
 
 extension DataSource: UICollectionViewDataSource {
-
   /// Asks the data source for the number of items in the specified section. (required)
   ///
   /// - parameter collectionView: An object representing the collection view requesting this information.
@@ -10,27 +9,17 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    let numberOfItemsInSection: Int = resolveComponent({ component in
-      if component.model.layout.infiniteScrolling {
-        var additionalIndexes: Int = 0
-        var remainingWidth: CGFloat = 0
-        for item in component.model.items {
-          remainingWidth += item.size.width
+    guard let component = component else {
+      return 0
+    }
 
-          if remainingWidth >= collectionView.frame.size.width {
-            break
-          }
+    let numberOfItemsInSection = component.model.items.count
 
-          additionalIndexes += 1
-        }
+    guard component.model.layout.infiniteScrolling else {
+      return numberOfItemsInSection
+    }
 
-        return component.model.items.count + additionalIndexes
-      }
-
-      return component.model.items.count
-    }, fallback: 0)
-
-    return numberOfItemsInSection
+    return numberOfItemsInSection + 2 * buffer
   }
 
   /// Asks the data source for the number of items in the specified section. (required)
@@ -44,35 +33,7 @@ extension DataSource: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
 
-    let currentIndexPath: IndexPath
-
-    if component.model.layout.infiniteScrolling {
-      /// Compute the first and last item in the list, it should start with the last
-      /// item instead of the first on the model. The last item in the list should
-      /// also be resolved to the last on the model.
-      if indexPath.item == 0 || indexPath.item == component.model.items.count {
-        currentIndexPath = IndexPath(item: component.model.items.count - 1, section: 0)
-      /// Properly resolve padded items.
-      /// Example with the last three items being padded.
-      /// |19|20|0|1|2|
-      } else if indexPath.item > component.model.items.count {
-        currentIndexPath = IndexPath(item: indexPath.item - component.model.items.count - 1, section: 0)
-      /// Resolve the regular items with an offset of -1 because the first item of the
-      /// data source is equal to the last item.
-      } else {
-        currentIndexPath = IndexPath(item: indexPath.item - 1, section: 0)
-      }
-    } else {
-      currentIndexPath = indexPath
-
-      /// Safe guard to avoid crash when requesting an index path that is out of bounds.
-      /// Discussion: This is legacy and I don't think this should be here, I'll leave
-      /// it for now as we have tests for it.
-      if indexPath.item >= component.model.items.count {
-        return UICollectionViewCell()
-      }
-    }
-
+    let currentIndexPath: IndexPath = indexPathManager.computeIndexPath(indexPath)
     let reuseIdentifier = component.identifier(for: currentIndexPath)
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: currentIndexPath)
     viewPreparer.prepareView(cell, atIndex: currentIndexPath.item, in: component, parentFrame: cell.bounds)

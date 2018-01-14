@@ -14,6 +14,8 @@ public class DataSource: NSObject, ComponentResolvable {
   /// about how to configure your views.
   let viewPreparer: ViewPreparer
   let configuration: Configuration
+  let indexPathManager: IndexPathManager!
+  var buffer: Int = 2
 
   /// A computed value that holds the amount of items that the component model holds.
   var numberOfItems: Int {
@@ -30,6 +32,7 @@ public class DataSource: NSObject, ComponentResolvable {
   init(component: Component, with configuration: Configuration = .shared) {
     self.component = component
     self.configuration = configuration
+    self.indexPathManager = IndexPathManager(component: component)
     self.viewPreparer = ViewPreparer(configuration: configuration)
   }
 }
