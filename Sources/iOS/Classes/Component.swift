@@ -185,27 +185,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     configurePageControl()
     Component.configure?(self)
 
+    #if os(tvOS)
     if model.layout.infiniteScrolling {
       setupInfiniteScrolling()
     }
-  }
-
-  private func setupInfiniteScrolling() {
-    guard let collectionView = collectionView,
-      let componentDataSource = componentDataSource else {
-        return
-    }
-
-    let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
-    guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
-      return
-    }
-
-    collectionView.contentOffset.x = attributes.frame.minX
-    componentDelegate?.manualFocusedIndexPath = indexPath
-    if #available(iOS 9.0, *) {
-      view.setNeedsFocusUpdate()
-    }
+    #endif
   }
 
   /// Configure the view frame with a given size.
@@ -250,6 +234,26 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     handleInfiniteScrolling()
     #endif
   }
+
+  #if os(tvOS)
+  private func setupInfiniteScrolling() {
+    guard let collectionView = collectionView,
+      let componentDataSource = componentDataSource else {
+        return
+    }
+
+    let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
+    guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
+      return
+    }
+
+    collectionView.contentOffset.x = attributes.frame.minX
+    componentDelegate?.manualFocusedIndexPath = indexPath
+    if #available(iOS 9.0, *) {
+      view.setNeedsFocusUpdate()
+    }
+  }
+  #endif
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
   /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
