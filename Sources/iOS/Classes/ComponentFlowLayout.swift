@@ -92,8 +92,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
             let indexPath = IndexPath(item: index - component.model.items.count, section: 0)
             contentSize.width += component.sizeForItem(at: indexPath).width + minimumInteritemSpacing
           }
-
-          contentSize.width += CGFloat(component.model.layout.inset.right)
         }
       }
 

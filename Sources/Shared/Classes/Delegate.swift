@@ -14,6 +14,16 @@ public class Delegate: NSObject, ComponentResolvable {
   /// about how to configure your views.
   let viewPreparer: ViewPreparer
   let configuration: Configuration
+  let indexPathManager: IndexPathManager
+
+  #if os(tvOS)
+  /// A boolean value that indicates that the scrolling offset has reached
+  /// the added buffer when using infinite scrolling.
+  var hasReachedBuffer: Bool = false
+  /// A property used for navigating seamlessly with the focus engine on
+  /// tvOS when a component has infinite scrolling enabled.
+  var manualFocusedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
+  #endif
 
   #if !os(macOS)
   /// The scroll view manager handles constraining horizontal components.
@@ -29,6 +39,7 @@ public class Delegate: NSObject, ComponentResolvable {
   init(component: Component, with configuration: Configuration = .shared) {
     self.component = component
     self.configuration = configuration
+    self.indexPathManager = IndexPathManager(component: component)
     self.viewPreparer = ViewPreparer(configuration: configuration)
   }
 }

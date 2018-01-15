@@ -45,6 +45,7 @@
 		BD2872AC1FA20ED200799CEB /* SpotsScrollView+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */; };
 		BD2872AE1FA20F9300799CEB /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */; };
 		BD2872AF1FA20F9300799CEB /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */; };
+		BD2BF912200CACD7002FF092 /* Delegate+tvOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BF911200CACD7002FF092 /* Delegate+tvOS+Extensions.swift */; };
 		BD30491D1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
 		BD30491E1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
 		BD30491F1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
@@ -77,6 +78,9 @@
 		BD45D9951E30A8A000C2D6B2 /* InsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* InsetTests.swift */; };
 		BD45D9961E30A8A000C2D6B2 /* InsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* InsetTests.swift */; };
 		BD45D9971E30A8A000C2D6B2 /* InsetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45D9941E30A8A000C2D6B2 /* InsetTests.swift */; };
+		BD48C97E200BE62E00A3561F /* IndexPathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48C97D200BE62E00A3561F /* IndexPathManager.swift */; };
+		BD48C97F200BE62E00A3561F /* IndexPathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48C97D200BE62E00A3561F /* IndexPathManager.swift */; };
+		BD48C980200BE62E00A3561F /* IndexPathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD48C97D200BE62E00A3561F /* IndexPathManager.swift */; };
 		BD4F05AB1FFD5AE5009528BB /* ComponentFocusDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F05A91FFD5AE5009528BB /* ComponentFocusDelegateTests.swift */; };
 		BD5500FE1F93950D0075CC4E /* ArrayExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5500FD1F93950D0075CC4E /* ArrayExtensionsTests.swift */; };
 		BD5500FF1F93950D0075CC4E /* ArrayExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5500FD1F93950D0075CC4E /* ArrayExtensionsTests.swift */; };
@@ -462,6 +466,7 @@
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpotsScrollView+tvOS.swift"; sourceTree = "<group>"; };
 		BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
+		BD2BF911200CACD7002FF092 /* Delegate+tvOS+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Delegate+tvOS+Extensions.swift"; sourceTree = "<group>"; };
 		BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveAlgorithmTests.swift; sourceTree = "<group>"; };
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD34B4011F93D5C800840F2F /* ItemChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemChange.swift; sourceTree = "<group>"; };
@@ -478,6 +483,7 @@
 		BD45D9941E30A8A000C2D6B2 /* InsetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetTests.swift; sourceTree = "<group>"; };
 		BD45D9981E30B0F700C2D6B2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BD45D9991E30B0F700C2D6B2 /* Spots.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Spots.podspec; sourceTree = "<group>"; };
+		BD48C97D200BE62E00A3561F /* IndexPathManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathManager.swift; sourceTree = "<group>"; };
 		BD4F05A91FFD5AE5009528BB /* ComponentFocusDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentFocusDelegateTests.swift; sourceTree = "<group>"; };
 		BD5500FD1F93950D0075CC4E /* ArrayExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTests.swift; sourceTree = "<group>"; };
 		BD5CF7361E8B7C57006CC281 /* ComponentResize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentResize.swift; sourceTree = "<group>"; };
@@ -870,6 +876,7 @@
 		BDAD852A1E3E7032008289AE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BD48C97D200BE62E00A3561F /* IndexPathManager.swift */,
 				BDE44B0E1EA0E5E80021EAC8 /* ComponentManager.swift */,
 				BDAD852C1E3E7032008289AE /* DataSource.swift */,
 				BDAD852D1E3E7032008289AE /* Delegate.swift */,
@@ -983,6 +990,7 @@
 				BDAD85F51E3E703A008289AE /* Component+tvOS.swift */,
 				BD6857A31F7CCCFC008EA9B5 /* SpotsController+tvOS.swift */,
 				BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */,
+				BD2BF911200CACD7002FF092 /* Delegate+tvOS+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1508,6 +1516,7 @@
 				BD34B4041F93D5C800840F2F /* ItemChange.swift in Sources */,
 				BDC5F37B1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
 				BD1F9A8B1F908866003E6D8D /* ItemModel.swift in Sources */,
+				BD2BF912200CACD7002FF092 /* Delegate+tvOS+Extensions.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD85C51E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				D5D282711E5474E0004BF251 /* Cell.swift in Sources */,
@@ -1523,6 +1532,7 @@
 				BD6857A41F7CCCFC008EA9B5 /* SpotsController+tvOS.swift in Sources */,
 				BDAD85D41E3E7032008289AE /* ComponentModel.swift in Sources */,
 				BDAD85F61E3E703A008289AE /* Component+tvOS.swift in Sources */,
+				BD48C980200BE62E00A3561F /* IndexPathManager.swift in Sources */,
 				BDAD85E31E3E7032008289AE /* Interaction.swift in Sources */,
 				BD24030D1E4B981A005BAA19 /* Component.swift in Sources */,
 				BD2872AF1FA20F9300799CEB /* SpotsScrollView.swift in Sources */,
@@ -1675,6 +1685,7 @@
 				BDAD85631E3E7032008289AE /* DataSource.swift in Sources */,
 				BDAD84B61E3E701C008289AE /* GridWrapper.swift in Sources */,
 				BDA3D96C1EC6F1A400141227 /* ItemManager.swift in Sources */,
+				BD48C97E200BE62E00A3561F /* IndexPathManager.swift in Sources */,
 				BD91A9521F2FAB87005B6A38 /* ComponentResolvable+Extensions.swift in Sources */,
 				BDC5F3791F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
 				BDDCF6E01E4DF927004B38C4 /* ItemConfigurable.swift in Sources */,
@@ -1826,6 +1837,7 @@
 				BDA25E901EB5070F002B21C0 /* Wrappable+macOS.swift in Sources */,
 				BDDCF6F01E4DF93D004B38C4 /* DictionaryConvertible.swift in Sources */,
 				BD77D1F51E8537E80075A3FC /* ComponentModelDiff.swift in Sources */,
+				BD48C97F200BE62E00A3561F /* IndexPathManager.swift in Sources */,
 				BDAD851D1E3E7025008289AE /* DataSource+macOS+Extensions.swift in Sources */,
 				BD0AF3531E83CC53008795C3 /* UserInterface+Extensions.swift in Sources */,
 				BDC5F37A1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,

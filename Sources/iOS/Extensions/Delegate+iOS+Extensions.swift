@@ -1,46 +1,6 @@
 import UIKit
 
-private extension Delegate {
-  /// Sets the initial values to the focus delegate.
-  /// See `updateFocusDelegate(_ index: Int, _ userInterface: UserInterface)` for more details.
-  ///
-  /// - Parameter scrollView: The scrollview that is currently in focus, can either be a `UICollectionView`
-  ///                         or a `UITableView`.
-  func setInitialValuesToFocusDelegate(_ scrollView: ScrollView) {
-    if let component = component,
-      component.view == scrollView,
-      component.focusDelegate?.focusedComponent == nil {
-      let focusedIndex = component.focusDelegate?.focusedItemIndex ?? 0
-      component.focusDelegate?.focusedComponent = component
-      component.focusDelegate?.focusedView = component.userInterface?.view(at: focusedIndex)
-    }
-  }
-
-  /// Sets new properties to the focus delegate.
-  /// The properties that gets updated are `.focusedComponent`, `focusedItemIndex` and `focusedView`.
-  /// `.focusedComponent` only gets set if the current focused component is different than the current one.
-  /// This is done to only trigger the observation once.
-  ///
-  /// - Parameters:
-  ///   - index: The index of the current view that is selected.
-  ///   - userInterface: The user interface that is currently in focus, can either be a `UICollectionView`
-  ///                    or a `UITableView`.
-  func updateFocusDelegate(_ index: Int, _ userInterface: UserInterface) {
-    if let component = component, index < component.model.items.count {
-      if component.focusDelegate?.focusedComponent != component {
-        component.focusDelegate?.focusedComponent = component
-      }
-      component.focusDelegate?.focusedItemIndex = index
-      component.focusDelegate?.focusedView = userInterface.view(at: index)
-      #if os(tvOS)
-        component.focusGuide.preferredFocusedView = userInterface.view(at: index)
-      #endif
-    }
-  }
-}
-
 extension Delegate: UICollectionViewDelegate {
-
   /// Asks the delegate for the size of the specified item’s cell.
   ///
   /// - parameter collectionView: The collection view object displaying the flow layout.
@@ -49,6 +9,7 @@ extension Delegate: UICollectionViewDelegate {
   ///
   /// - returns: The width and height of the specified item. Both values must be greater than 0.
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     let sizeForItem = resolveComponent({ component in
       component.sizeForItem(at: indexPath)
     }, fallback: .zero)
@@ -61,6 +22,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter collectionView: The collection view object that is notifying you of the selection change.
   /// - parameter indexPath: The index path of the cell that was selected.
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     resolveComponentItem(at: indexPath) { component, item in
       component.delegate?.component(component, itemSelected: item)
     }
@@ -72,6 +34,7 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object being added.
   /// - parameter indexPath: The index path of the data item that the cell represents.
   public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     resolveComponentItem(at: indexPath) { component, item in
       let view = (cell as? Wrappable)?.wrappedView ?? cell
 
@@ -89,46 +52,11 @@ extension Delegate: UICollectionViewDelegate {
   /// - parameter cell: The cell object that was removed.
   /// - parameter indexPath: The index path of the data item that the cell represented.
   public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
     resolveComponentItem(at: indexPath) { (component, item) in
       let view = (cell as? Wrappable)?.wrappedView ?? cell
       component.delegate?.component(component, didEndDisplaying: view, item: item)
     }
-  }
-
-  /// Asks the delegate whether the item at the specified index path can be focused.
-  ///
-  /// - parameter collectionView: The collection view object requesting this information.
-  /// - parameter indexPath:      The index path of an item in the collection view.
-  ///
-  /// - returns: YES if the item can receive be focused or NO if it can not.
-  public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    let canFocusItem = resolveComponent({ component in
-      return component.item(at: indexPath) != nil
-    }, fallback: false)
-    return canFocusItem
-  }
-
-  ///Asks the delegate whether a change in focus should occur.
-  ///
-  /// - parameter collectionView: The collection view object requesting this information.
-  /// - parameter context:        The context object containing metadata associated with the focus change.
-  /// This object contains the index path of the previously focused item and the item targeted to receive focus next. Use this information to determine if the focus change should occur.
-  ///
-  /// - returns: YES if the focus change should occur or NO if it should not.
-  @available(iOS 9.0, *)
-  public func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
-    guard let indexPath = context.nextFocusedIndexPath else {
-      return true
-    }
-
-    updateFocusDelegate(indexPath.item, collectionView)
-
-    return context.nextFocusedView?.canBecomeFocused ?? false
-  }
-
-  @available(iOS 9.0, *)
-  public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-    setInitialValuesToFocusDelegate(collectionView)
   }
 }
 
@@ -198,22 +126,6 @@ extension Delegate: UITableViewDelegate {
 
   public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     return component?.footerView ?? nil
-  }
-
-  @available(iOS 9.0, *)
-  public func tableView(_ tableView: UITableView, shouldUpdateFocusIn context: UITableViewFocusUpdateContext) -> Bool {
-    guard let indexPath = context.nextFocusedIndexPath else {
-      return true
-    }
-
-    updateFocusDelegate(indexPath.item, tableView)
-
-    return true
-  }
-
-  @available(iOS 9.0, *)
-  public func tableView(_ tableView: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-    setInitialValuesToFocusDelegate(tableView)
   }
 
   /// Asks the delegate for the height to use for a row in a specified location.

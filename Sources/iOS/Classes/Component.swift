@@ -185,10 +185,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     configurePageControl()
     Component.configure?(self)
 
+    #if os(tvOS)
     if model.layout.infiniteScrolling {
-      let size = sizeForItem(at: IndexPath(item: 0, section: 0))
-      collectionView?.contentOffset.x = size.width + CGFloat(model.layout.itemSpacing)
+      setupInfiniteScrolling()
     }
+    #endif
   }
 
   /// Configure the view frame with a given size.
@@ -225,12 +226,34 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// It is used to invoke `handleInfiniteScrolling` when the users scrolls a horizontal
   /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
+    #if os(iOS)
     guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
       return
     }
 
     handleInfiniteScrolling()
+    #endif
   }
+
+  #if os(tvOS)
+  private func setupInfiniteScrolling() {
+    guard let collectionView = collectionView,
+      let componentDataSource = componentDataSource else {
+        return
+    }
+
+    let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
+    guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
+      return
+    }
+
+    collectionView.contentOffset.x = attributes.frame.minX
+    componentDelegate?.manualFocusedIndexPath = indexPath
+    if #available(iOS 9.0, *) {
+      view.setNeedsFocusUpdate()
+    }
+  }
+  #endif
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
   /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
@@ -258,7 +281,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     collectionView.layer.masksToBounds = false
 
     if #available(iOS 9.0, *) {
-      collectionView.remembersLastFocusedIndexPath = true
+      collectionView.remembersLastFocusedIndexPath = !model.layout.infiniteScrolling
     }
 
     guard model.kind == .carousel else {
