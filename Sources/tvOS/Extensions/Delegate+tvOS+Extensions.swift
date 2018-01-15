@@ -36,10 +36,11 @@ extension Delegate {
       return true
     }
 
+    let computedIndexPath = indexPathManager.computeIndexPath(indexPath)
+
     if let component = component, component.model.layout.infiniteScrolling == true {
       let count = component.model.items.count
       let buffer = (collectionView.dataSource as? DataSource)?.buffer ?? 0
-      let computedIndexPath = indexPathManager.computeIndexPath(indexPath)
       updateFocusDelegate(computedIndexPath.item, collectionView)
 
       if context.focusHeading == .left && indexPath.item < buffer {
@@ -54,7 +55,7 @@ extension Delegate {
         return true
       }
     } else {
-      updateFocusDelegate(indexPath.item, collectionView)
+      updateFocusDelegate(computedIndexPath.item, collectionView)
     }
 
     return context.nextFocusedView?.canBecomeFocused ?? false
@@ -69,7 +70,6 @@ extension Delegate {
 
     hasReachedBuffer = false
     modifyContentOffsetFor(context.focusHeading, indexPath: nextFocusedIndexPath, collectionView: collectionView)
-    currentlyFocusedItem = manualFocusedIndexPath.item
     collectionView.setNeedsFocusUpdate()
   }
 
@@ -167,16 +167,16 @@ extension Delegate {
     let count = component.model.items.count
     let buffer = component.componentDataSource?.buffer ?? 0
 
-    currentlyFocusedItem = indexPath.item
+    var newFocusedIndex = indexPath.item
 
     if focusHeading == .left && indexPath.item < buffer {
-      currentlyFocusedItem += count
+      newFocusedIndex += count
     }
 
     if focusHeading == .right && indexPath.item >= buffer + count {
-      currentlyFocusedItem -= count
+      newFocusedIndex -= count
     }
 
-    manualFocusedIndexPath = IndexPath(item: currentlyFocusedItem, section: 0)
+    manualFocusedIndexPath = IndexPath(item: newFocusedIndex, section: 0)
   }
 }

@@ -20,8 +20,6 @@ public class Delegate: NSObject, ComponentResolvable {
   /// A boolean value that indicates that the scrolling offset has reached
   /// the added buffer when using infinite scrolling.
   var hasReachedBuffer: Bool = false
-  /// The index of the focused item.
-  var currentlyFocusedItem: Int = 0
   /// A property used for navigating seamlessly with the focus engine on
   /// tvOS when a component has infinite scrolling enabled.
   var manualFocusedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
