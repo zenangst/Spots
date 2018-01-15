@@ -1,14 +1,14 @@
 import Foundation
 
-class IndexPathManager {
-  var component: Component
+final class IndexPathManager {
+  weak private var component: Component?
 
   init(component: Component) {
     self.component = component
   }
 
   func computeIndexPath(_ indexPath: IndexPath) -> IndexPath {
-    guard component.model.layout.infiniteScrolling else {
+    guard let component = component, component.model.layout.infiniteScrolling else {
       return indexPath
     }
 
