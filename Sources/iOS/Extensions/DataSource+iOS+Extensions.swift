@@ -30,16 +30,19 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let component = component else {
-      return UICollectionViewCell()
+      return collectionView.dequeueReusableCell(withReuseIdentifier: Configuration.shared.views.defaultIdentifier,
+                                                for: indexPath)
     }
 
-    if indexPath.item >= component.model.items.count {
-      return UICollectionViewCell()
+    if !component.model.layout.infiniteScrolling, indexPath.item >= component.model.items.count {
+      return collectionView.dequeueReusableCell(withReuseIdentifier: Configuration.shared.views.defaultIdentifier,
+                                                for: IndexPath(item: 0, section: 0))
     }
 
     let currentIndexPath: IndexPath = indexPathManager.computeIndexPath(indexPath)
     let reuseIdentifier = component.identifier(for: currentIndexPath)
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: currentIndexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                  for: currentIndexPath)
     viewPreparer.prepareView(cell, atIndex: currentIndexPath.item, in: component, parentFrame: cell.bounds)
 
     return cell
