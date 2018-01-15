@@ -45,6 +45,7 @@
 		BD2872AC1FA20ED200799CEB /* SpotsScrollView+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */; };
 		BD2872AE1FA20F9300799CEB /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */; };
 		BD2872AF1FA20F9300799CEB /* SpotsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */; };
+		BD2BF912200CACD7002FF092 /* Delegate+tvOS+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BF911200CACD7002FF092 /* Delegate+tvOS+Extensions.swift */; };
 		BD30491D1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
 		BD30491E1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
 		BD30491F1F041C7E00D9EECB /* MoveAlgorithmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */; };
@@ -465,6 +466,7 @@
 		BD2403101E4B9A02005BAA19 /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpotsScrollView+tvOS.swift"; sourceTree = "<group>"; };
 		BD2872AD1FA20F9300799CEB /* SpotsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotsScrollView.swift; sourceTree = "<group>"; };
+		BD2BF911200CACD7002FF092 /* Delegate+tvOS+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Delegate+tvOS+Extensions.swift"; sourceTree = "<group>"; };
 		BD30491C1F041C7E00D9EECB /* MoveAlgorithmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveAlgorithmTests.swift; sourceTree = "<group>"; };
 		BD31BB991EA6208600D1FC8A /* DelegateConfigurationClosureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateConfigurationClosureTests.swift; sourceTree = "<group>"; };
 		BD34B4011F93D5C800840F2F /* ItemChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemChange.swift; sourceTree = "<group>"; };
@@ -988,6 +990,7 @@
 				BDAD85F51E3E703A008289AE /* Component+tvOS.swift */,
 				BD6857A31F7CCCFC008EA9B5 /* SpotsController+tvOS.swift */,
 				BD2872AB1FA20ED200799CEB /* SpotsScrollView+tvOS.swift */,
+				BD2BF911200CACD7002FF092 /* Delegate+tvOS+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1513,6 +1516,7 @@
 				BD34B4041F93D5C800840F2F /* ItemChange.swift in Sources */,
 				BDC5F37B1F041A6500EA6A2C /* MoveAlgorithm.swift in Sources */,
 				BD1F9A8B1F908866003E6D8D /* ItemModel.swift in Sources */,
+				BD2BF912200CACD7002FF092 /* Delegate+tvOS+Extensions.swift in Sources */,
 				BDAD85F21E3E7032008289AE /* TypeAlias.swift in Sources */,
 				BDAD85C51E3E7032008289AE /* ComponentFocusDelegate.swift in Sources */,
 				D5D282711E5474E0004BF251 /* Cell.swift in Sources */,
