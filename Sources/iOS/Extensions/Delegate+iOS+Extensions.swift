@@ -135,7 +135,8 @@ extension Delegate: UICollectionViewDelegate {
     if let component = component, component.model.layout.infiniteScrolling == true {
       let count = component.model.items.count
       let buffer = (collectionView.dataSource as? DataSource)?.buffer ?? 0
-      updateFocusDelegate(manualFocusCell.item, collectionView)
+      let computedIndexPath = indexPathManager.computeIndexPath(indexPath)
+      updateFocusDelegate(computedIndexPath.item, collectionView)
 
       if context.focusHeading == .left && indexPath.item < buffer {
         navigating = true
