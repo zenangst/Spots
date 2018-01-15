@@ -33,6 +33,10 @@ extension DataSource: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
 
+    if indexPath.item >= component.model.items.count {
+      return UICollectionViewCell()
+    }
+
     let currentIndexPath: IndexPath = indexPathManager.computeIndexPath(indexPath)
     let reuseIdentifier = component.identifier(for: currentIndexPath)
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: currentIndexPath)
