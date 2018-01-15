@@ -189,7 +189,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       let indexPath = IndexPath(item: 2, section: 0)
       let attributes = collectionView!.layoutAttributesForItem(at: indexPath)!
       collectionView?.contentOffset.x = attributes.frame.minX
-      componentDelegate?.manualFocusCell = indexPath
+      componentDelegate?.manualFocusedIndexPath = indexPath
       componentDelegate?.currentlyFocusedItem = indexPath.item
       if #available(iOS 9.0, *) {
         view.setNeedsFocusUpdate()

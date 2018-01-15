@@ -5,7 +5,7 @@ extension Delegate {
 
   public func indexPathForPreferredFocusedView(in collectionView: UICollectionView) -> IndexPath? {
     return component?.model.layout.infiniteScrolling == true
-      ? manualFocusCell
+      ? manualFocusedIndexPath
       : nil
   }
 
@@ -75,7 +75,7 @@ extension Delegate {
       jump(.backward, indexPath: nextFocusedIndexPath, collectionView: collectionView)
     }
 
-    currentlyFocusedItem = manualFocusCell.item
+    currentlyFocusedItem = manualFocusedIndexPath.item
     collectionView.setNeedsFocusUpdate()
   }
 
@@ -164,7 +164,7 @@ extension Delegate {
       jumpOffset *= -1
     }
 
-    manualFocusCell = newIndexPath
+    manualFocusedIndexPath = newIndexPath
 
     collectionView.setContentOffset(CGPoint(x: currentOffset + jumpOffset,
                                             y: collectionView.contentOffset.y),
@@ -190,6 +190,6 @@ extension Delegate {
       currentlyFocusedItem -= count
     }
 
-    manualFocusCell = IndexPath(item: currentlyFocusedItem, section: 0)
+    manualFocusedIndexPath = IndexPath(item: currentlyFocusedItem, section: 0)
   }
 }

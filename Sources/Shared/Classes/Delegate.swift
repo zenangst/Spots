@@ -17,7 +17,7 @@ public class Delegate: NSObject, ComponentResolvable {
   let indexPathManager: IndexPathManager!
   var navigating: Bool = false
   var currentlyFocusedItem: Int = 0
-  var manualFocusCell: IndexPath = IndexPath(item: 0, section: 0)
+  var manualFocusedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
 
   #if !os(macOS)
   /// The scroll view manager handles constraining horizontal components.
