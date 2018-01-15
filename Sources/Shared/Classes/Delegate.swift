@@ -14,7 +14,7 @@ public class Delegate: NSObject, ComponentResolvable {
   /// about how to configure your views.
   let viewPreparer: ViewPreparer
   let configuration: Configuration
-  let indexPathManager: IndexPathManager!
+  let indexPathManager: IndexPathManager
 
   #if os(tvOS)
   /// A boolean value that indicates that the scrolling offset has reached

@@ -14,7 +14,7 @@ public class DataSource: NSObject, ComponentResolvable {
   /// about how to configure your views.
   let viewPreparer: ViewPreparer
   let configuration: Configuration
-  let indexPathManager: IndexPathManager!
+  let indexPathManager: IndexPathManager
   var buffer: Int = 2
 
   /// A computed value that holds the amount of items that the component model holds.
