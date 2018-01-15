@@ -36,6 +36,7 @@ class ComponentDelegateiOSTests: XCTestCase {
     XCTAssertEqual(delegate.countsInvoked, 1)
   }
 
+  #if os(tvOS)
   func testCollectionViewCanFocus() {
     let component = Component(model: ComponentModel(kind: .grid, layout: Layout(span: 1), items: [Item(title: "title 1")]))
 
@@ -47,6 +48,7 @@ class ComponentDelegateiOSTests: XCTestCase {
     XCTAssertEqual(component.componentDelegate?.collectionView(collectionView, canFocusItemAt: IndexPath(item: 0, section: 0)), true)
     XCTAssertEqual(component.componentDelegate?.collectionView(collectionView, canFocusItemAt: IndexPath(item: 1, section: 0)), false)
   }
+  #endif
 
   // MARK: - UITableView
 
