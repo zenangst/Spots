@@ -44,13 +44,13 @@ extension Delegate {
 
       if context.focusHeading == .left && indexPath.item < buffer {
         hasReachedBuffer = true
-        jump(with: context, collectionView: collectionView, indexPath: indexPath)
+        modifyManualFocusedIndexPath(with: context, collectionView: collectionView, indexPath: indexPath)
         return true
       }
 
       if context.focusHeading == .right && indexPath.item >= buffer + count {
         hasReachedBuffer = true
-        jump(with: context, collectionView: collectionView, indexPath: indexPath)
+        modifyManualFocusedIndexPath(with: context, collectionView: collectionView, indexPath: indexPath)
         return true
       }
     } else {
@@ -68,13 +68,7 @@ extension Delegate {
     }
 
     hasReachedBuffer = false
-
-    if context.focusHeading == .left {
-      jump(.forward, indexPath: nextFocusedIndexPath, collectionView: collectionView)
-    } else {
-      jump(.backward, indexPath: nextFocusedIndexPath, collectionView: collectionView)
-    }
-
+    modifyContentOffsetFor(context.focusHeading, indexPath: nextFocusedIndexPath, collectionView: collectionView)
     currentlyFocusedItem = manualFocusedIndexPath.item
     collectionView.setNeedsFocusUpdate()
   }
@@ -92,9 +86,7 @@ extension Delegate {
       return true
     }
 
-    #if os(tvOS)
-      updateFocusDelegate(indexPath.item, tableView)
-    #endif
+    updateFocusDelegate(indexPath.item, tableView)
 
     return true
   }
@@ -132,53 +124,48 @@ extension Delegate {
       }
       component.focusDelegate?.focusedItemIndex = index
       component.focusDelegate?.focusedView = userInterface.view(at: index)
-      #if os(tvOS)
-        component.focusGuide.preferredFocusedView = userInterface.view(at: index)
-      #endif
+      component.focusGuide.preferredFocusedView = userInterface.view(at: index)
     }
   }
 
-  private enum JumpDirection {
-    case forward
-    case backward
-  }
-
-  private func jump(_ direction: JumpDirection, indexPath: IndexPath, collectionView: UICollectionView) {
+  private func modifyContentOffsetFor(_ heading: UIFocusHeading, indexPath: IndexPath, collectionView: UICollectionView) {
     guard let component = component else {
       return
     }
 
     var newIndexPath = indexPath
-    switch direction {
-    case .forward:
+    switch heading {
+    case .left:
       newIndexPath.item += component.model.items.count
-    case .backward:
+    case .right:
       newIndexPath.item -= component.model.items.count
+    default:
+      return
     }
 
     let currentOffset = collectionView.contentOffset.x
     let itemSizeIndexPath = indexPathManager.computeIndexPath(newIndexPath)
     let totalWidth = component.sizeForItem(at: itemSizeIndexPath).width + CGFloat(component.model.layout.itemSpacing)
-    var jumpOffset = CGFloat(component.model.items.count) * totalWidth
-    if case .backward = direction {
-      jumpOffset *= -1
+    var additionalOffset = CGFloat(component.model.items.count) * totalWidth
+    if case .right = heading {
+      additionalOffset *= -1
     }
 
     manualFocusedIndexPath = newIndexPath
 
-    collectionView.setContentOffset(CGPoint(x: currentOffset + jumpOffset,
+    collectionView.setContentOffset(CGPoint(x: currentOffset + additionalOffset,
                                             y: collectionView.contentOffset.y),
                                     animated: false)
   }
 
-  private func jump(with context: UICollectionViewFocusUpdateContext, collectionView: UICollectionView, indexPath: IndexPath) {
-    guard context.focusHeading == .left || context.focusHeading == .right else {
+  private func modifyManualFocusedIndexPath(with context: UICollectionViewFocusUpdateContext, collectionView: UICollectionView, indexPath: IndexPath) {
+    guard let component = component, context.focusHeading == .left || context.focusHeading == .right else {
       return
     }
 
     let focusHeading = context.focusHeading
-    let count = component!.model.items.count
-    let buffer = component!.componentDataSource?.buffer ?? 0
+    let count = component.model.items.count
+    let buffer = component.componentDataSource?.buffer ?? 0
 
     currentlyFocusedItem = indexPath.item
 
