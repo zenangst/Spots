@@ -186,13 +186,25 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     Component.configure?(self)
 
     if model.layout.infiniteScrolling {
-      let indexPath = IndexPath(item: 2, section: 0)
-      let attributes = collectionView!.layoutAttributesForItem(at: indexPath)!
-      collectionView?.contentOffset.x = attributes.frame.minX
-      componentDelegate?.manualFocusedIndexPath = indexPath
-      if #available(iOS 9.0, *) {
-        view.setNeedsFocusUpdate()
-      }
+      setupInfiniteScrolling()
+    }
+  }
+
+  private func setupInfiniteScrolling() {
+    guard let collectionView = collectionView,
+      let componentDataSource = componentDataSource else {
+        return
+    }
+
+    let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
+    guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
+      return
+    }
+
+    collectionView.contentOffset.x = attributes.frame.minX
+    componentDelegate?.manualFocusedIndexPath = indexPath
+    if #available(iOS 9.0, *) {
+      view.setNeedsFocusUpdate()
     }
   }
 
