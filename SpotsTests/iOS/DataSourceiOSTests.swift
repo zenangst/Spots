@@ -113,6 +113,6 @@ class DataSourceiOSTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(dataSource.collectionView(collectionView, numberOfItemsInSection: 0), 22)
+    XCTAssertEqual(dataSource.collectionView(collectionView, numberOfItemsInSection: 0), 25)
   }
 }

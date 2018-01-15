@@ -63,6 +63,7 @@ class ComponentTests: XCTestCase {
     waitForExpectations(timeout: 10.0, handler: nil)
   }
 
+  #if os(iOS)
   func testComponentInfiniteScrolling() {
     let items = (0...20).map { Item(title: "\($0)") }
     let model = ComponentModel(kind: .carousel, layout: Layout(infiniteScrolling: true), items: items)
@@ -83,4 +84,5 @@ class ComponentTests: XCTestCase {
     component.layoutSubviews()
     XCTAssertEqual(component.view.contentOffset.x, 2000)
   }
+  #endif
 }
