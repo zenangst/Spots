@@ -15,9 +15,17 @@ public class Delegate: NSObject, ComponentResolvable {
   let viewPreparer: ViewPreparer
   let configuration: Configuration
   let indexPathManager: IndexPathManager!
-  var navigating: Bool = false
+
+  #if os(tvOS)
+  /// A boolean value that indicates that the scrolling offset has reached
+  /// the added buffer when using infinite scrolling.
+  var hasReachedBuffer: Bool = false
+  /// The index of the focused item.
   var currentlyFocusedItem: Int = 0
+  /// A property used for navigating seamlessly with the focus engine on
+  /// tvOS when a component has infinite scrolling enabled.
   var manualFocusedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
+  #endif
 
   #if !os(macOS)
   /// The scroll view manager handles constraining horizontal components.

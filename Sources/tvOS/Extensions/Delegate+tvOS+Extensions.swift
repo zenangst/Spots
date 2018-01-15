@@ -43,13 +43,13 @@ extension Delegate {
       updateFocusDelegate(computedIndexPath.item, collectionView)
 
       if context.focusHeading == .left && indexPath.item < buffer {
-        navigating = true
+        hasReachedBuffer = true
         jump(with: context, collectionView: collectionView, indexPath: indexPath)
         return true
       }
 
       if context.focusHeading == .right && indexPath.item >= buffer + count {
-        navigating = true
+        hasReachedBuffer = true
         jump(with: context, collectionView: collectionView, indexPath: indexPath)
         return true
       }
@@ -63,11 +63,11 @@ extension Delegate {
   @available(iOS 9.0, *)
   public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     setInitialValuesToFocusDelegate(collectionView)
-    guard let nextFocusedIndexPath = context.nextFocusedIndexPath, navigating else {
+    guard let nextFocusedIndexPath = context.nextFocusedIndexPath, hasReachedBuffer else {
       return
     }
 
-    navigating = false
+    hasReachedBuffer = false
 
     if context.focusHeading == .left {
       jump(.forward, indexPath: nextFocusedIndexPath, collectionView: collectionView)
