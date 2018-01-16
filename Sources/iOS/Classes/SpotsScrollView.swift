@@ -4,6 +4,7 @@ import QuartzCore
 /// The core foundation scroll view inside of Spots that manages the linear layout of all components.
 open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
   var sizeCache = [Int: CGFloat]()
+  var isRotating = false
 
   private struct Observer: Equatable {
     let view: UIView
