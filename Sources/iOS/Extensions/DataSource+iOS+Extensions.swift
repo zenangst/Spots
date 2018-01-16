@@ -9,17 +9,16 @@ extension DataSource: UICollectionViewDataSource {
   /// - returns: The number of rows in section.
   @available(iOS 6.0, *)
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    guard let component = component else {
-      return 0
+    guard component?.model.layout.infiniteScrolling == true && numberOfItems >= buffer else {
+      return numberOfItems
     }
 
-    let numberOfItemsInSection = component.model.items.count
-
-    guard component.model.layout.infiniteScrolling else {
-      return numberOfItemsInSection
+    if numberOfItems == buffer {
+      buffer = 1
+      return numberOfItems + 2 * buffer
     }
 
-    return numberOfItemsInSection + 2 * buffer
+    return numberOfItems + 2 * buffer
   }
 
   /// Asks the data source for the number of items in the specified section. (required)
