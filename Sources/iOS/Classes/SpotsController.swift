@@ -1,3 +1,4 @@
+
 import UIKit
 import Cache
 
@@ -216,6 +217,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   ///
   /// - parameter notification: A notification containing the new size.
   @objc func deviceDidRotate(_ notification: Notification) {
+    /// This will rotate views that are not visisble on screen.
     if let userInfo = (notification as NSNotification).userInfo as? [String : Any],
       let rotationSize = userInfo["size"] as? RotationSize, view.window == nil {
       configure(withSize: rotationSize.size)
@@ -266,15 +268,16 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   ///
   /// - parameter size: The size that should be used to configure the views.
   func configure(withSize size: CGSize) {
-    scrollView.frame.size = size
-    scrollView.componentsView.frame.size = size
-
     components.forEach { component in
-      component.collectionView?.flowLayout?.prepare(forAnimatedBoundsChange: component.view.frame)
+      component.view.frame.size = size
+      component.prepareItems()
+      component.collectionView?.flowLayout?.prepare()
       component.collectionView?.flowLayout?.invalidateLayout()
-      component.layout(with: size)
       component.collectionView?.flowLayout?.finalizeAnimatedBoundsChange()
     }
+
+    scrollView.frame.size = size
+    scrollView.componentsView.frame.size = size
   }
 
   open override func viewWillLayoutSubviews() {
@@ -296,16 +299,17 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       }
     #endif
 
-    let completion: (UIViewControllerTransitionCoordinatorContext) -> Void = { _ in
-      self.configure(withSize: size)
+    let completion: (UIViewControllerTransitionCoordinatorContext) -> Void = { [weak self] _ in
+      self?.scrollView.isRotating = false
       NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
                                       object: nil,
                                       userInfo: ["size": RotationSize(size: size)])
     }
 
-    coordinator.animate(alongsideTransition: { _ in
-      self.configure(withSize: size)
-    }, completion: completion)
+    scrollView.isRotating = true
+    coordinator.animate(alongsideTransition: { [weak self] _ in
+      self?.configure(withSize: size)
+      }, completion: completion)
   }
 
   /// Set up components.

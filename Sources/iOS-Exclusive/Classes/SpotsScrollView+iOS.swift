@@ -48,7 +48,10 @@ extension SpotsScrollView {
           frame.size.height = 0
         }
 
-        scrollView.frame = frame
+        if !isRotating {
+          scrollView.frame = frame
+        }
+
         scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
         yOffsetOfCurrentSubview += scrollView.contentSize.height
       } else {
