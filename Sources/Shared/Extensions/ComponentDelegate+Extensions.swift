@@ -57,4 +57,7 @@ public extension ComponentDelegate {
   ///   - selectedIndexes: The selected indexes.
   func component(_ component: Component, didChangeSelection selectedIndexes: [Int]) {}
   #endif
+
+  func component(_ component: Component, didConfigureHeader view: ComponentView, item: Item) {}
+  func component(_ component: Component, didConfigureFooter view: ComponentView, item: Item) {}
 }
