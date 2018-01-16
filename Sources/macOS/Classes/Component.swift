@@ -223,6 +223,7 @@ import Cocoa
 
     layout(with: size, needsLayout: needsLayout, animated: false)
     Component.configure?(self)
+    configuration.configureComponent?(self)
   }
 
   /// Configure the view frame with a given size.
