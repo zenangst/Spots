@@ -8,15 +8,18 @@ final class IndexPathManager {
   }
 
   func computeIndexPath(_ indexPath: IndexPath) -> IndexPath {
-    guard let component = component, component.model.layout.infiniteScrolling else {
-      return indexPath
+    guard let component = component,
+      let dataSource = component.componentDataSource,
+      component.model.layout.infiniteScrolling,
+      component.model.items.count >= dataSource.buffer else {
+        return indexPath
     }
 
-    let buffer = component.componentDataSource?.buffer ?? 2
-    let count = component.model.items.count
     let index = indexPath.item
-    let wrapped = (index - buffer < 0) ? (count + (index - buffer)) : (index - buffer)
-    let adjustedIndex = wrapped % count
+    let wrapped = (index - dataSource.buffer < 0)
+      ? (component.model.items.count + (index - dataSource.buffer))
+      : (index - dataSource.buffer)
+    let adjustedIndex = wrapped % component.model.items.count
     return IndexPath(item: adjustedIndex, section: 0)
   }
 }

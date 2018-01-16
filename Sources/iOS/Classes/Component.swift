@@ -238,7 +238,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   #if os(tvOS)
   private func setupInfiniteScrolling() {
     guard let collectionView = collectionView,
-      let componentDataSource = componentDataSource else {
+      let componentDataSource = componentDataSource,
+      model.items.count >= componentDataSource.buffer else {
         return
     }
 
