@@ -20,6 +20,22 @@ public protocol ComponentDelegate: class {
   func componentIndexPath(_ component: Component, item: Item, at index: Int, for title: String) -> IndexPath
   #endif
 
+  /// This delegate method will be called when the header view is configured in the component.
+  ///
+  /// - Parameters:
+  ///   - component: The component that the header view belongs to.
+  ///   - view: The header view that has been configured.
+  ///   - item: The item of the header model.
+  func component(_ component: Component, didConfigureHeader view: ComponentView, item: Item)
+
+  /// This delegate method will be called when the footer vis is configured in the component.
+  ///
+  /// - Parameters:
+  ///   - component: The component that the header view belongs to.
+  ///   - view: The header view that has been configured.
+  ///   - item: The item of the header model.
+  func component(_ component: Component, didConfigureFooter view: ComponentView, item: Item)
+
   /// A delegate method that is triggered when ever a view is going to be displayed.
   ///
   /// - parameter component: The component that will display the item.
