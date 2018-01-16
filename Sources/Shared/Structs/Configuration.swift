@@ -38,6 +38,7 @@ public class Configuration {
   var presenters: [String: AnyPresenter] = .init()
   var coders: [String: AnyItemModelCoder] = .init()
   var modelCoder: AnyItemModelCoder?
+  open var componentConfiguration: ((Component) -> Void)?
 
   public init() {}
 

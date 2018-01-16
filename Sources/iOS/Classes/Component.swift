@@ -192,6 +192,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     layout(with: size, needsLayout: needsLayout)
     configurePageControl()
     Component.configure?(self)
+    configuration.componentConfiguration?(self)
 
     #if os(tvOS)
     if model.layout.infiniteScrolling {
