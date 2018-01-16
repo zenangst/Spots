@@ -60,12 +60,20 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       return 0.0
     }
 
+    if model.header?.model != nil {
+      return model.header?.size.height ?? 0
+    }
+
     return headerView.frame.size.height
   }
   /// The height of the footer view.
   var footerHeight: CGFloat {
     guard let footerView = footerView else {
       return 0.0
+    }
+
+    if model.footer?.model != nil {
+      return model.footer?.size.height ?? 0
     }
 
     return footerView.frame.size.height
