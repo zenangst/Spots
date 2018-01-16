@@ -17,7 +17,9 @@ extension Component {
     } else {
       if let model = header.model,
         let configurator = self.configuration.presenters[header.kind] {
-        self.model.header?.size.height = configurator.configure(view: headerView, model: model, containerSize: view.frame.size).height
+        let size = configurator.configure(view: headerView, model: model, containerSize: view.frame.size)
+        headerView.frame.size.height = size.height
+        self.model.header?.size.height = size.height
       }
     }
   }
@@ -38,7 +40,9 @@ extension Component {
     } else {
       if let model = footer.model,
         let configurator = self.configuration.presenters[footer.kind] {
-        self.model.footer?.size.height = configurator.configure(view: footerView, model: model, containerSize: view.frame.size).height
+        let size = configurator.configure(view: footerView, model: model, containerSize: view.frame.size)
+        footerView.frame.size.height = size.height
+        self.model.footer?.size.height = size.height
       }
     }
   }
