@@ -39,6 +39,8 @@ public class Configuration {
   var coders: [String: AnyItemModelCoder] = .init()
   var modelCoder: AnyItemModelCoder?
 
+  public init() {}
+
   /// Register a nib file with identifier on the component.
   ///
   /// - parameter nib:        A Nib file that should be used for identifier
