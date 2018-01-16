@@ -194,11 +194,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     Component.configure?(self)
     configuration.configureComponent?(self)
 
-    #if os(tvOS)
     if model.layout.infiniteScrolling {
       setupInfiniteScrolling()
     }
-    #endif
   }
 
   /// Configure the view frame with a given size.
@@ -244,7 +242,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     #endif
   }
 
-  #if os(tvOS)
   private func setupInfiniteScrolling() {
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
@@ -257,22 +254,40 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       return
     }
 
-    collectionView.contentOffset.x = attributes.frame.minX
-    componentDelegate?.manualFocusedIndexPath = indexPath
-    if #available(iOS 9.0, *) {
-      view.setNeedsFocusUpdate()
-    }
+    #if os(iOS)
+      let offset = CGFloat(model.layout.itemSpacing) + CGFloat(model.layout.inset.left / 2)
+      collectionView.contentOffset.x = attributes.frame.minX + offset
+    #endif
+
+    #if os(tvOS)
+      collectionView.contentOffset.x = attributes.frame.minX
+      componentDelegate?.manualFocusedIndexPath = indexPath
+      if #available(tvOS 9.0, *) {
+        view.setNeedsFocusUpdate()
+      }
+    #endif
   }
-  #endif
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
   /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
   private func handleInfiniteScrolling() {
-    let contentWidth = view.contentSize.width - view.frame.size.width
-    if view.contentOffset.x < 0.0 {
-      view.contentOffset.x = contentWidth
-    } else if view.contentOffset.x > contentWidth {
-      view.contentOffset.x = 0.0
+    guard let collectionView = collectionView,
+      let componentDataSource = componentDataSource,
+      model.items.count >= componentDataSource.buffer else {
+        return
+    }
+
+    let offset = collectionView.numberOfItems(inSection: 0) - model.items.count
+
+    guard let firstAttributes = collectionView.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer - 1, section: 0)),
+      let lastAttributes = collectionView.layoutAttributesForItem(at: IndexPath(item: collectionView.numberOfItems(inSection: 0) - offset, section: 0)) else {
+        return
+    }
+
+    if view.contentOffset.x < CGFloat(model.layout.inset.left) {
+      view.contentOffset.x = lastAttributes.frame.origin.x
+    } else if view.contentOffset.x > lastAttributes.frame.maxX + CGFloat(model.layout.inset.left) {
+      view.contentOffset.x = firstAttributes.frame.origin.x
     }
   }
 
