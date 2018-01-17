@@ -74,6 +74,27 @@ extension Delegate: UIScrollViewDelegate {
       }
 
       component.pageControl.currentPage = itemIndex
+
+      guard needsInfiniteScrollingAlignment && component.model.interaction.paginate == .item else {
+        return
+      }
+
+      performPaginatedScrolling { component, collectionView, collectionViewLayout in
+        let centerIndexPath = getCenterIndexPath(in: collectionView,
+                                                 scrollView: scrollView,
+                                                 point: scrollView.contentOffset,
+                                                 contentSize: collectionViewLayout.contentSize,
+                                                 offset: collectionViewLayout.minimumInteritemSpacing)
+
+        guard let foundCenterIndex = centerIndexPath else {
+          return
+        }
+
+        let itemFrame = collectionViewLayout.cachedFrames[foundCenterIndex.item]
+        let alignedX = itemFrame.midX - scrollView.frame.size.width / 2
+        scrollView.setContentOffset(.init(x: alignedX, y: 0), animated: true)
+        needsInfiniteScrollingAlignment = false
+      }
     }
   }
 
@@ -134,8 +155,13 @@ extension Delegate: UIScrollViewDelegate {
 
       // Only snap to item if new value exceeds zero or that the index path
       // at center is larger than zero.
-      guard newPointeeX > 0 && foundIndexPath.item > 0 else {
+      guard (newPointeeX > 0 && foundIndexPath.item > 0) || component.model.layout.infiniteScrolling else {
         return
+      }
+
+      let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
+      if component.model.layout.infiniteScrolling, (newPointeeX == 0 || newPointeeX == widthBounds)  {
+        needsInfiniteScrollingAlignment = true
       }
 
       targetContentOffset.pointee.x = newPointeeX
