@@ -444,4 +444,20 @@ class SpotsControllerManagerTests: XCTestCase {
     }
     waitForExpectations(timeout: 10.0, handler: nil)
   }
+
+  func testReloadIfNeededFilteringEmptyComponentModels() {
+    let models = [ComponentModel(), ComponentModel(), ComponentModel()]
+    let components = models.map { Component(model: $0) }
+    let controller = SpotsController(components: components)
+
+    XCTAssertEqual(controller.components.count, 3)
+
+    let expectation = self.expectation(description: "Wait for exception to be fulfilled.")
+    controller.reloadIfNeeded(models) {
+      XCTAssertEqual(controller.components.count, 0)
+      expectation.fulfill()
+    }
+
+    waitForExpectations(timeout: 10.0, handler: nil)
+  }
 }
