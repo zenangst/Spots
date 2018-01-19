@@ -446,11 +446,11 @@ class SpotsControllerManagerTests: XCTestCase {
   }
 
   func testReloadIfNeededFilteringEmptyComponentModels() {
-    var configuration = Configuration()
+    let configuration = Configuration()
     configuration.removeEmptyComponents = true
     let models = [ComponentModel(), ComponentModel(), ComponentModel()]
     let components = models.map { Component(model: $0) }
-    let controller = SpotsController(components: components)
+    let controller = SpotsController(components: components, configuration: configuration)
 
     XCTAssertEqual(controller.components.count, 3)
 
