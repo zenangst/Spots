@@ -626,7 +626,6 @@
 		BDFBB76C1F75094600421BCF /* ComponentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTableView.swift; sourceTree = "<group>"; };
 		BDFC474C1E747B2B008700BF /* GridWrapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridWrapperTests.swift; sourceTree = "<group>"; };
 		BDFC474D1E747B2B008700BF /* ListWrapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListWrapperTests.swift; sourceTree = "<group>"; };
-		D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Rx-Info-iOS.plist"; sourceTree = "<group>"; };
 		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		D55CFF641FA257F100F69973 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1057,7 +1056,6 @@
 		D58478231C43FF34006EBA49 /* Spots */ = {
 			isa = PBXGroup;
 			children = (
-				D55B7B041E42315A000125C8 /* Rx-Info-iOS.plist */,
 				BD129E3A1D7B2DE2009AC164 /* Info-tvOS.plist */,
 				D584784F1C43FFA1006EBA49 /* Info-macOS.plist */,
 				D58478241C43FF34006EBA49 /* Info-iOS.plist */,

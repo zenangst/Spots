@@ -27,7 +27,7 @@ type_name:
     warning: 40
     error: 50
   excluded: iPhone
-variable_name:
+identifier_name:
   min_length:
     error: 2
   excluded:
@@ -37,7 +37,7 @@ variable_name:
     - URL
     - GlobalAPIKey
 function_body_length:
-  warning: 50
+  warning: 75
 reporter: "xcode"
 missing_docs: internal
 large_tuple:

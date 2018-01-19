@@ -68,6 +68,8 @@ public class SpotsControllerManager {
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              withAnimation animation: Animation = .automatic,
                              completion: Completion = nil) {
+    let components = removeComponentsWithoutItemsIfNeeded(components, configuration: controller.configuration)
+
     guard !components.isEmpty else {
       Dispatch.main {
         controller.components.forEach {
@@ -251,7 +253,6 @@ public class SpotsControllerManager {
                       lessItems newItems: [Item],
                       animation: Animation,
                       completion: (() -> Void)? = nil) {
-
     let updateDatasource = {
       component.model.items = newItems
     }
@@ -378,7 +379,8 @@ public class SpotsControllerManager {
 
       let newComponents: [Component] = Parser.parseComponents(json: json,
                                                               configuration: controller.configuration)
-      let newComponentModels = newComponents.map { $0.model }
+      let newComponentModels = strongSelf.removeComponentsWithoutItemsIfNeeded(newComponents.map { $0.model },
+                                                                              configuration: controller.configuration)
       let oldComponentModels = controller.components.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
@@ -468,7 +470,9 @@ public class SpotsControllerManager {
         return
       }
 
-      controller.components = Parser.parseComponents(json: json, configuration: controller.configuration)
+      let models: [ComponentModel] = strongSelf.removeComponentsWithoutItemsIfNeeded(Parser.parseComponentModels(json: json),
+                                                                                    configuration: controller.configuration)
+      controller.components = models.map { Component(model: $0, configuration: controller.configuration) }
 
       if controller.scrollView.superview == nil {
         controller.view.addSubview(controller.scrollView)
@@ -770,6 +774,14 @@ public class SpotsControllerManager {
   func purgeCachedViews(in components: [Component]) {
     for component in components {
       component.configuration.views.purge()
+    }
+  }
+
+  func removeComponentsWithoutItemsIfNeeded(_ models: [ComponentModel], configuration: Configuration) -> [ComponentModel] {
+    if configuration.removeEmptyComponents {
+      return models.filter { !$0.items.isEmpty }
+    } else {
+      return models
     }
   }
 }

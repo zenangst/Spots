@@ -79,7 +79,7 @@ extension Delegate: UIScrollViewDelegate {
         return
       }
 
-      performPaginatedScrolling { component, collectionView, collectionViewLayout in
+      performPaginatedScrolling { _, collectionView, collectionViewLayout in
         let centerIndexPath = getCenterIndexPath(in: collectionView,
                                                  scrollView: scrollView,
                                                  point: scrollView.contentOffset,
@@ -160,7 +160,7 @@ extension Delegate: UIScrollViewDelegate {
       }
 
       let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
-      if component.model.layout.infiniteScrolling, (newPointeeX == 0 || newPointeeX == widthBounds)  {
+      if component.model.layout.infiniteScrolling, (newPointeeX == 0 || newPointeeX == widthBounds) {
         needsInfiniteScrollingAlignment = true
       }
 

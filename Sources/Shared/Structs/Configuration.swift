@@ -31,10 +31,10 @@ public class Configuration {
   ///  --------   --------
   /// ```
   public var stretchLastComponent: Bool = false
-
   public var defaultComponentKind: ComponentKind = .grid
   public var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
   public var views: Registry = .init()
+  public var removeEmptyComponents: Bool = false
   var presenters: [String: AnyPresenter] = .init()
   var coders: [String: AnyItemModelCoder] = .init()
   var modelCoder: AnyItemModelCoder?

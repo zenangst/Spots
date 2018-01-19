@@ -57,7 +57,6 @@ public struct Parser {
   /// - parameter key: The key that should be used for parsing JSON, defaults to `components`.
   ///
   /// - returns: A collection of `ComponentModel`s
-  @available(*, deprecated: 7.0, message: "Deprecated in favor for parseComponentModels with data")
   public static func parseComponentModels(json: [String : Any],
                                           key: String = "components") -> [ComponentModel] {
     let jsonEncoder = JSONEncoder()
