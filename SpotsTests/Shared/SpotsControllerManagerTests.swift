@@ -421,7 +421,7 @@ class SpotsControllerManagerTests: XCTestCase {
 
       newComponent.items = []
       self.controller.reloadIfNeeded([newComponent]) {
-        XCTAssertTrue(self.controller.components[0].model.items.isEmpty)
+        XCTAssertTrue(self.controller.components.isEmpty)
 
         let items = [
           Item(title: "foo"),
