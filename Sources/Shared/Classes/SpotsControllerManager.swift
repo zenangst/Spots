@@ -427,8 +427,6 @@ public class SpotsControllerManager {
         return
       }
 
-      let models = strongSelf.filterEmptyComponentsModels(models)
-
       // Opt-out of doing component cleanup if the controller has no components.
       let performCleanup = !controller.components.isEmpty
       let previousContentOffset = controller.scrollView.contentOffset
