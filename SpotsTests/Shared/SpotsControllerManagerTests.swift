@@ -446,6 +446,8 @@ class SpotsControllerManagerTests: XCTestCase {
   }
 
   func testReloadIfNeededFilteringEmptyComponentModels() {
+    var configuration = Configuration()
+    configuration.removeEmptyComponents = true
     let models = [ComponentModel(), ComponentModel(), ComponentModel()]
     let components = models.map { Component(model: $0) }
     let controller = SpotsController(components: components)

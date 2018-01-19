@@ -68,7 +68,7 @@ public class SpotsControllerManager {
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              withAnimation animation: Animation = .automatic,
                              completion: Completion = nil) {
-    let components = filterEmptyComponentsModels(components)
+    let components = removeComponentsWithoutItemsIfNeeded(components, configuration: controller.configuration)
 
     guard !components.isEmpty else {
       Dispatch.main {
@@ -379,7 +379,8 @@ public class SpotsControllerManager {
 
       let newComponents: [Component] = Parser.parseComponents(json: json,
                                                               configuration: controller.configuration)
-      let newComponentModels = strongSelf.filterEmptyComponentsModels(newComponents.map { $0.model } )
+      let newComponentModels = strongSelf.removeComponentsWithoutItemsIfNeeded(newComponents.map { $0.model },
+                                                                              configuration: controller.configuration)
       let oldComponentModels = controller.components.map { $0.model }
 
       guard compare(newComponentModels, oldComponentModels) else {
@@ -469,8 +470,8 @@ public class SpotsControllerManager {
         return
       }
 
-      let models: [ComponentModel] = strongSelf.filterEmptyComponentsModels(Parser.parseComponentModels(json: json))
-
+      let models: [ComponentModel] = strongSelf.removeComponentsWithoutItemsIfNeeded(Parser.parseComponentModels(json: json),
+                                                                                    configuration: controller.configuration)
       controller.components = models.map { Component(model: $0, configuration: controller.configuration) }
 
       if controller.scrollView.superview == nil {
@@ -776,7 +777,11 @@ public class SpotsControllerManager {
     }
   }
 
-  func filterEmptyComponentsModels(_ models: [ComponentModel]) -> [ComponentModel] {
-    return models.filter { !$0.items.isEmpty }
+  func removeComponentsWithoutItemsIfNeeded(_ models: [ComponentModel], configuration: Configuration) -> [ComponentModel] {
+    if configuration.removeEmptyComponents {
+      return models.filter { !$0.items.isEmpty }
+    } else {
+      return models
+    }
   }
 }
