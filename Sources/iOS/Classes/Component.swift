@@ -255,7 +255,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     #if os(iOS)
-      var offset = CGFloat(model.layout.itemSpacing) + CGFloat(model.layout.inset.left / 2)
+      let span: Double = model.layout.span > 1 ? model.layout.span : 1
+      var offset = CGFloat(model.layout.itemSpacing * span)
 
       // Calculate desired start offset of the component when multiple views fit on the screen.
       var remainingWidth = attributes.size.width + offset * 2
@@ -264,7 +265,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
         offset -= CGFloat(model.layout.itemSpacing)
       }
 
-      collectionView.contentOffset.x = attributes.frame.minX + offset
+      if offset == 0 {
+        offset -= CGFloat(model.layout.inset.left / 2 + model.layout.itemSpacing)
+      }
+
+      collectionView.contentOffset.x = attributes.frame.minX - offset
     #endif
 
     #if os(tvOS)
