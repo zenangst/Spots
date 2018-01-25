@@ -101,6 +101,16 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
   public let configuration: Configuration
 
+  public var isVisible: Bool {
+    guard let scrollView = controller?.scrollView else {
+      return false
+    }
+    
+    let isVisible = view.frame.intersects(.init(origin: scrollView.contentOffset,
+                                                size: scrollView.frame.size))
+    return isVisible
+  }
+
   public var controller: SpotsController? {
     return (focusDelegate as? SpotsController)
   }
@@ -222,10 +232,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     view.setNeedsLayout()
 
     // Only call `layoutIfNeeded` if the `Component` is not a part of a `SpotsController`.
-    if let spotsScrollView = (focusDelegate as? SpotsController)?.scrollView {
-      let isVisibleOnScreen = view.frame.intersects(.init(origin: spotsScrollView.contentOffset,
-                                                          size: spotsScrollView.frame.size))
-      if isVisibleOnScreen {
+    if controller != nil {
+      if isVisible {
         view.layoutIfNeeded()
       }
     } else {
