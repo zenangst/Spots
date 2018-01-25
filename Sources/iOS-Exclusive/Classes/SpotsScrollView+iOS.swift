@@ -45,12 +45,15 @@ extension SpotsScrollView {
 
       switch multipleComponents {
       case true:
-        let shouldModifyContentOffset = contentOffset.y <= scrollView.contentSize.height
         if configuration.componentResizeBehavior == .contentSize {
           newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
         }
+
+        let shouldModifyContentOffset = contentOffset.y <= scrollView.contentSize.height &&
+          self.contentOffset.y != frame.minY
+
         if shouldModifyContentOffset {
-          scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
+          scrollView.contentOffset.y = contentOffset.y
         } else {
           frame.origin.y = yOffsetOfCurrentSubview
         }
