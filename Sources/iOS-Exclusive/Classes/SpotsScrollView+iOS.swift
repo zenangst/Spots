@@ -59,7 +59,10 @@ extension SpotsScrollView {
       }
 
       frame.size.height = newHeight
-      scrollView.frame = frame
+
+      if scrollView.frame != frame {
+        scrollView.frame = frame
+      }
     }
   }
 }
