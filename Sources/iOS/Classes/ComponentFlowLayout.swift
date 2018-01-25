@@ -423,19 +423,30 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         collectionView.setContentOffset(targetContentOffset, animated: true)
       }
 
+      var contentOffset = collectionView.contentOffset
+      if velocity.x < 0.0 {
+        contentOffset.x *= 0.90
+      }
+
       let centerIndexPath = delegate.getCenterIndexPath(in: collectionView,
                                                         scrollView: collectionView,
-                                                        point: collectionView.contentOffset,
+                                                        point: contentOffset,
                                                         contentSize: contentSize,
                                                         offset: minimumInteritemSpacing)
 
+      
       guard let foundCenterIndex = centerIndexPath else {
         return targetContentOffset
       }
 
-      let itemFrame = cachedFrames[foundCenterIndex.item]
-      let alignedX = itemFrame.midX - collectionView.frame.size.width / 2
-      targetContentOffset.x = alignedX
+      guard let attributes = collectionView.layoutAttributesForItem(at: foundCenterIndex) else {
+        return targetContentOffset
+      }
+
+      let offset = CGFloat(component.model.layout.inset.left / 2 + component.model.layout.itemSpacing)
+      let x = component.componentCenterOffset(for: attributes) - offset
+
+      targetContentOffset.x = x
     }
 
     return targetContentOffset
