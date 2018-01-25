@@ -46,7 +46,7 @@ extension SpotsScrollView {
       switch multipleComponents {
       case true:
         let shouldModifyContentOffset = contentOffset.y <= scrollView.contentSize.height
-        if (scrollView as? CollectionView)?.flowLayout?.scrollDirection == .horizontal {
+        if configuration.componentResizeBehavior == .contentSize {
           newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
         }
         if shouldModifyContentOffset {
