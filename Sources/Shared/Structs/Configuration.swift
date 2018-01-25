@@ -13,6 +13,13 @@ struct PlatformDefaults {
 }
 
 public class Configuration {
+  public enum ResizeBehavior {
+    // Sets the frame of the component to zero if it is not on screen.
+    case `default`
+    // Sets the components frame to the size of the content size of the component.
+    case contentSize
+  }
+
   public static let shared: Configuration = Configuration()
 
   /// When enabled, the last `Component` in the collection will be stretched to occupy the remaining space.
@@ -31,6 +38,8 @@ public class Configuration {
   ///  --------   --------
   /// ```
   public var stretchLastComponent: Bool = false
+  // Sets the kind of resizing constraints that `SpotsScrollView` should use.
+  public var componentResizeBehavior: ResizeBehavior = .default
   public var defaultComponentKind: ComponentKind = .grid
   public var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
   public var views: Registry = .init()
