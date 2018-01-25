@@ -324,6 +324,7 @@ public class SpotsControllerManager {
           controller.components[index].reloadHeader()
           controller.components[index].model.footer = newComponentModels[index].footer
           controller.components[index].reloadFooter()
+          fallthrough
         case .items:
           if index == lastItemChange {
             completion = { [weak self] in
