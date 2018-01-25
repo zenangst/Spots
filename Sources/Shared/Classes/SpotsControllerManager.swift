@@ -319,12 +319,10 @@ public class SpotsControllerManager {
           strongSelf.newComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels)
         case .removed:
           strongSelf.removeComponent(atIndex: index, controller: controller)
-        case .header:
+        case .header, .footer:
           controller.components[index].model.header = newComponentModels[index].header
           controller.components[index].reloadHeader()
-          fallthrough
-        case .footer:
-          controller.components[index].model.header = newComponentModels[index].footer
+          controller.components[index].model.footer = newComponentModels[index].footer
           controller.components[index].reloadFooter()
           fallthrough
         case .items:
