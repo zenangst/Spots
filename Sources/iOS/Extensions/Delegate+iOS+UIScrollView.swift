@@ -152,21 +152,22 @@ extension Delegate: UIScrollViewDelegate {
         component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
       }
 
-      let itemFrame = collectionViewLayout.cachedFrames[foundIndexPath.item]
-      let newPointeeX = itemFrame.midX - scrollView.frame.size.width / 2
+      var newPointeeX: CGFloat = targetContentOffset.pointee.x
+      if component.model.interaction.paginate == .item {
+        let itemFrame = collectionViewLayout.cachedFrames[foundIndexPath.item]
+        newPointeeX = itemFrame.midX - scrollView.frame.size.width / 2
+        // Only snap to item if new value exceeds zero or that the index path
+        // at center is larger than zero.
+        guard (newPointeeX > 0 && foundIndexPath.item > 0) || component.model.layout.infiniteScrolling else {
+          return
+        }
 
-      // Only snap to item if new value exceeds zero or that the index path
-      // at center is larger than zero.
-      guard (newPointeeX > 0 && foundIndexPath.item > 0) || component.model.layout.infiniteScrolling else {
-        return
+        let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
+        if component.model.layout.infiniteScrolling, (newPointeeX == 0 || newPointeeX == widthBounds) {
+          needsInfiniteScrollingAlignment = true
+        }
+        targetContentOffset.pointee.x = newPointeeX
       }
-
-      let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
-      if component.model.layout.infiniteScrolling, (newPointeeX == 0 || newPointeeX == widthBounds) {
-        needsInfiniteScrollingAlignment = true
-      }
-
-      targetContentOffset.pointee.x = newPointeeX
     }
   }
 
