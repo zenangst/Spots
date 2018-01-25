@@ -313,18 +313,12 @@ public class SpotsControllerManager {
 
       for (index, change) in changes.enumerated() {
         switch change {
-        case .identifier, .kind, .layout, .meta, .model:
+        case .header, .footer, .identifier, .kind, .layout, .meta, .model:
           strongSelf.replaceComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels)
         case .new:
           strongSelf.newComponent(atIndex: index, controller: controller, newComponentModels: newComponentModels)
         case .removed:
           strongSelf.removeComponent(atIndex: index, controller: controller)
-        case .header, .footer:
-          controller.components[index].model.header = newComponentModels[index].header
-          controller.components[index].reloadHeader()
-          controller.components[index].model.footer = newComponentModels[index].footer
-          controller.components[index].reloadFooter()
-          fallthrough
         case .items:
           if index == lastItemChange {
             completion = { [weak self] in
