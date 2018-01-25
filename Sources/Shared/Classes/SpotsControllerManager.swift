@@ -324,7 +324,7 @@ public class SpotsControllerManager {
           controller.components[index].reloadHeader()
           fallthrough
         case .footer:
-          controller.components[index].model.header = newComponentModels[index].footer
+          controller.components[index].model.footer = newComponentModels[index].footer
           controller.components[index].reloadFooter()
           fallthrough
         case .items:
