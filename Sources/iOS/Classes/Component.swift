@@ -250,35 +250,42 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
-    guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
-      return
-    }
-
     #if os(iOS)
-      let span: Double = model.layout.span > 1 ? model.layout.span : 1
-      var offset = CGFloat(model.layout.itemSpacing * span)
-
-      // Calculate desired start offset of the component when multiple views fit on the screen.
-      var remainingWidth = attributes.size.width + offset * 2
-      while remainingWidth < view.frame.size.width {
-        remainingWidth *= 2
-        offset -= CGFloat(model.layout.itemSpacing)
+      if let x = initialXCoordinateItemAtIndexPath(indexPath) {
+        collectionView.contentOffset.x = x
       }
-
-      if offset == 0 {
-        offset -= CGFloat(model.layout.inset.left / 2 + model.layout.itemSpacing)
-      }
-
-      collectionView.contentOffset.x = attributes.frame.minX - offset
     #endif
 
     #if os(tvOS)
+      guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
+        return
+      }
       collectionView.contentOffset.x = attributes.frame.minX
       componentDelegate?.manualFocusedIndexPath = indexPath
       if #available(tvOS 9.0, *) {
         view.setNeedsFocusUpdate()
       }
     #endif
+  }
+
+  func initialXCoordinateItemAtIndexPath(_ indexPath: IndexPath) -> CGFloat? {
+    guard let attributes = collectionView?.layoutAttributesForItem(at: indexPath) else {
+      return nil
+    }
+
+    let span: Double = model.layout.span > 1 ? model.layout.span : 1
+    var offset = CGFloat(model.layout.itemSpacing * span)
+    var remainingWidth = attributes.size.width + offset * 2
+    while remainingWidth < view.frame.size.width {
+      remainingWidth *= 2
+      offset -= CGFloat(model.layout.itemSpacing)
+    }
+
+    if offset == 0 {
+      offset -= CGFloat(model.layout.inset.left / 2 + model.layout.itemSpacing)
+    }
+
+    return attributes.frame.minX - offset
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
