@@ -122,6 +122,10 @@ import Cocoa
 
   public let configuration: Configuration
 
+  public var controller: SpotsController? {
+    return (focusDelegate as? SpotsController)
+  }
+
   /// Default initializer for creating a component.
   ///
   /// - Parameters:
