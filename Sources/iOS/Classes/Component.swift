@@ -263,8 +263,12 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
     #if os(iOS)
-      if let x = initialXCoordinateItemAtIndexPath(indexPath) {
+      if var x = initialXCoordinateItemAtIndexPath(indexPath) {
+        x += CGFloat(model.layout.inset.left / 2 + model.layout.itemSpacing)
         collectionView.contentOffset.x = x
+        collectionView.setContentOffset(.init(x: x, y: 0), animated: false)
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
       }
     #endif
 
@@ -285,19 +289,19 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       return nil
     }
 
+    return componentCenterOffset(for: attributes)
+  }
+
+  func componentCenterOffset(for attributes: UICollectionViewLayoutAttributes) -> CGFloat {
     let span: Double = model.layout.span > 1 ? model.layout.span : 1
-    var offset = CGFloat(model.layout.itemSpacing * span)
-    var remainingWidth = attributes.size.width + offset * 2
+    var centerAlignment = CGFloat(model.layout.itemSpacing * span)
+    var remainingWidth = attributes.size.width + centerAlignment * 2
     while remainingWidth < view.frame.size.width {
       remainingWidth *= 2
-      offset -= CGFloat(model.layout.itemSpacing)
+      centerAlignment -= CGFloat(model.layout.itemSpacing)
     }
 
-    if offset == 0 {
-      offset -= CGFloat(model.layout.inset.left / 2 + model.layout.itemSpacing)
-    }
-
-    return attributes.frame.minX - offset
+    return attributes.frame.minX - centerAlignment
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
