@@ -402,4 +402,41 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   private func indexEligibleForItemsPerRow(index: Int, itemsPerRow: Int) -> Bool {
     return itemsPerRow == 1 || index % itemsPerRow == itemsPerRow - 1
   }
+
+  open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+    var targetContentOffset = proposedContentOffset
+
+    guard let collectionView = collectionView,
+      let delegate = collectionView.delegate as? Delegate,
+      let component = delegate.component else {
+        return targetContentOffset
+    }
+
+    if component.model.interaction.paginate == .page {
+      defer {
+        UIView.animate(withDuration: 0.3) {
+          collectionView.contentOffset.x = targetContentOffset.x
+        }
+        // This is called in order to invoke the delegate methods attached
+        // to the scroll view.
+        collectionView.setContentOffset(targetContentOffset, animated: true)
+      }
+
+      let centerIndexPath = delegate.getCenterIndexPath(in: collectionView,
+                                                        scrollView: collectionView,
+                                                        point: collectionView.contentOffset,
+                                                        contentSize: contentSize,
+                                                        offset: minimumInteritemSpacing)
+
+      guard let foundCenterIndex = centerIndexPath else {
+        return targetContentOffset
+      }
+
+      let itemFrame = cachedFrames[foundCenterIndex.item]
+      let alignedX = itemFrame.midX - collectionView.frame.size.width / 2
+      targetContentOffset.x = alignedX
+    }
+
+    return targetContentOffset
+  }
 }
