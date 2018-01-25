@@ -9,9 +9,6 @@ extension Component {
 
     collectionView.isScrollEnabled = true
     collectionViewLayout.scrollDirection = .horizontal
-    #if os(iOS)
-      collectionView.isPagingEnabled = model.interaction.paginate == .page
-    #endif
     configurePageControl()
 
     if collectionView.contentSize.height > 0 {
