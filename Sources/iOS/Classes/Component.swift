@@ -101,6 +101,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
   public let configuration: Configuration
 
+  public var controller: SpotsController? {
+    return (focusDelegate as? SpotsController)
+  }
+
   /// Default initializer for creating a component.
   ///
   /// - Parameters:
