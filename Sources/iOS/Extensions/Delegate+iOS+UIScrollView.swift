@@ -182,7 +182,7 @@ extension Delegate: UIScrollViewDelegate {
     }
   }
 
-  fileprivate func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
+  func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
     guard point.x > 0.0 else {
       return IndexPath(item: 0, section: 0)
     }
