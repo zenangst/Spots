@@ -46,7 +46,9 @@ extension SpotsScrollView {
       switch multipleComponents {
       case true:
         let shouldModifyContentOffset = contentOffset.y <= scrollView.contentSize.height
-        newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
+        if (scrollView as? CollectionView)?.flowLayout?.scrollDirection == .horizontal {
+          newHeight = fmin(componentsView.frame.height, scrollView.contentSize.height)
+        }
         if shouldModifyContentOffset {
           scrollView.contentOffset = CGPoint(x: Int(contentOffset.x), y: Int(contentOffset.y))
         } else {
