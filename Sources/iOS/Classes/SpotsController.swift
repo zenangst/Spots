@@ -342,6 +342,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       width: superview.frame.width,
       height: ceil(component.view.frame.height))
     component.focusDelegate = self
+    component.delegate = delegate
   }
 
   #if os(iOS)
