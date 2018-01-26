@@ -167,6 +167,7 @@ public class SpotsControllerManager {
 
       defer {
         controller.setupComponent(at: index, component: component)
+        component.afterUpdate()
       }
     }
 
