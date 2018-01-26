@@ -105,7 +105,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     guard let scrollView = controller?.scrollView else {
       return false
     }
-    
+
     let isVisible = view.frame.intersects(.init(origin: scrollView.contentOffset,
                                                 size: scrollView.frame.size))
     return isVisible
@@ -246,11 +246,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
     #if os(iOS)
-    guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
-      return
-    }
+      guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
+        return
+      }
 
-    handleInfiniteScrolling()
+      handleInfiniteScrolling()
     #endif
   }
 
@@ -262,21 +262,16 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
-    #if os(iOS)
-      if var x = initialXCoordinateItemAtIndexPath(indexPath) {
-        x += CGFloat(model.layout.inset.left / 2 + model.layout.itemSpacing)
-        collectionView.contentOffset.x = x
-        collectionView.setContentOffset(.init(x: x, y: 0), animated: false)
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-      }
-    #endif
+
+    if var x = initialXCoordinateItemAtIndexPath(indexPath) {
+      x += CGFloat(model.layout.inset.left)
+      collectionView.contentOffset.x = x
+      collectionView.setContentOffset(.init(x: x, y: 0), animated: false)
+      view.setNeedsLayout()
+      view.layoutIfNeeded()
+    }
 
     #if os(tvOS)
-      guard let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
-        return
-      }
-      collectionView.contentOffset.x = attributes.frame.minX
       componentDelegate?.manualFocusedIndexPath = indexPath
       if #available(tvOS 9.0, *) {
         view.setNeedsFocusUpdate()
@@ -447,3 +442,4 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     view.superview?.layoutIfNeeded()
   }
 }
+
