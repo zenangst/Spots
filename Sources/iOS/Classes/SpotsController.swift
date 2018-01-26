@@ -299,7 +299,16 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
     #endif
 
     let completion: (UIViewControllerTransitionCoordinatorContext) -> Void = { [weak self] _ in
-      self?.scrollView.isRotating = false
+      guard let strongSelf = self else {
+        return
+      }
+
+      strongSelf.scrollView.isRotating = false
+
+      for component in strongSelf.components where component.model.interaction.paginate != .disabled {
+        component.setupInfiniteScrolling()
+      }
+
       NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue),
                                       object: nil,
                                       userInfo: ["size": RotationSize(size: size)])

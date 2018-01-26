@@ -186,6 +186,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   @objc private func didInject() {
     userInterface?.register(with: configuration)
     userInterface?.reloadVisibleViews(with: .none, completion: nil)
+
+    if model.layout.infiniteScrolling {
+      setupInfiniteScrolling()
+    }
   }
 
   /// Setup up the component with a given size, this is usually the parent size when used in a controller context.
@@ -254,7 +258,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     #endif
   }
 
-  private func setupInfiniteScrolling() {
+  func setupInfiniteScrolling() {
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
       model.items.count >= componentDataSource.buffer else {
@@ -263,20 +267,21 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
 
-    if var x = initialXCoordinateItemAtIndexPath(indexPath) {
-      x += CGFloat(model.layout.inset.left)
-      collectionView.contentOffset.x = x
-      collectionView.setContentOffset(.init(x: x, y: 0), animated: false)
-      view.setNeedsLayout()
+    UIView.performWithoutAnimation {
       view.layoutIfNeeded()
-    }
-
-    #if os(tvOS)
-      componentDelegate?.manualFocusedIndexPath = indexPath
-      if #available(tvOS 9.0, *) {
-        view.setNeedsFocusUpdate()
+      if let x = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin.x,
+        let point = collectionView.flowLayout?.targetContentOffset(forProposedContentOffset: .init(x: x, y: collectionView.contentOffset.y),
+                                                                   withScrollingVelocity: .zero) {
+        collectionView.contentOffset.x = point.x
       }
-    #endif
+
+      #if os(tvOS)
+        componentDelegate?.manualFocusedIndexPath = indexPath
+        if #available(tvOS 9.0, *) {
+          view.setNeedsFocusUpdate()
+        }
+      #endif
+    }
   }
 
   func initialXCoordinateItemAtIndexPath(_ indexPath: IndexPath) -> CGFloat? {
