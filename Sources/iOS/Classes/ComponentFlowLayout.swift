@@ -415,12 +415,12 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
     if component.model.interaction.paginate == .page {
       defer {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
           collectionView.contentOffset.x = targetContentOffset.x
-        }
-        // This is called in order to invoke the delegate methods attached
-        // to the scroll view.
-        collectionView.setContentOffset(targetContentOffset, animated: true)
+          // This is called in order to invoke the delegate methods attached
+          // to the scroll view.
+          collectionView.setContentOffset(targetContentOffset, animated: true)
+        }, completion: nil)
       }
 
       var contentOffset = collectionView.contentOffset
