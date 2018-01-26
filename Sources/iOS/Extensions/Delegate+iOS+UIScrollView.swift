@@ -178,6 +178,8 @@ extension Delegate: UIScrollViewDelegate {
           return
       }
 
+      collectionView.contentOffset.y = 0
+
       handler(component, collectionView, collectionViewLayout)
     }
   }
