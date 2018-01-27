@@ -404,7 +404,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   }
 
   #if os(iOS)
-  open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+  @discardableResult open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
     var targetContentOffset = proposedContentOffset
 
     guard let collectionView = collectionView,

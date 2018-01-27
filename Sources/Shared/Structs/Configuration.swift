@@ -38,8 +38,10 @@ public class Configuration {
   ///  --------   --------
   /// ```
   public var stretchLastComponent: Bool = false
-  // Sets the kind of resizing constraints that `SpotsScrollView` should use.
-  public var componentResizeBehavior: ResizeBehavior = .default
+  #if os(iOS)
+    // Sets the kind of resizing constraints that `SpotsScrollView` should use.
+    public var componentResizeBehavior: ResizeBehavior = .default
+  #endif
   public var defaultComponentKind: ComponentKind = .grid
   public var defaultViewSize: CGSize = .init(width: 0, height: PlatformDefaults.defaultHeight)
   public var views: Registry = .init()
