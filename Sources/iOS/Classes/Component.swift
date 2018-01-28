@@ -257,29 +257,20 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   func setupInfiniteScrolling() {
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
+      let delegate = componentDelegate,
       model.items.count >= componentDataSource.buffer else {
         return
     }
 
     let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
     view.layoutIfNeeded()
-    UIView.performWithoutAnimation {
-      if let x = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin.x,
-        var point = collectionView.flowLayout?.targetContentOffset(forProposedContentOffset: .init(x: x, y: collectionView.contentOffset.y),
-                                                                   withScrollingVelocity: .zero) {
 
-        #if os(iOS)
-          if model.interaction.paginate == .disabled {
-            point.x -= CGFloat(model.layout.itemSpacing + model.layout.inset.left / 2)
-          } else {
-            point.x -= CGFloat(model.layout.inset.left)
-          }
-        #else
-          point.x += CGFloat(model.layout.inset.left)
-        #endif
-
-        collectionView.contentOffset.x = point.x
-      }
+    if let point = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin,
+      let targetContentOffset = (collectionView.flowLayout as? ComponentFlowLayout)?.targetContentOffsetForComponent(self,
+                                                                                                                     targetContentOffset: point,
+                                                                                                                     collectionView: collectionView,
+                                                                                                                     delegate: delegate) {
+      collectionView.setContentOffset(targetContentOffset, animated: false)
     }
   }
 

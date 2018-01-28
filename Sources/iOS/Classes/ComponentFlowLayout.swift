@@ -405,14 +405,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   }
 
   @discardableResult open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-    var targetContentOffset = proposedContentOffset
-
     guard let collectionView = collectionView,
       let delegate = collectionView.delegate as? Delegate,
       let dataSource = collectionView.dataSource as? DataSource,
       let component = delegate.component else {
-        return targetContentOffset
+        return proposedContentOffset
     }
+
+    var targetContentOffset = proposedContentOffset
 
     defer {
       if component.model.interaction.paginate == .page {
@@ -425,20 +425,28 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       }
     }
 
+    targetContentOffset = targetContentOffsetForComponent(component,
+                                                          targetContentOffset: targetContentOffset,
+                                                          collectionView: collectionView,
+                                                          delegate: delegate)
+
+    return targetContentOffset
+  }
+
+  func targetContentOffsetForComponent(_ component: Component, targetContentOffset: CGPoint, collectionView: CollectionView, delegate: Delegate) -> CGPoint {
+    var targetContentOffset = targetContentOffset
     var contentOffset = collectionView.contentOffset
 
-    guard let beginDraggingAtContentOffset = delegate.beginDraggingAtContentOffset,
+    if let beginDraggingAtContentOffset = delegate.beginDraggingAtContentOffset,
       let attributes = layoutAttributesForElements(in: collectionView.frame),
-      let attribute = attributes.first else {
-        return targetContentOffset
-    }
-
-    let threshold: CGFloat = abs(collectionView.contentOffset.x - beginDraggingAtContentOffset.x)
-    if threshold > attribute.frame.width * 0.25 {
-      if beginDraggingAtContentOffset.x > collectionView.contentOffset.x {
-        contentOffset.x -= threshold
-      } else {
-        contentOffset.x += threshold
+      let attribute = attributes.first {
+      let threshold: CGFloat = abs(collectionView.contentOffset.x - beginDraggingAtContentOffset.x)
+      if threshold > attribute.frame.width * 0.25 {
+        if beginDraggingAtContentOffset.x > collectionView.contentOffset.x {
+          contentOffset.x -= threshold
+        } else {
+          contentOffset.x += threshold
+        }
       }
     }
 
@@ -447,12 +455,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
                                                              point: contentOffset,
                                                              contentSize: contentSize,
                                                              offset: minimumInteritemSpacing),
+      let attributes = layoutAttributesForElements(in: collectionView.frame),
       let itemAttributes = collectionView.layoutAttributesForItem(at: foundCenterIndex) else {
         return targetContentOffset
     }
 
     var offset: CGFloat = 0
-    for attribute in intersectingAttributes {
+
+    for attribute in attributes {
       offset += attribute.frame.width + CGFloat(component.model.layout.inset.left + component.model.layout.itemSpacing)
       if offset >= collectionView.frame.width {
         offset -= collectionView.frame.width
@@ -464,6 +474,8 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     if component.model.interaction.paginate != .disabled {
       targetContentOffset.x = itemAttributes.frame.origin.x + offset
     }
+
+    Swift.print("🎭targetContentOffset: \(targetContentOffset)")
 
     return targetContentOffset
   }
