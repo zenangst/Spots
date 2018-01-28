@@ -300,10 +300,14 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
         return
     }
 
+    let max = model.interaction.paginate == .page
+      ? lastAttributes.frame.maxX - CGFloat(model.layout.itemSpacing)
+      : lastAttributes.frame.maxX + CGFloat(model.layout.inset.left)
+
     if view.contentOffset.x < CGFloat(model.layout.inset.left) {
-      view.contentOffset.x = lastAttributes.frame.origin.x
-    } else if view.contentOffset.x > lastAttributes.frame.maxX + CGFloat(model.layout.inset.left) {
-      view.contentOffset.x = firstAttributes.frame.origin.x
+      view.contentOffset.x = lastAttributes.frame.origin.x - CGFloat(model.layout.inset.left)
+    } else if view.contentOffset.x >= max {
+      view.contentOffset.x = firstAttributes.frame.origin.x - CGFloat(model.layout.inset.left)
     }
   }
 
