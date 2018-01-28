@@ -411,7 +411,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     return itemsPerRow == 1 || index % itemsPerRow == itemsPerRow - 1
   }
 
-  #if os(iOS)
   @discardableResult open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
     var targetContentOffset = proposedContentOffset
 
@@ -475,5 +474,4 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
     return targetContentOffset
   }
-  #endif
 }
