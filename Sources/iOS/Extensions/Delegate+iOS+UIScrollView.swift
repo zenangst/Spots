@@ -4,6 +4,8 @@ import UIKit
 extension Delegate: UIScrollViewDelegate {
   #if os(iOS)
   public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    beginDraggingAtContentOffset = scrollView.contentOffset
+
     if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
       let spotsScrollGesture = spotsScrollView.panGestureRecognizer
       let componentGesture = scrollView.panGestureRecognizer
@@ -126,6 +128,7 @@ extension Delegate: UIScrollViewDelegate {
   /// - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
   /// - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
   public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    beginDraggingAtContentOffset = nil
     performPaginatedScrolling { component, collectionView, collectionViewLayout in
       var centerIndexPath: IndexPath?
 

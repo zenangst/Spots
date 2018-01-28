@@ -16,6 +16,7 @@ public class Delegate: NSObject, ComponentResolvable {
   let configuration: Configuration
   let indexPathManager: IndexPathManager
   var needsInfiniteScrollingAlignment: Bool = false
+  var beginDraggingAtContentOffset: CGPoint?
 
   #if os(tvOS)
   /// A boolean value that indicates that the scrolling offset has reached
