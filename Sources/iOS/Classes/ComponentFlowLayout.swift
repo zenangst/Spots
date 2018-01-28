@@ -455,8 +455,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
                                                       scrollView: collectionView,
                                                       point: contentOffset,
                                                       contentSize: contentSize,
-                                                      offset: minimumInteritemSpacing,
-                                                      multiplier: 2)
+                                                      offset: minimumInteritemSpacing)
 
     guard let foundCenterIndex = centerIndexPath,
       let itemAttributes = collectionView.layoutAttributesForItem(at: foundCenterIndex) else {
