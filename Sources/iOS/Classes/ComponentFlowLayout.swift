@@ -475,8 +475,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
       targetContentOffset.x = itemAttributes.frame.origin.x + offset
     }
 
-    Swift.print("🎭targetContentOffset: \(targetContentOffset)")
-
     return targetContentOffset
   }
 }
