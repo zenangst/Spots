@@ -270,8 +270,13 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     UIView.performWithoutAnimation {
       view.layoutIfNeeded()
       if let x = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin.x,
-        let point = collectionView.flowLayout?.targetContentOffset(forProposedContentOffset: .init(x: x, y: collectionView.contentOffset.y),
+        var point = collectionView.flowLayout?.targetContentOffset(forProposedContentOffset: .init(x: x, y: collectionView.contentOffset.y),
                                                                    withScrollingVelocity: .zero) {
+
+        if model.interaction.paginate == .disabled {
+          point.x -= CGFloat(model.layout.itemSpacing + model.layout.inset.left / 2)
+        }
+
         collectionView.contentOffset.x = point.x
       }
 
