@@ -407,30 +407,27 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   @discardableResult open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
     guard let collectionView = collectionView,
       let delegate = collectionView.delegate as? Delegate,
-      let dataSource = collectionView.dataSource as? DataSource,
-      let component = delegate.component else {
+      let component = delegate.component,
+      component.model.interaction.paginate != .disabled else {
         return proposedContentOffset
     }
 
-    var targetContentOffset = proposedContentOffset
+    let targetContentOffset = targetContentOffsetForComponent(component,
+                                                              targetContentOffset: proposedContentOffset,
+                                                              collectionView: collectionView,
+                                                              delegate: delegate)
 
-    defer {
-      if component.model.interaction.paginate == .page {
-        let point = CGPoint(x: targetContentOffset.x, y: collectionView.contentOffset.y)
-        let options: UIViewAnimationOptions = [.beginFromCurrentState, .allowAnimatedContent, .allowUserInteraction]
-        UIView.animate(withDuration: 0.25, delay: 0, options: options, animations: {
-          collectionView.contentOffset = point
-          // This is called in order to invoke the delegate methods attached
-          // to the scroll view.
-          collectionView.setContentOffset(point, animated: true)
-        }, completion: nil)
-      }
+    if component.model.interaction.paginate == .page {
+      let point = CGPoint(x: targetContentOffset.x, y: collectionView.contentOffset.y)
+      let options: UIViewAnimationOptions = [.beginFromCurrentState, .allowAnimatedContent, .allowUserInteraction]
+      UIView.animate(withDuration: 0.25, delay: 0, options: options, animations: {
+        collectionView.contentOffset = point
+        // This is called in order to invoke the delegate methods attached
+        // to the scroll view.
+        collectionView.setContentOffset(point, animated: true)
+
+      }, completion: nil)
     }
-
-    targetContentOffset = targetContentOffsetForComponent(component,
-                                                          targetContentOffset: targetContentOffset,
-                                                          collectionView: collectionView,
-                                                          delegate: delegate)
 
     return targetContentOffset
   }
