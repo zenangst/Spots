@@ -416,11 +416,13 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
     defer {
       if component.model.interaction.paginate == .page {
-        UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
-          collectionView.contentOffset.x = targetContentOffset.x
+        let point = CGPoint(x: targetContentOffset.x, y: collectionView.contentOffset.y)
+        let options: UIViewAnimationOptions = [.beginFromCurrentState, .allowAnimatedContent, .allowUserInteraction]
+        UIView.animate(withDuration: 0.25, delay: 0, options: options, animations: {
+          collectionView.contentOffset = point
           // This is called in order to invoke the delegate methods attached
           // to the scroll view.
-          collectionView.setContentOffset(targetContentOffset, animated: true)
+          collectionView.setContentOffset(point, animated: true)
         }, completion: nil)
       }
     }
