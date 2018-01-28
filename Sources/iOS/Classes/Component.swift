@@ -186,10 +186,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   @objc private func didInject() {
     userInterface?.register(with: configuration)
     userInterface?.reloadVisibleViews(with: .none, completion: nil)
-
-    if model.layout.infiniteScrolling {
-      setupInfiniteScrolling()
-    }
   }
 
   /// Setup up the component with a given size, this is usually the parent size when used in a controller context.
