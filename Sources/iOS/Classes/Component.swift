@@ -272,23 +272,19 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
         var point = collectionView.flowLayout?.targetContentOffset(forProposedContentOffset: .init(x: x, y: collectionView.contentOffset.y),
                                                                    withScrollingVelocity: .zero) {
 
-        if model.interaction.paginate == .disabled {
-          point.x -= CGFloat(model.layout.itemSpacing + model.layout.inset.left / 2)
-        } else {
-          point.x -= CGFloat(model.layout.inset.left)
-        }
+        #if os(iOS)
+          if model.interaction.paginate == .disabled {
+            point.x -= CGFloat(model.layout.itemSpacing + model.layout.inset.left / 2)
+          } else {
+            point.x -= CGFloat(model.layout.inset.left)
+          }
+        #else
+          point.x += CGFloat(model.layout.inset.left)
+        #endif
 
         collectionView.contentOffset.x = point.x
       }
     }
-
-    #if os(tvOS)
-      componentDelegate?.manualFocusedIndexPath = indexPath
-      if #available(tvOS 9.0, *) {
-        view.setNeedsFocusUpdate()
-        view.updateFocusIfNeeded()
-      }
-    #endif
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
