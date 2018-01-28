@@ -14,7 +14,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   private var indexPathsToAnimate = [IndexPath]()
   private var indexPathsToMove = [IndexPath]()
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
-  private var intersectingAttributes: [UICollectionViewLayoutAttributes] = []
   private(set) var cachedFrames = [CGRect]()
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
@@ -131,7 +130,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     var attributes = [UICollectionViewLayoutAttributes]()
     var nextX: CGFloat = sectionInset.left
     var nextY: CGFloat = 0.0
-    intersectingAttributes.removeAll()
 
     if let newAttributes = self.layoutAttributes {
       for (index, attribute) in newAttributes.enumerated() {
@@ -171,10 +169,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
             nextY = itemAttribute.frame.maxY + minimumLineSpacing
           }
 
-          if itemAttribute.frame.intersects(rect) {
-            intersectingAttributes.append(itemAttribute)
-          }
-
           attributes.append(itemAttribute)
         case .vertical:
           itemAttribute.frame.origin.y += component.headerHeight
@@ -183,7 +177,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           // Note that this only applies to vertical components.
           if itemAttribute.frame.intersects(rect) {
             attributes.append(itemAttribute)
-            intersectingAttributes.append(itemAttribute)
           }
         }
 
