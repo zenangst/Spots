@@ -256,11 +256,4 @@ open class SpotsScrollView: UIScrollView, UIGestureRecognizerDelegate {
     guard let rhs = rhs else { return false }
     return lhs.integral.equalTo(rhs.integral)
   }
-
-  public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-    // Restrict the use of other gesture recognizer to components.
-    // This is done by checking the super view of the view that the gesture belongs to.
-    // All `Component`'s are added to `SpotsContentView` (`.componentsView`).
-    return otherGestureRecognizer.view?.superview === componentsView
-  }
 }
