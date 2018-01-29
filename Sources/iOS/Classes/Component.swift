@@ -186,10 +186,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   @objc private func didInject() {
     userInterface?.register(with: configuration)
     userInterface?.reloadVisibleViews(with: .none, completion: nil)
-
-    if model.layout.infiniteScrolling {
-      setupInfiniteScrolling()
-    }
   }
 
   /// Setup up the component with a given size, this is usually the parent size when used in a controller context.
@@ -261,47 +257,21 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   func setupInfiniteScrolling() {
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
+      let delegate = componentDelegate,
       model.items.count >= componentDataSource.buffer else {
         return
     }
 
     let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
+    view.layoutIfNeeded()
 
-    UIView.performWithoutAnimation {
-      view.layoutIfNeeded()
-      if let x = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin.x,
-        let point = collectionView.flowLayout?.targetContentOffset(forProposedContentOffset: .init(x: x, y: collectionView.contentOffset.y),
-                                                                   withScrollingVelocity: .zero) {
-        collectionView.contentOffset.x = point.x
-      }
-
-      #if os(tvOS)
-        componentDelegate?.manualFocusedIndexPath = indexPath
-        if #available(tvOS 9.0, *) {
-          view.setNeedsFocusUpdate()
-        }
-      #endif
+    if let point = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin,
+      let targetContentOffset = (collectionView.flowLayout as? ComponentFlowLayout)?.targetContentOffsetForComponent(self,
+                                                                                                                     targetContentOffset: point,
+                                                                                                                     collectionView: collectionView,
+                                                                                                                     delegate: delegate) {
+      collectionView.setContentOffset(targetContentOffset, animated: false)
     }
-  }
-
-  func initialXCoordinateItemAtIndexPath(_ indexPath: IndexPath) -> CGFloat? {
-    guard let attributes = collectionView?.layoutAttributesForItem(at: indexPath) else {
-      return nil
-    }
-
-    return componentCenterOffset(for: attributes)
-  }
-
-  func componentCenterOffset(for attributes: UICollectionViewLayoutAttributes) -> CGFloat {
-    let span: Double = model.layout.span > 1 ? model.layout.span : 1
-    var centerAlignment = CGFloat(model.layout.itemSpacing * span)
-    var remainingWidth = attributes.size.width + centerAlignment * 2
-    while remainingWidth < view.frame.size.width {
-      remainingWidth *= 2
-      centerAlignment -= CGFloat(model.layout.itemSpacing)
-    }
-
-    return attributes.frame.minX - centerAlignment
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
@@ -320,10 +290,14 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
         return
     }
 
+    let max = model.interaction.paginate == .page
+      ? lastAttributes.frame.maxX - CGFloat(model.layout.itemSpacing)
+      : lastAttributes.frame.maxX + CGFloat(model.layout.inset.left)
+
     if view.contentOffset.x < CGFloat(model.layout.inset.left) {
-      view.contentOffset.x = lastAttributes.frame.origin.x
-    } else if view.contentOffset.x > lastAttributes.frame.maxX + CGFloat(model.layout.inset.left) {
-      view.contentOffset.x = firstAttributes.frame.origin.x
+      view.contentOffset.x = lastAttributes.frame.origin.x - CGFloat(model.layout.inset.left)
+    } else if view.contentOffset.x >= max {
+      view.contentOffset.x = firstAttributes.frame.origin.x - CGFloat(model.layout.inset.left)
     }
   }
 

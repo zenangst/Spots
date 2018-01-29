@@ -168,6 +168,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
           } else {
             nextY = itemAttribute.frame.maxY + minimumLineSpacing
           }
+
           attributes.append(itemAttribute)
         case .vertical:
           itemAttribute.frame.origin.y += component.headerHeight
@@ -403,53 +404,76 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     return itemsPerRow == 1 || index % itemsPerRow == itemsPerRow - 1
   }
 
-  #if os(iOS)
-  @discardableResult open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-    var targetContentOffset = proposedContentOffset
-
+  open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
     guard let collectionView = collectionView,
       let delegate = collectionView.delegate as? Delegate,
-      let component = delegate.component else {
-        return targetContentOffset
+      let component = delegate.component,
+      component.model.interaction.paginate != .disabled else {
+        return proposedContentOffset
     }
 
+    let targetContentOffset = targetContentOffsetForComponent(component,
+                                                              targetContentOffset: proposedContentOffset,
+                                                              collectionView: collectionView,
+                                                              delegate: delegate)
+
     if component.model.interaction.paginate == .page {
-      defer {
-        UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
-          collectionView.contentOffset.x = targetContentOffset.x
-          // This is called in order to invoke the delegate methods attached
-          // to the scroll view.
-          collectionView.setContentOffset(targetContentOffset, animated: true)
-        }, completion: nil)
-      }
+      let point = CGPoint(x: targetContentOffset.x, y: collectionView.contentOffset.y)
+      let options: UIViewAnimationOptions = [.beginFromCurrentState, .allowAnimatedContent, .allowUserInteraction]
+      UIView.animate(withDuration: 0.25, delay: 0, options: options, animations: {
+        collectionView.contentOffset = point
+        // This is called in order to invoke the delegate methods attached
+        // to the scroll view.
+        collectionView.setContentOffset(point, animated: true)
 
-      var contentOffset = collectionView.contentOffset
-      if velocity.x < 0.0 {
-        contentOffset.x *= 0.90
-      }
-
-      let centerIndexPath = delegate.getCenterIndexPath(in: collectionView,
-                                                        scrollView: collectionView,
-                                                        point: contentOffset,
-                                                        contentSize: contentSize,
-                                                        offset: minimumInteritemSpacing)
-
-      
-      guard let foundCenterIndex = centerIndexPath else {
-        return targetContentOffset
-      }
-
-      guard let attributes = collectionView.layoutAttributesForItem(at: foundCenterIndex) else {
-        return targetContentOffset
-      }
-
-      let offset = CGFloat(component.model.layout.inset.left / 2 + component.model.layout.itemSpacing)
-      let x = component.componentCenterOffset(for: attributes) - offset
-
-      targetContentOffset.x = x
+      }, completion: nil)
     }
 
     return targetContentOffset
   }
-  #endif
+
+  func targetContentOffsetForComponent(_ component: Component, targetContentOffset: CGPoint, collectionView: CollectionView, delegate: Delegate) -> CGPoint {
+    var targetContentOffset = targetContentOffset
+    var contentOffset = collectionView.contentOffset
+
+    if let beginDraggingAtContentOffset = delegate.beginDraggingAtContentOffset,
+      let attributes = layoutAttributesForElements(in: collectionView.frame),
+      let attribute = attributes.first {
+      let threshold: CGFloat = abs(collectionView.contentOffset.x - beginDraggingAtContentOffset.x)
+      if threshold > attribute.frame.width * 0.25 {
+        if beginDraggingAtContentOffset.x > collectionView.contentOffset.x {
+          contentOffset.x -= threshold
+        } else {
+          contentOffset.x += threshold
+        }
+      }
+    }
+
+    guard let foundCenterIndex = delegate.getCenterIndexPath(in: collectionView,
+                                                             scrollView: collectionView,
+                                                             point: contentOffset,
+                                                             contentSize: contentSize,
+                                                             offset: minimumInteritemSpacing),
+      let attributes = layoutAttributesForElements(in: collectionView.frame),
+      let itemAttributes = collectionView.layoutAttributesForItem(at: foundCenterIndex) else {
+        return targetContentOffset
+    }
+
+    var offset: CGFloat = 0
+
+    for attribute in attributes {
+      offset += attribute.frame.width + CGFloat(component.model.layout.inset.left + component.model.layout.itemSpacing)
+      if offset >= collectionView.frame.width {
+        offset -= collectionView.frame.width
+        offset = attribute.frame.width - offset
+        break
+      }
+    }
+
+    if component.model.interaction.paginate != .disabled {
+      targetContentOffset.x = itemAttributes.frame.origin.x + offset
+    }
+
+    return targetContentOffset
+  }
 }
