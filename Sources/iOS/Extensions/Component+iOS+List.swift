@@ -1,7 +1,6 @@
 import UIKit
 
 extension Component {
-
   func setupTableView(_ tableView: TableView, with size: CGSize) {
     tableView.dataSource = componentDataSource
     tableView.delegate = componentDelegate

@@ -1,7 +1,6 @@
 import UIKit
 
-/// A scroll view extension on CarouselComponent to handle scrolling specifically for this object.
-extension Delegate: UIScrollViewDelegate {
+extension Delegate {
   #if os(iOS)
   public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     beginDraggingAtContentOffset = scrollView.contentOffset
@@ -40,9 +39,9 @@ extension Delegate: UIScrollViewDelegate {
     #endif
 
     #if os(iOS)
-    if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
-      spotsScrollView.panGestureRecognizer.isEnabled = true
-    }
+      if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
+        spotsScrollView.panGestureRecognizer.isEnabled = true
+      }
     #endif
 
     if let component = component {
@@ -148,7 +147,7 @@ extension Delegate: UIScrollViewDelegate {
       }
 
       guard let foundIndexPath = centerIndexPath else {
-          return
+        return
       }
 
       if let item = component.item(at: foundIndexPath.item) {
@@ -185,28 +184,5 @@ extension Delegate: UIScrollViewDelegate {
 
       handler(component, collectionView, collectionViewLayout)
     }
-  }
-
-  func getCenterIndexPath(in collectionView: UICollectionView, scrollView: UIScrollView, point: CGPoint, contentSize: CGSize, offset: CGFloat) -> IndexPath? {
-    guard point.x > 0.0 else {
-      return IndexPath(item: 0, section: 0)
-    }
-
-    let pointXUpperBound = round(contentSize.width - scrollView.frame.width / 2)
-    var point = point
-    point.x += scrollView.frame.width / 2
-    point.y = scrollView.contentSize.height / 2
-    var indexPath: IndexPath?
-
-    while indexPath == nil && point.x < pointXUpperBound {
-      indexPath = collectionView.indexPathForItem(at: point)
-      point.x += max(offset, 1)
-    }
-
-    guard let centerIndexPath = indexPath else {
-      return nil
-    }
-
-    return centerIndexPath
   }
 }
