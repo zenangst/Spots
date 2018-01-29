@@ -39,6 +39,8 @@ class FocusEngineManager {
             result -= CGFloat(component.model.layout.inset.top + component.model.layout.lineSpacing)
           } else if component.model.kind == .carousel {
             result -= component.headerHeight
+            result -= CGFloat(component.model.layout.inset.top)
+            result -= CGFloat(component.model.layout.inset.bottom)
           }
         }
       }
