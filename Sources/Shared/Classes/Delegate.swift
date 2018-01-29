@@ -1,4 +1,5 @@
 import Foundation
+import CoreGraphics
 
 /// `Delegate` works as the delegate for both table views and collection views.
 /// It does this by implementing all of the necessary methods on either implementation
