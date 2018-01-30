@@ -63,12 +63,4 @@ extension SpotsController {
       }
     }
   }
-
-  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    #if os(iOS)
-      for case let componentView as ScrollView in self.scrollView.componentsView.subviews where !componentView.panGestureRecognizer.isEnabled {
-        componentView.panGestureRecognizer.isEnabled = true
-      }
-    #endif
-  }
 }
