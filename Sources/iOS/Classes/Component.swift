@@ -268,14 +268,14 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     handleInfiniteScrolling()
     #endif
 
-    #if os(tvOS)
-      guard let firstAttributes = collectionView?.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer - 1, section: 0)) else {
-        return
-      }
+    guard let firstAttributes = collectionView?.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer - 1, section: 0)) else {
+      return
+    }
 
-      let newX = firstAttributes.frame.maxX + CGFloat(model.layout.inset.left)
+    let newX = firstAttributes.frame.maxX + CGFloat(model.layout.inset.left)
+    collectionView?.setContentOffset(.init(x: newX, y: 0), animated: false)
+    #if os(tvOS)
       componentDelegate?.manualFocusedIndexPath = IndexPath(item: componentDataSource.buffer, section: 0)
-      collectionView?.setContentOffset(.init(x: newX, y: 0), animated: false)
       view.setNeedsFocusUpdate()
       view.updateFocusIfNeeded()
     #endif
