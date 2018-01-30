@@ -246,8 +246,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
     #if os(iOS)
-      guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
-        return
+      guard model.kind == .carousel,
+        model.layout.infiniteScrolling == true,
+        model.interaction.paginate != .page
+        else {
+          return
       }
 
       handleInfiniteScrolling()
@@ -255,28 +258,17 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   }
 
   func setupInfiniteScrolling() {
-    guard let collectionView = collectionView,
-      let componentDataSource = componentDataSource,
-      let delegate = componentDelegate,
+    guard let componentDataSource = componentDataSource,
       model.items.count >= componentDataSource.buffer else {
         return
     }
-
-    let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
     view.layoutIfNeeded()
-
-    if let point = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin,
-      let targetContentOffset = (collectionView.flowLayout as? ComponentFlowLayout)?.targetContentOffsetForComponent(self,
-                                                                                                                     targetContentOffset: point,
-                                                                                                                     collectionView: collectionView,
-                                                                                                                     delegate: delegate) {
-      collectionView.setContentOffset(targetContentOffset, animated: false)
-    }
+    handleInfiniteScrolling()
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
   /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
-  private func handleInfiniteScrolling() {
+  func handleInfiniteScrolling() {
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
       model.items.count >= componentDataSource.buffer else {

@@ -412,12 +412,12 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         return proposedContentOffset
     }
 
-    let targetContentOffset = targetContentOffsetForComponent(component,
-                                                              targetContentOffset: proposedContentOffset,
-                                                              collectionView: collectionView,
-                                                              delegate: delegate)
-
-    if component.model.interaction.paginate == .page {
+    switch component.model.interaction.paginate {
+    case .page:
+      let targetContentOffset = targetContentOffsetForComponent(component,
+                                                                targetContentOffset: proposedContentOffset,
+                                                                collectionView: collectionView,
+                                                                delegate: delegate)
       let point = CGPoint(x: targetContentOffset.x, y: collectionView.contentOffset.y)
       let options: UIViewAnimationOptions = [.beginFromCurrentState, .allowAnimatedContent, .allowUserInteraction]
       UIView.animate(withDuration: 0.25, delay: 0, options: options, animations: {
@@ -425,11 +425,14 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         // This is called in order to invoke the delegate methods attached
         // to the scroll view.
         collectionView.setContentOffset(point, animated: true)
+      }, completion: { _ in
+        component.handleInfiniteScrolling()
+      })
 
-      }, completion: nil)
+      return point
+    case .item, .disabled:
+      return proposedContentOffset
     }
-
-    return targetContentOffset
   }
 
   func targetContentOffsetForComponent(_ component: Component, targetContentOffset: CGPoint, collectionView: CollectionView, delegate: Delegate) -> CGPoint {
