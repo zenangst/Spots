@@ -1,29 +1,9 @@
 import UIKit
 
 extension Delegate {
-  #if os(iOS)
   public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     beginDraggingAtContentOffset = scrollView.contentOffset
-
-    if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
-      let spotsScrollGesture = spotsScrollView.panGestureRecognizer
-      let componentGesture = scrollView.panGestureRecognizer
-      let spotsScrollState = spotsScrollGesture.state
-      let componentState = componentGesture.state
-
-      // Let component take precedence and disable scrolling in SpotsScrollView by deactivating
-      // its pan gesture. It will be re-enable during the scrolling of the component.
-      // See `func scrollViewDidScroll(_ scrollView: UIScrollView)`
-      if spotsScrollState == .possible && componentState == .began {
-        spotsScrollGesture.isEnabled = false
-      } else if componentState == .began && (spotsScrollState == .began || spotsScrollState == .changed) {
-        // If the `SpotsScrollView` state is trying to scroll it should take precedence over the component.
-        // It usually means that user is trying to scroll either up or down.
-        componentGesture.isEnabled = false
-      }
-    }
   }
-  #endif
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     #if os(tvOS)
@@ -35,12 +15,6 @@ extension Delegate {
       // and `didReachEnd`.
       if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView, spotsScrollView.subviewsInLayoutOrder.count == 1 {
         (component?.focusDelegate as? SpotsController)?.scrollViewDidScroll(scrollView)
-      }
-    #endif
-
-    #if os(iOS)
-      if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView {
-        spotsScrollView.panGestureRecognizer.isEnabled = true
       }
     #endif
 
