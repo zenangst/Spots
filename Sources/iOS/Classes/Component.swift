@@ -246,8 +246,11 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   /// `Component` with `infiniteScrolling` enabled.
   func layoutSubviews() {
     #if os(iOS)
-      guard model.kind == .carousel, model.layout.infiniteScrolling == true else {
-        return
+      guard model.kind == .carousel,
+        model.layout.infiniteScrolling == true,
+        model.interaction.paginate != .page
+        else {
+          return
       }
 
       handleInfiniteScrolling()
@@ -255,28 +258,32 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   }
 
   func setupInfiniteScrolling() {
-    guard let collectionView = collectionView,
-      let componentDataSource = componentDataSource,
-      let delegate = componentDelegate,
+    guard let componentDataSource = componentDataSource,
       model.items.count >= componentDataSource.buffer else {
         return
     }
 
-    let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
     view.layoutIfNeeded()
+    #if os(iOS)
+    handleInfiniteScrolling()
+    #endif
 
-    if let point = collectionView.layoutAttributesForItem(at: indexPath)?.frame.origin,
-      let targetContentOffset = (collectionView.flowLayout as? ComponentFlowLayout)?.targetContentOffsetForComponent(self,
-                                                                                                                     targetContentOffset: point,
-                                                                                                                     collectionView: collectionView,
-                                                                                                                     delegate: delegate) {
-      collectionView.setContentOffset(targetContentOffset, animated: false)
+    guard let firstAttributes = collectionView?.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer - 1, section: 0)) else {
+      return
     }
+
+    let newX = firstAttributes.frame.maxX + CGFloat(model.layout.inset.left)
+    collectionView?.setContentOffset(.init(x: newX, y: 0), animated: false)
+    #if os(tvOS)
+      componentDelegate?.manualFocusedIndexPath = IndexPath(item: componentDataSource.buffer, section: 0)
+      view.setNeedsFocusUpdate()
+      view.updateFocusIfNeeded()
+    #endif
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
   /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
-  private func handleInfiniteScrolling() {
+  func handleInfiniteScrolling() {
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
       model.items.count >= componentDataSource.buffer else {
