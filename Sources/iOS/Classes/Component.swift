@@ -134,8 +134,17 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 
-    self.componentDataSource = DataSource(component: self, with: configuration)
-    self.componentDelegate = Delegate(component: self, with: configuration)
+    let dataSource = DataSource(component: self, with: configuration)
+    let delegate = Delegate(component: self, with: configuration)
+    #if os(tvOS)
+      if model.layout.infiniteScrolling {
+        let item = dataSource.buffer
+        delegate.initialFocusedIndexPath = IndexPath(item: item, section: 0)
+      }
+    #endif
+
+    self.componentDataSource = dataSource
+    self.componentDelegate = delegate
 
     #if os(tvOS)
       view.addLayoutGuide(focusGuide)
@@ -263,8 +272,9 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
         return
     }
 
-    view.layoutIfNeeded()
     let item = componentDataSource.buffer
+
+    view.layoutIfNeeded()
 
     #if os(iOS)
     handleInfiniteScrolling()
@@ -278,7 +288,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     let frame = componentFlowLayout.cachedFrames[item]
     let x: CGFloat
     #if os(tvOS)
-      x = round(frame.origin.x + CGFloat(model.layout.inset.left))
+      x = round(frame.origin.x + CGFloat(model.layout.inset.left - model.layout.itemSpacing))
     #else
       switch model.interaction.paginate {
       case .page, .item:
@@ -286,15 +296,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       case .disabled:
         x = round(frame.origin.x - CGFloat(model.layout.itemSpacing * 1.5))
       }
+
     #endif
 
     collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
-
-    #if os(tvOS)
-      componentDelegate?.initialFocusedIndexPath = IndexPath(item: item, section: 0)
-      view.setNeedsFocusUpdate()
-      view.updateFocusIfNeeded()
-    #endif
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
