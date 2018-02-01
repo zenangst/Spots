@@ -270,18 +270,25 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     handleInfiniteScrolling()
     #endif
     guard let componentFlowLayout = collectionView?.flowLayout as? ComponentFlowLayout,
-      (item > 0 && item < componentFlowLayout.cachedFrames.count) else {
+      (item > 0 && item < componentFlowLayout.cachedFrames.count)
+    else {
         return
     }
 
-    let cachedFrame = componentFlowLayout.cachedFrames[item]
-
+    let frame = componentFlowLayout.cachedFrames[item]
+    let x: CGFloat
     #if os(tvOS)
-      let newX = cachedFrame.origin.x + CGFloat(model.layout.inset.left)
+      x = round(frame.origin.x + CGFloat(model.layout.inset.left))
     #else
-      let newX = cachedFrame.origin.x - CGFloat(model.layout.inset.left)
+      switch model.interaction.paginate {
+      case .page, .item:
+        x = round(frame.origin.x - CGFloat(model.layout.inset.left))
+      case .disabled:
+        x = round(frame.origin.x - CGFloat(model.layout.itemSpacing * 1.5))
+      }
     #endif
-    collectionView?.setContentOffset(.init(x: newX, y: 0), animated: false)
+
+    collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
 
     #if os(tvOS)
       componentDelegate?.initialFocusedIndexPath = IndexPath(item: item, section: 0)
