@@ -264,22 +264,27 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     }
 
     view.layoutIfNeeded()
+    let item = componentDataSource.buffer
+
     #if os(iOS)
     handleInfiniteScrolling()
     #endif
-
-    let item = componentDataSource.buffer
-
     guard let componentFlowLayout = collectionView?.flowLayout as? ComponentFlowLayout,
       (item > 0 && item < componentFlowLayout.cachedFrames.count) else {
         return
     }
 
     let cachedFrame = componentFlowLayout.cachedFrames[item]
-    let newX = cachedFrame.origin.x - CGFloat(model.layout.inset.left)
-    collectionView?.setContentOffset(.init(x: newX, y: 0), animated: false)
+
     #if os(tvOS)
-      componentDelegate?.manualFocusedIndexPath = IndexPath(item: item, section: 0)
+      let newX = cachedFrame.origin.x + CGFloat(model.layout.inset.left)
+    #else
+      let newX = cachedFrame.origin.x - CGFloat(model.layout.inset.left)
+    #endif
+    collectionView?.setContentOffset(.init(x: newX, y: 0), animated: false)
+
+    #if os(tvOS)
+      componentDelegate?.initialFocusedIndexPath = IndexPath(item: item, section: 0)
       view.setNeedsFocusUpdate()
       view.updateFocusIfNeeded()
     #endif
