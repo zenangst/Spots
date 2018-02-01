@@ -17,11 +17,7 @@ extension Delegate {
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
     if let initialFocusedIndexPath = initialFocusedIndexPath {
-      if initialFocusedIndexPath == indexPath {
-        return true
-      } else {
-        return false
-      }
+      return initialFocusedIndexPath == indexPath
     } else {
       let indexPath = indexPathManager.computeIndexPath(indexPath)
       let canFocusItem = resolveComponent({ component in
