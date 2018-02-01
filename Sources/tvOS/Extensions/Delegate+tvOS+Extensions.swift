@@ -16,11 +16,15 @@ extension Delegate {
   ///
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    let indexPath = indexPathManager.computeIndexPath(indexPath)
-    let canFocusItem = resolveComponent({ component in
-      return component.item(at: indexPath) != nil
-    }, fallback: false)
-    return canFocusItem
+    if let initialFocusedIndexPath = initialFocusedIndexPath {
+      return initialFocusedIndexPath == indexPath
+    } else {
+      let indexPath = indexPathManager.computeIndexPath(indexPath)
+      let canFocusItem = resolveComponent({ component in
+        return component.item(at: indexPath) != nil
+      }, fallback: false)
+      return canFocusItem
+    }
   }
 
   ///Asks the delegate whether a change in focus should occur.
@@ -64,13 +68,19 @@ extension Delegate {
   @available(iOS 9.0, *)
   public func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
     setInitialValuesToFocusDelegate(collectionView)
-    guard let nextFocusedIndexPath = context.nextFocusedIndexPath, hasReachedBuffer else {
+    guard let nextFocusedIndexPath = context.nextFocusedIndexPath else {
       return
     }
 
-    hasReachedBuffer = false
-    modifyContentOffsetFor(context.focusHeading, indexPath: nextFocusedIndexPath, collectionView: collectionView)
-    collectionView.setNeedsFocusUpdate()
+    if let initialFocusedIndexPath = self.initialFocusedIndexPath {
+      self.initialFocusedIndexPath = nil
+      modifyContentOffsetFor(context.focusHeading, indexPath: nextFocusedIndexPath, collectionView: collectionView)
+      collectionView.setNeedsFocusUpdate()
+    } else if hasReachedBuffer {
+      hasReachedBuffer = false
+      modifyContentOffsetFor(context.focusHeading, indexPath: nextFocusedIndexPath, collectionView: collectionView)
+      collectionView.setNeedsFocusUpdate()
+    }
   }
 
   // MARK: - UITableView
@@ -133,6 +143,8 @@ extension Delegate {
       return
     }
 
+    var shouldRemoveOffset: Bool = false
+
     var newIndexPath = indexPath
     switch heading {
     case .left:
@@ -140,15 +152,18 @@ extension Delegate {
     case .right:
       newIndexPath.item -= component.model.items.count
     default:
-      return
+      shouldRemoveOffset = true
     }
 
     let currentOffset = collectionView.contentOffset.x
     let itemSizeIndexPath = indexPathManager.computeIndexPath(newIndexPath)
     let totalWidth = component.sizeForItem(at: itemSizeIndexPath).width + CGFloat(component.model.layout.itemSpacing)
     var additionalOffset = CGFloat(component.model.items.count) * totalWidth
+
     if case .right = heading {
       additionalOffset *= -1
+    } else if shouldRemoveOffset {
+      additionalOffset = 0
     }
 
     manualFocusedIndexPath = newIndexPath

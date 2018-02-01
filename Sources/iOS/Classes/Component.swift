@@ -134,8 +134,17 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       model.layout.configure(collectionViewLayout: collectionViewLayout)
     }
 
-    self.componentDataSource = DataSource(component: self, with: configuration)
-    self.componentDelegate = Delegate(component: self, with: configuration)
+    let dataSource = DataSource(component: self, with: configuration)
+    let delegate = Delegate(component: self, with: configuration)
+    #if os(tvOS)
+      if model.layout.infiniteScrolling {
+        let item = dataSource.buffer
+        delegate.initialFocusedIndexPath = IndexPath(item: item, section: 0)
+      }
+    #endif
+
+    self.componentDataSource = dataSource
+    self.componentDelegate = delegate
 
     #if os(tvOS)
       view.addLayoutGuide(focusGuide)
@@ -263,22 +272,34 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
         return
     }
 
+    let item = componentDataSource.buffer
+
     view.layoutIfNeeded()
+
     #if os(iOS)
     handleInfiniteScrolling()
     #endif
-
-    guard let firstAttributes = collectionView?.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer - 1, section: 0)) else {
-      return
+    guard let componentFlowLayout = collectionView?.flowLayout as? ComponentFlowLayout,
+      (item > 0 && item < componentFlowLayout.cachedFrames.count)
+    else {
+        return
     }
 
-    let newX = firstAttributes.frame.maxX + CGFloat(model.layout.inset.left)
-    collectionView?.setContentOffset(.init(x: newX, y: 0), animated: false)
+    let frame = componentFlowLayout.cachedFrames[item]
+    let x: CGFloat
     #if os(tvOS)
-      componentDelegate?.manualFocusedIndexPath = IndexPath(item: componentDataSource.buffer, section: 0)
-      view.setNeedsFocusUpdate()
-      view.updateFocusIfNeeded()
+      x = round(frame.origin.x + CGFloat(model.layout.inset.left - model.layout.itemSpacing))
+    #else
+      switch model.interaction.paginate {
+      case .page, .item:
+        x = round(frame.origin.x - CGFloat(model.layout.inset.left))
+      case .disabled:
+        x = round(frame.origin.x - CGFloat(model.layout.itemSpacing * 1.5))
+      }
+
     #endif
+
+    collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
