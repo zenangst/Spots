@@ -312,6 +312,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     #endif
   }
 
+  @available(tvOS 9.0, *)
   private func initialXCoordinateItemAtIndexPath(_ indexPath: IndexPath) -> CGFloat? {
     guard let attributes = collectionView?.layoutAttributesForItem(at: indexPath) else {
       return nil
