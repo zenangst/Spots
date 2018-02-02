@@ -63,11 +63,11 @@ extension Delegate {
                                                  contentSize: collectionViewLayout.contentSize,
                                                  offset: collectionViewLayout.minimumInteritemSpacing)
 
-        guard let foundCenterIndex = centerIndexPath else {
+        guard let foundCenterIndex = centerIndexPath,
+          let itemFrame = collectionViewLayout.layoutAttributesForItem(at: foundCenterIndex)?.frame else {
           return
         }
 
-        let itemFrame = collectionViewLayout.cachedFrames[foundCenterIndex.item]
         let alignedX = itemFrame.midX - scrollView.frame.size.width / 2
         scrollView.setContentOffset(.init(x: alignedX, y: 0), animated: true)
         needsInfiniteScrollingAlignment = false
@@ -129,8 +129,8 @@ extension Delegate {
       }
 
       var newPointeeX: CGFloat = targetContentOffset.pointee.x
-      if component.model.interaction.paginate == .item {
-        let itemFrame = collectionViewLayout.cachedFrames[foundIndexPath.item]
+      if component.model.interaction.paginate == .item,
+        let itemFrame = collectionViewLayout.layoutAttributesForItem(at: foundIndexPath)?.frame {
         newPointeeX = itemFrame.midX - scrollView.frame.size.width / 2
         // Only snap to item if new value exceeds zero or that the index path
         // at center is larger than zero.

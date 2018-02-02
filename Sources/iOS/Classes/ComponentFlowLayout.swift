@@ -169,7 +169,12 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   ///
   /// - returns: An array of layout attribute objects containing the layout information for the enclosed items and views. The default implementation of this method returns nil.
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-    return self.layoutAttributes?.filter({ $0.frame.intersects(rect) })
+    switch scrollDirection {
+    case .horizontal:
+      return layoutAttributes
+    case .vertical:
+      return layoutAttributes?.filter({ $0.frame.intersects(rect) })
+    }
   }
 
   open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
