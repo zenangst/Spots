@@ -5,7 +5,6 @@ extension Component {
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
       model.items.count >= componentDataSource.buffer,
-      model.layout.infiniteScrolling,
       let frame = collectionView.flowLayout?.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer, section: 0))?.frame else {
         return
     }

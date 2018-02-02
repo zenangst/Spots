@@ -210,7 +210,10 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     configurePageControl()
     Component.configure?(self)
     configuration.configureComponent?(self)
-    setupInfiniteScrolling()
+
+    if model.layout.infiniteScrolling {
+      setupInfiniteScrolling()
+    }
   }
 
   /// Configure the view frame with a given size.
