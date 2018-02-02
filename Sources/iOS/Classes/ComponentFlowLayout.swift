@@ -121,41 +121,27 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
         return nil
     }
 
-    var nextX: CGFloat = sectionInset.left
-    var nextY: CGFloat = 0.0
-
-    if component.model.layout.infiniteScrolling {
-      if indexPath.item >= component.model.items.count {
-        itemAttribute.size = component.sizeForItem(at: IndexPath(item: indexPath.item - component.model.items.count, section: 0))
-      } else {
-        itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
-      }
+    if component.model.layout.infiniteScrolling, indexPath.item >= component.model.items.count {
+      itemAttribute.size = component.sizeForItem(at: IndexPath(item: indexPath.item - component.model.items.count, section: 0))
     } else {
-      itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
+      itemAttribute.size = component.sizeForItem(at: indexPath)
     }
 
     switch scrollDirection {
     case .horizontal:
-      if indexPath.item > 0, let previousItem = layoutAttributesForItem(at: IndexPath(item: indexPath.item - 1, section: 0)) {
-        if indexEligibleForItemsPerRow(index: itemAttribute.indexPath.item, itemsPerRow: component.model.layout.itemsPerRow) {
-          nextX = previousItem.frame.maxX + minimumInteritemSpacing
-          nextY = component.headerHeight + sectionInset.top
-        } else {
-          nextY = previousItem.frame.maxY + minimumLineSpacing
-        }
+      itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
+
+      guard indexPath.item > 0, let previousItem = layoutAttributesForItem(at: IndexPath(item: indexPath.item - 1, section: 0)) else {
+        itemAttribute.frame.origin.x = sectionInset.left
+        break
       }
 
-      if component.model.layout.itemsPerRow > 1 {
-        if itemAttribute.indexPath.item % component.model.layout.itemsPerRow == 0 {
-          itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
-        } else {
-          itemAttribute.frame.origin.y = nextY
-        }
-      } else {
-        itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
-      }
+      itemAttribute.frame.origin.x = previousItem.frame.maxX + minimumInteritemSpacing
 
-      itemAttribute.frame.origin.x = nextX
+      if component.model.layout.itemsPerRow > 1 && !(indexPath.item % component.model.layout.itemsPerRow == 0) {
+        itemAttribute.frame.origin.x = previousItem.frame.origin.x
+        itemAttribute.frame.origin.y = previousItem.frame.maxY + minimumLineSpacing
+      }
     case .vertical:
       itemAttribute.frame.origin.y += component.headerHeight
     }
