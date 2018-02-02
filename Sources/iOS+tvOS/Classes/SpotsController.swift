@@ -273,6 +273,10 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
       component.collectionView?.flowLayout?.prepare()
       component.collectionView?.flowLayout?.invalidateLayout()
       component.collectionView?.flowLayout?.finalizeAnimatedBoundsChange()
+      component.headerView?.frame.size.width = size.width
+      component.footerView?.frame.size.width = size.width
+      component.headerView?.frame.origin = .zero
+      component.footerView?.frame.origin = .zero
     }
 
     scrollView.frame.size = size
