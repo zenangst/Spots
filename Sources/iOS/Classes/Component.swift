@@ -266,69 +266,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     #endif
   }
 
-  func setupInfiniteScrolling() {
-    guard let componentDataSource = componentDataSource,
-      model.items.count >= componentDataSource.buffer else {
-        return
-    }
-
-    #if os(iOS)
-      let item = componentDataSource.buffer
-      view.layoutIfNeeded()
-      handleInfiniteScrolling()
-
-      guard let componentFlowLayout = collectionView?.flowLayout as? ComponentFlowLayout,
-        (item > 0 && item < componentFlowLayout.cachedFrames.count)
-        else {
-          return
-      }
-
-      let frame = componentFlowLayout.cachedFrames[item]
-      let x: CGFloat
-
-      switch model.interaction.paginate {
-      case .page, .item:
-        x = round(frame.origin.x - CGFloat(model.layout.inset.left))
-      case .disabled:
-        x = round(frame.origin.x - CGFloat(model.layout.itemSpacing * 1.5))
-      }
-
-      collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
-    #else
-      let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
-
-      if var x = initialXCoordinateItemAtIndexPath(indexPath) {
-        x += CGFloat(model.layout.inset.left)
-        collectionView?.contentOffset.x = x
-        collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-      }
-
-      componentDelegate?.manualFocusedIndexPath = indexPath
-      if #available(tvOS 9.0, *) {
-        view.setNeedsFocusUpdate()
-      }
-    #endif
-  }
-
-  @available(tvOS 9.0, *)
-  private func initialXCoordinateItemAtIndexPath(_ indexPath: IndexPath) -> CGFloat? {
-    guard let attributes = collectionView?.layoutAttributesForItem(at: indexPath) else {
-      return nil
-    }
-
-    let span: Double = model.layout.span > 1 ? model.layout.span : 1
-    var centerAlignment = CGFloat(model.layout.itemSpacing * span)
-    var remainingWidth = attributes.size.width + centerAlignment * 2
-    while remainingWidth < view.frame.size.width {
-      remainingWidth *= 2
-      centerAlignment -= CGFloat(model.layout.itemSpacing)
-    }
-
-    return attributes.frame.minX - centerAlignment
-  }
-
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
   /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
   func handleInfiniteScrolling() {
