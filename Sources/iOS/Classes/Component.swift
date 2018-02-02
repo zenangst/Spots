@@ -136,12 +136,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     let dataSource = DataSource(component: self, with: configuration)
     let delegate = Delegate(component: self, with: configuration)
-    #if os(tvOS)
-      if model.layout.infiniteScrolling {
-        let item = dataSource.buffer
-        delegate.initialFocusedIndexPath = IndexPath(item: item, section: 0)
-      }
-    #endif
 
     self.componentDataSource = dataSource
     self.componentDelegate = delegate
@@ -216,10 +210,7 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     configurePageControl()
     Component.configure?(self)
     configuration.configureComponent?(self)
-
-    if model.layout.infiniteScrolling {
-      setupInfiniteScrolling()
-    }
+    setupInfiniteScrolling()
   }
 
   /// Configure the view frame with a given size.
@@ -267,28 +258,22 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
   }
 
   func setupInfiniteScrolling() {
-    guard let componentDataSource = componentDataSource,
-      model.items.count >= componentDataSource.buffer else {
+    guard let collectionView = collectionView,
+      let componentDataSource = componentDataSource,
+      model.items.count >= componentDataSource.buffer,
+      model.layout.infiniteScrolling,
+      let frame = collectionView.flowLayout?.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer, section: 0))?.frame else {
         return
     }
-
-    let item = componentDataSource.buffer
-
-    view.layoutIfNeeded()
 
     #if os(iOS)
-    handleInfiniteScrolling()
+      view.layoutIfNeeded()
+      handleInfiniteScrolling()
     #endif
-    guard let componentFlowLayout = collectionView?.flowLayout as? ComponentFlowLayout,
-      (item > 0 && item < componentFlowLayout.cachedFrames.count)
-    else {
-        return
-    }
 
-    let frame = componentFlowLayout.cachedFrames[item]
     let x: CGFloat
     #if os(tvOS)
-      x = round(frame.origin.x + CGFloat(model.layout.inset.left - model.layout.itemSpacing))
+      collectionView.scrollToItem(at: IndexPath(item: componentDataSource.buffer, section: 0), at: .centeredHorizontally, animated: false)
     #else
       switch model.interaction.paginate {
       case .page, .item:
@@ -296,10 +281,8 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
       case .disabled:
         x = round(frame.origin.x - CGFloat(model.layout.itemSpacing * 1.5))
       }
-
+      collectionView.setContentOffset(.init(x: x, y: 0), animated: false)
     #endif
-
-    collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
   }
 
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.

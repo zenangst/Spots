@@ -16,15 +16,11 @@ extension Delegate {
   ///
   /// - returns: YES if the item can receive be focused or NO if it can not.
   public func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-    if let initialFocusedIndexPath = initialFocusedIndexPath {
-      return initialFocusedIndexPath == indexPath
-    } else {
-      let indexPath = indexPathManager.computeIndexPath(indexPath)
-      let canFocusItem = resolveComponent({ component in
-        return component.item(at: indexPath) != nil
-      }, fallback: false)
-      return canFocusItem
-    }
+    let indexPath = indexPathManager.computeIndexPath(indexPath)
+    let canFocusItem = resolveComponent({ component in
+      return component.item(at: indexPath) != nil
+    }, fallback: false)
+    return canFocusItem
   }
 
   ///Asks the delegate whether a change in focus should occur.
@@ -72,11 +68,7 @@ extension Delegate {
       return
     }
 
-    if let initialFocusedIndexPath = self.initialFocusedIndexPath {
-      self.initialFocusedIndexPath = nil
-      modifyContentOffsetFor(context.focusHeading, indexPath: nextFocusedIndexPath, collectionView: collectionView)
-      collectionView.setNeedsFocusUpdate()
-    } else if hasReachedBuffer {
+    if hasReachedBuffer {
       hasReachedBuffer = false
       modifyContentOffsetFor(context.focusHeading, indexPath: nextFocusedIndexPath, collectionView: collectionView)
       collectionView.setNeedsFocusUpdate()

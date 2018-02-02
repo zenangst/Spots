@@ -26,7 +26,6 @@ public class Delegate: NSObject, ComponentResolvable {
   /// A property used for navigating seamlessly with the focus engine on
   /// tvOS when a component has infinite scrolling enabled.
   var manualFocusedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
-  var initialFocusedIndexPath: IndexPath?
   #endif
 
   #if !os(macOS)
