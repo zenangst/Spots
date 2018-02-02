@@ -266,42 +266,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     #endif
   }
 
-  func setupInfiniteScrolling() {
-    guard let componentDataSource = componentDataSource,
-      model.items.count >= componentDataSource.buffer else {
-        return
-    }
-
-    let item = componentDataSource.buffer
-
-    view.layoutIfNeeded()
-
-    #if os(iOS)
-    handleInfiniteScrolling()
-    #endif
-    guard let componentFlowLayout = collectionView?.flowLayout as? ComponentFlowLayout,
-      (item > 0 && item < componentFlowLayout.cachedFrames.count)
-    else {
-        return
-    }
-
-    let frame = componentFlowLayout.cachedFrames[item]
-    let x: CGFloat
-    #if os(tvOS)
-      x = round(frame.origin.x + CGFloat(model.layout.inset.left - model.layout.itemSpacing))
-    #else
-      switch model.interaction.paginate {
-      case .page, .item:
-        x = round(frame.origin.x - CGFloat(model.layout.inset.left))
-      case .disabled:
-        x = round(frame.origin.x - CGFloat(model.layout.itemSpacing * 1.5))
-      }
-
-    #endif
-
-    collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
-  }
-
   /// Manipulates the x content offset when `infiniteScrolling` is enabled on the `Component`.
   /// The `.x` offset is changed when the user reaches the beginning or the end of a `Component`.
   func handleInfiniteScrolling() {
@@ -449,4 +413,3 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
     view.superview?.layoutIfNeeded()
   }
 }
-

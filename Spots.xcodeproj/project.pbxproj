@@ -399,6 +399,7 @@
 		D55CFF651FA257F100F69973 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CFF641FA257F100F69973 /* Size.swift */; };
 		D55CFF661FA257F100F69973 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CFF641FA257F100F69973 /* Size.swift */; };
 		D55CFF671FA257F100F69973 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55CFF641FA257F100F69973 /* Size.swift */; };
+		D5824B11202492BA0092BAC7 /* Component+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5824B10202492BA0092BAC7 /* Component+iOS.swift */; };
 		D58478141C43FEB9006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478091C43FEB8006EBA49 /* Spots.framework */; };
 		D58478571C43FFFD006EBA49 /* ComponentModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584782B1C43FF34006EBA49 /* ComponentModelTests.swift */; };
 		D58478D21C440568006EBA49 /* Spots.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58478C81C440567006EBA49 /* Spots.framework */; };
@@ -631,6 +632,7 @@
 		BDFC474D1E747B2B008700BF /* ListWrapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListWrapperTests.swift; sourceTree = "<group>"; };
 		D55B7B071E4231A4000125C8 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		D55CFF641FA257F100F69973 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		D5824B10202492BA0092BAC7 /* Component+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Component+iOS.swift"; sourceTree = "<group>"; };
 		D58478091C43FEB8006EBA49 /* Spots.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spots.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478131C43FEB9006EBA49 /* Spots-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Spots-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58478241C43FF34006EBA49 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -811,6 +813,7 @@
 				BDAD849F1E3E701C008289AE /* UICollectionView+UserInterface.swift */,
 				BDAD84A01E3E701C008289AE /* UITableView+UserInterface.swift */,
 				BDAD84A11E3E701C008289AE /* UIViewController+Extensions.swift */,
+				D5824B10202492BA0092BAC7 /* Component+iOS.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1658,6 +1661,7 @@
 				BDAD84BE1E3E701C008289AE /* DefaultItemView.swift in Sources */,
 				BDAD85ED1E3E7032008289AE /* StateCache.swift in Sources */,
 				BD5D69D41F398C370078AC19 /* Changes.swift in Sources */,
+				D5824B11202492BA0092BAC7 /* Component+iOS.swift in Sources */,
 				BDB8D59A1E51C4FE00220BC3 /* Delegate+iOS+tvOS+UIScrollView.swift in Sources */,
 				BD1D17251EA89A36000DBCF8 /* SpotsRefreshControl.swift in Sources */,
 				BDAD85B71E3E7032008289AE /* ScrollDelegate.swift in Sources */,
