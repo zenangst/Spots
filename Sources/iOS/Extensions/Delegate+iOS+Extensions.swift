@@ -1,190 +1,162 @@
 import UIKit
 
-extension Delegate: UICollectionViewDelegate {
-  /// Asks the delegate for the size of the specified item’s cell.
-  ///
-  /// - parameter collectionView: The collection view object displaying the flow layout.
-  /// - parameter collectionViewLayout: The layout object requesting the information.
-  /// - parameter indexPath: The index path of the item.
-  ///
-  /// - returns: The width and height of the specified item. Both values must be greater than 0.
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let indexPath = indexPathManager.computeIndexPath(indexPath)
-    let sizeForItem = resolveComponent({ component in
-      component.sizeForItem(at: indexPath)
-    }, fallback: .zero)
-
-    return sizeForItem
+extension Delegate {
+  public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    beginDraggingAtContentOffset = scrollView.contentOffset
   }
 
-  /// Tells the delegate that the item at the specified index path was selected.
-  ///
-  /// - parameter collectionView: The collection view object that is notifying you of the selection change.
-  /// - parameter indexPath: The index path of the cell that was selected.
-  public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let indexPath = indexPathManager.computeIndexPath(indexPath)
-    resolveComponentItem(at: indexPath) { component, item in
-      component.delegate?.component(component, itemSelected: item)
-    }
-  }
-
-  /// Tells the delegate that the specified cell is about to be displayed in the collection view.
-  ///
-  /// - parameter collectionView: The collection view object that is adding the cell.
-  /// - parameter cell: The cell object being added.
-  /// - parameter indexPath: The index path of the data item that the cell represents.
-  public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    let indexPath = indexPathManager.computeIndexPath(indexPath)
-    resolveComponentItem(at: indexPath) { component, item in
-      let view = (cell as? Wrappable)?.wrappedView ?? cell
-
-      if let itemConfigurable = view as? ItemConfigurable {
-        component.configure?(itemConfigurable)
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    #if os(tvOS)
+      // Invoke `scrollViewDidScroll` if there is only one component in the view hierarchy.
+      // The reason for this is that if a `SpotsScrollView` has only one component it will not
+      // resize to match the entire height of the component but let the components scroll view
+      // scroll itself. This is similar to a regular vanilla implementation. To get the regular
+      // delegate to work the components scroll view will be used to trigger `didReachBeginning`
+      // and `didReachEnd`.
+      if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView, spotsScrollView.subviewsInLayoutOrder.count == 1 {
+        (component?.focusDelegate as? SpotsController)?.scrollViewDidScroll(scrollView)
       }
-
-      component.delegate?.component(component, willDisplay: view, item: item)
-    }
-  }
-
-  /// Tells the delegate that the specified cell was removed from the collection view.
-  ///
-  /// - parameter collectionView: The collection view object that removed the cell.
-  /// - parameter cell: The cell object that was removed.
-  /// - parameter indexPath: The index path of the data item that the cell represented.
-  public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    let indexPath = indexPathManager.computeIndexPath(indexPath)
-    resolveComponentItem(at: indexPath) { (component, item) in
-      let view = (cell as? Wrappable)?.wrappedView ?? cell
-      component.delegate?.component(component, didEndDisplaying: view, item: item)
-    }
-  }
-}
-
-extension Delegate: UITableViewDelegate {
-
-  /// Asks the delegate for the height to use for the header of a particular section.
-  ///
-  /// - parameter tableView: The table-view object requesting this information.
-  /// - parameter heightForHeaderInSection: An index number identifying a section of tableView.
-  ///
-  /// - returns: Returns the `headerHeight` found in `model.meta`, otherwise 0.0.
-  public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return component?.headerHeight ?? 0.0
-  }
-
-  public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return component?.footerHeight ?? 0.0
-  }
-
-  /// Tells the delegate that the specified row is now selected.
-  ///
-  /// - parameter tableView: A table-view object informing the delegate about the new row selection.
-  /// - parameter indexPath: An index path locating the new selected row in tableView.
-  public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    #if os(iOS)
-      tableView.deselectRow(at: indexPath, animated: true)
     #endif
 
-    resolveComponentItem(at: indexPath) { component, item in
-      component.delegate?.component(component, itemSelected: item)
-    }
-  }
+    if let component = component {
+      component.backgroundView.frame.origin.x = scrollView.contentOffset.x
 
-  /// Tells the delegate the table view is about to draw a cell for a particular row.
-  ///
-  /// - Parameters:
-  ///   - tableView: The table-view object informing the delegate of this impending event.
-  ///   - cell: A table-view cell object that tableView is going to use when drawing the row.
-  ///   - indexPath: An index path locating the row in tableView.
-  public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    resolveComponentItem(at: indexPath) { (component, item) in
-      let view = (cell as? Wrappable)?.wrappedView ?? cell
-
-      if let itemConfigurable = view as? ItemConfigurable {
-        component.configure?(itemConfigurable)
+      if let footerView = component.footerView {
+        scrollViewManager.positionFooterView(footerView, in: scrollView)
       }
 
-      component.delegate?.component(component, willDisplay: view, item: item)
+      if let headerView = component.headerView {
+        scrollViewManager.positionHeaderView(headerView, footerView: component.footerView, in: scrollView, with: component.model.layout)
+      }
+    }
+
+    performPaginatedScrolling { component, _, _ in
+      component.carouselScrollDelegate?.componentCarouselDidScroll(component)
+      if component.model.layout.pageIndicatorPlacement == .overlay {
+        component.pageControl.frame.origin.x = scrollView.contentOffset.x
+      }
     }
   }
 
-  /// Tells the delegate that the specified cell was removed from the table.
-  ///
-  /// - parameter tableView: The table-view object that removed the view.
-  /// - parameter cell: The cell that was removed.
-  /// - parameter indexPath: The index path of the cell.
-  public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    resolveComponentItem(at: indexPath) { (component, item) in
-      let view = (cell as? Wrappable)?.wrappedView ?? cell
-      component.delegate?.component(component, didEndDisplaying: view, item: item)
-    }
-  }
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    component?.didScrollHorizontally { component in
+      let itemIndex = Int(scrollView.contentOffset.x / scrollView.frame.width)
 
-  public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    return component?.headerView ?? nil
-  }
-
-  public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    return component?.footerView ?? nil
-  }
-
-  /// Asks the delegate for the height to use for a row in a specified location.
-  ///
-  /// - parameter tableView: The table-view object requesting this information.
-  /// - parameter indexPath: An index path that locates a row in tableView.
-  ///
-  /// - returns:  A nonnegative floating-point value that specifies the height (in points) that row should be based on the view model height, defaults to 0.0.
-  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    let heightForRow: CGFloat = resolveComponent({ component in
-      component.model.size = CGSize(
-        width: tableView.frame.size.width,
-        height: tableView.frame.size.height)
-
-      return component.item(at: indexPath)?.size.height ?? 0
-    }, fallback: 0.0)
-
-    return heightForRow
-  }
-}
-
-extension Delegate: UICollectionViewDelegateFlowLayout {
-
-  /// Asks the delegate for the spacing between successive rows or columns of a section.
-  ///
-  /// - parameter collectionView:       The collection view object displaying the flow layout.
-  /// - parameter collectionViewLayout: The layout object requesting the information.
-  /// - parameter section:              The index number of the section whose line spacing is needed.
-  /// - returns: The minimum space (measured in points) to apply between successive lines in a section.
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    if let layout = collectionView.flowLayout {
-      return layout.minimumLineSpacing
-    } else {
-      return 0
-    }
-  }
-
-  /// Asks the delegate for the margins to apply to content in the specified section.
-  ///
-  /// - parameter collectionView:       The collection view object displaying the flow layout.
-  /// - parameter collectionViewLayout: The layout object requesting the information.
-  /// - parameter section:              The index number of the section whose insets are needed.
-  ///
-  /// - returns: The margins to apply to items in the section.
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    if let layout = collectionView.flowLayout {
-      guard layout.scrollDirection == .horizontal else {
-        return layout.sectionInset
+      guard itemIndex >= 0 else {
+        return
       }
 
-      let left = layout.minimumLineSpacing / 2
-      let right = layout.minimumLineSpacing / 2
+      guard itemIndex < component.model.items.count else {
+        return
+      }
 
-      return UIEdgeInsets(top: layout.sectionInset.top,
-                          left: left,
-                          bottom: layout.sectionInset.bottom,
-                          right: right)
-    } else {
-      return UIEdgeInsets.zero
+      component.pageControl.currentPage = itemIndex
+
+      guard needsInfiniteScrollingAlignment && component.model.interaction.paginate == .item else {
+        return
+      }
+
+      performPaginatedScrolling { _, collectionView, collectionViewLayout in
+        let centerIndexPath = getCenterIndexPath(in: collectionView,
+                                                 scrollView: scrollView,
+                                                 point: scrollView.contentOffset,
+                                                 contentSize: collectionViewLayout.contentSize,
+                                                 offset: collectionViewLayout.minimumInteritemSpacing)
+
+        guard let foundCenterIndex = centerIndexPath,
+          let itemFrame = collectionViewLayout.layoutAttributesForItem(at: foundCenterIndex)?.frame else {
+          return
+        }
+
+        let alignedX = itemFrame.midX - scrollView.frame.size.width / 2
+        scrollView.setContentOffset(.init(x: alignedX, y: 0), animated: true)
+        needsInfiniteScrollingAlignment = false
+      }
+    }
+  }
+
+  public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    performPaginatedScrolling { component, collectionView, collectionViewLayout in
+      let centerIndexPath = getCenterIndexPath(in: collectionView,
+                                               scrollView: scrollView,
+                                               point: scrollView.contentOffset,
+                                               contentSize: collectionViewLayout.contentSize,
+                                               offset: collectionViewLayout.minimumInteritemSpacing)
+
+      guard let foundCenterIndex = centerIndexPath else {
+        return
+      }
+
+      guard let item = component.item(at: foundCenterIndex.item) else {
+        return
+      }
+
+      component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: true)
+    }
+  }
+
+  /// Tells the delegate when the user finishes scrolling the content.
+  ///
+  /// - parameter scrollView:          The scroll-view object where the user ended the touch.
+  /// - parameter velocity:            The velocity of the scroll view (in points) at the moment the touch was released.
+  /// - parameter targetContentOffset: The expected offset when the scrolling action decelerates to a stop.
+  public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    beginDraggingAtContentOffset = nil
+    performPaginatedScrolling { component, collectionView, collectionViewLayout in
+      var centerIndexPath: IndexPath?
+
+      centerIndexPath = getCenterIndexPath(in: collectionView,
+                                           scrollView: scrollView,
+                                           point: targetContentOffset.pointee,
+                                           contentSize: collectionViewLayout.contentSize,
+                                           offset: collectionViewLayout.minimumInteritemSpacing)
+
+      if component.model.interaction.paginate == .page {
+        let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
+        let isBeyondBounds = targetContentOffset.pointee.x >= widthBounds && centerIndexPath == nil
+
+        if isBeyondBounds {
+          centerIndexPath = IndexPath(item: component.model.items.count - 1, section: 0)
+        }
+      }
+
+      guard let foundIndexPath = centerIndexPath else {
+        return
+      }
+
+      if let item = component.item(at: foundIndexPath.item) {
+        component.carouselScrollDelegate?.componentCarouselDidEndScrolling(component, item: item, animated: false)
+      }
+
+      var newPointeeX: CGFloat = targetContentOffset.pointee.x
+      if component.model.interaction.paginate == .item,
+        let itemFrame = collectionViewLayout.layoutAttributesForItem(at: foundIndexPath)?.frame {
+        newPointeeX = itemFrame.midX - scrollView.frame.size.width / 2
+        // Only snap to item if new value exceeds zero or that the index path
+        // at center is larger than zero.
+        guard (newPointeeX > 0 && foundIndexPath.item > 0) || component.model.layout.infiniteScrolling else {
+          return
+        }
+
+        let widthBounds = scrollView.contentSize.width - scrollView.frame.size.width
+        if component.model.layout.infiniteScrolling, (newPointeeX == 0 || newPointeeX == widthBounds) {
+          needsInfiniteScrollingAlignment = true
+        }
+        targetContentOffset.pointee.x = newPointeeX
+      }
+    }
+  }
+
+  fileprivate func performPaginatedScrolling(_ handler: (Component, UICollectionView, CollectionLayout) -> Void) {
+    component?.didScrollHorizontally { component in
+      guard let collectionView = component.userInterface as? CollectionView,
+        let collectionViewLayout = collectionView.collectionViewLayout as? CollectionLayout else {
+          return
+      }
+
+      collectionView.contentOffset.y = 0
+
+      handler(component, collectionView, collectionViewLayout)
     }
   }
 }
