@@ -136,12 +136,6 @@ public class Component: NSObject, ComponentHorizontallyScrollable {
 
     let dataSource = DataSource(component: self, with: configuration)
     let delegate = Delegate(component: self, with: configuration)
-    #if os(tvOS)
-      if model.layout.infiniteScrolling {
-        let item = dataSource.buffer
-        delegate.initialFocusedIndexPath = IndexPath(item: item, section: 0)
-      }
-    #endif
 
     self.componentDataSource = dataSource
     self.componentDelegate = delegate

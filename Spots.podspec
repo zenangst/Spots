@@ -14,9 +14,9 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.ios.source_files = 'Sources/{iOS,iOS-Exclusive,Shared}/**/*'
-  s.osx.source_files = 'Sources/{macOS,Shared}/**/*'
-  s.tvos.source_files = 'Sources/{iOS,tvOS,Shared}/**/*'
+  s.ios.source_files = 'Sources/{Universal,iOS,iOS+tvOS}/**/*'
+  s.osx.source_files = 'Sources/{Universal,macOS}/**/*'
+  s.tvos.source_files = 'Sources/{Universal,tvOS,iOS+tvOS}/**/*'
   
   s.dependency 'Cache', '~> 4.0'
   s.framework  = "Foundation"

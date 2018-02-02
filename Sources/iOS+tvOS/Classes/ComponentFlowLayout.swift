@@ -14,7 +14,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   private var indexPathsToAnimate = [IndexPath]()
   private var indexPathsToMove = [IndexPath]()
   private var layoutAttributes: [UICollectionViewLayoutAttributes]?
-  private(set) var cachedFrames = [CGRect]()
 
   // Subclasses must override this method and use it to return the width and height of the collection view’s content. These values represent the width and height of all the content, not just the content that is currently visible. The collection view uses this information to configure its own content size to facilitate scrolling.
   open override var collectionViewContentSize: CGSize {
@@ -114,81 +113,54 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     component.model.size = contentSize
   }
 
+  open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard let collectionView = collectionView,
+      let dataSource = collectionView.dataSource as? DataSource,
+      let component = dataSource.component,
+      let itemAttribute = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes else {
+        return nil
+    }
+
+    if component.model.layout.infiniteScrolling, indexPath.item >= component.model.items.count {
+      itemAttribute.size = component.sizeForItem(at: IndexPath(item: indexPath.item - component.model.items.count, section: 0))
+    } else {
+      itemAttribute.size = component.sizeForItem(at: indexPath)
+    }
+
+    switch scrollDirection {
+    case .horizontal:
+      itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
+
+      guard indexPath.item > 0, let previousItem = layoutAttributesForItem(at: IndexPath(item: indexPath.item - 1, section: 0)) else {
+        itemAttribute.frame.origin.x = sectionInset.left
+        break
+      }
+
+      itemAttribute.frame.origin.x = previousItem.frame.maxX + minimumInteritemSpacing
+
+      if component.model.layout.itemsPerRow > 1 && !(indexPath.item % component.model.layout.itemsPerRow == 0) {
+        itemAttribute.frame.origin.x = previousItem.frame.origin.x
+        itemAttribute.frame.origin.y = previousItem.frame.maxY + minimumLineSpacing
+      }
+    case .vertical:
+      itemAttribute.frame.origin.y += component.headerHeight
+    }
+
+    return itemAttribute
+  }
+
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
   ///
   /// - parameter rect: The rectangle (specified in the collection view’s coordinate system) containing the target views.
   ///
   /// - returns: An array of layout attribute objects containing the layout information for the enclosed items and views. The default implementation of this method returns nil.
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-    guard let collectionView = collectionView,
-      let dataSource = collectionView.dataSource as? DataSource,
-      let component = dataSource.component
-      else {
-        return nil
+    switch scrollDirection {
+    case .horizontal:
+      return layoutAttributes
+    case .vertical:
+      return layoutAttributes?.filter({ $0.frame.intersects(rect) })
     }
-
-    var attributes = [UICollectionViewLayoutAttributes]()
-    var nextX: CGFloat = sectionInset.left
-    var nextY: CGFloat = 0.0
-
-    if let newAttributes = self.layoutAttributes {
-      for (index, attribute) in newAttributes.enumerated() {
-        guard let itemAttribute = attribute.copy() as? UICollectionViewLayoutAttributes
-          else {
-            continue
-        }
-
-        if component.model.layout.infiniteScrolling {
-          if index >= component.model.items.count {
-            itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
-          } else {
-            itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
-          }
-        } else {
-          itemAttribute.size = component.sizeForItem(at: itemAttribute.indexPath)
-        }
-
-        switch scrollDirection {
-        case .horizontal:
-          if component.model.layout.itemsPerRow > 1 {
-            if itemAttribute.indexPath.item % component.model.layout.itemsPerRow == 0 {
-              itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
-            } else {
-              itemAttribute.frame.origin.y = nextY
-            }
-          } else {
-            itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
-          }
-
-          itemAttribute.frame.origin.x = nextX
-
-          if indexEligibleForItemsPerRow(index: itemAttribute.indexPath.item, itemsPerRow: component.model.layout.itemsPerRow) {
-            nextX += itemAttribute.size.width + minimumInteritemSpacing
-            nextY = component.headerHeight + sectionInset.top
-          } else {
-            nextY = itemAttribute.frame.maxY + minimumLineSpacing
-          }
-
-          attributes.append(itemAttribute)
-        case .vertical:
-          itemAttribute.frame.origin.y += component.headerHeight
-          // Only add item attributes if the item frame insects the rect passed into the method.
-          // This removes unwanted computation when a collection view scrolls.
-          // Note that this only applies to vertical components.
-          if itemAttribute.frame.intersects(rect) {
-            attributes.append(itemAttribute)
-          }
-        }
-
-        if index >= cachedFrames.count {
-          cachedFrames.append(itemAttribute.frame)
-        } else {
-          cachedFrames[index] = itemAttribute.frame
-        }
-      }
-    }
-
-    return attributes
   }
 
   open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -407,8 +379,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
   open override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
     guard let collectionView = collectionView,
       let delegate = collectionView.delegate as? Delegate,
-      let component = delegate.component,
-      component.model.interaction.paginate != .disabled else {
+      let component = delegate.component else {
         return proposedContentOffset
     }
 
