@@ -6,18 +6,6 @@ extension Delegate {
   }
 
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    #if os(tvOS)
-      // Invoke `scrollViewDidScroll` if there is only one component in the view hierarchy.
-      // The reason for this is that if a `SpotsScrollView` has only one component it will not
-      // resize to match the entire height of the component but let the components scroll view
-      // scroll itself. This is similar to a regular vanilla implementation. To get the regular
-      // delegate to work the components scroll view will be used to trigger `didReachBeginning`
-      // and `didReachEnd`.
-      if let spotsScrollView = scrollView.superview?.superview as? SpotsScrollView, spotsScrollView.subviewsInLayoutOrder.count == 1 {
-        (component?.focusDelegate as? SpotsController)?.scrollViewDidScroll(scrollView)
-      }
-    #endif
-
     if let component = component {
       component.backgroundView.frame.origin.x = scrollView.contentOffset.x
 
