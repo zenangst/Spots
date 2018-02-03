@@ -45,13 +45,14 @@ public class ComponentFlowLayout: FlowLayout {
       contentSize = .zero
 
       if let firstItem = component.model.items.first {
-        contentSize.height = firstItem.size.height * CGFloat(component.model.layout.itemsPerRow)
+        contentSize.height = (firstItem.size.height + minimumLineSpacing) * CGFloat(component.model.layout.itemsPerRow)
 
         if component.model.items.count % component.model.layout.itemsPerRow == 1 {
           contentSize.width += firstItem.size.width + minimumLineSpacing
-          contentSize.height += CGFloat(component.model.layout.lineSpacing)
         }
       }
+
+      contentSize.height -= minimumLineSpacing
 
       for (index, item) in component.model.items.enumerated() {
         guard indexEligibleForItemsPerRow(index: index, itemsPerRow: component.model.layout.itemsPerRow) else {
@@ -61,8 +62,20 @@ public class ComponentFlowLayout: FlowLayout {
         contentSize.width += item.size.width + minimumInteritemSpacing
       }
 
+      if component.model.layout.infiniteScrolling {
+        let dataSourceCount = collectionView?.numberOfItems(inSection: 0) ?? 0
+
+        if dataSourceCount > component.model.items.count {
+          for index in component.model.items.count..<dataSourceCount {
+            let indexPath = IndexPath(item: index - component.model.items.count, section: 0)
+            contentSize.width += component.sizeForItem(at: indexPath).width + minimumInteritemSpacing
+          }
+        }
+      }
+
       contentSize.height += component.headerHeight
       contentSize.height += component.footerHeight
+      contentSize.height += CGFloat(component.model.layout.inset.bottom)
       contentSize.width -= minimumInteritemSpacing
       contentSize.width += CGFloat(component.model.layout.inset.left + component.model.layout.inset.right)
     case .vertical:
