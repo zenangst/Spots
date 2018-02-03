@@ -97,7 +97,7 @@ class ComponentFlowLayoutSharedTests: XCTestCase {
     // In this case that should be the current formula:
     // $totalItemWidth + $leftInset + $rightInset
     //     80 * 4      +     10     +     10
-    XCTAssertEqual(flowLayout.contentSize, CGSize(width: 340, height: 80))
+    XCTAssertEqual(flowLayout.contentSize, CGSize(width: 340, height: 70))
   }
 
   func testCarouselLayoutWithSpanOfTwoWithPaddingAndItemSpacing() {
@@ -124,7 +124,7 @@ class ComponentFlowLayoutSharedTests: XCTestCase {
     // In this case that should be the current formula:
     // $totalItemWidth + $leftInset + $rightInset + ($itemSpacing * $numberOfItems - $itemSpacing)
     //     30 * 4      +     10     +     10      + (     10      *       4        - 10  )
-    XCTAssertEqual(flowLayout.contentSize, CGSize(width: 170, height: 80))
+    XCTAssertEqual(flowLayout.contentSize, CGSize(width: 170, height: 70))
   }
 
   private func createComponent(with layout: Layout) -> (Component, ComponentFlowLayout) {
