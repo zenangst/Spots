@@ -76,64 +76,53 @@ public class ComponentFlowLayout: FlowLayout {
     component.model.size = contentSize
   }
 
-  public override func layoutAttributesForElements(in rect: NSRect) -> [NSCollectionViewLayoutAttributes] {
-    var attributes = [NSCollectionViewLayoutAttributes]()
-
+  open override func layoutAttributesForItem(at indexPath: IndexPath) -> NSCollectionViewLayoutAttributes? {
     guard let collectionView = collectionView,
       let dataSource = collectionView.dataSource as? DataSource,
-      let component = dataSource.component
-      else {
-        return attributes
+      let component = dataSource.component,
+      let itemAttribute = super.layoutAttributesForItem(at: indexPath)?.copy() as? NSCollectionViewLayoutAttributes else {
+        return nil
     }
 
-    guard let newAttributes = self.layoutAttributes else {
-      return attributes
-    }
-
-    var nextX: CGFloat = sectionInset.left
-    var nextY: CGFloat = 0.0
-
-    for attribute in newAttributes {
-      guard let itemAttribute = attribute.copy() as? NSCollectionViewLayoutAttributes else {
-        continue
-      }
-
-      guard let indexPath = itemAttribute.indexPath else {
-        continue
-      }
-
+    if component.model.layout.infiniteScrolling, indexPath.item >= component.model.items.count {
+      itemAttribute.size = component.sizeForItem(at: IndexPath(item: indexPath.item - component.model.items.count, section: 0))
+    } else {
       itemAttribute.size = component.sizeForItem(at: indexPath)
-
-      if scrollDirection == .horizontal {
-        if component.model.layout.itemsPerRow > 1 {
-          if indexPath.item % Int(component.model.layout.itemsPerRow) == 0 {
-            itemAttribute.frame.origin.y += sectionInset.top + component.headerHeight
-          } else {
-            itemAttribute.frame.origin.y = nextY
-          }
-        } else {
-          itemAttribute.frame.origin.y = component.headerView?.frame.maxY ?? component.headerHeight
-          itemAttribute.frame.origin.y += CGFloat(component.model.layout.inset.top)
-        }
-
-        itemAttribute.frame.origin.x = nextX
-
-        if indexEligibleForItemsPerRow(index: indexPath.item, itemsPerRow: component.model.layout.itemsPerRow) {
-          nextX += itemAttribute.size.width + minimumInteritemSpacing
-          nextY = 0
-        } else {
-          nextY = itemAttribute.frame.maxY + CGFloat(component.model.layout.lineSpacing)
-        }
-        attributes.append(itemAttribute)
-      } else {
-        itemAttribute.frame.origin.y += CGFloat(component.model.layout.inset.top)
-        if itemAttribute.frame.intersects(rect) {
-          attributes.append(itemAttribute)
-        }
-      }
     }
 
-    return attributes
+    switch scrollDirection {
+    case .horizontal:
+      itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
+
+      guard indexPath.item > 0, let previousItem = layoutAttributesForItem(at: IndexPath(item: indexPath.item - 1, section: 0)) else {
+        itemAttribute.frame.origin.x = sectionInset.left
+        break
+      }
+
+      itemAttribute.frame.origin.x = previousItem.frame.maxX + minimumInteritemSpacing
+
+      if component.model.layout.itemsPerRow > 1 && !(indexPath.item % component.model.layout.itemsPerRow == 0) {
+        itemAttribute.frame.origin.x = previousItem.frame.origin.x
+        itemAttribute.frame.origin.y = previousItem.frame.maxY + minimumLineSpacing
+      }
+    case .vertical:
+      itemAttribute.frame.origin.y += component.headerHeight
+    }
+
+    return itemAttribute
+  }
+
+  open override func layoutAttributesForElements(in rect: CGRect) -> [NSCollectionViewLayoutAttributes] {
+    guard let layoutAttributes = layoutAttributes else {
+      return []
+    }
+
+    switch scrollDirection {
+    case .horizontal:
+      return layoutAttributes
+    case .vertical:
+      return layoutAttributes.filter({ $0.frame.intersects(rect) })
+    }
   }
 
   public override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> NSCollectionViewLayoutAttributes? {
