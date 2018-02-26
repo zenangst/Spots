@@ -366,7 +366,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
     switch scrollDirection {
     case .horizontal:
-      return newBounds.size.height >= contentSize.height
+      return newBounds.size.height > contentSize.height || newBounds.size.height < contentSize.height
     case .vertical:
       #if os(tvOS)
         return true
