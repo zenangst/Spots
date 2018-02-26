@@ -52,8 +52,10 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     var previousItem: UICollectionViewLayoutAttributes? = nil
 
     for index in 0..<(collectionView?.numberOfItems(inSection: 0) ?? 0) {
-      if let itemAttribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
-        defer { previousItem = itemAttribute }
+      if let itemAttribute = super.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
+        defer {
+          previousItem = itemAttribute
+        }
 
         if component.model.layout.infiniteScrolling, index >= component.model.items.count {
           itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
@@ -86,6 +88,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
 
     self.layoutAttributes = layoutAttributes
     computeContentSize(with: component)
+    collectionView?.setNeedsLayout()
   }
 
   func computeContentSize(with component: Component) {
@@ -153,6 +156,22 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     case .vertical:
       return layoutAttributes?.filter({ $0.frame.intersects(rect) })
     }
+  }
+
+  open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    guard layoutAttributes?.isEmpty == false,
+      let component = (collectionView?.dataSource as? DataSource)?.component else {
+      return nil
+    }
+
+    let newIndex: Int
+    if component.model.layout.infiniteScrolling, indexPath.item >= component.model.items.count {
+      newIndex = indexPath.item - component.model.items.count
+    } else {
+      newIndex = indexPath.item
+    }
+
+    return layoutAttributes?[newIndex]
   }
 
   open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
