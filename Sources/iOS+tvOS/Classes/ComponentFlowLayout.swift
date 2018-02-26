@@ -49,9 +49,37 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     super.prepare()
 
     var layoutAttributes = [UICollectionViewLayoutAttributes]()
+    var previousItem: UICollectionViewLayoutAttributes? = nil
 
     for index in 0..<(collectionView?.numberOfItems(inSection: 0) ?? 0) {
       if let itemAttribute = self.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
+        defer { previousItem = itemAttribute }
+
+        if component.model.layout.infiniteScrolling, index >= component.model.items.count {
+          itemAttribute.size = component.sizeForItem(at: IndexPath(item: index - component.model.items.count, section: 0))
+        } else {
+          itemAttribute.size = component.sizeForItem(at: IndexPath(item: index, section: 0))
+        }
+
+        switch scrollDirection {
+        case .horizontal:
+          itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
+
+          guard index > 0, let previousItem = previousItem else {
+            itemAttribute.frame.origin.x = sectionInset.left
+            break
+          }
+
+          itemAttribute.frame.origin.x = previousItem.frame.maxX + minimumInteritemSpacing
+
+          if component.model.layout.itemsPerRow > 1 && !(index % component.model.layout.itemsPerRow == 0) {
+            itemAttribute.frame.origin.x = previousItem.frame.origin.x
+            itemAttribute.frame.origin.y = previousItem.frame.maxY + minimumLineSpacing
+          }
+        case .vertical:
+          itemAttribute.frame.origin.y += component.headerHeight
+        }
+
         layoutAttributes.append(itemAttribute)
       }
     }
@@ -111,42 +139,6 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     }
 
     component.model.size = contentSize
-  }
-
-  open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-    guard let collectionView = collectionView,
-      let dataSource = collectionView.dataSource as? DataSource,
-      let component = dataSource.component,
-      let itemAttribute = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes else {
-        return nil
-    }
-
-    if component.model.layout.infiniteScrolling, indexPath.item >= component.model.items.count {
-      itemAttribute.size = component.sizeForItem(at: IndexPath(item: indexPath.item - component.model.items.count, section: 0))
-    } else {
-      itemAttribute.size = component.sizeForItem(at: indexPath)
-    }
-
-    switch scrollDirection {
-    case .horizontal:
-      itemAttribute.frame.origin.y = component.headerHeight + sectionInset.top
-
-      guard indexPath.item > 0, let previousItem = layoutAttributesForItem(at: IndexPath(item: indexPath.item - 1, section: 0)) else {
-        itemAttribute.frame.origin.x = sectionInset.left
-        break
-      }
-
-      itemAttribute.frame.origin.x = previousItem.frame.maxX + minimumInteritemSpacing
-
-      if component.model.layout.itemsPerRow > 1 && !(indexPath.item % component.model.layout.itemsPerRow == 0) {
-        itemAttribute.frame.origin.x = previousItem.frame.origin.x
-        itemAttribute.frame.origin.y = previousItem.frame.maxY + minimumLineSpacing
-      }
-    case .vertical:
-      itemAttribute.frame.origin.y += component.headerHeight
-    }
-
-    return itemAttribute
   }
 
   /// Returns the layout attributes for all of the cells and views in the specified rectangle.
