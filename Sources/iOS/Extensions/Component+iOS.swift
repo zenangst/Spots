@@ -2,6 +2,8 @@ import UIKit
 
 extension Component {
   func setupInfiniteScrolling() {
+    collectionView?.collectionViewLayout.prepare()
+
     guard let collectionView = collectionView,
       let componentDataSource = componentDataSource,
       model.items.count >= componentDataSource.buffer,
