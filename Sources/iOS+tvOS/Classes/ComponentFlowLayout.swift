@@ -52,7 +52,7 @@ open class ComponentFlowLayout: UICollectionViewFlowLayout {
     var previousItem: UICollectionViewLayoutAttributes? = nil
 
     for index in 0..<(collectionView?.numberOfItems(inSection: 0) ?? 0) {
-      if let itemAttribute = super.layoutAttributesForItem(at: IndexPath(item: index, section: 0)) {
+      if let itemAttribute = super.layoutAttributesForItem(at: IndexPath(item: index, section: 0))?.copy() as? UICollectionViewLayoutAttributes {
         defer {
           previousItem = itemAttribute
         }
