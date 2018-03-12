@@ -16,25 +16,18 @@ extension Component {
   }
 
   func setupInfiniteScrolling() {
-    guard let componentDataSource = componentDataSource,
-      model.items.count >= componentDataSource.buffer else {
+    collectionView?.collectionViewLayout.prepare()
+
+    guard let collectionView = collectionView,
+      let componentDataSource = componentDataSource,
+      model.items.count >= componentDataSource.buffer,
+      let frame = collectionView.flowLayout?.layoutAttributesForItem(at: IndexPath(item: componentDataSource.buffer, section: 0))?.frame else {
         return
     }
 
-    let indexPath = IndexPath(item: componentDataSource.buffer, section: 0)
-
-    if var x = initialXCoordinateItemAtIndexPath(indexPath) {
-      x += CGFloat(model.layout.inset.left)
-      collectionView?.contentOffset.x = x
-      collectionView?.setContentOffset(.init(x: x, y: 0), animated: false)
-      view.setNeedsLayout()
-      view.layoutIfNeeded()
-    }
-
-    componentDelegate?.manualFocusedIndexPath = indexPath
-    if #available(tvOS 9.0, *) {
-      view.setNeedsFocusUpdate()
-    }
+    view.layoutIfNeeded()
+    let x: CGFloat = round(frame.origin.x - CGFloat(model.layout.inset.left))
+    collectionView.setContentOffset(.init(x: x, y: 0), animated: false)
   }
 
   private func initialXCoordinateItemAtIndexPath(_ indexPath: IndexPath) -> CGFloat? {
