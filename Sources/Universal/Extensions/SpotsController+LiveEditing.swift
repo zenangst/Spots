@@ -59,7 +59,7 @@ import Cache
     ///
     /// - parameter stateCache: An optional StateCache, used for resolving which file should be monitored.
     func liveEditing(stateCache: StateCache?) {
-      #if (arch(i386) || arch(x86_64)) && os(iOS)
+      #if targetEnvironment(simulator)
         guard let stateCache = stateCache, source == nil else {
           return
         }
