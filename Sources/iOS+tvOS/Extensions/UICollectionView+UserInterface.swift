@@ -163,12 +163,12 @@ extension UICollectionView: UserInterface {
     let indexPaths = indexes.map { IndexPath(item: $0, section: 0) }
 
     switch animation {
-      case .none:
-        UIView.performWithoutAnimation {
-          reloadItems(at: indexPaths)
-          removeAnimation()
-          completion?()
-      }
+    case .none:
+      UIView.performWithoutAnimation {
+        reloadItems(at: indexPaths)
+        removeAnimation()
+        completion?()
+    }
     default:
       reloadItems(at: indexPaths)
       collectionViewLayout.finalizeCollectionViewUpdates()

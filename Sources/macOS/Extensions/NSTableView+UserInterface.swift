@@ -130,7 +130,7 @@ extension NSTableView: UserInterface {
   public func processChanges(_ changes: Changes,
                              withAnimation animation: Animation = .automatic,
                              updateDataSource: () -> Void,
-                             completion: ((()) -> Void)? = nil) {
+                             completion: (() -> Void)? = nil) {
     guard let component = (dataSource as? DataSource)?.component else {
       return
     }
@@ -145,7 +145,7 @@ extension NSTableView: UserInterface {
       !reloadSets.isEmpty &&
       !deletionSets.isEmpty &&
       changes.moved.isEmpty {
-      completion?(())
+      completion?()
       return
     }
 
@@ -170,7 +170,7 @@ extension NSTableView: UserInterface {
       component.model.items[index] = item
     }
 
-    completion?(())
+    completion?()
     endUpdates()
   }
 

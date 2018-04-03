@@ -1,4 +1,4 @@
-public extension Array where Element : Indexable {
+public extension Array where Element: Indexable {
   /// Refresh indexes inside of an array that is indexable.
   mutating func refreshIndexes() {
     enumerated().forEach {

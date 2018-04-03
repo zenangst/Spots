@@ -127,7 +127,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
 
     let notificationName = NSNotification.Name(rawValue: NotificationKeys.deviceDidRotateNotification.rawValue)
     NotificationCenter.default.addObserver(self,
-                                           selector:#selector(self.deviceDidRotate(_:)),
+                                           selector: #selector(self.deviceDidRotate(_:)),
                                            name: notificationName,
                                            object: nil)
   }
@@ -147,7 +147,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   ///
   /// - returns: An initialized controller with components. built from JSON.
   @available(*, deprecated: 7.0, message: "Deprecated in favor for init with data")
-  public convenience init(_ json: [String : Any], configuration: Configuration = .shared) {
+  public convenience init(_ json: [String: Any], configuration: Configuration = .shared) {
     self.init(components: Parser.parseComponents(json: json, configuration: configuration),
               configuration: configuration)
   }
@@ -217,7 +217,7 @@ open class SpotsController: UIViewController, SpotsProtocol, ComponentFocusDeleg
   /// - parameter notification: A notification containing the new size.
   @objc func deviceDidRotate(_ notification: Notification) {
     /// This will rotate views that are not visisble on screen.
-    if let userInfo = (notification as NSNotification).userInfo as? [String : Any],
+    if let userInfo = (notification as NSNotification).userInfo as? [String: Any],
       let rotationSize = userInfo["size"] as? RotationSize, view.window == nil {
       configure(withSize: rotationSize.size)
     }

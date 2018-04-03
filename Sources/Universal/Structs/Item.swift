@@ -73,8 +73,8 @@ public struct Item: Codable, Indexable {
               kind: StringConvertible = "",
               action: String? = nil,
               size: CGSize = CGSize(width: 0, height: 0),
-              meta: [String : Any] = [:],
-              relations: [String : [Item]] = [:]) {
+              meta: [String: Any] = [:],
+              relations: [String: [Item]] = [:]) {
     self.identifier = identifier
     self.title = title
     self.subtitle = subtitle
@@ -103,8 +103,8 @@ public struct Item: Codable, Indexable {
                             kind: StringConvertible = "",
                             action: String? = nil,
                             size: CGSize = CGSize(width: 0, height: 0),
-                            meta: [String : Any] = [:],
-                            relations: [String : [Item]] = [:]) {
+                            meta: [String: Any] = [:],
+                            relations: [String: [Item]] = [:]) {
     self.init(identifier: identifier,
               title: title,
               subtitle: subtitle,
