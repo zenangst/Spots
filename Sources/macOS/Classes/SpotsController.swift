@@ -104,7 +104,7 @@ open class SpotsController: NSViewController, SpotsProtocol {
    - parameter json: A JSON dictionary that gets parsed into UI elements
    */
   @available(*, deprecated: 7.0, message: "Deprecated in favor for init with data")
-  public convenience init(_ json: [String : Any], configuration: Configuration = .shared) {
+  public convenience init(_ json: [String: Any], configuration: Configuration = .shared) {
     self.init(components: Parser.parseComponents(json: json, configuration: configuration))
   }
 

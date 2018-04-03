@@ -359,7 +359,7 @@ public class SpotsControllerManager {
   /// - parameter compare: A closure that is used for comparing a ComponentModel collections
   /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
   /// - parameter completion: A closure that will be run after reload has been performed on all components
-  public func reloadIfNeeded(_ json: [String : Any],
+  public func reloadIfNeeded(_ json: [String: Any],
                              controller: SpotsController,
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              animated: ((_ view: View) -> Void)? = nil,
@@ -456,7 +456,7 @@ public class SpotsControllerManager {
   ///- parameter controller: A SpotsController instance.
   ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
   ///- parameter completion: A closure that will be run after reload has been performed on all components
-  public func reload(json: [String : Any], controller: SpotsController, animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
+  public func reload(json: [String: Any], controller: SpotsController, animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     Dispatch.main { [weak self] in
       guard let strongSelf = self else {
         completion?()

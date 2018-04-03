@@ -41,7 +41,7 @@ extension SpotsController {
   /// - parameter compare: A closure that is used for comparing a ComponentModel collections
   /// - parameter animated: An animation closure that can be used to perform custom animations when reloading
   /// - parameter completion: A closure that will be run after reload has been performed on all components
-  public func reloadIfNeeded(_ json: [String : Any],
+  public func reloadIfNeeded(_ json: [String: Any],
                              compare: @escaping CompareClosure = { lhs, rhs in return lhs !== rhs },
                              animated: ((_ view: View) -> Void)? = nil,
                              completion: Completion = nil) {
@@ -69,7 +69,7 @@ extension SpotsController {
   ///- parameter json: A JSON dictionary that gets parsed into UI elements
   ///- parameter animated: An animation closure that can be used to perform custom animations when reloading
   ///- parameter completion: A closure that will be run after reload has been performed on all components
-  public func reload(_ json: [String : Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
+  public func reload(_ json: [String: Any], animated: ((_ view: View) -> Void)? = nil, completion: Completion = nil) {
     manager.reload(json: json,
                    controller: self,
                    animated: animated,

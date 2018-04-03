@@ -17,7 +17,7 @@ class ComponentFlowLayoutSharedTests: XCTestCase {
 
   static let identifier: String = "MockIdentifier"
   var model = ComponentModel(kind: .carousel,
-                             items: (0..<4).flatMap { Item(title: "Test \($0)", kind: identifier) })
+                             items: (0..<4).compactMap { Item(title: "Test \($0)", kind: identifier) })
 
   func testRegularCarouselLayout() {
     let layout = Layout()

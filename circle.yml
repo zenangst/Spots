@@ -1,6 +1,6 @@
 machine:
   xcode:
-    version: "9.0"
+    version: "9.3.0"
 
 dependencies:
   override:
@@ -22,4 +22,3 @@ test:
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2' clean
     - set -o pipefail && xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2' -enableCodeCoverage YES test
     - bash <(curl -s https://codecov.io/bash) -cF tvos -J 'Spots'
-
