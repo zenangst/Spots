@@ -22,8 +22,8 @@ jobs:
       - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator clean
       - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-iOS" -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=11.3,name=iPhone X' -enableCodeCoverage YES test
       - run: bash <(curl -s https://codecov.io/bash) -cF ios -J 'Spots'
-      - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2' clean
-      - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.2' -enableCodeCoverage YES test
+      - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV,OS=11.3' clean
+      - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-tvOS" -destination 'platform=tvOS Simulator,name=Apple TV,OS=11.3' -enableCodeCoverage YES test
       - run: bash <(curl -s https://codecov.io/bash) -cF tvos -J 'Spots'
 
 workflows:
