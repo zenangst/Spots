@@ -3,9 +3,9 @@ jobs:
   carthage:
     macos:
       xcode: "9.3.0"
+    working_directory: /Users/distiller/project
     shell: /bin/bash --login -o pipefail
     steps:
-      - run: ls
       - run: brew upgrade Carthage
       - run: carthage bootstrap
       - run: brew install swiftlint
