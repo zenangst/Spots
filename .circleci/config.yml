@@ -6,14 +6,8 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - run: brew upgrade Carthage
-      - run: rm -rf Cartfile.resolved
-      - run: rm -rf vendor/Carthage
       - run: carthage bootstrap
       - run: brew install swiftlint
-      - save_cache:
-          key: dependency-cache
-          paths:
-            - vendor/Carthage
   build-and-test:
     macos:
       xcode: "9.3.0"
