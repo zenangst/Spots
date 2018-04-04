@@ -5,6 +5,7 @@ jobs:
       xcode: "9.3.0"
     shell: /bin/bash --login -o pipefail
     steps:
+      - run: ls
       - run: brew upgrade Carthage
       - run: carthage bootstrap
       - run: brew install swiftlint
