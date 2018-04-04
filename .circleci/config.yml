@@ -1,20 +1,14 @@
 version: 2
 jobs:
-  carthage:
-    macos:
-      xcode: "9.3.0"
-    working_directory: /Users/distiller/project
-    shell: /bin/bash --login -o pipefail
-    steps:
-      - run: brew upgrade Carthage
-      - run: carthage bootstrap
-      - run: brew install swiftlint
   build-and-test:
     macos:
       xcode: "9.3.0"
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
+      - run: brew upgrade Carthage
+      - run: carthage bootstrap
+      - run: brew install swiftlint
       - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx clean
       - run: xcodebuild -project Spots.xcodeproj -scheme "Spots-macOS" -sdk macosx -enableCodeCoverage YES test
       - run: bash <(curl -s https://codecov.io/bash) -cF osx -J 'Spots'
@@ -29,5 +23,4 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - carthage
       - build-and-test      
