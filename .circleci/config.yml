@@ -1,6 +1,9 @@
 version: 2
 jobs:
   carthage:
+    macos:
+      xcode: "9.3.0"
+    shell: /bin/bash --login -o pipefail
     steps:
       - run: rm -rf Cartfile.resolved
       - run: rm -rf vendor/Carthage
