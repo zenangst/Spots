@@ -78,7 +78,7 @@ public protocol UserInterface: class {
   func processChanges(_ changes: Changes,
                       withAnimation animation: Animation,
                       updateDataSource: () -> Void,
-                      completion: ((()) -> Void)?)
+                      completion: (() -> Void)?)
 
   /// A convenience method for performing inserts on a UserInterface.
   ///
