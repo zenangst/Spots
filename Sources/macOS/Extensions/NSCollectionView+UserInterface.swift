@@ -158,7 +158,7 @@ extension NSCollectionView: UserInterface {
   public func processChanges(_ changes: Changes,
                              withAnimation animation: Animation = .automatic,
                              updateDataSource: () -> Void,
-                             completion: ((()) -> Void)? = nil) {
+                             completion: (() -> Void)? = nil) {
     let instance = animation != .none ? animator() : self
     let deletionSets = Set<IndexPath>(changes.deletions
       .map { IndexPath(item: $0, section: 0) })
@@ -173,7 +173,7 @@ extension NSCollectionView: UserInterface {
       reloadSets.isEmpty &&
       deletionSets.isEmpty &&
       changes.moved.isEmpty {
-      completion?(())
+      completion?()
       return
     }
 
@@ -189,7 +189,7 @@ extension NSCollectionView: UserInterface {
                       to: IndexPath(item: move.value, section: 0))
       }
     }, completionHandler: nil)
-    completion?(())
+    completion?()
     removeAnimation()
   }
 
