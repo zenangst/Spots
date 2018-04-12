@@ -121,7 +121,7 @@ public extension Component {
   ///
   /// - parameter json:      A JSON dictionary
   /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)
-  public func reloadIfNeeded(_ json: [String : Any], withAnimation animation: Animation = .automatic) {
+  public func reloadIfNeeded(_ json: [String: Any], withAnimation animation: Animation = .automatic) {
     manager.reloadIfNeeded(json: json, component: self, withAnimation: animation)
   }
 }

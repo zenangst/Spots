@@ -9,7 +9,7 @@ public struct Parser {
   ///
   /// - returns: A collection of components
   @available(*, deprecated: 7.0, message: "Deprecated in favor for parseComponents with data")
-  public static func parseComponents(json: [String : Any],
+  public static func parseComponents(json: [String: Any],
                                      key: String = "components",
                                      configuration: Configuration = .shared) -> [Component] {
     let components: [ComponentModel] = parseComponentModels(json: json, key: key)
@@ -58,7 +58,7 @@ public struct Parser {
   ///
   /// - returns: A collection of `ComponentModel`s
   @available(*, deprecated: 7.0, message: "Deprecated in favor for parseComponentModels with data")
-  public static func parseComponentModels(json: [String : Any],
+  public static func parseComponentModels(json: [String: Any],
                                           key: String = "components") -> [ComponentModel] {
     let jsonEncoder = JSONEncoder()
 

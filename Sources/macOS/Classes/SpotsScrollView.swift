@@ -66,7 +66,7 @@ open class SpotsScrollView: NSScrollView {
     layoutViews(animated: false)
   }
 
-  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "contentLayoutRect" {
       if #available(OSX 10.12, *) {
         // Workaround to fix the contentInset when using tabs.

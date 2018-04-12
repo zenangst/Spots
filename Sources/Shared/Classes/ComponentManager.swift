@@ -413,7 +413,7 @@ public class ComponentManager {
   /// - parameter component: The component that should be mutated.
   /// - parameter animation:  A Animation that is used when performing the mutation (only works for Listable objects)
   @available(*, deprecated: 7.0, message: "Deprecated in favor for reloadIfNeeded with items")
-  public func reloadIfNeeded(json: [String : Any], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
+  public func reloadIfNeeded(json: [String: Any], component: Component, withAnimation animation: Animation = .automatic, completion: Completion = nil) {
     Dispatch.interactive {
       let jsonEncoder = JSONEncoder()
       let jsonDecoder = JSONDecoder()

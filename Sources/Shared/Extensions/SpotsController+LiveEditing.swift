@@ -31,7 +31,7 @@ import Cache
 
         do {
           if let data = NSData(contentsOfFile: filePath),
-            let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String : Any] {
+            let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? [String: Any] {
             strongSelf.source?.cancel()
             strongSelf.source = nil
 

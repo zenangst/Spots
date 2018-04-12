@@ -67,7 +67,7 @@ public struct ComponentModel: Codable, Equatable {
               layout: Layout = Layout(),
               interaction: Interaction = .init(),
               items: [Item] = [],
-              meta: [String : Any] = [:]) {
+              meta: [String: Any] = [:]) {
     self.identifier = identifier
     self.kind = kind
     self.layout = layout
@@ -98,7 +98,7 @@ public struct ComponentModel: Codable, Equatable {
                                     interaction: Interaction = .init(),
                                     model: T? = nil,
                                     items: [Item] = [],
-                                    meta: [String : Any] = [:]) {
+                                    meta: [String: Any] = [:]) {
     self.init(identifier: identifier,
               header: header,
               footer: footer,
