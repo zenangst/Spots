@@ -14,7 +14,7 @@ extension SpotsScrollView {
     var yOffsetOfCurrentSubview: CGFloat = 0.0
     let lastView = subviewsInLayoutOrder.last
     let multipleComponents = subviewsInLayoutOrder.count > 1
-    let scrollViews = subviewsInLayoutOrder.flatMap({ $0 as? ScrollView })
+    let scrollViews = subviewsInLayoutOrder.compactMap({ $0 as? ScrollView })
 
     for (offset, scrollView) in scrollViews.enumerated() {
       defer {
